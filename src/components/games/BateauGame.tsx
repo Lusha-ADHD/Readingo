@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent, TouchEvent as ReactTouchEvent } from "react";
 import syllableEntries from "../../content/fr/syllables.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import words from "../../content/fr/words.json";
@@ -38,7 +38,7 @@ type Tile = {
 type DragState = {
   tileId: string;
   text: string;
-  pointerId: number;
+  inputId: number;
   sourceElement: HTMLButtonElement;
   startX: number;
   startY: number;
@@ -146,6 +146,29 @@ function shuffleSessionWords(previousOrder: WordChallenge[]) {
   }
 
   return shuffled;
+}
+
+function isIOSDevice() {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+}
+
+function findTouch(
+  touches: { length: number; item(index: number): { identifier: number; clientX: number; clientY: number } | null },
+  identifier: number,
+) {
+  for (let index = 0; index < touches.length; index += 1) {
+    const touch = touches.item(index);
+
+    if (touch?.identifier === identifier) {
+      return touch;
+    }
+  }
+
+  return null;
 }
 
 function shuffleTiles(challenge: WordChallenge): Tile[] {
@@ -565,62 +588,103 @@ export function BateauGame() {
     }, sailingDuration + nextJourney.treasuresFound * CHEST_COLLECT_PAUSE_MS + 260);
   }
 
+  function startDrag(tile: Tile, inputId: number, sourceElement: HTMLButtonElement, clientX: number, clientY: number) {
+    void playEffect("select");
+    dragStateRef.current = {
+      tileId: tile.id,
+      text: tile.text,
+      inputId,
+      sourceElement,
+      startX: clientX,
+      startY: clientY,
+      x: clientX,
+      y: clientY,
+      isDragging: false,
+    };
+    setSelectedTileId(tile.id);
+  }
+
+  function moveDrag(inputId: number, clientX: number, clientY: number) {
+    const currentDrag = dragStateRef.current;
+
+    if (!currentDrag || inputId !== currentDrag.inputId) {
+      return;
+    }
+
+    const movedDistance = Math.hypot(clientX - currentDrag.startX, clientY - currentDrag.startY);
+    const isDragging = currentDrag.isDragging || movedDistance >= DRAG_THRESHOLD;
+
+    dragStateRef.current = {
+      ...currentDrag,
+      x: clientX,
+      y: clientY,
+      isDragging,
+    };
+
+    if (isDragging) {
+      const element = document.elementFromPoint(clientX, clientY);
+      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
+      setActiveSlot(slot?.dataset.slotIndex != null ? Number(slot.dataset.slotIndex) : null);
+    }
+
+    forceDragRender((value) => value + 1);
+  }
+
+  function finishDrag(inputId: number, clientX: number, clientY: number, cancelled = false) {
+    const currentDrag = dragStateRef.current;
+
+    if (!currentDrag || inputId !== currentDrag.inputId) {
+      return null;
+    }
+
+    if (cancelled) {
+      setSelectedTileId(null);
+    } else {
+      const element = document.elementFromPoint(clientX, clientY);
+      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
+
+      if (currentDrag.isDragging && slot?.dataset.slotIndex != null) {
+        placeTile(currentDrag.tileId, Number(slot.dataset.slotIndex));
+      } else {
+        setSelectedTileId((current) => (current === currentDrag.tileId ? null : currentDrag.tileId));
+      }
+    }
+
+    dragStateRef.current = null;
+    setActiveSlot(null);
+    forceDragRender((value) => value + 1);
+    return currentDrag;
+  }
+
   function handlePointerDown(tile: Tile, event: ReactPointerEvent<HTMLButtonElement>) {
     if (phase !== "playing" || usedTileIds.includes(tile.id) || !event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) {
       return;
     }
 
+    if (event.pointerType === "touch" && isIOSDevice()) {
+      return;
+    }
+
     event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
-    void playEffect("select");
-    dragStateRef.current = {
-      tileId: tile.id,
-      text: tile.text,
-      pointerId: event.pointerId,
-      sourceElement: event.currentTarget,
-      startX: event.clientX,
-      startY: event.clientY,
-      x: event.clientX,
-      y: event.clientY,
-      isDragging: false,
-    };
-    setSelectedTileId(tile.id);
+    startDrag(tile, event.pointerId, event.currentTarget, event.clientX, event.clientY);
 
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const currentDrag = dragStateRef.current;
 
-      if (!currentDrag || moveEvent.pointerId !== currentDrag.pointerId) {
+      if (!currentDrag || moveEvent.pointerId !== currentDrag.inputId) {
         return;
       }
 
       moveEvent.preventDefault();
-      const movedDistance = Math.hypot(moveEvent.clientX - currentDrag.startX, moveEvent.clientY - currentDrag.startY);
-      const isDragging = currentDrag.isDragging || movedDistance >= DRAG_THRESHOLD;
-
-      dragStateRef.current = {
-        ...currentDrag,
-        x: moveEvent.clientX,
-        y: moveEvent.clientY,
-        isDragging,
-      };
-
-      if (isDragging) {
-        const element = document.elementFromPoint(moveEvent.clientX, moveEvent.clientY);
-        const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
-        setActiveSlot(slot?.dataset.slotIndex != null ? Number(slot.dataset.slotIndex) : null);
-      }
-
-      forceDragRender((value) => value + 1);
+      moveDrag(moveEvent.pointerId, moveEvent.clientX, moveEvent.clientY);
     };
 
     const cleanupDrag = (drag: DragState) => {
-      if (drag.sourceElement.hasPointerCapture(drag.pointerId)) {
-        drag.sourceElement.releasePointerCapture(drag.pointerId);
+      if (drag.sourceElement.hasPointerCapture(drag.inputId)) {
+        drag.sourceElement.releasePointerCapture(drag.inputId);
       }
 
-      dragStateRef.current = null;
-      setActiveSlot(null);
-      forceDragRender((value) => value + 1);
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerup", handlePointerUp);
       window.removeEventListener("pointercancel", handlePointerCancel);
@@ -629,37 +693,89 @@ export function BateauGame() {
     const handlePointerUp = (upEvent: PointerEvent) => {
       const currentDrag = dragStateRef.current;
 
-      if (!currentDrag || upEvent.pointerId !== currentDrag.pointerId) {
+      if (!currentDrag || upEvent.pointerId !== currentDrag.inputId) {
         return;
       }
 
       upEvent.preventDefault();
-      const element = document.elementFromPoint(upEvent.clientX, upEvent.clientY);
-      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
-
-      if (currentDrag.isDragging && slot?.dataset.slotIndex != null) {
-        placeTile(currentDrag.tileId, Number(slot.dataset.slotIndex));
-      } else {
-        setSelectedTileId((current) => (current === currentDrag.tileId ? null : currentDrag.tileId));
-      }
-
+      finishDrag(upEvent.pointerId, upEvent.clientX, upEvent.clientY);
       cleanupDrag(currentDrag);
     };
 
     const handlePointerCancel = (cancelEvent: PointerEvent) => {
       const currentDrag = dragStateRef.current;
 
-      if (!currentDrag || cancelEvent.pointerId !== currentDrag.pointerId) {
+      if (!currentDrag || cancelEvent.pointerId !== currentDrag.inputId) {
         return;
       }
 
-      setSelectedTileId(null);
+      finishDrag(cancelEvent.pointerId, cancelEvent.clientX, cancelEvent.clientY, true);
       cleanupDrag(currentDrag);
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: false });
     window.addEventListener("pointerup", handlePointerUp, { passive: false });
     window.addEventListener("pointercancel", handlePointerCancel);
+  }
+
+  function handleTouchStart(tile: Tile, event: ReactTouchEvent<HTMLButtonElement>) {
+    if (!isIOSDevice() || phase !== "playing" || usedTileIds.includes(tile.id) || event.touches.length !== 1) {
+      return;
+    }
+
+    const touch = event.touches.item(0);
+
+    if (!touch) {
+      return;
+    }
+
+    event.preventDefault();
+    startDrag(tile, touch.identifier, event.currentTarget, touch.clientX, touch.clientY);
+  }
+
+  function handleTouchMove(event: ReactTouchEvent<HTMLButtonElement>) {
+    const currentDrag = dragStateRef.current;
+
+    if (!isIOSDevice() || !currentDrag) {
+      return;
+    }
+
+    const touch = findTouch(event.touches, currentDrag.inputId);
+
+    if (!touch) {
+      return;
+    }
+
+    event.preventDefault();
+    moveDrag(touch.identifier, touch.clientX, touch.clientY);
+  }
+
+  function handleTouchEnd(event: ReactTouchEvent<HTMLButtonElement>) {
+    const currentDrag = dragStateRef.current;
+
+    if (!isIOSDevice() || !currentDrag) {
+      return;
+    }
+
+    const touch = findTouch(event.changedTouches, currentDrag.inputId);
+
+    if (!touch) {
+      return;
+    }
+
+    event.preventDefault();
+    finishDrag(touch.identifier, touch.clientX, touch.clientY);
+  }
+
+  function handleTouchCancel(event: ReactTouchEvent<HTMLButtonElement>) {
+    const currentDrag = dragStateRef.current;
+
+    if (!isIOSDevice() || !currentDrag) {
+      return;
+    }
+
+    const touch = findTouch(event.changedTouches, currentDrag.inputId);
+    finishDrag(currentDrag.inputId, touch?.clientX ?? currentDrag.x, touch?.clientY ?? currentDrag.y, true);
   }
 
   function restartSession() {
@@ -873,6 +989,10 @@ export function BateauGame() {
                 <SyllableTile
                   id={tile.id}
                   onPointerDown={(event) => handlePointerDown(tile, event)}
+                  onTouchCancel={handleTouchCancel}
+                  onTouchEnd={handleTouchEnd}
+                  onTouchMove={handleTouchMove}
+                  onTouchStart={(event) => handleTouchStart(tile, event)}
                   selected={selectedTileId === tile.id}
                   state={wrongTileId === tile.id ? "wrong" : "default"}
                   text={tile.text}
