@@ -5,11 +5,13 @@ import { sitePath } from "../utils/paths";
 type Props = {
   title?: string;
   description?: string;
+  bodyClass?: string;
 };
 
 const {
   title = "Readingo - Apprendre a lire en jouant",
   description = "Des mini-jeux gratuits pour aider les enfants de 5 a 7 ans a apprendre les lettres, les syllabes et les mots.",
+  bodyClass = "",
 } = Astro.props;
 
 ---
@@ -26,7 +28,7 @@ const {
     <link rel="icon" href={sitePath("/favicon.svg")} type="image/svg+xml" />
     <title>{title}</title>
   </head>
-  <body>
+  <body class={bodyClass}>
     <header class="site-header">
       <div class="site-header__inner page-shell">
         <a class="brand" href={sitePath("/")} aria-label="Accueil Readingo">

@@ -91,6 +91,10 @@ svg {
   backdrop-filter: blur(16px);
 }
 
+.game-layout .site-header {
+  position: static;
+}
+
 .site-header__inner {
   display: flex;
   min-height: 76px;

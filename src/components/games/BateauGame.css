@@ -287,15 +287,14 @@
   display: grid;
   position: absolute;
   z-index: 9;
-  top: 120px;
-  right: 18px;
-  left: 18px;
+  inset: 0 18px;
+  align-content: center;
   justify-items: center;
   gap: 22px;
 }
 
 .bateau-game__intro--dialog {
-  top: 82px;
+  inset-block: 0;
 }
 
 .bateau-game__speech {
@@ -864,17 +863,26 @@
 
 @media (max-width: 700px) {
   .bateau-game {
+    --mobile-panel-height: clamp(286px, 48%, 340px);
+    width: 100%;
+    height: 100%;
     border-radius: 0;
     border-inline: 0;
+    border-bottom: 0;
+    box-shadow: none;
   }
 
   .bateau-game__world {
-    min-height: 340px;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
   }
 
   .bateau-game--intro .bateau-game__world,
   .bateau-game--dialog .bateau-game__world {
-    min-height: 620px;
+    min-height: 0;
   }
 
   .bateau-game__island-track {
@@ -886,25 +894,138 @@
   }
 
   .bateau-game__boat {
+    top: 206px;
+    bottom: auto;
     left: calc(50% - 69px);
   }
 
   .pana {
-    width: 176px;
-    height: 198px;
+    width: 156px;
+    height: 174px;
+  }
+
+  .bateau-game__intro {
+    inset-block: 0;
+    gap: 14px;
+  }
+
+  .bateau-game__intro--dialog {
+    inset-block: 0;
+  }
+
+  .bateau-game__speech {
+    max-width: calc(100% - 12px);
+    padding: 12px 14px;
+    font-size: clamp(1rem, 4.6vw, 1.35rem);
   }
 
   .bateau-game__panel {
-    grid-template-columns: 1fr;
-    margin-inline: 12px;
-    padding: 16px;
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
+    width: auto;
+    height: var(--mobile-panel-height);
+    grid-template-columns: minmax(88px, 0.34fr) 1fr;
+    grid-template-rows: minmax(96px, 1fr) auto;
+    gap: 10px;
+    margin: 0;
+    padding: 12px;
+    border-radius: 22px;
+    overflow: visible;
   }
 
   .bateau-game__image-card {
-    min-height: 160px;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .bateau-game__picture {
+    width: min(106px, 100%);
+    border-width: 3px;
+    border-radius: 20px;
+  }
+
+  .bateau-game__word-frame {
+    border-radius: 16px;
+  }
+
+  .bateau-game__audio {
+    top: -7px;
+    right: -7px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .bateau-game__audio .audio-button__icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .bateau-game__challenge-header {
+    min-height: 28px;
+  }
+
+  .bateau-game__eyebrow {
+    font-size: 0.78rem;
+  }
+
+  .bateau-game__slots {
+    gap: 8px;
+    margin-top: 6px;
   }
 
   .bateau-game__syllables {
+    align-self: end;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .bateau-game__tile-audio {
+    top: -6px;
+    right: -4px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .bateau-game__tile-audio .audio-button__icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .bateau-game__sailing-panel {
+    position: absolute;
+    z-index: 6;
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
+    width: auto;
+    height: var(--mobile-panel-height);
+    min-height: 0;
+    align-items: flex-end;
+    margin: 0;
+    padding: 12px;
+  }
+
+  .bateau-game__sailing-status > div:last-child {
+    min-width: 0;
+    padding: 10px 12px;
+  }
+
+  .bateau-game__sailing-status strong {
+    font-size: 1.15rem;
+  }
+
+  .bateau-game__end {
+    min-height: 0;
+    gap: 10px;
+  }
+
+  .bateau-game__end h2 {
+    font-size: 2.2rem;
+  }
+
+  .bateau-game__end p {
+    font-size: 1rem;
   }
 }

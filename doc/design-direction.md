@@ -227,11 +227,15 @@ Le jeu doit etre prioritaire en mobile portrait.
 
 Contraintes :
 
-- largeur minimale cible : 360 px ;
+- largeur minimale cible : 320 px ;
 - zones tactiles de 44 px minimum ;
-- cartes manipulables au doigt ;
+- syllabes utilisables par simple toucher ;
 - aucune action necessitant un hover ;
 - pas de texte qui deborde dans les boutons ;
+- hauteur du jeu ajustee au viewport dynamique mobile ;
+- panneau de jeu fixe en bas et autorise a masquer une partie du bateau ;
+- dimensions identiques entre les phases de composition et de navigation ;
+- header Readingo non flottant sur la page de jeu ;
 - mode tablette avec plus d'espace mais meme logique ;
 - desktop compatible souris.
 

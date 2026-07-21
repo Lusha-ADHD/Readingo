@@ -204,6 +204,27 @@
   color: #ffffff;
 }
 
+@media (max-width: 700px) {
+  .syllable-tile {
+    min-height: 54px;
+    border-width: 3px;
+    border-radius: 14px;
+    box-shadow: 0 5px 0 rgba(8, 33, 74, 0.25);
+    font-size: clamp(1.65rem, 8vw, 2.2rem);
+  }
+
+  .syllable-slot {
+    min-height: 58px;
+    border-width: 3px;
+    border-radius: 14px;
+    font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  .syllable-slot--filled {
+    box-shadow: 0 5px 0 rgba(8, 33, 74, 0.2);
+  }
+}
+
 .reward-burst {
   display: inline-flex;
   align-items: center;
