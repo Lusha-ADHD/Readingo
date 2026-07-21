@@ -690,6 +690,7 @@ export function BateauGame() {
 
       {phase === "intro" ? (
         <div className="bateau-game__intro">
+          <h2 className="bateau-game__intro-title">Maîtriser les syllabes avec Pana</h2>
           <PanaMascot />
           <GameButton onClick={() => void startIntroDialog()} variant="primary">
             Commencer

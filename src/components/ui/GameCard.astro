@@ -17,7 +17,7 @@ const { title, description, href, variant = "blue" } = Astro.props;
     <strong>{title}</strong>
     <span>{description}</span>
   </span>
-  <span class="game-card__arrow" aria-hidden="true">›</span>
+  <span class="game-card__arrow" aria-hidden="true"><span class="game-card__arrow-glyph">&gt;</span></span>
 </a>
 
 <style>
@@ -52,11 +52,23 @@ const { title, description, href, variant = "blue" } = Astro.props;
   }
 
   .game-card__arrow {
+    position: relative;
     width: 48px;
     height: 48px;
     border-radius: 16px;
     color: #ffffff;
+  }
+
+  .game-card__arrow-glyph {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
     font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    transform: translate(-50%, -54%);
   }
 
   .game-card__content {
@@ -70,7 +82,7 @@ const { title, description, href, variant = "blue" } = Astro.props;
     line-height: 1.1;
   }
 
-  .game-card span span {
+  .game-card__content > span {
     color: var(--color-muted);
     font-weight: 750;
   }
@@ -88,6 +100,10 @@ const { title, description, href, variant = "blue" } = Astro.props;
   .game-card--gold .game-card__icon,
   .game-card--gold .game-card__arrow {
     background: var(--color-gold);
+    color: var(--color-text);
+  }
+
+  .game-card--gold .game-card__arrow-glyph {
     color: var(--color-text);
   }
 
