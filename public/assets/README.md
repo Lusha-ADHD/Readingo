@@ -1,14 +1,14 @@
 # Assets Readingo
 
-Les assets exposes au site vivent dans ce dossier `public/assets`.
+Les assets exposés au site vivent dans ce dossier `public/assets`.
 
 Fichiers attendus par le jeu Bateau :
 
-- `characters/pana.png` : personnage Pana, fond transparent recommande.
-- `world/boat.png` : bateau joueur, fond transparent recommande.
-- `world/IslandWithChest.png` : ile avec coffre.
-- `world/IslandWithoutChest.png` : ile sans coffre.
-- `world/Chest.png` : icone de coffre pour le score et les recompenses.
+- `characters/pana.png` : personnage Pana, fond transparent recommandé.
+- `world/boat.png` : bateau joueur, fond transparent recommandé.
+- `world/IslandWithChest.png` : île avec coffre.
+- `world/IslandWithoutChest.png` : île sans coffre.
+- `world/Chest.png` : icône de coffre pour le score et les récompenses.
 
 Les chemins publics correspondants sont :
 

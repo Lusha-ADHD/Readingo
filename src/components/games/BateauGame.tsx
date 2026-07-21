@@ -235,7 +235,7 @@ function buildJourney(startIndex: number, wind: 1 | 2 | 3): Journey {
 
 function getWindLabel(wind: 1 | 2 | 3) {
   if (wind === 3) {
-    return "Vent tres fort";
+    return "Vent très fort";
   }
 
   if (wind === 2) {
@@ -717,8 +717,8 @@ export function BateauGame() {
               <strong>{getWindLabel(journey.wind)}</strong>
               <span>
                 {journey.treasuresFound > 0
-                  ? `${journey.treasuresFound} coffre${journey.treasuresFound > 1 ? "s" : ""} collecte${journey.treasuresFound > 1 ? "s" : ""}`
-                  : "On file vers la prochaine ile"}
+                  ? `${journey.treasuresFound} coffre${journey.treasuresFound > 1 ? "s" : ""} collecté${journey.treasuresFound > 1 ? "s" : ""}`
+                  : "On file vers la prochaine île"}
               </span>
             </div>
           </div>
@@ -740,7 +740,7 @@ export function BateauGame() {
               )}
               <AudioButton
                 className="bateau-game__audio"
-                label={`Ecouter ${challenge.displayWord}`}
+                label={`Écouter ${challenge.displayWord}`}
                 onClick={() => void playRecordedVoice(challenge.audioWord, challenge.displayWord)}
               />
             </div>
@@ -776,7 +776,7 @@ export function BateauGame() {
                 />
                 <AudioButton
                   className="bateau-game__tile-audio"
-                  label={`Ecouter ${tile.text}`}
+                  label={`Écouter ${tile.text}`}
                   onClick={() =>
                     void playRecordedVoice(
                       getChallengeSyllableAudioPath(challenge, tile.text),
@@ -794,9 +794,9 @@ export function BateauGame() {
         <div className="bateau-game__panel bateau-game__panel--end">
           <div className="bateau-game__end" aria-live="polite">
             <p className="bateau-game__eyebrow">Coffres ouverts</p>
-            <h2>Session terminee</h2>
+            <h2>Session terminée</h2>
             <p>
-              {sessionWords.length} mots reussis, {treasures} coffre{treasures > 1 ? "s" : ""} collecte{treasures > 1 ? "s" : ""}.
+              {sessionWords.length} mots réussis, {treasures} coffre{treasures > 1 ? "s" : ""} collecté{treasures > 1 ? "s" : ""}.
             </p>
             <div className="bateau-game__end-actions">
               <GameButton onClick={restartSession} variant="success">
@@ -806,7 +806,7 @@ export function BateauGame() {
                 onClick={() => void playRecordedVoice(voiceLines.feedback.bravo.audio, voiceLines.feedback.bravo.text)}
                 variant="secondary"
               >
-                Ecouter bravo
+                Écouter bravo
               </GameButton>
             </div>
           </div>

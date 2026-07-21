@@ -1,6 +1,6 @@
 # World
 
-Deposer ici les assets du monde du jeu Bateau : bateau, iles, coffres et elements de decor.
+Déposer ici les assets du monde du jeu Bateau : bateau, îles, coffres et éléments de décor.
 
 Noms attendus :
 
@@ -11,4 +11,4 @@ IslandWithoutChest.png
 Chest.png
 ```
 
-Format recommande : PNG ou WebP avec fond transparent, sujet centre et marge suffisante autour de l'asset.
+Format recommandé : PNG ou WebP avec fond transparent, sujet centré et marge suffisante autour de l'asset.

@@ -6,17 +6,17 @@ import { sitePath } from "../utils/paths";
 ---
 
 <BaseLayout
-  title="Readingo - Apprendre a lire en jouant"
+  title="Readingo - Apprendre à lire en jouant"
   description="Explore l'Archipel des mots avec des mini-jeux gratuits pour apprendre les lettres, les syllabes et les mots."
 >
   <main>
     <section class="hero page-shell">
       <div class="hero__copy">
         <p class="hero__kicker">L'Archipel des mots</p>
-        <h1>Apprendre a lire en jouant</h1>
+        <h1>Apprendre à lire en jouant</h1>
         <p>
           Des mini-jeux gratuits pour les 5-7 ans : lettres, syllabes, mots et
-          coffres a ouvrir a chaque progres.
+          coffres à ouvrir à chaque progrès.
         </p>
         <div class="hero__actions">
           <a class="button button--primary" href={sitePath("/jeux/bateau/")}>Jouer maintenant</a>
@@ -28,11 +28,11 @@ import { sitePath } from "../utils/paths";
 
     <section id="jeux" class="games page-shell" aria-labelledby="games-title">
       <div class="section-heading">
-        <p>Premieres escales</p>
+        <p>Premières escales</p>
         <h2 id="games-title">Choisir un jeu</h2>
       </div>
       <div class="games__grid">
-        <GameCard title="Lettres" description="Reconnaitre les lettres et leurs sons." href="/jeux/lettres/" variant="blue" />
+        <GameCard title="Lettres" description="Reconnaître les lettres et leurs sons." href="/jeux/lettres/" variant="blue" />
         <GameCard title="Syllabes" description="Assembler les syllabes pour former des mots." href="/jeux/bateau/" variant="green" />
         <GameCard title="Mots" description="Lire et comprendre des mots simples." href="/jeux/syllabes/" variant="purple" />
       </div>

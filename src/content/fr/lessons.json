@@ -1,7 +1,7 @@
 [
   {
     "id": "premieres-syllabes",
-    "title": "Premieres syllabes",
+    "title": "Premières syllabes",
     "gameIds": ["bateau"],
     "wordIds": ["chaton", "bateau", "moto", "lapin", "melon", "tapis", "panda", "maison"]
   }

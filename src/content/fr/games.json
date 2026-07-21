@@ -8,7 +8,7 @@
   {
     "id": "lettres",
     "title": "Lettres",
-    "description": "Reconnaitre les lettres et leurs sons.",
+    "description": "Reconnaître les lettres et leurs sons.",
     "skills": ["lettres", "sons"]
   }
 ]

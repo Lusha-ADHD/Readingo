@@ -112,7 +112,7 @@ export function useGameAudio() {
       return;
     }
 
-    sea.volume = 0.22;
+    sea.volume = 0.15;
     void sea.play().catch(() => undefined);
   }, [ensureAudio]);
 

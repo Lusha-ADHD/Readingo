@@ -42,7 +42,7 @@ const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
 const languageCode = process.env.ELEVENLABS_LANGUAGE_CODE || "fr";
 
 if (!apiKey || !voiceId) {
-  throw new Error("ELEVENLABS_API_KEY et ELEVENLABS_VOICE_ID doivent etre renseignes dans .env.local.");
+  throw new Error("ELEVENLABS_API_KEY et ELEVENLABS_VOICE_ID doivent être renseignés dans .env.local.");
 }
 
 if (checkVoiceOnly) {

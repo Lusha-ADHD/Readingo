@@ -14,7 +14,7 @@ export function ProgressBar({ current, total, score }: ProgressBarProps) {
   const chestIconPath = sitePath("/assets/world/Chest.png");
 
   return (
-    <div className="progress-bar" aria-label={`Mot ${currentWord} sur ${total}, ${score} coffre${score > 1 ? "s" : ""} collecte${score > 1 ? "s" : ""}`}>
+    <div className="progress-bar" aria-label={`Mot ${currentWord} sur ${total}, ${score} coffre${score > 1 ? "s" : ""} collecté${score > 1 ? "s" : ""}`}>
       <div className="progress-bar__label">
         <span>
           Mot {currentWord} / {total}
