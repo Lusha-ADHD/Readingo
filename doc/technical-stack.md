@@ -45,7 +45,7 @@ React est adapte pour gerer :
 - la composition de composants reutilisables ;
 - l'integration de bibliotheques specialisees comme Motion, Howler.js, PixiJS ou Rive.
 
-React n'est pas limitant pour ce projet. Les mini-jeux vises sont principalement des experiences 2D d'interface : drag and drop, selection, feedback, audio, progression. Pour des scenes plus proches d'un moteur de jeu 2D, PixiJS pourra etre ajoute ponctuellement sans remettre en cause l'architecture.
+React n'est pas limitant pour ce projet. Les mini-jeux vises sont principalement des experiences 2D d'interface : selection au toucher, placement automatique, feedback, audio, progression. Pour des scenes plus proches d'un moteur de jeu 2D, PixiJS pourra etre ajoute ponctuellement sans remettre en cause l'architecture.
 
 ## Animation
 

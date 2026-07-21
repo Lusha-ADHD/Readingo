@@ -147,7 +147,7 @@ Les bruitages sont heberges localement pour garantir leur lecture sur GitHub Pag
 | Vent pendant le voyage | `public/assets/audio/sfx/wind-loop.mp3` | [Wind Blowing SFX 01](https://pixabay.com/sound-effects/nature-wind-blowing-sfx-01-423673/) |
 | Mouvement du bateau | `public/assets/audio/sfx/boat-loop.mp3` | [Boat Squeaking](https://pixabay.com/sound-effects/film-special-effects-boat-squeaking-44883/) |
 | Selection d'une syllabe | `public/assets/audio/sfx/syllable-select.mp3` | [UI Pop sound](https://pixabay.com/sound-effects/film-special-effects-ui-pop-sound-316482/) |
-| Depot d'une syllabe | `public/assets/audio/sfx/syllable-drop.mp3` | [app_interface_click_2](https://pixabay.com/sound-effects/app-interface-click-2-476372/) |
+| Placement d'une syllabe | `public/assets/audio/sfx/syllable-drop.mp3` | [app_interface_click_2](https://pixabay.com/sound-effects/app-interface-click-2-476372/) |
 | Collecte d'un coffre | `public/assets/audio/sfx/chest-collect.mp3` | [Opening Bell](https://pixabay.com/sound-effects/film-special-effects-opening-bell-421471/) |
 | Niveau termine | `public/assets/audio/sfx/level-complete.mp3` | [Short Success Sound Glockenspiel Treasure Video Game](https://pixabay.com/sound-effects/film-special-effects-short-success-sound-glockenspiel-treasure-video-game-6346/) |
 

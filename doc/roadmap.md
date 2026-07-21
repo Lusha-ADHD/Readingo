@@ -70,10 +70,10 @@ Objectif : livrer le premier jeu complet.
 Taches :
 
 - charger une liste de mots depuis JSON ;
-- afficher image, syllabes et zones de depot ;
+- afficher image, syllabes et emplacements ;
 - gerer clic audio sur image ;
 - gerer clic audio sur syllabe ;
-- gerer drag and drop souris et tactile ;
+- placer au clic ou au toucher la syllabe dans le premier emplacement libre ;
 - valider les syllabes ;
 - ajouter feedback positif/negatif ;
 - calculer score ;
@@ -211,4 +211,3 @@ Ordre recommande :
 7. Deploiement GitHub Pages.
 
 Le risque principal n'est pas technique. Le risque principal est la qualite percue : assets incoherents, audio moyen, animations pauvres ou progression confuse. Il faut donc livrer peu de contenu au debut, mais avec un niveau de finition eleve.
-

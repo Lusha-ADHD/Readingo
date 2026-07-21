@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties, PointerEvent as ReactPointerEvent, TouchEvent as ReactTouchEvent } from "react";
+import type { CSSProperties } from "react";
 import syllableEntries from "../../content/fr/syllables.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import words from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
 import { AudioButton } from "../ui/AudioButton";
-import { DropSlot } from "../ui/DropSlot";
+import { SyllableSlot } from "../ui/SyllableSlot";
 import { GameButton } from "../ui/GameButton";
 import { ProgressBar } from "../ui/ProgressBar";
 import { RewardBurst } from "../ui/RewardBurst";
@@ -33,18 +33,6 @@ type WordChallenge = {
 type Tile = {
   id: string;
   text: string;
-};
-
-type DragState = {
-  tileId: string;
-  text: string;
-  inputId: number;
-  sourceElement: HTMLButtonElement;
-  startX: number;
-  startY: number;
-  x: number;
-  y: number;
-  isDragging: boolean;
 };
 
 type SavedProgress = {
@@ -95,7 +83,6 @@ type Journey = {
 };
 
 const STORAGE_KEY = "readingo:bateau:v2";
-const DRAG_THRESHOLD = 8;
 const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 const BOAT_ASSET_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_WITH_CHEST_ASSET_PATH = sitePath("/assets/world/IslandWithChest.png");
@@ -146,29 +133,6 @@ function shuffleSessionWords(previousOrder: WordChallenge[]) {
   }
 
   return shuffled;
-}
-
-function isIOSDevice() {
-  if (typeof navigator === "undefined") {
-    return false;
-  }
-
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
-}
-
-function findTouch(
-  touches: { length: number; item(index: number): { identifier: number; clientX: number; clientY: number } | null },
-  identifier: number,
-) {
-  for (let index = 0; index < touches.length; index += 1) {
-    const touch = touches.item(index);
-
-    if (touch?.identifier === identifier) {
-      return touch;
-    }
-  }
-
-  return null;
 }
 
 function shuffleTiles(challenge: WordChallenge): Tile[] {
@@ -356,9 +320,7 @@ export function BateauGame() {
   const [wordIndex, setWordIndex] = useState(0);
   const [placed, setPlaced] = useState<Array<Tile | null>>([]);
   const [usedTileIds, setUsedTileIds] = useState<string[]>([]);
-  const [selectedTileId, setSelectedTileId] = useState<string | null>(null);
   const [wrongTileId, setWrongTileId] = useState<string | null>(null);
-  const [activeSlot, setActiveSlot] = useState<number | null>(null);
   const [treasures, setTreasures] = useState(0);
   const [lastTreasuresFound, setLastTreasuresFound] = useState(0);
   const [mistakes, setMistakes] = useState(0);
@@ -369,11 +331,9 @@ export function BateauGame() {
   const [chestBursts, setChestBursts] = useState<number[]>([]);
   const [journey, setJourney] = useState<Journey | null>(null);
   const [progress, setProgress] = useState<SavedProgress>(() => getInitialProgress());
-  const dragStateRef = useRef<DragState | null>(null);
   const dialogRunRef = useRef(0);
   const chestBurstIdRef = useRef(0);
   const savedSessionRef = useRef(false);
-  const [, forceDragRender] = useState(0);
   const { playEffect, setTravelAudio, startAmbience } = useGameAudio();
   const { cancelVoice, playVoice } = useVoiceAudio();
 
@@ -385,9 +345,7 @@ export function BateauGame() {
   useEffect(() => {
     setPlaced(Array.from({ length: challenge.syllables.length }, () => null));
     setUsedTileIds([]);
-    setSelectedTileId(null);
     setWrongTileId(null);
-    setActiveSlot(null);
     setLastTreasuresFound(0);
     setMistakes(0);
     setIsCollectingChest(false);
@@ -456,12 +414,18 @@ export function BateauGame() {
   }
 
   async function startIntroDialog() {
-    startAmbience();
-    setSessionWords((currentOrder) => shuffleSessionWords(currentOrder));
     const runId = dialogRunRef.current + 1;
     dialogRunRef.current = runId;
     setPhase("dialog");
     setDialogLineIndex(0);
+    setSessionWords((currentOrder) => shuffleSessionWords(currentOrder));
+
+    try {
+      startAmbience();
+    } catch {
+      // Audio is optional: a browser restriction must not block the game.
+    }
+
     await playRecordedSequence(introLines, setDialogLineIndex, () => dialogRunRef.current === runId);
 
     if (dialogRunRef.current !== runId) {
@@ -500,7 +464,7 @@ export function BateauGame() {
     if (tile.text !== expected) {
       setMistakes((value) => value + 1);
       setWrongTileId(tileId);
-      void playEffect("drop").then(async () => {
+      void playEffect("place").then(async () => {
         const syllableResult = await playRecordedVoice(
           getChallengeSyllableAudioPath(challenge, tile.text),
           getChallengeSyllableSpeechText(challenge, tile.text),
@@ -518,8 +482,7 @@ export function BateauGame() {
     nextPlaced[slotIndex] = tile;
     setPlaced(nextPlaced);
     setUsedTileIds((value) => [...value, tileId]);
-    setSelectedTileId(null);
-    void playEffect("drop").then(async () => {
+    void playEffect("place").then(async () => {
       await playRecordedVoice(
         getChallengeSyllableAudioPath(challenge, tile.text),
         getPlacedSyllableSpeechText(challenge, tile, slotIndex),
@@ -588,197 +551,15 @@ export function BateauGame() {
     }, sailingDuration + nextJourney.treasuresFound * CHEST_COLLECT_PAUSE_MS + 260);
   }
 
-  function startDrag(tile: Tile, inputId: number, sourceElement: HTMLButtonElement, clientX: number, clientY: number) {
+  function handleTileClick(tileId: string) {
+    const firstEmptySlot = placed.findIndex((slot) => slot === null);
+
+    if (phase !== "playing" || usedTileIds.includes(tileId) || firstEmptySlot < 0) {
+      return;
+    }
+
     void playEffect("select");
-    dragStateRef.current = {
-      tileId: tile.id,
-      text: tile.text,
-      inputId,
-      sourceElement,
-      startX: clientX,
-      startY: clientY,
-      x: clientX,
-      y: clientY,
-      isDragging: false,
-    };
-    setSelectedTileId(tile.id);
-  }
-
-  function moveDrag(inputId: number, clientX: number, clientY: number) {
-    const currentDrag = dragStateRef.current;
-
-    if (!currentDrag || inputId !== currentDrag.inputId) {
-      return;
-    }
-
-    const movedDistance = Math.hypot(clientX - currentDrag.startX, clientY - currentDrag.startY);
-    const isDragging = currentDrag.isDragging || movedDistance >= DRAG_THRESHOLD;
-
-    dragStateRef.current = {
-      ...currentDrag,
-      x: clientX,
-      y: clientY,
-      isDragging,
-    };
-
-    if (isDragging) {
-      const element = document.elementFromPoint(clientX, clientY);
-      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
-      setActiveSlot(slot?.dataset.slotIndex != null ? Number(slot.dataset.slotIndex) : null);
-    }
-
-    forceDragRender((value) => value + 1);
-  }
-
-  function finishDrag(inputId: number, clientX: number, clientY: number, cancelled = false) {
-    const currentDrag = dragStateRef.current;
-
-    if (!currentDrag || inputId !== currentDrag.inputId) {
-      return null;
-    }
-
-    if (cancelled) {
-      setSelectedTileId(null);
-    } else {
-      const element = document.elementFromPoint(clientX, clientY);
-      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
-
-      if (currentDrag.isDragging && slot?.dataset.slotIndex != null) {
-        placeTile(currentDrag.tileId, Number(slot.dataset.slotIndex));
-      } else {
-        setSelectedTileId((current) => (current === currentDrag.tileId ? null : currentDrag.tileId));
-      }
-    }
-
-    dragStateRef.current = null;
-    setActiveSlot(null);
-    forceDragRender((value) => value + 1);
-    return currentDrag;
-  }
-
-  function handlePointerDown(tile: Tile, event: ReactPointerEvent<HTMLButtonElement>) {
-    if (phase !== "playing" || usedTileIds.includes(tile.id) || !event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) {
-      return;
-    }
-
-    if (event.pointerType === "touch" && isIOSDevice()) {
-      return;
-    }
-
-    event.preventDefault();
-    event.currentTarget.setPointerCapture(event.pointerId);
-    startDrag(tile, event.pointerId, event.currentTarget, event.clientX, event.clientY);
-
-    const handlePointerMove = (moveEvent: PointerEvent) => {
-      const currentDrag = dragStateRef.current;
-
-      if (!currentDrag || moveEvent.pointerId !== currentDrag.inputId) {
-        return;
-      }
-
-      moveEvent.preventDefault();
-      moveDrag(moveEvent.pointerId, moveEvent.clientX, moveEvent.clientY);
-    };
-
-    const cleanupDrag = (drag: DragState) => {
-      if (drag.sourceElement.hasPointerCapture(drag.inputId)) {
-        drag.sourceElement.releasePointerCapture(drag.inputId);
-      }
-
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
-      window.removeEventListener("pointercancel", handlePointerCancel);
-    };
-
-    const handlePointerUp = (upEvent: PointerEvent) => {
-      const currentDrag = dragStateRef.current;
-
-      if (!currentDrag || upEvent.pointerId !== currentDrag.inputId) {
-        return;
-      }
-
-      upEvent.preventDefault();
-      finishDrag(upEvent.pointerId, upEvent.clientX, upEvent.clientY);
-      cleanupDrag(currentDrag);
-    };
-
-    const handlePointerCancel = (cancelEvent: PointerEvent) => {
-      const currentDrag = dragStateRef.current;
-
-      if (!currentDrag || cancelEvent.pointerId !== currentDrag.inputId) {
-        return;
-      }
-
-      finishDrag(cancelEvent.pointerId, cancelEvent.clientX, cancelEvent.clientY, true);
-      cleanupDrag(currentDrag);
-    };
-
-    window.addEventListener("pointermove", handlePointerMove, { passive: false });
-    window.addEventListener("pointerup", handlePointerUp, { passive: false });
-    window.addEventListener("pointercancel", handlePointerCancel);
-  }
-
-  function handleTouchStart(tile: Tile, event: ReactTouchEvent<HTMLButtonElement>) {
-    if (!isIOSDevice() || phase !== "playing" || usedTileIds.includes(tile.id) || event.touches.length !== 1) {
-      return;
-    }
-
-    const touch = event.touches.item(0);
-
-    if (!touch) {
-      return;
-    }
-
-    event.preventDefault();
-    startDrag(tile, touch.identifier, event.currentTarget, touch.clientX, touch.clientY);
-
-    const touchId = touch.identifier;
-
-    const cleanupTouchListeners = () => {
-      window.removeEventListener("touchmove", handleNativeTouchMove);
-      window.removeEventListener("touchend", handleNativeTouchEnd);
-      window.removeEventListener("touchcancel", handleNativeTouchCancel);
-    };
-
-    const handleNativeTouchMove = (moveEvent: TouchEvent) => {
-      const movedTouch = findTouch(moveEvent.touches, touchId);
-
-      if (!movedTouch) {
-        return;
-      }
-
-      moveEvent.preventDefault();
-      moveDrag(touchId, movedTouch.clientX, movedTouch.clientY);
-    };
-
-    const handleNativeTouchEnd = (endEvent: TouchEvent) => {
-      const endedTouch = findTouch(endEvent.changedTouches, touchId);
-
-      if (!endedTouch) {
-        return;
-      }
-
-      endEvent.preventDefault();
-      finishDrag(touchId, endedTouch.clientX, endedTouch.clientY);
-      cleanupTouchListeners();
-    };
-
-    const handleNativeTouchCancel = (cancelEvent: TouchEvent) => {
-      const currentDrag = dragStateRef.current;
-
-      if (!currentDrag || currentDrag.inputId !== touchId) {
-        cleanupTouchListeners();
-        return;
-      }
-
-      const cancelledTouch = findTouch(cancelEvent.changedTouches, touchId);
-      finishDrag(touchId, cancelledTouch?.clientX ?? currentDrag.x, cancelledTouch?.clientY ?? currentDrag.y, true);
-      cleanupTouchListeners();
-    };
-
-    window.addEventListener("touchmove", handleNativeTouchMove, { passive: false });
-    window.addEventListener("touchend", handleNativeTouchEnd, { passive: false });
-    window.addEventListener("touchcancel", handleNativeTouchCancel);
+    placeTile(tileId, firstEmptySlot);
   }
 
   function restartSession() {
@@ -794,7 +575,6 @@ export function BateauGame() {
     setPhase("intro");
   }
 
-  const currentDrag = dragStateRef.current?.isDragging ? dragStateRef.current : null;
   const showGamePanel = phase === "playing" || phase === "validating";
   const showHud = phase === "playing" || phase === "validating" || phase === "sailing" || phase === "done";
   const visibleIslands = phase === "sailing" && journey ? journey.islands : buildSceneIslands(islandStartIndex, 2);
@@ -975,11 +755,9 @@ export function BateauGame() {
             </div>
             <div className="bateau-game__slots" aria-label="Emplacements des syllabes">
               {placed.map((slot, index) => (
-                <DropSlot
-                  active={activeSlot === index}
+                <SyllableSlot
                   index={index}
                   key={`${challenge.id}-slot-${index}`}
-                  onDropTile={placeTile}
                   value={slot?.text}
                 />
               ))}
@@ -991,9 +769,7 @@ export function BateauGame() {
               <div className="bateau-game__tile-wrap" key={tile.id}>
                 <SyllableTile
                   id={tile.id}
-                  onPointerDown={(event) => handlePointerDown(tile, event)}
-                  onTouchStart={(event) => handleTouchStart(tile, event)}
-                  selected={selectedTileId === tile.id}
+                  onClick={() => handleTileClick(tile.id)}
                   state={wrongTileId === tile.id ? "wrong" : "default"}
                   text={tile.text}
                   used={usedTileIds.includes(tile.id)}
@@ -1036,8 +812,6 @@ export function BateauGame() {
           </div>
         </div>
       ) : null}
-
-      {currentDrag ? <SyllableTile floating id={currentDrag.tileId} text={currentDrag.text} style={{ left: currentDrag.x, top: currentDrag.y }} /> : null}
     </section>
   );
 }

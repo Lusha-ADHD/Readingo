@@ -84,8 +84,8 @@ Note : "chaton" doit etre utilise sans accent pour designer le petit chat. La gr
 4. Une image apparait avec les emplacements de syllabes.
 5. L'enfant peut toucher le haut-parleur de l'image pour entendre le mot.
 6. L'enfant peut toucher le haut-parleur d'une syllabe pour l'entendre.
-7. L'enfant glisse les syllabes dans les emplacements.
-8. Le jeu valide chaque depot.
+7. L'enfant touche une syllabe pour la placer automatiquement dans le premier emplacement libre a gauche.
+8. Le jeu valide chaque placement.
 9. Si la syllabe est correcte, elle se fixe et le son de la syllabe est joue.
 10. Si la syllabe est incorrecte, son son est joue puis Pana dit "Essaie encore".
 11. Quand le mot est complet, le vent se leve.

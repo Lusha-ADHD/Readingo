@@ -142,12 +142,10 @@
   background: linear-gradient(180deg, #2c8df5, #0f62c9);
   box-shadow: 0 8px 0 rgba(8, 33, 74, 0.25);
   color: #ffffff;
-  cursor: grab;
+  cursor: pointer;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 950;
   line-height: 1;
-  touch-action: none;
-  -webkit-touch-callout: none;
   user-select: none;
   transition:
     transform 140ms ease,
@@ -155,14 +153,12 @@
     filter 140ms ease;
 }
 
-.syllable-tile:hover,
-.syllable-tile--selected {
+.syllable-tile:hover {
   filter: brightness(1.08);
   transform: translateY(-4px);
 }
 
 .syllable-tile:active {
-  cursor: grabbing;
   transform: translateY(2px) scale(0.98);
 }
 
@@ -183,16 +179,7 @@
   background: linear-gradient(180deg, #ff8274, #f24d41);
 }
 
-.syllable-tile--floating {
-  position: fixed;
-  z-index: 60;
-  width: 136px;
-  min-height: 72px;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(1.04);
-}
-
-.drop-slot {
+.syllable-slot {
   display: grid;
   min-height: 92px;
   place-items: center;
@@ -209,14 +196,7 @@
     transform 140ms ease;
 }
 
-.drop-slot--active {
-  border-color: var(--color-teal);
-  background: rgba(20, 197, 193, 0.16);
-  box-shadow: 0 0 0 6px rgba(20, 197, 193, 0.18);
-  transform: translateY(-2px);
-}
-
-.drop-slot--filled {
+.syllable-slot--filled {
   border-style: solid;
   border-color: var(--color-border);
   background: linear-gradient(180deg, #74de4a, #34ad33);

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { sitePath } from "../../utils/paths";
 
 type LoopName = "sea" | "wind" | "boat";
-type EffectName = "select" | "drop" | "chest" | "levelComplete";
+type EffectName = "select" | "place" | "chest" | "levelComplete";
 
 const LOOP_PATHS: Record<LoopName, string> = {
   sea: sitePath("/assets/audio/sfx/sea-loop.mp3"),
@@ -12,21 +12,21 @@ const LOOP_PATHS: Record<LoopName, string> = {
 
 const EFFECT_PATHS: Record<EffectName, string> = {
   select: sitePath("/assets/audio/sfx/syllable-select.mp3"),
-  drop: sitePath("/assets/audio/sfx/syllable-drop.mp3"),
+  place: sitePath("/assets/audio/sfx/syllable-drop.mp3"),
   chest: sitePath("/assets/audio/sfx/chest-collect.mp3"),
   levelComplete: sitePath("/assets/audio/sfx/level-complete.mp3"),
 };
 
 const EFFECT_VOLUMES: Record<EffectName, number> = {
   select: 0.28,
-  drop: 0.34,
+  place: 0.34,
   chest: 0.48,
   levelComplete: 0.52,
 };
 
 const EFFECT_MAX_WAIT: Record<EffectName, number> = {
   select: 500,
-  drop: 350,
+  place: 350,
   chest: 1500,
   levelComplete: 3200,
 };

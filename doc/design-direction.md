@@ -121,14 +121,14 @@ Les cartes doivent ressembler a des objets manipulables :
 - taille stable ;
 - ombre courte ;
 - bord epais ou contour clair ;
-- etat "selectionne" ;
+- etat "presse" ;
 - etat "correct" ;
 - etat "incorrect" ;
-- animation au drag.
+- animation courte au toucher et au placement.
 
-### Zones de Depot
+### Emplacements de Syllabes
 
-Les zones de depot doivent etre visibles avant l'action :
+Les emplacements doivent etre visibles avant l'action :
 
 - emplacement clair ;
 - contour pointille ou surface douce ;
