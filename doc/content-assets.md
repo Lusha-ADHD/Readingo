@@ -117,6 +117,26 @@ Regles :
 - articulation lente mais naturelle ;
 - pas de musique de fond dans le MVP.
 
+### Voix ElevenLabs
+
+Les dialogues, mots et syllabes sont pre-generes avec ElevenLabs puis heberges comme assets statiques. La cle API reste uniquement dans `.env.local` et ne doit jamais etre exposee dans le code client.
+
+La generation francaise utilise `ELEVENLABS_LANGUAGE_CODE=fr` avec `eleven_v3`. Le modele `eleven_multilingual_v2` ne doit pas etre utilise ici car son API ignore `language_code`, ce qui rend les syllabes tres courtes ambigues. Les graphies de generation peuvent differer du texte affiche, par exemple `tôt` pour garantir le son francais de `to` et `teau`.
+
+La generation se lance avec :
+
+```bash
+npm run audio:generate
+```
+
+Le script `scripts/generate-voices.mjs` lit `words.json`, `syllables.json` et `voice-lines.json`. Il conserve les clips existants par defaut. Pour regenerer tous les fichiers apres un changement de voix ou de reglages :
+
+```bash
+npm run audio:generate -- --force
+```
+
+Les variantes contextuelles utilisent un chemin propre au mot, par exemple `words/maison/son.mp3`, tandis que les distracteurs emploient la prononciation generique de la syllabe. Le navigateur utilise `speechSynthesis` uniquement comme solution de repli lorsqu'un MP3 ne peut pas etre lu.
+
 ### Bruitages du jeu Bateau
 
 Les bruitages sont heberges localement pour garantir leur lecture sur GitHub Pages. Ils proviennent de Pixabay et sont utilises selon la Pixabay Content License.

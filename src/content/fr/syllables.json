@@ -15,7 +15,7 @@
   { "id": "ri", "text": "ri", "speechText": "ri", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/ri.mp3" },
   { "id": "son", "text": "son", "speechText": "son", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/son.mp3" },
   { "id": "ta", "text": "ta", "speechText": "ta", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/ta.mp3" },
-  { "id": "teau", "text": "teau", "speechText": "to", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/teau.mp3" },
+  { "id": "teau", "text": "teau", "speechText": "tôt", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/teau.mp3" },
   { "id": "ti", "text": "ti", "speechText": "ti", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/ti.mp3" },
-  { "id": "to", "text": "to", "speechText": "to", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/to.mp3" }
+  { "id": "to", "text": "to", "speechText": "tôt", "locale": "fr-FR", "audio": "/assets/audio/fr/syllables/to.mp3" }
 ]

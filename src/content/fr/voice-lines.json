@@ -1,0 +1,31 @@
+{
+  "dialogue": {
+    "intro": [
+      {
+        "id": "intro-01",
+        "text": "Aide-moi à parcourir l'océan et à trouver le plus de trésors possibles.",
+        "audio": "/assets/audio/fr/dialogue/intro-01.mp3"
+      },
+      {
+        "id": "intro-02",
+        "text": "Associe les bonnes syllabes à chaque mot pour que le vent pousse notre bateau !",
+        "audio": "/assets/audio/fr/dialogue/intro-02.mp3"
+      },
+      {
+        "id": "intro-03",
+        "text": "Je compte sur toi !",
+        "audio": "/assets/audio/fr/dialogue/intro-03.mp3"
+      }
+    ]
+  },
+  "feedback": {
+    "tryAgain": {
+      "text": "Essaie encore !",
+      "audio": "/assets/audio/fr/feedback/essaie-encore.mp3"
+    },
+    "bravo": {
+      "text": "Bravo !",
+      "audio": "/assets/audio/fr/feedback/bravo.mp3"
+    }
+  }
+}

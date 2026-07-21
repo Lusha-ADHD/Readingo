@@ -22,7 +22,7 @@
     "word": "bateau",
     "displayWord": "bateau",
     "syllables": ["ba", "teau"],
-    "spokenSyllables": ["bah", "to"],
+    "spokenSyllables": ["bah", "tôt"],
     "distractors": ["cha", "mi"],
     "image": "/assets/images/fr/words/bateau.webp",
     "audioWord": "/assets/audio/fr/words/bateau.mp3",
@@ -39,7 +39,7 @@
     "word": "moto",
     "displayWord": "moto",
     "syllables": ["mo", "to"],
-    "spokenSyllables": ["mo", "to"],
+    "spokenSyllables": ["mo", "tôt"],
     "distractors": ["la", "ri"],
     "image": "/assets/images/fr/words/moto.webp",
     "audioWord": "/assets/audio/fr/words/moto.mp3",
@@ -113,7 +113,7 @@
     "audioWord": "/assets/audio/fr/words/panda.mp3",
     "audioSyllables": {
       "pan": "/assets/audio/fr/syllables/pan.mp3",
-      "da": "/assets/audio/fr/syllables/da.mp3"
+      "da": "/assets/audio/fr/words/panda/da.mp3"
     },
     "difficulty": 2,
     "tags": ["animal", "mot-bisyllabique"]
@@ -130,7 +130,7 @@
     "audioWord": "/assets/audio/fr/words/maison.mp3",
     "audioSyllables": {
       "mai": "/assets/audio/fr/syllables/mai.mp3",
-      "son": "/assets/audio/fr/syllables/son.mp3"
+      "son": "/assets/audio/fr/words/maison/son.mp3"
     },
     "difficulty": 3,
     "tags": ["objet", "mot-bisyllabique", "son-ai"]

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import syllableEntries from "../../content/fr/syllables.json";
+import voiceLinesData from "../../content/fr/voice-lines.json";
 import words from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
 import { AudioButton } from "../ui/AudioButton";
@@ -11,6 +12,8 @@ import { RewardBurst } from "../ui/RewardBurst";
 import { SyllableTile } from "../ui/SyllableTile";
 import { OceanCanvas } from "./OceanCanvas";
 import { useGameAudio } from "./gameAudio";
+import { useVoiceAudio } from "./useVoiceAudio";
+import type { VoicePlaybackResult } from "./useVoiceAudio";
 import "./BateauGame.css";
 
 type WordChallenge = {
@@ -21,6 +24,8 @@ type WordChallenge = {
   syllables: string[];
   spokenSyllables?: string[];
   distractors: string[];
+  audioWord: string;
+  audioSyllables: Partial<Record<string, string>>;
   difficulty: number;
   tags: string[];
 };
@@ -50,6 +55,17 @@ type SyllableEntry = {
   id: string;
   text: string;
   speechText?: string;
+  audio: string;
+};
+
+type VoiceLine = {
+  text: string;
+  audio: string;
+};
+
+type VoiceLines = {
+  dialogue: { intro: VoiceLine[] };
+  feedback: { tryAgain: VoiceLine; bravo: VoiceLine };
 };
 
 type GamePhase = "intro" | "dialog" | "playing" | "sailing" | "done";
@@ -110,12 +126,9 @@ const SCENE_CLOUDS = Array.from({ length: 18 }, (_, index) => ({
   delay: -1100 * (index % 7),
 }));
 const sessionWords = words as WordChallenge[];
-const syllableSpeechByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry.speechText ?? entry.text]));
-const introLines = [
-  "Aide-moi à parcourir l'océan et à trouver le plus de trésors possibles.",
-  "Associe les bonnes syllabes à chaque mot pour que le vent pousse notre bateau !",
-  "Je compte sur toi !",
-];
+const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry]));
+const voiceLines = voiceLinesData as VoiceLines;
+const introLines = voiceLines.dialogue.intro;
 
 function shuffleTiles(challenge: WordChallenge): Tile[] {
   return [...challenge.syllables, ...challenge.distractors]
@@ -160,32 +173,21 @@ function speak(text: string, options: { cancel?: boolean } = {}) {
   });
 }
 
-async function speakSequence(texts: string[], onLine?: (index: number) => void, shouldContinue = () => true) {
-  if (typeof window !== "undefined" && "speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
-  }
-
-  for (const [index, text] of texts.entries()) {
-    if (!shouldContinue()) {
-      return;
-    }
-
-    onLine?.(index);
-    await speak(text, { cancel: index === 0 });
-
-    if (!shouldContinue()) {
-      return;
-    }
-  }
+function getSyllableSpeechText(text: string) {
+  return syllableByText.get(text)?.speechText ?? text;
 }
 
-function getSyllableSpeechText(text: string) {
-  return syllableSpeechByText.get(text) ?? text;
+function getSyllableAudioPath(text: string) {
+  return syllableByText.get(text)?.audio;
 }
 
 function getChallengeSyllableSpeechText(challenge: WordChallenge, text: string) {
   const syllableIndex = challenge.syllables.indexOf(text);
   return syllableIndex >= 0 ? (challenge.spokenSyllables?.[syllableIndex] ?? getSyllableSpeechText(text)) : getSyllableSpeechText(text);
+}
+
+function getChallengeSyllableAudioPath(challenge: WordChallenge, text: string) {
+  return challenge.audioSyllables[text] ?? getSyllableAudioPath(text);
 }
 
 function getPlacedSyllableSpeechText(challenge: WordChallenge, tile: Tile, slotIndex: number) {
@@ -331,6 +333,7 @@ export function BateauGame() {
   const savedSessionRef = useRef(false);
   const [, forceDragRender] = useState(0);
   const { playEffect, setTravelAudio, startAmbience } = useGameAudio();
+  const { cancelVoice, playVoice } = useVoiceAudio();
 
   const challenge = sessionWords[wordIndex];
   const wordAtlasFrame = WORD_ATLAS_FRAMES[challenge.id];
@@ -376,13 +379,47 @@ export function BateauGame() {
     return tiles.find((tile) => tile.id === tileId);
   }
 
+  async function playRecordedVoice(audioPath: string | undefined, fallbackText: string): Promise<VoicePlaybackResult> {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    if (audioPath) {
+      const result = await playVoice(audioPath);
+
+      if (result !== "failed") {
+        return result;
+      }
+    }
+
+    await speak(fallbackText);
+    return "played";
+  }
+
+  async function playRecordedSequence(lines: VoiceLine[], onLine?: (index: number) => void, shouldContinue = () => true) {
+    cancelVoice();
+
+    for (const [index, line] of lines.entries()) {
+      if (!shouldContinue()) {
+        return;
+      }
+
+      onLine?.(index);
+      const result = await playRecordedVoice(line.audio, line.text);
+
+      if (result === "cancelled" || !shouldContinue()) {
+        return;
+      }
+    }
+  }
+
   async function startIntroDialog() {
     startAmbience();
     const runId = dialogRunRef.current + 1;
     dialogRunRef.current = runId;
     setPhase("dialog");
     setDialogLineIndex(0);
-    await speakSequence(introLines, setDialogLineIndex, () => dialogRunRef.current === runId);
+    await playRecordedSequence(introLines, setDialogLineIndex, () => dialogRunRef.current === runId);
 
     if (dialogRunRef.current !== runId) {
       return;
@@ -394,6 +431,7 @@ export function BateauGame() {
 
   function skipIntroDialog() {
     dialogRunRef.current += 1;
+    cancelVoice();
 
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
@@ -419,7 +457,16 @@ export function BateauGame() {
     if (tile.text !== expected) {
       setMistakes((value) => value + 1);
       setWrongTileId(tileId);
-      void playEffect("drop").then(() => speakSequence([getChallengeSyllableSpeechText(challenge, tile.text), "Essaie encore"]));
+      void playEffect("drop").then(async () => {
+        const syllableResult = await playRecordedVoice(
+          getChallengeSyllableAudioPath(challenge, tile.text),
+          getChallengeSyllableSpeechText(challenge, tile.text),
+        );
+
+        if (syllableResult !== "cancelled") {
+          await playRecordedVoice(voiceLines.feedback.tryAgain.audio, voiceLines.feedback.tryAgain.text);
+        }
+      });
       window.setTimeout(() => setWrongTileId(null), 320);
       return;
     }
@@ -430,7 +477,10 @@ export function BateauGame() {
     setUsedTileIds((value) => [...value, tileId]);
     setSelectedTileId(null);
     void playEffect("drop").then(async () => {
-      await speak(getPlacedSyllableSpeechText(challenge, tile, slotIndex));
+      await playRecordedVoice(
+        getChallengeSyllableAudioPath(challenge, tile.text),
+        getPlacedSyllableSpeechText(challenge, tile, slotIndex),
+      );
 
       if (nextPlaced.every(Boolean)) {
         finishWord();
@@ -558,6 +608,7 @@ export function BateauGame() {
   }
 
   function restartSession() {
+    cancelVoice();
     savedSessionRef.current = false;
     setWordIndex(0);
     setTreasures(0);
@@ -696,7 +747,7 @@ export function BateauGame() {
         <div className="bateau-game__intro bateau-game__intro--dialog">
           <PanaMascot />
           <div className="bateau-game__speech" aria-live="polite">
-            {introLines[dialogLineIndex]}
+            {introLines[dialogLineIndex].text}
           </div>
           <GameButton onClick={skipIntroDialog} variant="secondary">
             Passer
@@ -733,7 +784,11 @@ export function BateauGame() {
               ) : (
                 <span className="bateau-game__picture-fallback" />
               )}
-              <AudioButton className="bateau-game__audio" label={`Ecouter ${challenge.displayWord}`} onClick={() => void speak(challenge.displayWord)} />
+              <AudioButton
+                className="bateau-game__audio"
+                label={`Ecouter ${challenge.displayWord}`}
+                onClick={() => void playRecordedVoice(challenge.audioWord, challenge.displayWord)}
+              />
             </div>
           </div>
 
@@ -771,7 +826,12 @@ export function BateauGame() {
                 <AudioButton
                   className="bateau-game__tile-audio"
                   label={`Ecouter ${tile.text}`}
-                  onClick={() => void speak(getChallengeSyllableSpeechText(challenge, tile.text))}
+                  onClick={() =>
+                    void playRecordedVoice(
+                      getChallengeSyllableAudioPath(challenge, tile.text),
+                      getChallengeSyllableSpeechText(challenge, tile.text),
+                    )
+                  }
                 />
               </div>
             ))}
@@ -791,7 +851,10 @@ export function BateauGame() {
               <GameButton onClick={restartSession} variant="success">
                 Rejouer
               </GameButton>
-              <GameButton onClick={() => void speak("Bravo")} variant="secondary">
+              <GameButton
+                onClick={() => void playRecordedVoice(voiceLines.feedback.bravo.audio, voiceLines.feedback.bravo.text)}
+                variant="secondary"
+              >
                 Ecouter bravo
               </GameButton>
             </div>
