@@ -686,6 +686,7 @@
 .bateau-game__tile-wrap {
   display: grid;
   position: relative;
+  touch-action: none;
 }
 
 .bateau-game__tile-audio {

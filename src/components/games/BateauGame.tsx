@@ -38,6 +38,8 @@ type Tile = {
 type DragState = {
   tileId: string;
   text: string;
+  pointerId: number;
+  sourceElement: HTMLButtonElement;
   startX: number;
   startY: number;
   x: number;
@@ -564,15 +566,18 @@ export function BateauGame() {
   }
 
   function handlePointerDown(tile: Tile, event: ReactPointerEvent<HTMLButtonElement>) {
-    if (phase !== "playing" || usedTileIds.includes(tile.id)) {
+    if (phase !== "playing" || usedTileIds.includes(tile.id) || !event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) {
       return;
     }
 
     event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
     void playEffect("select");
     dragStateRef.current = {
       tileId: tile.id,
       text: tile.text,
+      pointerId: event.pointerId,
+      sourceElement: event.currentTarget,
       startX: event.clientX,
       startY: event.clientY,
       x: event.clientX,
@@ -584,10 +589,11 @@ export function BateauGame() {
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const currentDrag = dragStateRef.current;
 
-      if (!currentDrag) {
+      if (!currentDrag || moveEvent.pointerId !== currentDrag.pointerId) {
         return;
       }
 
+      moveEvent.preventDefault();
       const movedDistance = Math.hypot(moveEvent.clientX - currentDrag.startX, moveEvent.clientY - currentDrag.startY);
       const isDragging = currentDrag.isDragging || movedDistance >= DRAG_THRESHOLD;
 
@@ -607,15 +613,9 @@ export function BateauGame() {
       forceDragRender((value) => value + 1);
     };
 
-    const handlePointerUp = (upEvent: PointerEvent) => {
-      const currentDrag = dragStateRef.current;
-      const element = document.elementFromPoint(upEvent.clientX, upEvent.clientY);
-      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
-
-      if (currentDrag?.isDragging && slot?.dataset.slotIndex != null) {
-        placeTile(currentDrag.tileId, Number(slot.dataset.slotIndex));
-      } else if (currentDrag) {
-        setSelectedTileId((current) => (current === currentDrag.tileId ? null : currentDrag.tileId));
+    const cleanupDrag = (drag: DragState) => {
+      if (drag.sourceElement.hasPointerCapture(drag.pointerId)) {
+        drag.sourceElement.releasePointerCapture(drag.pointerId);
       }
 
       dragStateRef.current = null;
@@ -623,10 +623,43 @@ export function BateauGame() {
       forceDragRender((value) => value + 1);
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerCancel);
     };
 
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", handlePointerUp, { once: true });
+    const handlePointerUp = (upEvent: PointerEvent) => {
+      const currentDrag = dragStateRef.current;
+
+      if (!currentDrag || upEvent.pointerId !== currentDrag.pointerId) {
+        return;
+      }
+
+      upEvent.preventDefault();
+      const element = document.elementFromPoint(upEvent.clientX, upEvent.clientY);
+      const slot = element?.closest("[data-slot-index]") as HTMLElement | null;
+
+      if (currentDrag.isDragging && slot?.dataset.slotIndex != null) {
+        placeTile(currentDrag.tileId, Number(slot.dataset.slotIndex));
+      } else {
+        setSelectedTileId((current) => (current === currentDrag.tileId ? null : currentDrag.tileId));
+      }
+
+      cleanupDrag(currentDrag);
+    };
+
+    const handlePointerCancel = (cancelEvent: PointerEvent) => {
+      const currentDrag = dragStateRef.current;
+
+      if (!currentDrag || cancelEvent.pointerId !== currentDrag.pointerId) {
+        return;
+      }
+
+      setSelectedTileId(null);
+      cleanupDrag(currentDrag);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: false });
+    window.addEventListener("pointerup", handlePointerUp, { passive: false });
+    window.addEventListener("pointercancel", handlePointerCancel);
   }
 
   function restartSession() {

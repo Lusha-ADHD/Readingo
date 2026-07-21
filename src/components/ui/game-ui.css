@@ -147,6 +147,7 @@
   font-weight: 950;
   line-height: 1;
   touch-action: none;
+  -webkit-touch-callout: none;
   user-select: none;
   transition:
     transform 140ms ease,
