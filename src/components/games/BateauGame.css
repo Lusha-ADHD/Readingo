@@ -1,0 +1,910 @@
+.bateau-game {
+  --horizon-height: 158px;
+  position: relative;
+  overflow: hidden;
+  border: 4px solid var(--color-border);
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, #8f71e8 0, #b47dec 92px, #d195ee var(--horizon-height), #48b2e3 calc(var(--horizon-height) + 1px), #0753a7 100%);
+  box-shadow: var(--shadow-raised);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.bateau-game *,
+.bateau-game *::before,
+.bateau-game *::after {
+  -webkit-user-drag: none;
+}
+
+.bateau-game__hud {
+  display: block;
+  position: absolute;
+  z-index: 8;
+  top: 14px;
+  right: 14px;
+  left: 14px;
+  max-width: 540px;
+  margin-inline: auto;
+}
+
+.bateau-game__ocean {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bateau-game__world {
+  position: relative;
+  z-index: 1;
+  min-height: 330px;
+  overflow: hidden;
+}
+
+.bateau-game--intro .bateau-game__world,
+.bateau-game--dialog .bateau-game__world {
+  min-height: 640px;
+}
+
+.bateau-game__cloud-track {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  transform: translateX(var(--cloud-start-distance));
+  pointer-events: none;
+}
+
+.bateau-game__cloud-track--sailing {
+  animation: cloud-track-sail var(--cloud-sailing-duration) linear forwards;
+}
+
+.bateau-game--collecting .bateau-game__cloud-track--sailing {
+  animation-play-state: paused;
+}
+
+.bateau-game__cloud {
+  position: absolute;
+  width: 92px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(255, 248, 255, 0.84);
+  box-shadow:
+    inset 0 -5px 0 rgba(167, 122, 222, 0.13),
+    0 6px 0 rgba(87, 62, 170, 0.08);
+  animation: cloud-drift var(--cloud-drift-duration) ease-in-out var(--cloud-drift-delay) infinite alternate;
+}
+
+.bateau-game__cloud::before,
+.bateau-game__cloud::after {
+  position: absolute;
+  bottom: 5px;
+  border-radius: 50% 50% 42% 42%;
+  background: inherit;
+  content: "";
+}
+
+.bateau-game__cloud::before {
+  left: 16px;
+  width: 36px;
+  height: 36px;
+}
+
+.bateau-game__cloud::after {
+  right: 14px;
+  width: 48px;
+  height: 48px;
+}
+
+.bateau-game__island {
+  position: absolute;
+  top: 110px;
+  left: var(--island-left-desktop);
+  width: 176px;
+  height: 126px;
+}
+
+.bateau-game__island-track {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  --sailing-distance: var(--sailing-distance-desktop);
+  transform: translateX(0);
+}
+
+.bateau-game__island-track--sailing {
+  animation: island-track-sail var(--sailing-duration) linear forwards;
+}
+
+.bateau-game--collecting .bateau-game__island-track--sailing {
+  animation-play-state: paused;
+}
+
+.bateau-game__island-asset {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.bateau-game__island--small {
+  top: 128px;
+  width: 132px;
+  height: 94px;
+}
+
+.bateau-game__island--large {
+  top: 110px;
+  width: 176px;
+  height: 126px;
+}
+
+.bateau-game__boat {
+  position: absolute;
+  z-index: 5;
+  bottom: 58px;
+  left: calc(50% - 69px);
+  width: 138px;
+  height: 66px;
+  animation: boat-bob 1900ms ease-in-out infinite;
+}
+
+.bateau-game__boat-asset {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  width: 196px;
+  max-width: none;
+  opacity: 1;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity 160ms ease;
+}
+
+.bateau-game--collecting .bateau-game__boat-asset {
+  animation: boat-collect-pop 620ms cubic-bezier(0.17, 0.9, 0.25, 1.2) both;
+}
+
+.bateau-game__boat-fallback {
+  position: absolute;
+  inset: 0;
+  border: 4px solid var(--color-border);
+  border-radius: 18px 18px 50px 50px;
+  background: linear-gradient(180deg, #bd6b2f, #783b20);
+  box-shadow: 0 10px 0 rgba(8, 33, 74, 0.2);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.bateau-game__boat--asset-failed .bateau-game__boat-fallback {
+  opacity: 1;
+}
+
+.bateau-game__sail {
+  position: absolute;
+  left: 50px;
+  bottom: 44px;
+  width: 48px;
+  height: 86px;
+  border: 4px solid var(--color-border);
+  border-radius: 6px 34px 6px 6px;
+  background: linear-gradient(90deg, #ffffff 0 54%, #2677e9 54% 100%);
+}
+
+.bateau-game__wind {
+  position: absolute;
+  z-index: 3;
+  top: var(--wind-top);
+  right: -110px;
+  width: var(--wind-width);
+  height: 6px;
+  border-radius: 999px;
+  animation: wind-streak var(--wind-duration) linear infinite;
+  animation-delay: var(--wind-delay);
+  background: rgba(238, 251, 255, 0.84);
+  box-shadow: 0 0 10px rgba(226, 248, 255, 0.42);
+}
+
+.bateau-game--collecting .bateau-game__wind {
+  animation-play-state: paused;
+  opacity: 0.42;
+}
+
+.bateau-game__collect-burst {
+  display: grid;
+  position: absolute;
+  z-index: 7;
+  right: calc(50% - 114px);
+  bottom: 126px;
+  width: 92px;
+  height: 92px;
+  place-items: center;
+  pointer-events: none;
+  animation: chest-collect-burst 980ms cubic-bezier(0.17, 0.9, 0.25, 1.14) both;
+}
+
+.bateau-game__collect-burst::before {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: rgba(255, 221, 72, 0.34);
+  box-shadow:
+    0 0 0 10px rgba(255, 255, 255, 0.22),
+    0 0 32px rgba(255, 221, 72, 0.48);
+  content: "";
+}
+
+.bateau-game__collect-burst img {
+  position: relative;
+  z-index: 2;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 0 rgba(8, 33, 74, 0.2));
+}
+
+.bateau-game__collect-burst strong {
+  position: absolute;
+  z-index: 3;
+  right: -2px;
+  bottom: 2px;
+  border: 3px solid var(--color-border);
+  border-radius: 999px;
+  background: #ffffff;
+  padding: 4px 8px;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  line-height: 1;
+  box-shadow: 0 4px 0 rgba(8, 33, 74, 0.18);
+}
+
+.bateau-game__collect-spark {
+  position: absolute;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  clip-path: polygon(50% 0, 62% 34%, 100% 50%, 62% 66%, 50% 100%, 38% 66%, 0 50%, 38% 34%);
+}
+
+.bateau-game__collect-spark--one {
+  top: 4px;
+  left: 14px;
+  animation: collect-spark-one 780ms ease both;
+}
+
+.bateau-game__collect-spark--two {
+  right: 8px;
+  bottom: 22px;
+  animation: collect-spark-two 780ms 80ms ease both;
+}
+
+.bateau-game__intro {
+  display: grid;
+  position: absolute;
+  z-index: 9;
+  top: 120px;
+  right: 18px;
+  left: 18px;
+  justify-items: center;
+  gap: 22px;
+}
+
+.bateau-game__intro--dialog {
+  top: 82px;
+}
+
+.bateau-game__speech {
+  max-width: min(600px, calc(100% - 24px));
+  border: 4px solid var(--color-border);
+  border-radius: 24px;
+  background: var(--color-panel-light);
+  padding: 18px 22px;
+  box-shadow: 0 9px 0 rgba(8, 33, 74, 0.2);
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  font-weight: 900;
+  text-align: center;
+}
+
+.pana {
+  position: relative;
+  width: 210px;
+  height: 232px;
+  filter: drop-shadow(0 12px 0 rgba(8, 33, 74, 0.16));
+}
+
+.pana--compact {
+  width: 74px;
+  height: 82px;
+}
+
+.pana__asset {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.pana__fallback {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.pana--asset-failed .pana__fallback {
+  opacity: 1;
+}
+
+.pana__head {
+  position: absolute;
+  right: 12px;
+  bottom: 22px;
+  left: 12px;
+  height: 150px;
+  border: 4px solid var(--color-border);
+  border-radius: 44% 44% 48% 48%;
+  background: linear-gradient(135deg, #ff7a42, #ff4f37);
+}
+
+.pana--compact .pana__head {
+  right: 4px;
+  bottom: 8px;
+  left: 4px;
+  height: 52px;
+  border-width: 2px;
+}
+
+.pana__ear {
+  position: absolute;
+  top: 28px;
+  width: 44px;
+  height: 54px;
+  border: 4px solid var(--color-border);
+  background: #ff6a3d;
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+.pana__ear--left {
+  left: -18px;
+  transform: rotate(-28deg);
+}
+
+.pana__ear--right {
+  right: -18px;
+  transform: rotate(28deg);
+}
+
+.pana--compact .pana__ear {
+  top: 10px;
+  width: 16px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.pana__hat {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 10px;
+  left: 10px;
+  height: 86px;
+  border: 4px solid #4c4436;
+  border-radius: 18px 18px 34px 34px;
+  background: #111a24;
+  clip-path: polygon(7% 48%, 28% 34%, 35% 6%, 50% 30%, 66% 6%, 72% 34%, 94% 48%, 76% 70%, 24% 70%);
+}
+
+.pana--compact .pana__hat {
+  top: 0;
+  right: 3px;
+  left: 3px;
+  height: 30px;
+  border-width: 2px;
+}
+
+.pana__patch {
+  position: absolute;
+  top: 48px;
+  left: 52px;
+  z-index: 3;
+  width: 52px;
+  height: 42px;
+  border: 4px solid #5d4637;
+  border-radius: 48%;
+  background: #3c302a;
+}
+
+.pana--compact .pana__patch {
+  top: 18px;
+  left: 18px;
+  width: 18px;
+  height: 15px;
+  border-width: 2px;
+}
+
+.pana__eye {
+  position: absolute;
+  top: 58px;
+  right: 50px;
+  width: 30px;
+  height: 30px;
+  border: 4px solid var(--color-border);
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.pana__eye::after {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-border);
+  content: "";
+}
+
+.pana--compact .pana__eye {
+  top: 20px;
+  right: 16px;
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+}
+
+.pana__muzzle {
+  position: absolute;
+  right: 44px;
+  bottom: 20px;
+  left: 44px;
+  height: 50px;
+  border-radius: 48%;
+  background: #ffffff;
+}
+
+.pana__muzzle::before {
+  position: absolute;
+  top: 8px;
+  left: calc(50% - 10px);
+  width: 20px;
+  height: 16px;
+  border-radius: 46%;
+  background: var(--color-border);
+  content: "";
+}
+
+.pana--compact .pana__muzzle {
+  right: 16px;
+  bottom: 8px;
+  left: 16px;
+  height: 18px;
+}
+
+.pana__scarf {
+  position: absolute;
+  right: 42px;
+  bottom: 4px;
+  left: 42px;
+  height: 42px;
+  border: 4px solid var(--color-border);
+  border-radius: 0 0 18px 18px;
+  background: repeating-linear-gradient(0deg, #ffffff 0 10px, #cf2f30 10px 20px);
+}
+
+.pana--compact .pana__scarf {
+  right: 16px;
+  bottom: 0;
+  left: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.bateau-game__sailing-status {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.bateau-game__sailing-panel {
+  display: flex;
+  position: relative;
+  z-index: 2;
+  min-height: 318px;
+  align-items: flex-end;
+  justify-content: center;
+  margin: -26px 18px 18px;
+  padding: 22px;
+  border: 4px solid transparent;
+}
+
+.bateau-game__sailing-status > div:last-child {
+  display: grid;
+  gap: 4px;
+  min-width: min(460px, 70%);
+  border: 4px solid var(--color-border);
+  border-radius: 22px;
+  background: var(--color-panel-light);
+  padding: 14px 18px;
+  box-shadow: 0 8px 0 rgba(8, 33, 74, 0.2);
+}
+
+.bateau-game__sailing-status strong {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.bateau-game__sailing-status span {
+  color: var(--color-muted);
+  font-weight: 900;
+}
+
+.bateau-game__panel {
+  display: grid;
+  position: relative;
+  z-index: 2;
+  grid-template-columns: minmax(190px, 0.72fr) 1fr;
+  gap: 22px;
+  margin: -26px 18px 18px;
+  padding: 22px;
+  border: 4px solid var(--color-blue-dark);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(255, 196, 47, 0.16), transparent 7rem),
+    var(--color-panel);
+  box-shadow: 0 10px 0 rgba(8, 33, 74, 0.22);
+}
+
+.bateau-game__panel--end {
+  grid-template-columns: 1fr;
+}
+
+.bateau-game__image-card {
+  position: relative;
+  display: grid;
+  width: min(360px, 100%);
+  min-height: 190px;
+  place-items: center;
+  justify-self: center;
+}
+
+.bateau-game__picture {
+  position: relative;
+  display: grid;
+  width: min(152px, 68%);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 4px solid var(--color-border);
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 7px 0 rgba(8, 33, 74, 0.16);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.bateau-game__word-frame {
+  display: grid;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 21px;
+  place-items: center;
+}
+
+.bateau-game__word-atlas-viewport {
+  display: block;
+  position: relative;
+  width: 118%;
+  aspect-ratio: 11 / 8;
+  overflow: hidden;
+}
+
+.bateau-game__word-atlas {
+  position: absolute;
+  top: var(--word-atlas-top);
+  left: var(--word-atlas-left);
+  width: var(--word-atlas-width);
+  height: var(--word-atlas-height);
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.bateau-game__picture-fallback {
+  display: block;
+  width: 64%;
+  aspect-ratio: 1;
+  border: 4px solid var(--color-border);
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--color-teal), var(--color-gold));
+  box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
+}
+
+.bateau-game__audio {
+  position: absolute;
+  z-index: 12;
+  top: -10px;
+  right: -10px;
+  width: 40px;
+  height: 40px;
+  border-width: 2px;
+  border-radius: 13px;
+  pointer-events: auto;
+}
+
+.bateau-game__audio .audio-button__icon {
+  width: 26px;
+  height: 26px;
+}
+
+.bateau-game__challenge {
+  min-width: 0;
+}
+
+.bateau-game__challenge-header {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bateau-game__eyebrow {
+  margin: 0;
+  color: var(--color-muted);
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.bateau-game__slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(100px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.bateau-game__syllables {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.bateau-game__tile-wrap {
+  display: grid;
+  position: relative;
+}
+
+.bateau-game__tile-audio {
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  width: 34px;
+  height: 34px;
+  border-width: 2px;
+  border-radius: 12px;
+}
+
+.bateau-game__tile-audio .audio-button__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.bateau-game__end {
+  display: grid;
+  grid-column: 1 / -1;
+  min-height: 360px;
+  place-items: center;
+  align-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.bateau-game__end h2 {
+  margin: 0;
+  font-size: clamp(2.8rem, 8vw, 5.2rem);
+  line-height: 1;
+}
+
+.bateau-game__end p {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.2rem;
+  font-weight: 850;
+}
+
+.bateau-game__end-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+@keyframes boat-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes boat-collect-pop {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1) rotate(0deg);
+  }
+
+  32% {
+    transform: translateX(-50%) scale(1.16) rotate(-4deg);
+  }
+
+  58% {
+    transform: translateX(-50%) scale(1.08) rotate(3deg);
+  }
+}
+
+@keyframes island-track-sail {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(var(--sailing-distance));
+  }
+}
+
+@keyframes cloud-track-sail {
+  0% {
+    transform: translateX(var(--cloud-start-distance));
+  }
+
+  100% {
+    transform: translateX(var(--cloud-end-distance));
+  }
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translate3d(16px, 0, 0) scale(var(--cloud-scale));
+  }
+
+  100% {
+    transform: translate3d(-22px, 3px, 0) scale(var(--cloud-scale));
+  }
+}
+
+@keyframes chest-collect-burst {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.42) rotate(-8deg);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.16) rotate(4deg);
+  }
+
+  62% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-46px) scale(0.9) rotate(8deg);
+  }
+}
+
+@keyframes collect-spark-one {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+
+  38% {
+    opacity: 1;
+    transform: translate(-16px, -12px) scale(1.25);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-28px, -22px) scale(0.7);
+  }
+}
+
+@keyframes collect-spark-two {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+
+  38% {
+    opacity: 1;
+    transform: translate(18px, 8px) scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(32px, 16px) scale(0.7);
+  }
+}
+
+@keyframes wind-streak {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-120vw);
+  }
+}
+
+@media (max-width: 700px) {
+  .bateau-game {
+    border-radius: 0;
+    border-inline: 0;
+  }
+
+  .bateau-game__world {
+    min-height: 340px;
+  }
+
+  .bateau-game--intro .bateau-game__world,
+  .bateau-game--dialog .bateau-game__world {
+    min-height: 620px;
+  }
+
+  .bateau-game__island-track {
+    --sailing-distance: var(--sailing-distance-mobile);
+  }
+
+  .bateau-game__island {
+    left: var(--island-left-mobile);
+  }
+
+  .bateau-game__boat {
+    left: calc(50% - 69px);
+  }
+
+  .pana {
+    width: 176px;
+    height: 198px;
+  }
+
+  .bateau-game__panel {
+    grid-template-columns: 1fr;
+    margin-inline: 12px;
+    padding: 16px;
+  }
+
+  .bateau-game__image-card {
+    min-height: 160px;
+  }
+
+  .bateau-game__syllables {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

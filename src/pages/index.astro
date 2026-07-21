@@ -1,0 +1,184 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { BateauGame } from "@components/games/BateauGame";
+import GameCard from "@components/ui/GameCard.astro";
+import { sitePath } from "../utils/paths";
+---
+
+<BaseLayout
+  title="Readingo - Apprendre a lire en jouant"
+  description="Explore l'Archipel des mots avec des mini-jeux gratuits pour apprendre les lettres, les syllabes et les mots."
+>
+  <main>
+    <section class="hero page-shell">
+      <div class="hero__copy">
+        <p class="hero__kicker">L'Archipel des mots</p>
+        <h1>Apprendre a lire en jouant</h1>
+        <p>
+          Des mini-jeux gratuits pour les 5-7 ans : lettres, syllabes, mots et
+          coffres a ouvrir a chaque progres.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--primary" href={sitePath("/jeux/bateau/")}>Jouer maintenant</a>
+          <a class="button button--secondary" href="#jeux">Voir les jeux</a>
+        </div>
+      </div>
+      <BateauGame client:load />
+    </section>
+
+    <section id="jeux" class="games page-shell" aria-labelledby="games-title">
+      <div class="section-heading">
+        <p>Premieres escales</p>
+        <h2 id="games-title">Choisir un jeu</h2>
+      </div>
+      <div class="games__grid">
+        <GameCard title="Lettres" description="Reconnaitre les lettres et leurs sons." href="/jeux/lettres/" variant="blue" />
+        <GameCard title="Syllabes" description="Assembler les syllabes pour former des mots." href="/jeux/bateau/" variant="green" />
+        <GameCard title="Mots" description="Lire et comprendre des mots simples." href="/jeux/syllabes/" variant="purple" />
+      </div>
+    </section>
+
+    <section class="resources page-shell" aria-labelledby="resources-title">
+      <div class="section-heading">
+        <p>Ressources</p>
+        <h2 id="resources-title">Pour accompagner la lecture</h2>
+      </div>
+      <div class="resources__grid">
+        <a href={sitePath("/apprendre-a-lire/")}>Lecture CP</a>
+        <a href={sitePath("/apprendre-les-lettres/")}>Grande section</a>
+        <a href={sitePath("/apprendre-les-syllabes/")}>Vacances</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(520px, 1.24fr);
+    gap: 40px;
+    align-items: center;
+    padding-block: 54px 36px;
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: 22px;
+  }
+
+  .hero__kicker,
+  .section-heading p {
+    margin: 0;
+    color: var(--color-blue-dark);
+    font-weight: 950;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2 {
+    margin: 0;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  h1 {
+    max-width: 11ch;
+    font-size: clamp(3.4rem, 7vw, 6.5rem);
+  }
+
+  h2 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+  }
+
+  .hero p:not(.hero__kicker) {
+    max-width: 36rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: clamp(1.1rem, 2.1vw, 1.35rem);
+    font-weight: 750;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--color-border);
+    border-radius: 18px;
+    box-shadow: 0 7px 0 rgba(8, 33, 74, 0.18);
+    font-weight: 950;
+  }
+
+  .button--primary {
+    min-width: 210px;
+    background: linear-gradient(180deg, var(--color-gold), var(--color-orange));
+    color: var(--color-text);
+  }
+
+  .button--secondary {
+    min-width: 160px;
+    background: #ffffff;
+    color: var(--color-blue-dark);
+  }
+
+  .games,
+  .resources {
+    padding-block: 32px;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .games__grid,
+  .resources__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .resources__grid a {
+    display: flex;
+    min-height: 96px;
+    align-items: center;
+    padding: 22px;
+    border: 3px solid rgba(8, 33, 74, 0.18);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--color-text);
+    font-size: 1.35rem;
+    font-weight: 900;
+  }
+
+  @media (max-width: 1000px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hero {
+      width: 100%;
+      padding-top: 28px;
+    }
+
+    .hero__copy {
+      width: min(var(--content-width), calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .games__grid,
+    .resources__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

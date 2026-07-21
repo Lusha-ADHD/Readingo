@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Readingo">
+  <rect width="64" height="64" rx="16" fill="#1167d8"/>
+  <path d="M15 16c10 0 17 5 17 15v18c-5-6-10-8-17-8V16z" fill="#fffaf0"/>
+  <path d="M49 16c-10 0-17 5-17 15v18c5-6 10-8 17-8V16z" fill="#ffc42f"/>
+  <path d="M32 13v39" stroke="#08214a" stroke-width="4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "bateau",
+    "title": "Bateau",
+    "description": "Composer des mots avec des syllabes pour rejoindre le coffre.",
+    "skills": ["syllabes", "mots"]
+  },
+  {
+    "id": "lettres",
+    "title": "Lettres",
+    "description": "Reconnaitre les lettres et leurs sons.",
+    "skills": ["lettres", "sons"]
+  }
+]

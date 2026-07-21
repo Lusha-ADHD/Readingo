@@ -4,7 +4,9 @@
 
 Readingo doit donner l'impression d'une application educative premium : simple, coloree, animee, chaleureuse et solide. Le rendu ne doit pas faire cheap, generique ou bricolage.
 
-La reference d'esprit est Duolingo : immediatete, lisibilite, recompense, rythme, humour leger. Il ne faut pas copier son style graphique, mais viser le meme niveau de clarte et de polish.
+Le territoire principal est l'Archipel des mots : un ocean fantastique, des iles, un bateau, du vent, des coffres et des tresors. La reference d'esprit reste l'immediatete et le polish d'applications comme Duolingo ou Lingokids, mais l'identite visuelle doit venir du voyage en bateau et de la chasse aux tresors.
+
+Pana est le personnage accompagnateur. Il introduit l'aventure, rassure l'enfant et donne les consignes importantes. Il doit etre present comme compagnon de voyage, pas comme mascotte envahissante.
 
 ## Mots-Cles
 
@@ -16,6 +18,9 @@ La reference d'esprit est Duolingo : immediatete, lisibilite, recompense, rythme
 - premium
 - progressif
 - rassurant
+- aventure
+- tresor
+- ocean
 
 ## Palette
 
@@ -42,7 +47,43 @@ Proposition de tokens :
 }
 ```
 
-Le fond peut etre legerement chaud, mais les zones interactives doivent rester tres lisibles.
+Le fond peut etre legerement chaud pour les pages editoriales. Les ecrans de jeu utilisent plutot une mer violette/bleue tres saturee, des iles colorees et des panneaux clairs pour la lecture. Les zones interactives doivent rester tres lisibles.
+
+## Univers Archipel
+
+Le jeu doit donner l'impression que l'enfant avance physiquement dans un monde.
+
+Elements recurrents :
+
+- mer violette/bleue avec reflets simples ;
+- bateau au centre de l'action ;
+- iles qui defilent de droite a gauche ;
+- coffres sur certaines iles ;
+- cartes, coquillages, boussoles, voiles et fanions ;
+- particules de vent pour montrer la vitesse.
+
+Le bateau reste stable au centre pendant les sequences de navigation. Le mouvement est donne par les iles et les particules qui defilent. Cette convention rend l'action plus lisible sur mobile.
+
+## Pana
+
+Pana est un compagnon pirate bienveillant. Il accompagne l'enfant au debut de la session puis ponctuellement lors des moments importants.
+
+Regles visuelles :
+
+- silhouette tres lisible ;
+- regard expressif ;
+- chapeau pirate sans signes agressifs ;
+- pas d'armes ;
+- pas de cranes ;
+- couleurs chaudes pour contraster avec la mer violette ;
+- utilisation en grand dans l'introduction, en plus petit pendant le jeu.
+
+Regles UX :
+
+- Pana parle apres une action utilisateur, jamais automatiquement au chargement ;
+- les textes de Pana doivent etre courts ;
+- quand Pana parle, le jeu attend la fin du dialogue avant de commencer ;
+- l'enfant doit pouvoir comprendre la consigne avec la voix et le visuel.
 
 ## Typographie
 
@@ -99,9 +140,11 @@ Les zones de depot doivent etre visibles avant l'action :
 La progression doit etre simple :
 
 - nombre de mots restants ;
-- etoiles ;
+- coffres collectes ;
 - chemin court ;
 - pas de tableau de statistiques complexe dans le MVP.
+
+Pour les enfants de 5 a 7 ans, eviter les grands scores. Le score principal du jeu Bateau est le nombre de coffres collectes. Il reste petit, concret et facile a comprendre.
 
 ## Animation
 
@@ -117,7 +160,19 @@ Exemples :
 - carte correcte : scale 1.06 puis retour a 1 ;
 - erreur : shake horizontal doux ;
 - mot complete : confettis legers + image qui rebondit ;
-- changement de mot : sortie douce, entree rapide.
+- mot complete : vent qui se leve, iles qui defilent, bateau qui avance ;
+- coffre trouve : petit arret visuel, coffre qui s'ouvre, compteur de coffres collectes qui augmente ;
+- changement de mot : le jeu revient au panneau de lecture apres la navigation.
+
+## Vent et Tresors
+
+Le vent traduit la rapidite et la precision.
+
+- Vent fort : le bateau parcourt 3 iles.
+- Vent moyen : le bateau parcourt 2 iles.
+- Vent faible : le bateau parcourt 1 ile.
+
+En moyenne, une ile sur deux contient un coffre. Les iles avec coffre provoquent une micro-pause : le coffre s'ouvre, un tresor est collecte, puis le bateau reprend son trajet.
 
 ## Sound Design
 
@@ -197,4 +252,3 @@ Plus tard :
 - rythme ralenti ;
 - reduction des animations ;
 - choix de casse typographique.
-

@@ -1,0 +1,138 @@
+[
+  {
+    "id": "chaton",
+    "locale": "fr-FR",
+    "word": "chaton",
+    "displayWord": "chaton",
+    "syllables": ["cha", "ton"],
+    "spokenSyllables": ["cha", "ton"],
+    "distractors": ["ba", "ti"],
+    "image": "/assets/images/fr/words/chaton.webp",
+    "audioWord": "/assets/audio/fr/words/chaton.mp3",
+    "audioSyllables": {
+      "cha": "/assets/audio/fr/syllables/cha.mp3",
+      "ton": "/assets/audio/fr/syllables/ton.mp3"
+    },
+    "difficulty": 2,
+    "tags": ["animal", "mot-bisyllabique", "son-ch"]
+  },
+  {
+    "id": "bateau",
+    "locale": "fr-FR",
+    "word": "bateau",
+    "displayWord": "bateau",
+    "syllables": ["ba", "teau"],
+    "spokenSyllables": ["bah", "to"],
+    "distractors": ["cha", "mi"],
+    "image": "/assets/images/fr/words/bateau.webp",
+    "audioWord": "/assets/audio/fr/words/bateau.mp3",
+    "audioSyllables": {
+      "ba": "/assets/audio/fr/syllables/ba.mp3",
+      "teau": "/assets/audio/fr/syllables/teau.mp3"
+    },
+    "difficulty": 2,
+    "tags": ["objet", "mot-bisyllabique"]
+  },
+  {
+    "id": "moto",
+    "locale": "fr-FR",
+    "word": "moto",
+    "displayWord": "moto",
+    "syllables": ["mo", "to"],
+    "spokenSyllables": ["mo", "to"],
+    "distractors": ["la", "ri"],
+    "image": "/assets/images/fr/words/moto.webp",
+    "audioWord": "/assets/audio/fr/words/moto.mp3",
+    "audioSyllables": {
+      "mo": "/assets/audio/fr/syllables/mo.mp3",
+      "to": "/assets/audio/fr/syllables/to.mp3"
+    },
+    "difficulty": 1,
+    "tags": ["objet", "mot-bisyllabique"]
+  },
+  {
+    "id": "lapin",
+    "locale": "fr-FR",
+    "word": "lapin",
+    "displayWord": "lapin",
+    "syllables": ["la", "pin"],
+    "spokenSyllables": ["la", "pin"],
+    "distractors": ["mo", "teau"],
+    "image": "/assets/images/fr/words/lapin.webp",
+    "audioWord": "/assets/audio/fr/words/lapin.mp3",
+    "audioSyllables": {
+      "la": "/assets/audio/fr/syllables/la.mp3",
+      "pin": "/assets/audio/fr/syllables/pin.mp3"
+    },
+    "difficulty": 2,
+    "tags": ["animal", "mot-bisyllabique"]
+  },
+  {
+    "id": "melon",
+    "locale": "fr-FR",
+    "word": "melon",
+    "displayWord": "melon",
+    "syllables": ["me", "lon"],
+    "spokenSyllables": ["me", "lon"],
+    "distractors": ["ba", "to"],
+    "image": "/assets/images/fr/words/melon.webp",
+    "audioWord": "/assets/audio/fr/words/melon.mp3",
+    "audioSyllables": {
+      "me": "/assets/audio/fr/syllables/me.mp3",
+      "lon": "/assets/audio/fr/syllables/lon.mp3"
+    },
+    "difficulty": 2,
+    "tags": ["aliment", "mot-bisyllabique"]
+  },
+  {
+    "id": "tapis",
+    "locale": "fr-FR",
+    "word": "tapis",
+    "displayWord": "tapis",
+    "syllables": ["ta", "pis"],
+    "spokenSyllables": ["ta", "pi"],
+    "distractors": ["la", "son"],
+    "image": "/assets/images/fr/words/tapis.webp",
+    "audioWord": "/assets/audio/fr/words/tapis.mp3",
+    "audioSyllables": {
+      "ta": "/assets/audio/fr/syllables/ta.mp3",
+      "pis": "/assets/audio/fr/syllables/pis.mp3"
+    },
+    "difficulty": 2,
+    "tags": ["objet", "mot-bisyllabique"]
+  },
+  {
+    "id": "panda",
+    "locale": "fr-FR",
+    "word": "panda",
+    "displayWord": "panda",
+    "syllables": ["pan", "da"],
+    "spokenSyllables": ["pan", "da"],
+    "distractors": ["pi", "lon"],
+    "image": "/assets/images/fr/words/panda.webp",
+    "audioWord": "/assets/audio/fr/words/panda.mp3",
+    "audioSyllables": {
+      "pan": "/assets/audio/fr/syllables/pan.mp3",
+      "da": "/assets/audio/fr/syllables/da.mp3"
+    },
+    "difficulty": 2,
+    "tags": ["animal", "mot-bisyllabique"]
+  },
+  {
+    "id": "maison",
+    "locale": "fr-FR",
+    "word": "maison",
+    "displayWord": "maison",
+    "syllables": ["mai", "son"],
+    "spokenSyllables": ["mè", "zon"],
+    "distractors": ["cha", "da"],
+    "image": "/assets/images/fr/words/maison.webp",
+    "audioWord": "/assets/audio/fr/words/maison.mp3",
+    "audioSyllables": {
+      "mai": "/assets/audio/fr/syllables/mai.mp3",
+      "son": "/assets/audio/fr/syllables/son.mp3"
+    },
+    "difficulty": 3,
+    "tags": ["objet", "mot-bisyllabique", "son-ai"]
+  }
+]

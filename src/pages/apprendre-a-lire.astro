@@ -1,0 +1,70 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { sitePath } from "../utils/paths";
+---
+
+<BaseLayout
+  title="Apprendre a lire avec des jeux gratuits - Readingo"
+  description="Conseils et mini-jeux gratuits pour accompagner l'apprentissage de la lecture chez les enfants de 5 a 7 ans."
+>
+  <main class="content-page page-shell">
+    <p>Ressource</p>
+    <h1>Apprendre a lire en jouant</h1>
+    <section>
+      <h2>Une progression courte et ludique</h2>
+      <p>
+        Readingo propose des activites courtes pour travailler les lettres, les
+        sons, les syllabes et les mots simples, avec des feedbacks immediats et
+        une progression visible.
+      </p>
+    </section>
+    <a href={sitePath("/jeux/bateau/")}>Lancer le premier jeu</a>
+  </main>
+</BaseLayout>
+
+<style>
+  .content-page {
+    display: grid;
+    max-width: 820px;
+    gap: 20px;
+    padding-block: 56px;
+  }
+
+  .content-page > p {
+    margin: 0;
+    color: var(--color-blue-dark);
+    font-weight: 950;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .content-page h1 {
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 5.4rem);
+    line-height: 1;
+  }
+
+  .content-page h2 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+  }
+
+  .content-page p {
+    color: var(--color-muted);
+    font-size: 1.15rem;
+    font-weight: 750;
+  }
+
+  .content-page a {
+    display: inline-flex;
+    width: max-content;
+    min-height: 54px;
+    align-items: center;
+    border: 3px solid var(--color-border);
+    border-radius: 16px;
+    background: var(--color-gold);
+    padding-inline: 22px;
+    box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
+    font-weight: 950;
+  }
+</style>

@@ -78,17 +78,22 @@ Note : "chaton" doit etre utilise sans accent pour designer le petit chat. La gr
 
 ### Boucle de Jeu
 
-1. Une image apparait au centre.
-2. Le mot est prononce.
-3. Des cartes de syllabes apparaissent.
-4. L'enfant peut toucher une syllabe pour l'entendre.
-5. L'enfant glisse les syllabes dans les emplacements.
-6. Le jeu valide chaque depot.
-7. Si la syllabe est correcte, elle se fixe avec un feedback positif.
-8. Si la syllabe est incorrecte, elle revient doucement a sa position.
-9. Quand le mot est complet, le mot entier est prononce.
-10. Le score/progres est mis a jour.
-11. Le jeu passe au mot suivant.
+1. L'ecran affiche l'ocean, le bateau, des iles et Pana au centre.
+2. L'enfant appuie sur "Commencer".
+3. Pana donne la consigne vocale et visuelle.
+4. Une image apparait avec les emplacements de syllabes.
+5. L'enfant peut toucher le haut-parleur de l'image pour entendre le mot.
+6. L'enfant peut toucher le haut-parleur d'une syllabe pour l'entendre.
+7. L'enfant glisse les syllabes dans les emplacements.
+8. Le jeu valide chaque depot.
+9. Si la syllabe est correcte, elle se fixe et le son de la syllabe est joue.
+10. Si la syllabe est incorrecte, son son est joue puis Pana dit "Essaie encore".
+11. Quand le mot est complet, le vent se leve.
+12. Le bateau reste au centre et les iles defilent de droite a gauche.
+13. Selon la rapidite, le bateau parcourt 1, 2 ou 3 iles.
+14. Une ile sur deux en moyenne contient un coffre.
+15. Si un coffre est trouve, le bateau marque un petit arret, le coffre s'ouvre et le compteur de coffres collectes augmente.
+16. Une fois la navigation terminee, le mot suivant apparait.
 
 ### Feedback Positif
 
@@ -113,15 +118,17 @@ Pas de buzzer dur, pas de rouge agressif, pas de message culpabilisant.
 
 ### Scoring
 
-Le scoring sert a motiver, pas a evaluer strictement.
+Le scoring sert a motiver, pas a evaluer strictement. Pour cet age, il doit utiliser de petits nombres.
 
 Proposition :
 
-- +100 points par mot complete ;
-- +50 bonus sans erreur ;
-- +0 a +50 bonus rapidite ;
-- etoiles visuelles par session ;
-- badge apres une serie de reussites.
+- le score principal est le nombre de coffres collectes ;
+- chaque coffre ajoute 1 tresor ;
+- la rapidite ne donne pas de points directs ;
+- la rapidite influence la force du vent ;
+- vent fort : 3 iles parcourues ;
+- vent moyen : 2 iles parcourues ;
+- vent faible : 1 ile parcourue.
 
 Le timer ne doit pas etre central visuellement. Pour cet age, la pression temporelle doit rester secondaire.
 
@@ -198,7 +205,7 @@ Une session doit durer environ 3 a 7 minutes.
 Ecran de fin :
 
 - nombre de mots ou lettres reussis ;
-- etoiles gagnees ;
+- coffres collectes ;
 - bouton "Rejouer" ;
 - bouton "Changer de jeu" ;
 - suggestion douce : "Encore 3 mots demain".

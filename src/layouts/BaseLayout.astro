@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+import { sitePath } from "../utils/paths";
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const {
+  title = "Readingo - Apprendre a lire en jouant",
+  description = "Des mini-jeux gratuits pour aider les enfants de 5 a 7 ans a apprendre les lettres, les syllabes et les mots.",
+} = Astro.props;
+
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href={sitePath("/favicon.svg")} type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner page-shell">
+        <a class="brand" href={sitePath("/")} aria-label="Accueil Readingo">
+          <span class="brand__mark" aria-hidden="true">
+            <span class="brand__sail"></span>
+          </span>
+          <span>Readingo</span>
+        </a>
+        <nav class="main-nav" aria-label="Navigation principale">
+          <a href={sitePath("/jeux/bateau/")}>Jeux</a>
+          <a href={sitePath("/apprendre-les-syllabes/")}>Parcours</a>
+          <a href={sitePath("/apprendre-a-lire/")}>Ressources</a>
+        </nav>
+      </div>
+    </header>
+    <slot />
+    <footer class="site-footer">
+      <div class="site-footer__inner page-shell">
+        <strong>Readingo</strong>
+        <a href={sitePath("/apprendre-a-lire/")}>Ressources pour apprendre a lire</a>
+      </div>
+    </footer>
+  </body>
+</html>

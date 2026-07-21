@@ -117,6 +117,22 @@ Regles :
 - articulation lente mais naturelle ;
 - pas de musique de fond dans le MVP.
 
+### Bruitages du jeu Bateau
+
+Les bruitages sont heberges localement pour garantir leur lecture sur GitHub Pages. Ils proviennent de Pixabay et sont utilises selon la Pixabay Content License.
+
+| Usage | Fichier local | Source |
+| --- | --- | --- |
+| Ambiance de la mer | `public/assets/audio/sfx/sea-loop.mp3` | [Sea Wave](https://pixabay.com/sound-effects/nature-sea-wave-34088/) |
+| Vent pendant le voyage | `public/assets/audio/sfx/wind-loop.mp3` | [Wind Blowing SFX 01](https://pixabay.com/sound-effects/nature-wind-blowing-sfx-01-423673/) |
+| Mouvement du bateau | `public/assets/audio/sfx/boat-loop.mp3` | [Boat Squeaking](https://pixabay.com/sound-effects/film-special-effects-boat-squeaking-44883/) |
+| Selection d'une syllabe | `public/assets/audio/sfx/syllable-select.mp3` | [UI Pop sound](https://pixabay.com/sound-effects/film-special-effects-ui-pop-sound-316482/) |
+| Depot d'une syllabe | `public/assets/audio/sfx/syllable-drop.mp3` | [app_interface_click_2](https://pixabay.com/sound-effects/app-interface-click-2-476372/) |
+| Collecte d'un coffre | `public/assets/audio/sfx/chest-collect.mp3` | [Opening Bell](https://pixabay.com/sound-effects/film-special-effects-opening-bell-421471/) |
+| Niveau termine | `public/assets/audio/sfx/level-complete.mp3` | [Short Success Sound Glockenspiel Treasure Video Game](https://pixabay.com/sound-effects/film-special-effects-short-success-sound-glockenspiel-treasure-video-game-6346/) |
+
+L'ambiance de la mer ne demarre qu'apres l'action `Commencer`, conformement aux restrictions de lecture automatique des navigateurs. Le vent et le bateau sont synchronises avec le mouvement du voyage. Pendant la collecte d'un coffre, le bateau s'arrete mais le vent reste audible en arriere-plan a un volume reduit.
+
 ## Images
 
 Arborescence cible :
@@ -130,6 +146,30 @@ public/assets/images/
     characters/
     ui/
 ```
+
+Assets partages deja reserves pour le jeu Bateau :
+
+```txt
+public/assets/
+  characters/
+    pana.png
+  world/
+    boat.png
+    IslandWithChest.png
+    IslandWithoutChest.png
+    Chest.png
+  words/
+    WordAtlas.png
+```
+
+Ces assets sont charges automatiquement par l'interface Bateau si tu les ajoutes. Tant que Pana ou le bateau sont absents, le jeu garde un fallback CSS temporaire.
+
+Pour les images de mots du prototype, `WordAtlas.png` est utilise comme atlas 4 colonnes x 3 lignes. Les deux premieres lignes contiennent les mots du jeu Bateau :
+
+- ligne 1 : bateau, moto, lapin, panda ;
+- ligne 2 : maison, melon, tapis, chaton.
+
+Le composant `BateauGame` mappe explicitement chaque `id` de mot vers sa cellule d'atlas. Pour ajouter un mot, il faut soit ajouter l'image dans l'atlas et completer ce mapping, soit passer a des fichiers separes quand le volume d'assets augmente.
 
 Regles :
 
@@ -214,4 +254,3 @@ Emplacements a eviter :
 - entre deux mots ;
 - pop-up bloquante ;
 - elements qui ressemblent a une recompense enfant.
-

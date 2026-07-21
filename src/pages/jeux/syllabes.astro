@@ -1,0 +1,57 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { sitePath } from "../../utils/paths";
+---
+
+<BaseLayout
+  title="Jeu des mots - Readingo"
+  description="Une future escale Readingo pour lire et comprendre des mots simples."
+>
+  <main class="placeholder page-shell">
+    <p>Prochaine escale</p>
+    <h1>Mots</h1>
+    <span>Ce mini-jeu sera implemente apres le prototype Bateau.</span>
+    <a href={sitePath("/jeux/bateau/")}>Essayer Bateau</a>
+  </main>
+</BaseLayout>
+
+<style>
+  .placeholder {
+    display: grid;
+    min-height: 58vh;
+    align-content: center;
+    gap: 14px;
+  }
+
+  .placeholder p {
+    margin: 0;
+    color: var(--color-blue-dark);
+    font-weight: 950;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .placeholder h1 {
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1;
+  }
+
+  .placeholder span {
+    color: var(--color-muted);
+    font-weight: 800;
+  }
+
+  .placeholder a {
+    display: inline-flex;
+    width: max-content;
+    min-height: 54px;
+    align-items: center;
+    border: 3px solid var(--color-border);
+    border-radius: 16px;
+    background: var(--color-gold);
+    padding-inline: 22px;
+    box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
+    font-weight: 950;
+  }
+</style>
