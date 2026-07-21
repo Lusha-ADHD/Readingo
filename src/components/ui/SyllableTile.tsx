@@ -10,9 +10,6 @@ type SyllableTileProps = {
   floating?: boolean;
   onClick?: () => void;
   onPointerDown?: (event: PointerEvent<HTMLButtonElement>) => void;
-  onTouchCancel?: (event: TouchEvent<HTMLButtonElement>) => void;
-  onTouchEnd?: (event: TouchEvent<HTMLButtonElement>) => void;
-  onTouchMove?: (event: TouchEvent<HTMLButtonElement>) => void;
   onTouchStart?: (event: TouchEvent<HTMLButtonElement>) => void;
   style?: CSSProperties;
 };
@@ -26,9 +23,6 @@ export function SyllableTile({
   floating = false,
   onClick,
   onPointerDown,
-  onTouchCancel,
-  onTouchEnd,
-  onTouchMove,
   onTouchStart,
   style,
 }: SyllableTileProps) {
@@ -51,9 +45,6 @@ export function SyllableTile({
       onClick={onClick}
       onDragStart={(event) => event.preventDefault()}
       onPointerDown={onPointerDown}
-      onTouchCancel={onTouchCancel}
-      onTouchEnd={onTouchEnd}
-      onTouchMove={onTouchMove}
       onTouchStart={onTouchStart}
       style={style}
       type="button"

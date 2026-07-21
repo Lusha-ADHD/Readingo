@@ -731,51 +731,54 @@ export function BateauGame() {
 
     event.preventDefault();
     startDrag(tile, touch.identifier, event.currentTarget, touch.clientX, touch.clientY);
-  }
 
-  function handleTouchMove(event: ReactTouchEvent<HTMLButtonElement>) {
-    const currentDrag = dragStateRef.current;
+    const touchId = touch.identifier;
 
-    if (!isIOSDevice() || !currentDrag) {
-      return;
-    }
+    const cleanupTouchListeners = () => {
+      window.removeEventListener("touchmove", handleNativeTouchMove);
+      window.removeEventListener("touchend", handleNativeTouchEnd);
+      window.removeEventListener("touchcancel", handleNativeTouchCancel);
+    };
 
-    const touch = findTouch(event.touches, currentDrag.inputId);
+    const handleNativeTouchMove = (moveEvent: TouchEvent) => {
+      const movedTouch = findTouch(moveEvent.touches, touchId);
 
-    if (!touch) {
-      return;
-    }
+      if (!movedTouch) {
+        return;
+      }
 
-    event.preventDefault();
-    moveDrag(touch.identifier, touch.clientX, touch.clientY);
-  }
+      moveEvent.preventDefault();
+      moveDrag(touchId, movedTouch.clientX, movedTouch.clientY);
+    };
 
-  function handleTouchEnd(event: ReactTouchEvent<HTMLButtonElement>) {
-    const currentDrag = dragStateRef.current;
+    const handleNativeTouchEnd = (endEvent: TouchEvent) => {
+      const endedTouch = findTouch(endEvent.changedTouches, touchId);
 
-    if (!isIOSDevice() || !currentDrag) {
-      return;
-    }
+      if (!endedTouch) {
+        return;
+      }
 
-    const touch = findTouch(event.changedTouches, currentDrag.inputId);
+      endEvent.preventDefault();
+      finishDrag(touchId, endedTouch.clientX, endedTouch.clientY);
+      cleanupTouchListeners();
+    };
 
-    if (!touch) {
-      return;
-    }
+    const handleNativeTouchCancel = (cancelEvent: TouchEvent) => {
+      const currentDrag = dragStateRef.current;
 
-    event.preventDefault();
-    finishDrag(touch.identifier, touch.clientX, touch.clientY);
-  }
+      if (!currentDrag || currentDrag.inputId !== touchId) {
+        cleanupTouchListeners();
+        return;
+      }
 
-  function handleTouchCancel(event: ReactTouchEvent<HTMLButtonElement>) {
-    const currentDrag = dragStateRef.current;
+      const cancelledTouch = findTouch(cancelEvent.changedTouches, touchId);
+      finishDrag(touchId, cancelledTouch?.clientX ?? currentDrag.x, cancelledTouch?.clientY ?? currentDrag.y, true);
+      cleanupTouchListeners();
+    };
 
-    if (!isIOSDevice() || !currentDrag) {
-      return;
-    }
-
-    const touch = findTouch(event.changedTouches, currentDrag.inputId);
-    finishDrag(currentDrag.inputId, touch?.clientX ?? currentDrag.x, touch?.clientY ?? currentDrag.y, true);
+    window.addEventListener("touchmove", handleNativeTouchMove, { passive: false });
+    window.addEventListener("touchend", handleNativeTouchEnd, { passive: false });
+    window.addEventListener("touchcancel", handleNativeTouchCancel);
   }
 
   function restartSession() {
@@ -989,9 +992,6 @@ export function BateauGame() {
                 <SyllableTile
                   id={tile.id}
                   onPointerDown={(event) => handlePointerDown(tile, event)}
-                  onTouchCancel={handleTouchCancel}
-                  onTouchEnd={handleTouchEnd}
-                  onTouchMove={handleTouchMove}
                   onTouchStart={(event) => handleTouchStart(tile, event)}
                   selected={selectedTileId === tile.id}
                   state={wrongTileId === tile.id ? "wrong" : "default"}
