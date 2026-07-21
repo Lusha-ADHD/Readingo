@@ -68,7 +68,7 @@ type VoiceLines = {
   feedback: { tryAgain: VoiceLine; bravo: VoiceLine };
 };
 
-type GamePhase = "intro" | "dialog" | "playing" | "sailing" | "done";
+type GamePhase = "intro" | "dialog" | "playing" | "validating" | "sailing" | "done";
 
 type SailingIsland = {
   id: string;
@@ -112,6 +112,7 @@ const WORD_ATLAS_FRAMES: Record<string, WordAtlasFrame> = {
 };
 const CHEST_COLLECT_PAUSE_MS = 620;
 const CHEST_COLLECT_SEGMENT_RATIO = 0.58;
+const WORD_SUCCESS_SOUND_MS = 600;
 const SAILING_DURATIONS: Record<Journey["wind"], number> = {
   1: 1700,
   2: 2200,
@@ -125,10 +126,25 @@ const SCENE_CLOUDS = Array.from({ length: 18 }, (_, index) => ({
   duration: 8200 + (index % 5) * 1300,
   delay: -1100 * (index % 7),
 }));
-const sessionWords = words as WordChallenge[];
+const wordChallenges = words as WordChallenge[];
 const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry]));
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.intro;
+
+function shuffleSessionWords(previousOrder: WordChallenge[]) {
+  const shuffled = [...previousOrder];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  if (shuffled.length > 1 && shuffled.every((word, index) => word.id === previousOrder[index]?.id)) {
+    [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+  }
+
+  return shuffled;
+}
 
 function shuffleTiles(challenge: WordChallenge): Tile[] {
   return [...challenge.syllables, ...challenge.distractors]
@@ -311,6 +327,7 @@ function BoatAsset() {
 export function BateauGame() {
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [dialogLineIndex, setDialogLineIndex] = useState(0);
+  const [sessionWords, setSessionWords] = useState<WordChallenge[]>(() => [...wordChallenges]);
   const [wordIndex, setWordIndex] = useState(0);
   const [placed, setPlaced] = useState<Array<Tile | null>>([]);
   const [usedTileIds, setUsedTileIds] = useState<string[]>([]);
@@ -369,7 +386,7 @@ export function BateauGame() {
 
     setProgress(nextProgress);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextProgress));
-  }, [phase, progress.bestTreasures, progress.completedWords, progress.sessions, treasures]);
+  }, [phase, progress.bestTreasures, progress.completedWords, progress.sessions, sessionWords, treasures]);
 
   useEffect(() => {
     setTravelAudio(phase === "sailing" && isSailingMotionActive, journey?.wind ?? 1, isCollectingChest);
@@ -415,6 +432,7 @@ export function BateauGame() {
 
   async function startIntroDialog() {
     startAmbience();
+    setSessionWords((currentOrder) => shuffleSessionWords(currentOrder));
     const runId = dialogRunRef.current + 1;
     dialogRunRef.current = runId;
     setPhase("dialog");
@@ -483,13 +501,17 @@ export function BateauGame() {
       );
 
       if (nextPlaced.every(Boolean)) {
-        finishWord();
+        await finishWord();
       }
     });
   }
 
-  function finishWord() {
+  async function finishWord() {
     const wind = calculateWind(startedAt, mistakes);
+    setPhase("validating");
+    await playEffect("levelComplete", WORD_SUCCESS_SOUND_MS);
+    await playRecordedVoice(challenge.audioWord, challenge.displayWord);
+
     const nextJourney = buildJourney(islandStartIndex, wind);
     const sailingDuration = SAILING_DURATIONS[wind];
     const segmentDuration = Math.round(sailingDuration / wind);
@@ -621,8 +643,8 @@ export function BateauGame() {
   }
 
   const currentDrag = dragStateRef.current?.isDragging ? dragStateRef.current : null;
-  const showGamePanel = phase === "playing";
-  const showHud = phase === "playing" || phase === "sailing" || phase === "done";
+  const showGamePanel = phase === "playing" || phase === "validating";
+  const showHud = phase === "playing" || phase === "validating" || phase === "sailing" || phase === "done";
   const visibleIslands = phase === "sailing" && journey ? journey.islands : buildSceneIslands(islandStartIndex, 2);
   const sailingDuration = journey ? SAILING_DURATIONS[journey.wind] : 0;
   const cloudStartDistance = islandStartIndex * -13;

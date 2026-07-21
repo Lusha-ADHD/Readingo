@@ -5,6 +5,7 @@ import process from "node:process";
 const rootDirectory = process.cwd();
 const force = process.argv.includes("--force");
 const checkVoiceOnly = process.argv.includes("--check-voice");
+const onlyTarget = process.argv.find((argument) => argument.startsWith("--only="))?.slice("--only=".length);
 
 async function loadLocalEnvironment() {
   const environmentFile = await readFile(path.join(rootDirectory, ".env.local"), "utf8");
@@ -206,6 +207,10 @@ let skippedCount = 0;
 
 for (const target of targets.values()) {
   const outputPath = publicFilePath(target.audio);
+
+  if (onlyTarget && target.id !== onlyTarget && target.audio !== onlyTarget) {
+    continue;
+  }
 
   if (!force && (await fileExists(outputPath))) {
     skippedCount += 1;

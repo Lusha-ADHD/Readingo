@@ -73,7 +73,7 @@
     "word": "melon",
     "displayWord": "melon",
     "syllables": ["me", "lon"],
-    "spokenSyllables": ["me", "lon"],
+    "spokenSyllables": ["meuh", "lon"],
     "distractors": ["ba", "to"],
     "image": "/assets/images/fr/words/melon.webp",
     "audioWord": "/assets/audio/fr/words/melon.mp3",

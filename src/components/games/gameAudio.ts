@@ -59,7 +59,7 @@ export function useGameAudio() {
   }, []);
 
   const playEffect = useCallback(
-    (name: EffectName) => {
+    (name: EffectName, maxPlaybackMs?: number) => {
       if (!enabledRef.current || typeof window === "undefined") {
         return Promise.resolve();
       }
@@ -80,7 +80,7 @@ export function useGameAudio() {
         const timeoutId = window.setTimeout(() => {
           audio.pause();
           complete();
-        }, EFFECT_MAX_WAIT[name]);
+        }, maxPlaybackMs ?? EFFECT_MAX_WAIT[name]);
 
         function complete() {
           if (completed) {
@@ -143,13 +143,13 @@ export function useGameAudio() {
 
       if (paused) {
         boatAudio.pause();
-        windAudio.volume = 0.07 + wind * 0.03;
+        windAudio.volume = 0.2 + wind * 0.1;
         void windAudio.play().catch(() => undefined);
         return;
       }
 
-      windAudio.volume = 0.08 + wind * 0.055;
-      boatAudio.volume = 0.15;
+      windAudio.volume = 0.4 + wind * 0.2;
+      boatAudio.volume = 0.2;
       void windAudio.play().catch(() => undefined);
       void boatAudio.play().catch(() => undefined);
     },
