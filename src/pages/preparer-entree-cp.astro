@@ -1,0 +1,276 @@
+---
+import GuideLayout from "@layouts/GuideLayout.astro";
+import GameCard from "@components/ui/GameCard.astro";
+
+const faqEntries = [
+  {
+    question: "Faut-il savoir lire avant d’entrer au CP ?",
+    answer:
+      "Non. L’apprentissage systématique de la lecture est conduit au CP. La maternelle prépare l’enfant grâce au langage oral, aux histoires, aux syllabes, aux sons, aux lettres et aux premiers essais d’écriture. Une attitude curieuse et confiante constitue déjà un appui précieux.",
+  },
+  {
+    question: "Un cahier de vacances est-il nécessaire ?",
+    answer:
+      "Il peut servir si l’enfant aime ce support, mais il ne constitue pas une obligation. Les lectures, les jeux de sons, le dessin, les lettres mobiles, les recettes et les activités quotidiennes offrent de nombreuses occasions de mobiliser les mêmes compétences.",
+  },
+  {
+    question: "Doit-on faire travailler l’écriture cursive pendant l’été ?",
+    answer:
+      "Vous pouvez proposer le prénom et quelques mots déjà travaillés en classe, avec un modèle adapté. Gardez des temps courts et une posture confortable. Le dessin, le découpage et la pâte à modeler entretiennent aussi la motricité fine utile à l’écriture.",
+  },
+  {
+    question: "À quelle fréquence proposer des activités ?",
+    answer:
+      "Deux ou trois courts rendez-vous par semaine suffisent, en plus des histoires partagées. Variez les activités et laissez des journées entièrement libres. Une routine prévisible aide l’enfant à participer sans transformer les vacances en temps scolaire.",
+  },
+  {
+    question: "Quelle place donner aux écrans éducatifs ?",
+    answer:
+      "Utilisez-les comme un complément ponctuel. Une partie de 5 à 10 minutes, accompagnée par un adulte, permet de parler des lettres, des syllabes ou des mots rencontrés. Prolongez ensuite avec un livre, un dessin ou une activité de manipulation.",
+  },
+  {
+    question: "Que faire si des difficultés sont repérées avant la rentrée ?",
+    answer:
+      "Reprenez les observations transmises par l’enseignant de grande section et notez les situations difficiles à la maison. Rassurez l’enfant et évitez les comparaisons. Contactez l’école ou le professionnel déjà impliqué si un suivi est prévu. Pour une difficulté persistante de langage, d’audition ou de vision, demandez conseil au médecin.",
+  },
+];
+
+const toc = [
+  { href: "#priorites", label: "Ce qui compte avant le CP" },
+  { href: "#competences", label: "Les compétences utiles" },
+  { href: "#rythme", label: "Un rythme hebdomadaire" },
+  { href: "#vacances", label: "Une routine pour les vacances" },
+  { href: "#jeux", label: "Les mini-jeux adaptés" },
+  { href: "#autonomie", label: "Autonomie et premiers jours" },
+  { href: "#difficultes", label: "En cas de difficultés" },
+  { href: "#faq", label: "Questions fréquentes" },
+];
+
+const sources = [
+  {
+    href: "https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A",
+    label: "Bulletin officiel, programmes de langage du cycle 1 et de français du cycle 2",
+  },
+  {
+    href: "https://eduscol.education.fr/4740/ressources-d-accompagnement-du-programme-de-francais-au-cycle-2",
+    label: "Éduscol, ressources d’accompagnement du programme de français au cycle 2",
+  },
+  {
+    href: "https://www.education.gouv.fr/votre-enfant-au-cp-des-reperes-pour-l-accompagner-tout-au-long-de-l-annee-453744",
+    label: "Ministère de l’Éducation nationale, repères pour accompagner un enfant au CP",
+  },
+];
+
+const relatedGuides = [
+  {
+    href: "/apprendre-a-lire/",
+    title: "Les bases de la lecture",
+    description: "Revoir la progression complète suivie pendant la maternelle.",
+  },
+  {
+    href: "/apprendre-les-lettres/",
+    title: "Apprendre les lettres",
+    description: "Consolider les graphies, les noms et les sons avant le CP.",
+  },
+  {
+    href: "/apprendre-les-syllabes/",
+    title: "Apprendre les syllabes",
+    description: "Des jeux simples pour écouter et assembler les mots.",
+  },
+];
+---
+
+<GuideLayout
+  title="Préparer l’entrée au CP : repères et activités pour les vacances | Readingo"
+  description="Préparez l’entrée au CP avec des repères simples, une routine légère pour les vacances et des activités de lecture adaptées aux enfants de 5 à 6 ans."
+  canonicalPath="/preparer-entree-cp/"
+  eyebrow="Guide pour les parents · 5 à 6 ans"
+  heading="Préparer l’entrée au CP en confiance"
+  intro="L’été précédant le CP peut rester un temps de repos, de découvertes et de jeux. Quelques habitudes simples entretiennent les acquis de grande section et aident l’enfant à aborder sa nouvelle classe avec confiance."
+  readingTime="environ 7 minutes"
+  {toc}
+  {faqEntries}
+  {sources}
+  sourceIntro="Ce guide relie les repères de fin de maternelle aux apprentissages qui commencent au CP, à partir des programmes officiels en vigueur."
+  {relatedGuides}
+>
+  <section id="priorites" class="intro-note" aria-labelledby="priorites-title">
+    <h2 id="priorites-title">Préserver l’envie d’apprendre</h2>
+    <p>
+      L’entrée au CP marque le début d’un enseignement quotidien et structuré de
+      la lecture. L’enfant arrive avec toutes les expériences construites en
+      maternelle : parler, comprendre, écouter des histoires, jouer avec les sons,
+      reconnaître des lettres et produire de premiers écrits.
+    </p>
+    <p>
+      Les vacances permettent de réutiliser ces acquis dans un cadre détendu. Une
+      recette fait lire une liste et suivre des étapes. Une carte postale donne une
+      raison d’écrire. Un trajet invite à reconnaître des lettres sur les panneaux.
+      Ces situations gardent le langage vivant et montrent l’utilité de l’écrit.
+    </p>
+    <p>
+      Le repos conserve une place essentielle. Maintenez autant que possible des
+      horaires réguliers, des moments actifs et des temps calmes. À l’approche de
+      la rentrée, un rythme quotidien stable facilite le retour aux journées
+      d’école.
+    </p>
+  </section>
+
+  <section id="competences" aria-labelledby="competences-title">
+    <p class="section-kicker">Les fondations déjà travaillées</p>
+    <h2 id="competences-title">Sept compétences utiles pour commencer le CP</h2>
+    <p>
+      Ces repères aident à choisir des activités. Ils décrivent un ensemble de
+      compétences en cours de construction. Chaque enfant présente un profil
+      différent et continuera à progresser au CP.
+    </p>
+    <ul class="checklist">
+      <li><span aria-hidden="true">1</span>Comprendre une consigne et demander une précision si nécessaire.</li>
+      <li><span aria-hidden="true">2</span>Raconter une expérience ou une histoire avec un ordre compréhensible.</li>
+      <li><span aria-hidden="true">3</span>Écouter les syllabes, les rimes et certains sons dans les mots.</li>
+      <li><span aria-hidden="true">4</span>Reconnaître les lettres dans leurs principales graphies.</li>
+      <li><span aria-hidden="true">5</span>Relier plusieurs lettres à leur valeur sonore la plus fréquente.</li>
+      <li><span aria-hidden="true">6</span>Écrire son prénom et copier quelques mots avec un geste appliqué.</li>
+      <li><span aria-hidden="true">7</span>Préparer ses affaires, écouter un court moment et persévérer face à une tâche.</li>
+    </ul>
+    <p>
+      La compréhension et le vocabulaire méritent autant d’attention que les
+      lettres. Un enfant qui connaît le sens de nombreux mots et suit une histoire
+      dispose de ressources utiles pour comprendre les textes qu’il apprendra à
+      déchiffrer.
+    </p>
+  </section>
+
+  <section id="rythme" aria-labelledby="rythme-title">
+    <p class="section-kicker">Une organisation légère</p>
+    <h2 id="rythme-title">Installer un rythme hebdomadaire souple</h2>
+    <p>
+      Une semaine peut contenir quelques rendez-vous courts sans reproduire
+      l’emploi du temps de l’école. Gardez les livres accessibles et choisissez
+      les autres activités selon l’énergie et l’envie de l’enfant.
+    </p>
+    <div class="advice-list">
+      <div>
+        <h3>Chaque jour : une histoire ou une conversation</h3>
+        <p>Lisez un album, écoutez un livre audio ensemble ou racontez un moment de la journée. Demandez à l’enfant ce qu’il retient et accueillez ses questions.</p>
+      </div>
+      <div>
+        <h3>Deux fois par semaine : sons et lettres</h3>
+        <p>Choisissez un jeu de rimes, trois mots à scander, une chasse aux lettres ou un mot à composer. Cinq à dix minutes forment un temps complet.</p>
+      </div>
+      <div>
+        <h3>Plusieurs fois par semaine : bouger et manipuler</h3>
+        <p>Dessiner, découper, construire, cuisiner et jouer dehors développent l’attention, la coordination et la motricité fine.</p>
+      </div>
+      <div>
+        <h3>Une fois par semaine : produire un petit écrit</h3>
+        <p>Écrivez ensemble une liste, une légende, une carte ou le nom d’un dessin. L’enfant peut dicter, copier ou proposer quelques lettres.</p>
+      </div>
+    </div>
+    <p>
+      Annoncez le début et la fin de l’activité. L’enfant sait ainsi qu’un effort
+      court sera suivi d’un autre moment. Félicitez la recherche, la concentration
+      et la capacité à recommencer.
+    </p>
+  </section>
+
+  <section id="vacances" aria-labelledby="vacances-title">
+    <p class="section-kicker">Les semaines avant la rentrée</p>
+    <h2 id="vacances-title">Une routine spéciale vacances de 5 à 10 minutes</h2>
+    <p>
+      Choisissez trois petits rendez-vous dans la semaine. Ils peuvent avoir lieu
+      le matin, après un temps calme ou avant l’histoire du soir. Utilisez un
+      support différent à chaque fois pour solliciter plusieurs compétences.
+    </p>
+    <div class="advice-list">
+      <div>
+        <h3>Rendez-vous 1 : écouter et raconter</h3>
+        <p>Lisez une histoire courte. L’enfant choisit son passage préféré, décrit un personnage et raconte la fin avec ses mots.</p>
+      </div>
+      <div>
+        <h3>Rendez-vous 2 : jouer avec le code</h3>
+        <p>Composez deux mots avec des lettres ou des syllabes mobiles. Nommez les lettres et prononcez les sons utiles sans demander une lecture complète.</p>
+      </div>
+      <div>
+        <h3>Rendez-vous 3 : écrire pour quelqu’un</h3>
+        <p>Préparez une carte, une liste de courses ou une étiquette. L’enfant dicte le message et écrit ce qu’il peut avec un modèle.</p>
+      </div>
+    </div>
+    <p>
+      Une même activité peut revenir plusieurs semaines. La répétition permet de
+      mesurer les progrès et de gagner en assurance. Changez les mots, les images
+      ou le destinataire afin de conserver le plaisir de participer.
+    </p>
+  </section>
+
+  <section id="jeux" aria-labelledby="jeux-title">
+    <p class="section-kicker">Choisir selon la compétence</p>
+    <h2 id="jeux-title">Trois mini-jeux pour varier les entraînements</h2>
+    <p>
+      Les mini-jeux peuvent occuper l’un des rendez-vous de la semaine. Restez à
+      proximité pour aider à comprendre la consigne et faire verbaliser les choix.
+      Une courte partie peut ensuite être prolongée avec des cartes, un crayon ou
+      un livre.
+    </p>
+    <div class="games-grid">
+      <GameCard
+        title="Lettres"
+        description="Reconnaître les graphies et écouter les sons associés."
+        href="/jeux/lettres/"
+        variant="blue"
+      />
+      <GameCard
+        title="Syllabes"
+        description="Assembler les morceaux d’un mot dans le bon ordre."
+        href="/jeux/bateau/"
+        variant="green"
+      />
+      <GameCard
+        title="Mots"
+        description="Mobiliser les lettres et les syllabes dans des mots simples."
+        href="/jeux/syllabes/"
+        variant="purple"
+      />
+    </div>
+  </section>
+
+  <section id="autonomie" aria-labelledby="autonomie-title">
+    <p class="section-kicker">Se préparer à la vie de classe</p>
+    <h2 id="autonomie-title">Matériel, autonomie et premiers jours</h2>
+    <p>
+      Associez l’enfant à la préparation du cartable et des vêtements. Montrez où
+      se trouvent les objets et entraînez les gestes utiles : ouvrir une boîte,
+      ranger un crayon, fermer un sac et reconnaître ses affaires. Étiquetez le
+      matériel selon les consignes données par l’école.
+    </p>
+    <p>
+      Parlez du CP avec des mots concrets. L’enfant rencontrera une nouvelle salle,
+      de nouvelles habitudes et parfois de nouveaux camarades. Laissez-le exprimer
+      ses questions. Vous pouvez rappeler une situation passée où il a découvert
+      un lieu et trouvé progressivement ses repères.
+    </p>
+    <p>
+      Les premiers soirs, privilégiez l’écoute et un retour au calme. Demandez ce
+      qui a plu, ce qui a surpris et ce qui reste difficile. Les échanges avec
+      l’enseignant permettront ensuite d’ajuster l’accompagnement à la maison.
+    </p>
+  </section>
+
+  <section id="difficultes" class="support-section" aria-labelledby="difficultes-title">
+    <p class="section-kicker">Agir avec sérénité</p>
+    <h2 id="difficultes-title">Si certaines compétences restent fragiles</h2>
+    <p>
+      Appuyez-vous sur le bilan de grande section et sur les conseils de
+      l’enseignant. Choisissez une seule compétence et une activité très accessible.
+      Notez les situations dans lesquelles l’enfant réussit mieux, ainsi que les
+      aides qui lui permettent d’avancer.
+    </p>
+    <p>
+      Informez le futur enseignant des accompagnements déjà mis en place. Si les
+      difficultés concernent durablement le langage, la compréhension, l’audition
+      ou la vision, demandez conseil au médecin traitant, au pédiatre ou au médecin
+      scolaire. La rentrée reste un moment de continuité : l’équipe du CP reprendra
+      les acquis de maternelle et observera les besoins de chaque élève.
+    </p>
+  </section>
+</GuideLayout>

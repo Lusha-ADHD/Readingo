@@ -1,0 +1,169 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import "../styles/guide.css";
+import { sitePath } from "../utils/paths";
+
+type TocItem = {
+  href: string;
+  label: string;
+};
+
+type FaqEntry = {
+  question: string;
+  answer: string;
+};
+
+type SourceEntry = {
+  href: string;
+  label: string;
+};
+
+type RelatedGuide = {
+  href: string;
+  title: string;
+  description: string;
+};
+
+type Props = {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  readingTime: string;
+  toc: TocItem[];
+  faqEntries: FaqEntry[];
+  sources: SourceEntry[];
+  sourceIntro: string;
+  relatedGuides?: RelatedGuide[];
+  audience?: string;
+};
+
+const {
+  title,
+  description,
+  canonicalPath,
+  eyebrow,
+  heading,
+  intro,
+  readingTime,
+  toc,
+  faqEntries,
+  sources,
+  sourceIntro,
+  relatedGuides = [],
+  audience = "Parents d’enfants de 2 à 7 ans",
+} = Astro.props;
+
+const canonicalUrl = new URL(sitePath(canonicalPath), Astro.site ?? Astro.url).toString();
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: heading,
+  description,
+  inLanguage: "fr-FR",
+  datePublished: "2026-07-22",
+  dateModified: "2026-07-22",
+  mainEntityOfPage: canonicalUrl,
+  author: {
+    "@type": "Organization",
+    name: "Readingo",
+  },
+  audience: {
+    "@type": "PeopleAudience",
+    audienceType: audience,
+  },
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqEntries.map((entry) => ({
+    "@type": "Question",
+    name: entry.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: entry.answer,
+    },
+  })),
+};
+const structuredData = faqEntries.length > 0 ? [articleSchema, faqSchema] : [articleSchema];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  ogType="article"
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <main class="article-page">
+    <article>
+      <header class="article-hero page-shell">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{heading}</h1>
+        <p class="article-hero__intro">{intro}</p>
+        <p class="article-meta">Mis à jour en juillet 2026 · Lecture : {readingTime}</p>
+      </header>
+
+      <div class="article-layout page-shell">
+        <nav class="article-toc" aria-label="Sommaire de l’article">
+          <strong>Dans ce guide</strong>
+          <ol>
+            {toc.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ol>
+        </nav>
+
+        <div class="article-content">
+          <slot />
+
+          <section id="faq" aria-labelledby="faq-title">
+            <p class="section-kicker">Questions fréquentes</p>
+            <h2 id="faq-title">Vos questions</h2>
+            <div class="faq-list">
+              {faqEntries.map((entry) => (
+                <details>
+                  <summary>{entry.question}</summary>
+                  <p>{entry.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <slot name="afterFaq" />
+
+          {relatedGuides.length > 0 && (
+            <section id="a-lire-aussi" class="related-section" aria-labelledby="related-title">
+              <p class="section-kicker">Poursuivre votre lecture</p>
+              <h2 id="related-title">À lire aussi</h2>
+              <div class="related-grid">
+                {relatedGuides.map((guide) => (
+                  <a class="related-card" href={sitePath(guide.href)}>
+                    <strong>{guide.title}</strong>
+                    <span>{guide.description}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section class="sources" aria-labelledby="sources-title">
+            <h2 id="sources-title">Sources officielles</h2>
+            <p>{sourceIntro}</p>
+            <ul>
+              {sources.map((source) => (
+                <li><a href={source.href}>{source.label}</a></li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
+    </article>
+  </main>
+</BaseLayout>

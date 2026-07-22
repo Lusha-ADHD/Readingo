@@ -1,0 +1,310 @@
+---
+import GuideLayout from "@layouts/GuideLayout.astro";
+import { sitePath } from "../utils/paths";
+
+const faqEntries = [
+  {
+    question: "Qu’est-ce que la conscience phonologique ?",
+    answer:
+      "C’est la capacité à écouter volontairement les unités sonores de la langue et à agir dessus. L’enfant apprend à repérer les mots, les syllabes, les rimes puis certains phonèmes. Il peut les compter, les comparer, les retirer ou les combiner.",
+  },
+  {
+    question: "La phonologie sert-elle à mieux prononcer ?",
+    answer:
+      "La phonologie développe surtout l’attention portée aux sons de la langue. La prononciation et l’articulation participent à cette écoute, mais elles correspondent à des compétences différentes. Un enfant peut réussir un jeu de rimes tout en prononçant encore certains sons avec difficulté.",
+  },
+  {
+    question: "Quelle différence entre une syllabe et un phonème ?",
+    answer:
+      "La syllabe forme un morceau de mot facilement rythmé, comme BA et TEAU dans BATEAU. Le phonème est une unité plus petite, comme /f/ dans FÉE. Les enfants manipulent généralement les syllabes avant d’isoler les phonèmes.",
+  },
+  {
+    question: "Combien de temps doit durer un jeu phonologique ?",
+    answer:
+      "Une activité de cinq minutes peut suffire. Choisissez un seul objectif, comme trouver une rime ou frapper trois mots. Arrêtez pendant que l’enfant reste disponible et reprenez régulièrement avec de nouveaux exemples.",
+  },
+  {
+    question: "Peut-on jouer avec les sons dans plusieurs langues ?",
+    answer:
+      "Oui. Les comptines, les rimes et les jeux d’écoute peuvent vivre dans toutes les langues de la famille. Comparez les sonorités avec curiosité. Lorsque des difficultés sont observées, indiquez aux enseignants et aux professionnels les langues comprises et parlées par l’enfant.",
+  },
+  {
+    question: "Quand parler des difficultés avec l’enseignant ?",
+    answer:
+      "Échangez avec l’enseignant lorsque l’enfant peine durablement à écouter une courte consigne sonore, mémoriser une comptine, scander des mots familiers ou repérer des ressemblances malgré des activités répétées. Les observations croisées permettent de choisir la suite adaptée.",
+  },
+];
+
+const toc = [
+  { href: "#definition", label: "Définition simple" },
+  { href: "#unites", label: "Mots, syllabes et phonèmes" },
+  { href: "#importance", label: "Pourquoi la travailler" },
+  { href: "#progression-age", label: "La progression par âge" },
+  { href: "#activites", label: "Jeux à la maison" },
+  { href: "#observer", label: "Observer les progrès" },
+  { href: "#difficultes", label: "En cas de difficultés" },
+  { href: "#faq", label: "Questions fréquentes" },
+];
+
+const sources = [
+  {
+    href: "https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A",
+    label: "Bulletin officiel, programme de langage oral et écrit du cycle 1",
+  },
+  {
+    href: "https://eduscol.education.fr/document/13870/download",
+    label: "Éduscol, guide de référence sur la conscience phonologique",
+  },
+  {
+    href: "https://eduscol.education.fr/document/301/download?attachment=",
+    label: "Éduscol, préparer l’apprentissage de la lecture et de l’écriture à la maternelle",
+  },
+];
+
+const relatedGuides = [
+  {
+    href: "/apprendre-les-syllabes/",
+    title: "Apprendre les syllabes",
+    description: "Des gestes et des jeux pour entendre les morceaux des mots.",
+  },
+  {
+    href: "/apprendre-les-lettres/",
+    title: "Apprendre les lettres",
+    description: "Relier les sons entendus aux lettres qui les représentent.",
+  },
+  {
+    href: "/apprendre-a-lire/",
+    title: "Les bases de la lecture",
+    description: "Retrouver toute la progression de la petite à la grande section.",
+  },
+];
+---
+
+<GuideLayout
+  title="Conscience phonologique en maternelle : guide pour les parents | Readingo"
+  description="Comprenez la conscience phonologique en maternelle et découvrez des jeux simples sur les mots, les syllabes, les rimes et les phonèmes."
+  canonicalPath="/conscience-phonologique-maternelle/"
+  eyebrow="Guide pour les parents · Petite à grande section"
+  heading="La conscience phonologique expliquée aux parents"
+  intro="Avant de relier les lettres aux sons, l’enfant apprend à écouter la langue autrement. Il découvre que les phrases contiennent des mots et que les mots peuvent être découpés en syllabes puis en sons plus petits. Cette attention prépare l’apprentissage de la lecture."
+  readingTime="environ 7 minutes"
+  {toc}
+  {faqEntries}
+  {sources}
+  sourceIntro="Ce guide s’appuie sur le programme du cycle 1 et sur le guide de référence publié par Éduscol pour préparer l’apprentissage de la lecture et de l’écriture."
+  {relatedGuides}
+>
+  <section id="definition" class="intro-note" aria-labelledby="definition-title">
+    <h2 id="definition-title">Une capacité à écouter et à manipuler les sons</h2>
+    <p>
+      La conscience phonologique désigne la capacité à percevoir les unités
+      sonores de la langue, à les isoler et à les transformer volontairement.
+      Pendant une conversation, l’enfant cherche surtout à comprendre le message.
+      Pendant un jeu phonologique, il dirige son attention vers la manière dont
+      les mots sonnent.
+    </p>
+    <p>
+      Il peut ainsi compter les mots d’une petite phrase, frapper les syllabes
+      d’un prénom, trouver deux mots qui riment ou repérer le son /f/ dans une
+      liste. Cette compétence se construit par des activités courtes, structurées
+      et répétées. Les comptines, la voix et les gestes offrent les premiers
+      supports.
+    </p>
+    <div class="example-box">
+      <h3>Un exemple avec le mot BATEAU</h3>
+      <ul>
+        <li>Le mot entier porte un sens et désigne un objet.</li>
+        <li>Il peut être scandé en deux syllabes orales : BA et TEAU.</li>
+        <li>Sa première syllabe commence par le phonème /b/.</li>
+        <li>Le son /b/ peut ensuite être relié à la lettre B.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="unites" aria-labelledby="unites-title">
+    <p class="section-kicker">Du plus grand au plus petit</p>
+    <h2 id="unites-title">Mots, syllabes, rimes et phonèmes</h2>
+    <p>
+      La progression avance depuis les unités les plus faciles à percevoir vers
+      les sons les plus fins. Chaque niveau demande une attention particulière.
+      L’enfant continue à jouer avec les syllabes même lorsqu’il commence à
+      repérer des phonèmes.
+    </p>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <span aria-hidden="true">1</span>
+        <h3>Le mot</h3>
+        <p>Une petite phrase peut être segmentée en mots, chacun portant une place et un sens.</p>
+      </div>
+      <div class="concept-card">
+        <span aria-hidden="true">2</span>
+        <h3>La syllabe</h3>
+        <p>Elle correspond à un morceau prononcé en une émission de voix et peut être facilement scandée.</p>
+      </div>
+      <div class="concept-card">
+        <span aria-hidden="true">3</span>
+        <h3>La rime et l’attaque</h3>
+        <p>La rime termine le mot. L’attaque désigne son début sonore, avant la partie qui rime.</p>
+      </div>
+      <div class="concept-card">
+        <span aria-hidden="true">4</span>
+        <h3>Le phonème</h3>
+        <p>Cette petite unité sonore permet de distinguer les mots et sera représentée par une ou plusieurs lettres.</p>
+      </div>
+    </div>
+    <p>
+      Le passage suit généralement l’ordre mot, syllabe, rime ou attaque, puis
+      phonème. Certaines activités se chevauchent selon les acquis de l’enfant.
+      L’enseignant adapte la difficulté et revient régulièrement sur les gestes
+      déjà appris.
+    </p>
+  </section>
+
+  <section id="importance" aria-labelledby="importance-title">
+    <p class="section-kicker">Préparer le principe alphabétique</p>
+    <h2 id="importance-title">Pourquoi cette compétence aide-t-elle à lire ?</h2>
+    <p>
+      Le français écrit représente les sons de la parole avec des lettres ou des
+      groupes de lettres. Pour comprendre ce système, l’enfant doit pouvoir porter
+      son attention sur les sons. Lorsqu’il entend /f/ au début de FÉE et connaît
+      la lettre F, il peut commencer à relier l’oral à l’écrit.
+    </p>
+    <p>
+      Cette découverte nourrit aussi les premiers essais d’écriture. L’enfant
+      prononce un mot lentement, cherche une syllabe connue et propose une lettre
+      pour un son entendu. Ses productions montrent sa réflexion. L’adulte peut
+      lui demander comment il a choisi, puis écrire le mot correctement afin de
+      fournir un modèle clair.
+    </p>
+    <p>
+      La conscience phonologique agit avec le vocabulaire, la syntaxe, la
+      compréhension des histoires et la connaissance des lettres. Lire demande
+      de mobiliser toutes ces bases ensemble. Les jeux sonores prennent donc leur
+      place au milieu des conversations, des albums et des activités d’écriture.
+    </p>
+    <aside class="game-callout game-callout--green" aria-labelledby="phonologie-game-title">
+      <div>
+        <p>Écouter les morceaux des mots</p>
+        <h3 id="phonologie-game-title">Manipuler des syllabes dans un jeu</h3>
+        <span>L’Archipel des mots aide à écouter, choisir et fusionner des syllabes.</span>
+      </div>
+      <a href={sitePath("/jeux/bateau/")}>Jouer avec les syllabes</a>
+    </aside>
+  </section>
+
+  <section id="progression-age" aria-labelledby="progression-age-title">
+    <p class="section-kicker">Des repères par âge</p>
+    <h2 id="progression-age-title">Comment la phonologie évolue-t-elle en maternelle ?</h2>
+    <div class="advice-list">
+      <div>
+        <h3>Avant 4 ans : écouter et rythmer</h3>
+        <p>
+          L’enfant reconnaît des sons familiers, répète des comptines et scande
+          les syllabes de mots connus. Il peut frapper son prénom ou reproduire
+          une courte suite sonore. La voix et le corps soutiennent l’écoute.
+        </p>
+      </div>
+      <div>
+        <h3>À partir de 4 ans : manipuler les syllabes</h3>
+        <p>
+          L’enfant compte et classe les syllabes. Il peut en ajouter, en supprimer,
+          en répéter ou en déplacer. Il commence à discriminer des phonèmes et à
+          repérer une sonorité précise dans une courte suite.
+        </p>
+      </div>
+      <div>
+        <h3>À partir de 5 ans : affiner jusqu’au phonème</h3>
+        <p>
+          L’enfant produit des rimes, localise des sons et distingue des mots
+          proches. Il fusionne ou transforme les syllabes avec davantage de
+          souplesse et mobilise ces connaissances dans ses essais d’écriture.
+        </p>
+      </div>
+    </div>
+    <p>
+      Ces repères décrivent une progression. Ils restent souples et tiennent
+      compte des apprentissages déjà observés. Une activité peut être reprise avec
+      un enfant plus âgé lorsqu’elle consolide une étape encore fragile.
+    </p>
+  </section>
+
+  <section id="activites" aria-labelledby="activites-title">
+    <p class="section-kicker">Jouer avec la langue</p>
+    <h2 id="activites-title">Six activités phonologiques à faire à la maison</h2>
+    <div class="advice-list">
+      <div>
+        <h3>La phrase en jetons</h3>
+        <p>Dites une phrase courte et posez un jeton pour chaque mot. Répétez-la en suivant les jetons de gauche à droite.</p>
+      </div>
+      <div>
+        <h3>Les pas des syllabes</h3>
+        <p>Prononcez un mot familier et avancez d’un pas pour chaque syllabe. Comparez ensuite deux trajets.</p>
+      </div>
+      <div>
+        <h3>Le panier des rimes</h3>
+        <p>Placez ensemble les images dont les noms riment, comme CHAT et RAT. Commencez avec un choix très réduit.</p>
+      </div>
+      <div>
+        <h3>L’intrus sonore</h3>
+        <p>Dites trois mots dont deux commencent par le même son. L’enfant repère celui qui commence autrement.</p>
+      </div>
+      <div>
+        <h3>Le mot transformé</h3>
+        <p>Retirez ou remplacez une syllabe dans un mot connu et écoutez ensemble le résultat, même s’il devient amusant.</p>
+      </div>
+      <div>
+        <h3>Le son caché</h3>
+        <p>Choisissez un son facile à prolonger, comme /f/ ou /s/, puis cherchez-le dans trois ou quatre mots.</p>
+      </div>
+    </div>
+    <p>
+      Présentez toujours un exemple avant de demander une réponse. L’enfant doit
+      comprendre le geste attendu : écouter, compter, comparer ou transformer.
+      Une consigne stable lui permet de concentrer son attention sur les sons.
+    </p>
+  </section>
+
+  <section id="observer" aria-labelledby="observer-title">
+    <p class="section-kicker">Regarder la progression</p>
+    <h2 id="observer-title">Quels progrès peut-on remarquer ?</h2>
+    <ul class="checklist">
+      <li><span aria-hidden="true">✓</span>L’enfant écoute une comptine et en reprend le rythme.</li>
+      <li><span aria-hidden="true">✓</span>Il scande un prénom ou un mot familier avec un geste régulier.</li>
+      <li><span aria-hidden="true">✓</span>Il classe quelques mots selon leur nombre de syllabes.</li>
+      <li><span aria-hidden="true">✓</span>Il repère une syllabe ou une rime commune dans plusieurs mots.</li>
+      <li><span aria-hidden="true">✓</span>Il comprend une consigne de suppression ou de fusion sonore.</li>
+      <li><span aria-hidden="true">✓</span>Il commence à relier certains sons aux lettres connues.</li>
+    </ul>
+    <p>
+      Observez surtout les stratégies. Un enfant peut tapoter discrètement, répéter
+      le mot à voix basse ou demander une seconde écoute. Ces gestes montrent
+      qu’il cherche à analyser le mot. Valorisez cette démarche avant le résultat.
+    </p>
+    <aside class="game-callout game-callout--blue" aria-labelledby="lettres-sons-title">
+      <div>
+        <p>Relier l’oral à l’écrit</p>
+        <h3 id="lettres-sons-title">Écouter le son des lettres</h3>
+        <span>Le jeu Lettres complète les activités orales lorsque l’enfant commence à reconnaître les graphies.</span>
+      </div>
+      <a href={sitePath("/jeux/lettres/")}>Découvrir le jeu Lettres</a>
+    </aside>
+  </section>
+
+  <section id="difficultes" class="support-section" aria-labelledby="difficultes-title">
+    <p class="section-kicker">Croiser les observations</p>
+    <h2 id="difficultes-title">Quand les jeux sonores restent difficiles</h2>
+    <p>
+      Vérifiez que l’enfant connaît les mots employés et comprend la consigne.
+      Revenez à une imitation avec le corps, puis proposez seulement deux choix.
+      Une difficulté peut concerner le vocabulaire, la mémoire de la consigne,
+      l’articulation ou l’écoute. Le contexte aide à comprendre ce qui bloque.
+    </p>
+    <p>
+      Si l’enfant progresse peu malgré des activités régulières, s’il comprend
+      difficilement le langage ou s’il réagit peu aux sons, partagez vos
+      observations avec l’enseignant. Une régression mérite également un échange
+      rapide avec le médecin. Les professionnels pourront regarder l’ensemble du
+      développement langagier et proposer les étapes adaptées.
+    </p>
+  </section>
+</GuideLayout>

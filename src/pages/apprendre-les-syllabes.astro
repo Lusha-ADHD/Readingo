@@ -1,69 +1,305 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
+import GuideLayout from "@layouts/GuideLayout.astro";
 import { sitePath } from "../utils/paths";
+
+const faqEntries = [
+  {
+    question: "Comment expliquer une syllabe à un enfant ?",
+    answer:
+      "Présentez la syllabe comme un morceau de mot que l’on entend en une seule émission de voix. Prononcez lentement BATEAU, puis rythmez BA et TEAU avec deux frappes. L’enfant peut d’abord écouter et imiter avant de compter seul.",
+  },
+  {
+    question: "À quel âge commencer les jeux de syllabes ?",
+    answer:
+      "Les premières comptines et frappes peuvent commencer avant 4 ans avec des mots très familiers. À partir de 4 ans, les manipulations deviennent plus variées. Après 5 ans, l’enfant affine son écoute et commence aussi à travailler avec des phonèmes.",
+  },
+  {
+    question: "Quelle différence entre syllabe orale et syllabe écrite ?",
+    answer:
+      "La maternelle travaille d’abord la syllabe entendue et prononcée. Elle suit le rythme de la parole. Le découpage écrit s’appuie sur les lettres et sera étudié plus précisément pendant l’apprentissage de la lecture. Pour jouer à la maison, fiez-vous au mot prononcé.",
+  },
+  {
+    question: "Pourquoi certains mots sont-ils difficiles à découper ?",
+    answer:
+      "La longueur, les sons proches, les groupes de consonnes ou une prononciation peu familière peuvent compliquer l’écoute. Revenez à des prénoms et à des mots courts. Prononcez naturellement, puis plus lentement, sans séparer chaque lettre.",
+  },
+  {
+    question: "Que faire si mon enfant se trompe souvent ?",
+    answer:
+      "Donnez le modèle, faites le geste avec lui et réduisez le nombre de choix. Une réussite accompagnée aide à comprendre l’action attendue. Si la difficulté reste présente dans plusieurs activités et dure dans le temps, échangez avec l’enseignant.",
+  },
+  {
+    question: "Combien de temps consacrer à ces activités ?",
+    answer:
+      "Cinq à dix minutes suffisent. Une comptine, trois mots frappés ou une courte partie peuvent former une séance complète. La régularité et le plaisir aident davantage que la quantité d’exercices.",
+  },
+];
+
+const toc = [
+  { href: "#definition", label: "Comprendre la syllabe orale" },
+  { href: "#progression", label: "La progression des gestes" },
+  { href: "#avant-4-ans", label: "Avant 4 ans" },
+  { href: "#a-partir-4-ans", label: "À partir de 4 ans" },
+  { href: "#a-partir-5-ans", label: "À partir de 5 ans" },
+  { href: "#activites", label: "Activités à la maison" },
+  { href: "#premiers-mots", label: "Des syllabes aux mots" },
+  { href: "#difficultes", label: "En cas de difficultés" },
+  { href: "#faq", label: "Questions fréquentes" },
+];
+
+const sources = [
+  {
+    href: "https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A",
+    label: "Bulletin officiel, programme de langage oral et écrit du cycle 1",
+  },
+  {
+    href: "https://eduscol.education.fr/document/13870/download",
+    label: "Éduscol, guide de référence sur la conscience phonologique",
+  },
+  {
+    href: "https://eduscol.education.fr/document/301/download?attachment=",
+    label: "Éduscol, préparer l’apprentissage de la lecture et de l’écriture à la maternelle",
+  },
+];
+
+const relatedGuides = [
+  {
+    href: "/apprendre-les-lettres/",
+    title: "Apprendre les lettres",
+    description: "Relier progressivement les formes, les noms et les sons.",
+  },
+  {
+    href: "/conscience-phonologique-maternelle/",
+    title: "La conscience phonologique",
+    description: "Situer les syllabes parmi les autres unités sonores.",
+  },
+  {
+    href: "/preparer-entree-cp/",
+    title: "Préparer l’entrée au CP",
+    description: "Des activités courtes pour consolider les bases avant la rentrée.",
+  },
+];
 ---
 
-<BaseLayout
-  title="Apprendre les syllabes - Readingo"
-  description="Des jeux gratuits pour assembler les syllabes et former les premiers mots."
+<GuideLayout
+  title="Apprendre les syllabes en maternelle : jeux et progression | Readingo"
+  description="Apprenez à jouer avec les syllabes en maternelle : frapper, compter, repérer, déplacer et assembler les morceaux des mots selon l’âge."
+  canonicalPath="/apprendre-les-syllabes/"
+  eyebrow="Guide pour les parents · 2 à 6 ans"
+  heading="Comment apprendre les syllabes en maternelle ?"
+  intro="Les syllabes donnent un rythme aux mots. En les écoutant, en les frappant et en les déplaçant, l’enfant découvre que la parole peut être découpée et manipulée. Cette étape prépare le lien entre les sons et l’écrit."
+  readingTime="environ 7 minutes"
+  {toc}
+  {faqEntries}
+  {sources}
+  sourceIntro="Ce guide suit la progression du programme français de cycle 1 et les ressources officielles consacrées à la conscience phonologique."
+  {relatedGuides}
 >
-  <main class="content-page page-shell">
-    <p>Ressource</p>
-    <h1>Apprendre les syllabes</h1>
-    <section>
-      <h2>Assembler pour lire</h2>
+  <section id="definition" class="intro-note" aria-labelledby="definition-title">
+    <h2 id="definition-title">Qu’est-ce qu’une syllabe orale ?</h2>
+    <p>
+      Une syllabe est un morceau de mot prononcé en une seule émission de voix.
+      Le mot BATEAU comporte deux syllabes orales : BA et TEAU. PAPA en comporte
+      deux, tandis que CHAT se prononce en une seule syllabe. Les enfants sentent
+      d’abord ce rythme dans leur corps, avec la voix, les mains ou les pas.
+    </p>
+    <p>
+      À la maternelle, le travail commence par l’oral. L’enfant écoute le mot sans
+      regarder son écriture. Il apprend à porter son attention sur sa forme sonore.
+      Cette capacité fait partie de la conscience phonologique, qui permet de
+      repérer et de manipuler les unités de la langue parlée.
+    </p>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <span aria-hidden="true">👂</span>
+        <h3>Écouter</h3>
+        <p>Entendre le rythme d’un mot et reconnaître des morceaux déjà rencontrés.</p>
+      </div>
+      <div class="concept-card">
+        <span aria-hidden="true">👏</span>
+        <h3>Scander</h3>
+        <p>Marquer chaque syllabe avec les mains, les pas, des jetons ou un instrument.</p>
+      </div>
+      <div class="concept-card">
+        <span aria-hidden="true">2</span>
+        <h3>Compter</h3>
+        <p>Associer chaque syllabe entendue à un geste ou à un objet que l’on peut dénombrer.</p>
+      </div>
+      <div class="concept-card">
+        <span aria-hidden="true">↔</span>
+        <h3>Manipuler</h3>
+        <p>Ajouter, retirer, répéter, déplacer ou fusionner des syllabes dans un mot.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="progression" aria-labelledby="progression-title">
+    <p class="section-kicker">Une découverte par étapes</p>
+    <h2 id="progression-title">Du mot entier à la syllabe manipulée</h2>
+    <p>
+      L’enfant part de mots qu’il comprend et qu’il sait prononcer. Son prénom,
+      ceux de ses proches, les animaux et les objets de la maison offrent un
+      vocabulaire motivant. Il écoute d’abord un adulte scander le mot, puis imite
+      le geste. Il pourra ensuite agir seul et comparer plusieurs mots.
+    </p>
+    <ol class="steps-list">
+      <li>Écouter un mot prononcé clairement et le répéter.</li>
+      <li>Marquer chaque syllabe avec un geste régulier.</li>
+      <li>Compter les gestes et classer les mots selon leur longueur orale.</li>
+      <li>Repérer une syllabe identique dans plusieurs mots.</li>
+      <li>Localiser cette syllabe au début ou à la fin du mot.</li>
+      <li>Ajouter, supprimer, remplacer ou déplacer une syllabe.</li>
+      <li>Fusionner des syllabes entendues séparément pour retrouver un mot.</li>
+    </ol>
+    <p>
+      Chaque étape reste disponible même lorsque la suivante commence. Revenir à
+      une simple frappe aide l’enfant à retrouver le rythme d’un mot plus difficile.
+      Les opérations complexes arrivent après de nombreuses expériences d’écoute.
+    </p>
+  </section>
+
+  <section id="avant-4-ans" aria-labelledby="avant-4-ans-title">
+    <p class="section-kicker">Petite section · avant 4 ans</p>
+    <h2 id="avant-4-ans-title">Sentir le rythme avec le corps</h2>
+    <p>
+      Les comptines, les chansons et les jeux de doigts installent une attention
+      aux sons. L’enfant peut prononcer son prénom en frappant dans ses mains ou
+      poser un jeton pour chaque partie entendue. Il imite l’adulte et découvre
+      que deux mots peuvent avoir un rythme différent.
+    </p>
+    <p>
+      Choisissez des mots courts et familiers. Une image ou un objet permet de
+      garder le sens présent. Prononcez le mot normalement, puis scandez-le avec
+      un geste ample. L’enfant peut participer avec tout son corps avant de réussir
+      une frappe précise.
+    </p>
+    <div class="at-home">
+      <h3>Une activité avec les prénoms</h3>
       <p>
-        Les jeux de syllabes transforment la lecture en manipulation concrète :
-        l'enfant écoute, choisit, place et valide les sons dans le bon ordre.
+        Dites les prénoms de la famille. Faites un pas pour chaque syllabe. Comparez
+        ensuite les trajets : qui a avancé d’un pas, de deux pas ou de trois pas ?
       </p>
-    </section>
-    <a href={sitePath("/jeux/bateau/")}>Jouer avec les syllabes</a>
-  </main>
-</BaseLayout>
+    </div>
+  </section>
 
-<style>
-  .content-page {
-    display: grid;
-    max-width: 820px;
-    gap: 20px;
-    padding-block: 56px;
-  }
+  <section id="a-partir-4-ans" aria-labelledby="a-partir-4-ans-title">
+    <p class="section-kicker">Moyenne section · à partir de 4 ans</p>
+    <h2 id="a-partir-4-ans-title">Compter, classer et transformer</h2>
+    <p>
+      L’enfant scande des mots sans avoir besoin d’imiter chaque fois l’adulte. Il
+      peut compter les syllabes, comparer leur nombre et classer des images. Il
+      repère aussi une syllabe cible dans une petite suite ou dans plusieurs mots.
+    </p>
+    <p>
+      Les premières transformations apportent beaucoup de plaisir. Répéter la
+      première syllabe de MOTO donne MO-MO-TO. Retirer BA de BATEAU laisse TEAU.
+      Inverser les deux syllabes crée TEAU-BA, un pseudo-mot amusant. Ces jeux
+      demandent de garder les morceaux en mémoire et d’agir volontairement dessus.
+    </p>
+    <aside class="game-callout game-callout--green" aria-labelledby="syllabes-ms-title">
+      <div>
+        <p>Écouter puis agir</p>
+        <h3 id="syllabes-ms-title">Assembler des syllabes avec un adulte</h3>
+        <span>L’Archipel des mots permet de choisir des syllabes et de vérifier leur ordre.</span>
+      </div>
+      <a href={sitePath("/jeux/bateau/")}>Découvrir L’Archipel des mots</a>
+    </aside>
+  </section>
 
-  .content-page > p {
-    margin: 0;
-    color: var(--color-blue-dark);
-    font-weight: 950;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+  <section id="a-partir-5-ans" aria-labelledby="a-partir-5-ans-title">
+    <p class="section-kicker">Grande section · à partir de 5 ans</p>
+    <h2 id="a-partir-5-ans-title">Manipuler avec précision et écouter les phonèmes</h2>
+    <p>
+      En grande section, les opérations deviennent plus souples. L’enfant peut
+      supprimer, ajouter, remplacer, inverser ou fusionner des syllabes. Il repère
+      des rimes et des sons communs. Son attention descend alors vers le phonème,
+      la plus petite unité sonore utile pour distinguer et construire les mots.
+    </p>
+    <p>
+      La syllabe garde un rôle essentiel. Elle aide à ralentir la parole et à
+      organiser les premiers essais d’écriture. Pour MOTO, l’enfant peut isoler MO
+      puis TO, écouter le premier son de chaque syllabe et chercher les lettres
+      correspondantes avec l’aide de l’adulte.
+    </p>
+    <p>
+      Les activités restent orales avant l’utilisation des lettres. Cette
+      succession permet d’entendre les unités, puis de comprendre comment l’écrit
+      les représente. Elle prépare directement le principe alphabétique travaillé
+      à la maternelle et approfondi au CP.
+    </p>
+  </section>
 
-  .content-page h1 {
-    margin: 0;
-    font-size: clamp(3rem, 8vw, 5.4rem);
-    line-height: 1;
-  }
+  <section id="activites" aria-labelledby="activites-title">
+    <p class="section-kicker">Des jeux courts et variés</p>
+    <h2 id="activites-title">Six activités de syllabes à faire à la maison</h2>
+    <div class="advice-list">
+      <div>
+        <h3>Les jetons du mot</h3>
+        <p>Posez un jeton pour chaque syllabe entendue, puis faites glisser le doigt de gauche à droite en répétant le mot.</p>
+      </div>
+      <div>
+        <h3>Les familles de longueur</h3>
+        <p>Classez six images dans trois familles : une, deux ou trois syllabes orales.</p>
+      </div>
+      <div>
+        <h3>La syllabe commune</h3>
+        <p>Cherchez le morceau commun dans MAMAN et MARDI, ou dans BATEAU et BALADE.</p>
+      </div>
+      <div>
+        <h3>Le mot robot</h3>
+        <p>Prononcez les syllabes avec une courte pause. L’enfant retrouve le mot entier et montre l’objet correspondant.</p>
+      </div>
+      <div>
+        <h3>La syllabe en trop</h3>
+        <p>Ajoutez une syllabe amusante à un prénom, puis demandez à l’enfant de retrouver sa forme habituelle.</p>
+      </div>
+      <div>
+        <h3>Le panier des débuts</h3>
+        <p>Rassemblez les images dont le nom commence par la même syllabe, comme MAMAN, MARDI et MARTEAU.</p>
+      </div>
+    </div>
+  </section>
 
-  .content-page h2 {
-    margin: 0 0 8px;
-    font-size: 2rem;
-  }
+  <section id="premiers-mots" aria-labelledby="premiers-mots-title">
+    <p class="section-kicker">Vers l’écrit</p>
+    <h2 id="premiers-mots-title">Passer des syllabes aux premiers mots</h2>
+    <p>
+      Lorsque l’enfant fusionne BA et TEAU pour retrouver BATEAU, il maintient deux
+      unités en mémoire et les remet dans l’ordre. Une image, un enregistrement du
+      mot et des cartes de syllabes rendent cette opération concrète. Le sens du
+      mot reste présent tout au long de l’activité.
+    </p>
+    <p>
+      Commencez avec deux syllabes très distinctes et un mot connu. Prononcez chaque
+      carte lorsque l’enfant la touche. Une fois le mot assemblé, relisez-le en
+      suivant les cartes de gauche à droite. L’enfant entend alors le passage des
+      morceaux au mot entier.
+    </p>
+    <aside class="game-callout game-callout--green" aria-labelledby="syllabes-gs-title">
+      <div>
+        <p>Mettre les morceaux dans l’ordre</p>
+        <h3 id="syllabes-gs-title">Composer des mots et gagner des trésors</h3>
+        <span>Le jeu Bateau associe écoute, manipulation et validation immédiate.</span>
+      </div>
+      <a href={sitePath("/jeux/bateau/")}>Jouer avec les syllabes</a>
+    </aside>
+  </section>
 
-  .content-page p {
-    color: var(--color-muted);
-    font-size: 1.15rem;
-    font-weight: 750;
-  }
-
-  .content-page a {
-    display: inline-flex;
-    width: max-content;
-    min-height: 54px;
-    align-items: center;
-    border: 3px solid var(--color-border);
-    border-radius: 16px;
-    background: var(--color-gold);
-    padding-inline: 22px;
-    box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
-    font-weight: 950;
-  }
-</style>
+  <section id="difficultes" class="support-section" aria-labelledby="difficultes-title">
+    <p class="section-kicker">Accompagner les progrès</p>
+    <h2 id="difficultes-title">Quand le découpage reste difficile</h2>
+    <p>
+      Vérifiez d’abord que le mot est connu et bien prononcé. Donnez le modèle,
+      ralentissez légèrement et accompagnez chaque syllabe d’un geste. Réduisez
+      le choix à deux mots faciles. Vous pouvez aussi revenir aux comptines et aux
+      prénoms avant de reprendre le classement ou la transformation.
+    </p>
+    <p>
+      Observez les progrès sur plusieurs semaines. Si l’enfant peine durablement
+      à comprendre les consignes, à prononcer les mots, à mémoriser de courtes
+      suites sonores ou à repérer les syllabes malgré les reprises, parlez-en avec
+      l’enseignant. Les observations faites à l’école et à la maison aideront à
+      choisir un accompagnement adapté.
+    </p>
+  </section>
+</GuideLayout>
