@@ -1,70 +1,923 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import GameCard from "@components/ui/GameCard.astro";
 import { sitePath } from "../utils/paths";
+
+const pageTitle = "Lecture en maternelle : les bases de la petite à la grande section | Readingo";
+const pageDescription =
+  "Découvrez les bases de la lecture de 2 à 6 ans, les repères du programme français par section et des mini-jeux pour progresser en s'amusant.";
+const canonicalUrl = new URL(sitePath("/apprendre-a-lire/"), Astro.site ?? Astro.url).toString();
+
+const faqEntries = [
+  {
+    question: "Faut-il savoir lire avant d’entrer au CP ?",
+    answer:
+      "Non. À la maternelle, l’enfant développe le langage, écoute des histoires, joue avec les sons, découvre les lettres et commence à comprendre le fonctionnement de l’écrit. Ces bases l’aident à aborder sereinement l’apprentissage organisé de la lecture au CP.",
+  },
+  {
+    question: "Que proposer à un enfant dès 2 ans ?",
+    answer:
+      "Vous pouvez regarder de petits livres ensemble, nommer les images, chanter des comptines et parler de ce que vous faites. Laissez l’enfant tourner les pages, répéter un mot ou raconter avec ses propres mots. Quelques minutes agréables et régulières suffisent.",
+  },
+  {
+    question: "Faut-il apprendre les lettres capitales, scriptes ou cursives ?",
+    answer:
+      "Les lettres capitales sont souvent les premières reconnues, notamment dans le prénom. L’enfant découvre ensuite les minuscules scriptes des livres et les lettres cursives utilisées pour écrire à la main. Les trois graphies sont reliées progressivement au fil de la maternelle.",
+  },
+  {
+    question: "Quelle différence entre une syllabe et un phonème ?",
+    answer:
+      "Une syllabe est une partie de mot que l’on peut facilement rythmer, comme BA et TEAU dans BATEAU. Un phonème est un son plus petit, comme /f/ au début de FÉE. Les jeux commencent par les mots et les syllabes avant d’affiner l’écoute des phonèmes.",
+  },
+  {
+    question: "Combien de temps consacrer aux mini-jeux ?",
+    answer:
+      "Une session de 5 à 10 minutes est adaptée à la plupart des jeunes enfants. Restez près de l’enfant pour lire la consigne, l’encourager et parler de ses choix. Vous pouvez arrêter dès que son attention baisse et reprendre un autre jour.",
+  },
+  {
+    question: "Que faire en cas de difficultés ?",
+    answer:
+      "Observez les compétences qui restent difficiles dans plusieurs situations : comprendre une consigne ou une histoire, trouver ses mots, construire une phrase, jouer avec les syllabes, reconnaître des lettres ou former les premiers tracés. Notez leur évolution et échangez avec l’enseignant. Si les difficultés persistent, si elles sont marquées ou si l’enfant régresse, parlez-en au médecin, au pédiatre ou au médecin scolaire. Il pourra proposer un bilan et orienter la famille vers le professionnel adapté.",
+  },
+];
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Les bases de la lecture à l’école maternelle",
+    description: pageDescription,
+    inLanguage: "fr-FR",
+    mainEntityOfPage: canonicalUrl,
+    author: {
+      "@type": "Organization",
+      name: "Readingo",
+    },
+    audience: {
+      "@type": "PeopleAudience",
+      audienceType: "Parents d’enfants de 2 à 6 ans",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqEntries.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: entry.answer,
+      },
+    })),
+  },
+];
 ---
 
 <BaseLayout
-  title="Apprendre à lire avec des jeux gratuits - Readingo"
-  description="Conseils et mini-jeux gratuits pour accompagner l'apprentissage de la lecture chez les enfants de 5 à 7 ans."
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/apprendre-a-lire/"
+  ogType="article"
 >
-  <main class="content-page page-shell">
-    <p>Ressource</p>
-    <h1>Apprendre à lire en jouant</h1>
-    <section>
-      <h2>Une progression courte et ludique</h2>
-      <p>
-        Readingo propose des activités courtes pour travailler les lettres, les
-        sons, les syllabes et les mots simples, avec des feedbacks immédiats et
-        une progression visible.
-      </p>
-    </section>
-    <a href={sitePath("/jeux/bateau/")}>Lancer le premier jeu</a>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <main class="article-page">
+    <article>
+      <header class="article-hero page-shell">
+        <p class="eyebrow">Guide pour les parents · 2 à 6 ans</p>
+        <h1>Les bases de la lecture à l’école maternelle</h1>
+        <p class="article-hero__intro">
+          Entre 2 et 6 ans, votre enfant construit peu à peu tout ce qui l’aidera
+          à lire. Il apprend à mieux parler, à écouter une histoire, à jouer avec
+          les sons et à reconnaître les lettres. Voici des repères simples pour
+          comprendre cette progression et l’accompagner avec plaisir.
+        </p>
+        <p class="article-meta">Mis à jour en juillet 2026 · Lecture : environ 8 minutes</p>
+      </header>
+
+      <div class="article-layout page-shell">
+        <nav class="article-toc" aria-label="Sommaire de l’article">
+          <strong>Dans ce guide</strong>
+          <ol>
+            <li><a href="#bases">Les six bases de la lecture</a></li>
+            <li><a href="#petite-section">Petite section, 2 à 4 ans</a></li>
+            <li><a href="#moyenne-section">Moyenne section, 4 à 5 ans</a></li>
+            <li><a href="#grande-section">Grande section, 5 à 6 ans</a></li>
+            <li><a href="#preparer-cp">Préparer l’arrivée au CP</a></li>
+            <li><a href="#accompagner">Accompagner à la maison</a></li>
+            <li><a href="#difficultes">En cas de difficultés</a></li>
+            <li><a href="#faq">Questions fréquentes</a></li>
+          </ol>
+        </nav>
+
+        <div class="article-content">
+          <section class="intro-note" aria-labelledby="programme-title">
+            <h2 id="programme-title">Des repères adaptés au rythme de chaque enfant</h2>
+            <p>
+              Le programme français du cycle 1 organise les apprentissages selon
+              trois périodes : avant 4 ans, à partir de 4 ans et à partir de 5
+              ans. Ces âges correspondent généralement à la petite, à la moyenne
+              et à la grande section. Ils servent de guide. Une compétence peut
+              apparaître plus tôt ou demander davantage de temps.
+            </p>
+            <p>
+              La maternelle prépare l’apprentissage de la lecture mené au CP.
+              Elle nourrit le langage, la curiosité et le plaisir des livres.
+              Chaque histoire écoutée et chaque mot découvert renforcent ces
+              fondations.
+            </p>
+          </section>
+
+          <section id="bases" aria-labelledby="bases-title">
+            <p class="section-kicker">La progression en un coup d’œil</p>
+            <h2 id="bases-title">Les six bases de la lecture</h2>
+            <p>
+              Lire mobilise plusieurs capacités qui grandissent ensemble. Les
+              activités de l’école et les échanges du quotidien les font
+              progresser régulièrement.
+            </p>
+            <div class="pillars-grid">
+              <div class="pillar-card">
+                <span aria-hidden="true">1</span>
+                <h3>Le langage oral</h3>
+                <p>Parler, écouter, expliquer et construire des phrases de plus en plus précises.</p>
+              </div>
+              <div class="pillar-card">
+                <span aria-hidden="true">2</span>
+                <h3>Le vocabulaire</h3>
+                <p>Comprendre de nouveaux mots et savoir les réutiliser dans une conversation.</p>
+              </div>
+              <div class="pillar-card">
+                <span aria-hidden="true">3</span>
+                <h3>La compréhension</h3>
+                <p>Suivre une histoire, reconnaître les personnages et raconter les événements.</p>
+              </div>
+              <div class="pillar-card">
+                <span aria-hidden="true">4</span>
+                <h3>Les sons de la langue</h3>
+                <p>Entendre les mots, les syllabes puis les plus petits sons appelés phonèmes.</p>
+              </div>
+              <div class="pillar-card">
+                <span aria-hidden="true">5</span>
+                <h3>Le principe alphabétique</h3>
+                <p>Comprendre que les lettres servent à écrire les sons de la langue.</p>
+              </div>
+              <div class="pillar-card">
+                <span aria-hidden="true">6</span>
+                <h3>Le geste d’écriture</h3>
+                <p>Développer la motricité fine, tenir le crayon et former des lettres progressivement.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="petite-section" aria-labelledby="petite-section-title">
+            <p class="section-kicker">Avant 4 ans</p>
+            <h2 id="petite-section-title">Petite section : écouter, parler et découvrir l’écrit</h2>
+            <p>
+              À cet âge, la priorité va au langage oral. Votre enfant apprend à
+              nommer les personnes, les objets, les actions et les émotions. Il
+              raconte ce qu’il fait avec des phrases qui s’allongent. Les
+              chansons, les comptines et les histoires l’aident à mémoriser des
+              mots et à mieux articuler.
+            </p>
+            <p>
+              Les premiers jeux sonores peuvent rester très simples. Vous pouvez
+              frapper dans vos mains pour chaque syllabe de son prénom, imiter le
+              bruit d’un animal ou chercher deux mots qui commencent de la même
+              façon. L’enfant découvre aussi que l’écrit transmet un message. Il
+              reconnaît son étiquette-prénom et quelques lettres capitales qui le
+              composent.
+            </p>
+            <div class="at-home">
+              <h3>À essayer à la maison</h3>
+              <ul>
+                <li>Laissez votre enfant choisir un livre et tourner les pages.</li>
+                <li>Nommez ensemble ce que vous voyez sur une illustration.</li>
+                <li>Frappez les syllabes de PAPA, DODO ou d’un prénom familier.</li>
+                <li>Montrez la première lettre de son prénom sur une affiche ou un paquet.</li>
+              </ul>
+            </div>
+            <aside class="game-callout game-callout--blue" aria-labelledby="game-letters-title">
+              <div>
+                <p>Une escale ludique</p>
+                <h3 id="game-letters-title">Reconnaître les lettres</h3>
+                <span>Le jeu Lettres aide à observer leur forme et à écouter leur son.</span>
+              </div>
+              <a href={sitePath("/jeux/lettres/")}>Découvrir le jeu Lettres</a>
+            </aside>
+          </section>
+
+          <section id="moyenne-section" aria-labelledby="moyenne-section-title">
+            <p class="section-kicker">À partir de 4 ans</p>
+            <h2 id="moyenne-section-title">Moyenne section : jouer avec les syllabes et les lettres</h2>
+            <p>
+              Le vocabulaire continue de s’enrichir. L’enfant apprend à expliquer
+              comment il a réalisé une activité et à raconter une histoire déjà
+              entendue avec l’aide d’images ou de figurines. Il découvre aussi les
+              usages de l’écrit : une recette sert à cuisiner, une liste aide à se
+              souvenir et une lettre transmet un message à quelqu’un.
+            </p>
+            <p>
+              La conscience phonologique prend une place importante. Cette
+              expression désigne la capacité à entendre et à manipuler les sons
+              de la langue. L’enfant scande les syllabes, les compte, les fusionne
+              ou en enlève une. Il nomme les lettres de son prénom et de mots
+              familiers. Il relie peu à peu les capitales, les minuscules des
+              livres et les premières formes cursives.
+            </p>
+            <p>
+              Du côté de l’écriture, il copie son prénom et quelques mots en
+              capitales. Il commence la cursive lorsque son geste et sa posture
+              sont prêts. Les jeux de pâte à modeler, de pinces, de dessin et de
+              tracés soutiennent cette évolution.
+            </p>
+            <div class="at-home">
+              <h3>À essayer à la maison</h3>
+              <ul>
+                <li>Classez des mots selon leur nombre de syllabes.</li>
+                <li>Inventez un mot amusant en mélangeant deux syllabes.</li>
+                <li>Retrouvez une même lettre en capitale et en minuscule.</li>
+                <li>Demandez à votre enfant de raconter sa journée dans l’ordre.</li>
+              </ul>
+            </div>
+            <aside class="game-callout game-callout--green" aria-labelledby="game-syllables-title">
+              <div>
+                <p>Une escale à partager</p>
+                <h3 id="game-syllables-title">Assembler des syllabes</h3>
+                <span>L’Archipel des mots permet d’écouter, de choisir et de placer les syllabes dans le bon ordre.</span>
+              </div>
+              <a href={sitePath("/jeux/bateau/")}>Jouer avec les syllabes</a>
+            </aside>
+          </section>
+
+          <section id="grande-section" aria-labelledby="grande-section-title">
+            <p class="section-kicker">À partir de 5 ans</p>
+            <h2 id="grande-section-title">Grande section : relier les sons, les lettres et les mots</h2>
+            <p>
+              En grande section, l’enfant affine son écoute. Il repère des rimes,
+              localise un son dans un mot et commence à isoler certains phonèmes.
+              Par exemple, il peut reconnaître le son /f/ dans FÉE, CAFÉ et
+              GIRAFE. Il connaît progressivement le nom des lettres de l’alphabet
+              et leur valeur sonore la plus fréquente.
+            </p>
+            <p>
+              Le principe alphabétique devient plus clair : les sons prononcés
+              peuvent être codés par des lettres. L’enfant s’appuie sur cette idée
+              pour essayer d’écrire des syllabes et des mots simples. Les mots
+              dits transparents sont particulièrement adaptés. Leur écriture
+              correspond directement aux sons entendus, comme MOTO ou PAPA.
+            </p>
+            <p>
+              La compréhension des récits continue aussi de grandir. L’enfant
+              explique les intentions et les émotions des personnages. Il peut
+              raconter une histoire connue dans son ensemble. En écriture, il
+              apprend à enchaîner les lettres cursives et à écrire son prénom sans
+              modèle lorsque le geste est suffisamment assuré.
+            </p>
+            <div class="at-home">
+              <h3>À essayer à la maison</h3>
+              <ul>
+                <li>Cherchez des mots qui riment avec CHAT ou SOURIS.</li>
+                <li>Repérez le premier son d’un mot familier.</li>
+                <li>Composez un mot avec des lettres mobiles ou des syllabes écrites.</li>
+                <li>Invitez votre enfant à raconter la fin d’une histoire avec ses mots.</li>
+              </ul>
+            </div>
+            <aside class="game-callout game-callout--purple" aria-labelledby="game-words-title">
+              <div>
+                <p>Une escale pour aller plus loin</p>
+                <h3 id="game-words-title">Lire et comprendre des mots simples</h3>
+                <span>Le parcours Mots invite l’enfant à mobiliser les sons et les syllabes déjà connus.</span>
+              </div>
+              <a href={sitePath("/jeux/syllabes/")}>Découvrir le jeu Mots</a>
+            </aside>
+          </section>
+
+          <section id="preparer-cp" aria-labelledby="preparer-cp-title">
+            <p class="section-kicker">Le passage vers l’élémentaire</p>
+            <h2 id="preparer-cp-title">Préparer l’arrivée au CP en confiance</h2>
+            <p>
+              Les repères suivants donnent une vision globale des apprentissages
+              travaillés en fin de maternelle. Ils permettent de remarquer les
+              progrès et de choisir une activité adaptée. Ils peuvent être acquis
+              dans un ordre différent selon les enfants.
+            </p>
+            <ul class="checklist">
+              <li><span aria-hidden="true">✓</span>Écouter une histoire et en raconter les étapes principales.</li>
+              <li><span aria-hidden="true">✓</span>Comprendre et utiliser un vocabulaire varié dans des phrases organisées.</li>
+              <li><span aria-hidden="true">✓</span>Découper un mot en syllabes et repérer certains sons.</li>
+              <li><span aria-hidden="true">✓</span>Nommer les lettres et reconnaître leurs principales graphies.</li>
+              <li><span aria-hidden="true">✓</span>Associer plusieurs lettres à leur son le plus courant.</li>
+              <li><span aria-hidden="true">✓</span>Comprendre que l’écrit code ce qui est dit et se lit de gauche à droite.</li>
+              <li><span aria-hidden="true">✓</span>Écrire son prénom et essayer d’écrire quelques mots simples.</li>
+              <li><span aria-hidden="true">✓</span>Oser chercher, se tromper, recommencer et demander de l’aide.</li>
+            </ul>
+            <p>
+              Savoir déchiffrer seul tous les mots ne fait pas partie des attentes
+              de la maternelle. Une bonne familiarité avec la langue, les livres,
+              les sons et les lettres offre déjà un appui précieux pour le CP.
+            </p>
+          </section>
+
+          <section id="accompagner" aria-labelledby="accompagner-title">
+            <p class="section-kicker">Des habitudes simples</p>
+            <h2 id="accompagner-title">Comment accompagner votre enfant à la maison</h2>
+            <div class="advice-list">
+              <div>
+                <h3>Lisez un peu chaque jour</h3>
+                <p>
+                  Dix minutes autour d’un album créent un rendez-vous rassurant.
+                  Relisez les histoires préférées. La répétition aide à mémoriser
+                  le vocabulaire et la structure des phrases.
+                </p>
+              </div>
+              <div>
+                <h3>Parlez de la vie quotidienne</h3>
+                <p>
+                  Décrivez une recette, le trajet de l’école ou une sortie. Posez
+                  des questions ouvertes et laissez le temps de répondre. Vous
+                  pouvez reformuler naturellement une phrase pour offrir un modèle.
+                </p>
+              </div>
+              <div>
+                <h3>Jouez avec la langue</h3>
+                <p>
+                  Comptines, devinettes, rimes et mots inventés développent
+                  l’écoute. Gardez un esprit léger. Un rire partagé favorise
+                  souvent l’envie de recommencer.
+                </p>
+              </div>
+              <div>
+                <h3>Gardez une place pour le geste</h3>
+                <p>
+                  Dessiner, découper, modeler et manipuler de petites pièces
+                  préparent la main à écrire. Variez les supports et évitez de
+                  demander de longues lignes de lettres.
+                </p>
+              </div>
+              <div>
+                <h3>Accompagnez les mini-jeux</h3>
+                <p>
+                  Une session de 5 à 10 minutes suffit. Restez disponible pour
+                  lire une consigne, nommer un son et valoriser l’effort. Parlez
+                  ensuite du mot ou de la lettre rencontrée dans le jeu.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="difficultes" class="support-section" aria-labelledby="difficultes-title">
+            <p class="section-kicker">Observer et soutenir</p>
+            <h2 id="difficultes-title">Que faire en cas de difficultés ?</h2>
+            <p>
+              Les parents et l’enseignant peuvent remarquer qu’une compétence liée
+              à la future lecture progresse peu ou reste fragile. L’observation
+              porte sur plusieurs situations et sur une certaine durée. Un signe
+              isolé ne permet pas de conclure à un trouble. Le rythme, l’âge, la
+              langue parlée à la maison et les expériences de l’enfant doivent
+              toujours être pris en compte.
+            </p>
+            <h3>Quelques signes à observer</h3>
+            <ul class="signals-list">
+              <li>Comprendre difficilement une consigne simple ou une histoire adaptée à son âge.</li>
+              <li>Disposer de peu de mots, chercher souvent ses mots ou construire des phrases très courtes.</li>
+              <li>Avoir du mal à raconter un événement ou à remettre les étapes d’une histoire dans l’ordre.</li>
+              <li>Rester difficile à comprendre pour les personnes extérieures à la famille.</li>
+              <li>Peiner durablement à repérer des rimes, à frapper les syllabes ou à distinguer des sons proches.</li>
+              <li>Mémoriser difficilement le nom des lettres, leur forme ou leur son malgré des reprises régulières.</li>
+              <li>Rencontrer une gêne importante et persistante dans les activités de tracé et d’écriture.</li>
+              <li>Demander souvent de répéter, réagir peu à la voix ou sembler particulièrement gêné dans le bruit.</li>
+            </ul>
+            <p>
+              Notez simplement ce que vous observez, le contexte et les progrès
+              au fil des semaines. Échangez ensuite avec l’enseignant. Les regards
+              de la famille et de l’école se complètent. Ils aident à savoir si la
+              difficulté apparaît partout, dans certaines activités ou seulement
+              à certains moments.
+            </p>
+            <p>
+              Si les difficultés persistent, sont marquées ou s’accompagnent
+              d’une régression, prenez conseil auprès du médecin traitant, du
+              pédiatre ou du médecin scolaire. Une interrogation sur l’audition ou
+              la vue mérite aussi d’être signalée. Le médecin pourra proposer un
+              bilan et, si besoin, orienter la famille vers un orthophoniste, un
+              ORL ou un autre professionnel. Le diagnostic appartient à ces
+              professionnels.
+            </p>
+          </section>
+
+          <section id="faq" aria-labelledby="faq-title">
+            <p class="section-kicker">Questions fréquentes</p>
+            <h2 id="faq-title">Vos questions sur la lecture en maternelle</h2>
+            <div class="faq-list">
+              {faqEntries.map((entry) => (
+                <details>
+                  <summary>{entry.question}</summary>
+                  <p>{entry.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section class="games-section" aria-labelledby="games-title">
+            <p class="section-kicker">Choisir une activité</p>
+            <h2 id="games-title">Prolonger les apprentissages en jouant</h2>
+            <p>
+              Choisissez le jeu qui correspond à l’envie du moment. Vous pouvez
+              rejouer plusieurs fois, faire une pause et revenir à une étape plus
+              familière. Le plaisir et la régularité soutiennent les progrès.
+            </p>
+            <div class="games-grid">
+              <GameCard
+                title="Lettres"
+                description="Reconnaître les lettres et leurs sons."
+                href="/jeux/lettres/"
+                variant="blue"
+              />
+              <GameCard
+                title="Syllabes"
+                description="Assembler les syllabes dans le bon ordre."
+                href="/jeux/bateau/"
+                variant="green"
+              />
+              <GameCard
+                title="Mots"
+                description="Lire et comprendre des mots simples."
+                href="/jeux/syllabes/"
+                variant="purple"
+              />
+            </div>
+          </section>
+
+          <section class="sources" aria-labelledby="sources-title">
+            <h2 id="sources-title">Sources officielles</h2>
+            <p>
+              Ce guide s’appuie sur le programme d’enseignement pour le
+              développement et la structuration du langage oral et écrit du cycle
+              1, publié au Bulletin officiel du 31 octobre 2024 et appliqué depuis
+              la rentrée 2025.
+            </p>
+            <ul>
+              <li>
+                <a href="https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A">
+                  Bulletin officiel de l’Éducation nationale, programme du cycle 1
+                </a>
+              </li>
+              <li>
+                <a href="https://eduscol.education.fr/4698/le-developpement-et-la-structuration-du-langage-oral-et-ecrit-au-cycle-1">
+                  Éduscol, ressources pour le langage oral et écrit au cycle 1
+                </a>
+              </li>
+              <li>
+                <a href="https://www.ameli.fr/assure/sante/themes/trouble-expression-langage-oral-enfant/reconnaitre-signes-parole">
+                  Assurance Maladie, reconnaître les difficultés du langage oral chez l’enfant
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </article>
   </main>
 </BaseLayout>
 
 <style>
-  .content-page {
-    display: grid;
-    max-width: 820px;
-    gap: 20px;
-    padding-block: 56px;
+  .article-page {
+    padding-bottom: 32px;
   }
 
-  .content-page > p {
+  .article-hero {
+    display: grid;
+    max-width: 940px;
+    gap: 18px;
+    padding-block: 64px 40px;
+    text-align: center;
+  }
+
+  .eyebrow,
+  .section-kicker {
     margin: 0;
     color: var(--color-blue-dark);
+    font-size: 0.86rem;
+    font-weight: 950;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  .article-hero h1 {
+    max-width: 14ch;
+    margin: 0 auto;
+    font-size: clamp(3rem, 7vw, 5.4rem);
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  .article-hero__intro {
+    max-width: 720px;
+    margin: 0 auto;
+    color: var(--color-muted);
+    font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+    font-weight: 750;
+    line-height: 1.65;
+  }
+
+  .article-meta {
+    margin: 4px 0 0;
+    color: var(--color-muted);
+    font-size: 0.94rem;
+    font-weight: 750;
+  }
+
+  .article-layout {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 760px);
+    gap: 48px;
+    align-items: start;
+    justify-content: center;
+  }
+
+  .article-toc {
+    position: sticky;
+    top: 100px;
+    padding: 22px;
+    border: 3px solid rgba(8, 33, 74, 0.14);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 7px 0 rgba(8, 33, 74, 0.09);
+  }
+
+  .article-toc strong {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 1.12rem;
+  }
+
+  .article-toc ol {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    padding-left: 20px;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    font-weight: 750;
+  }
+
+  .article-toc a:hover {
+    color: var(--color-blue-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-content {
+    min-width: 0;
+  }
+
+  .article-content > section {
+    scroll-margin-top: 104px;
+    margin-bottom: 76px;
+  }
+
+  .article-content h2 {
+    margin: 8px 0 20px;
+    font-size: clamp(2rem, 4.5vw, 3.15rem);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .article-content h3 {
+    margin: 0;
+    font-size: 1.26rem;
+    line-height: 1.25;
+  }
+
+  .article-content > section > p:not(.section-kicker),
+  .intro-note p,
+  .advice-list p,
+  .sources p {
+    color: var(--color-muted);
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.75;
+  }
+
+  .intro-note {
+    padding: clamp(24px, 5vw, 38px);
+    border: 3px solid var(--color-border);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 9px 0 rgba(8, 33, 74, 0.11);
+  }
+
+  .intro-note h2 {
+    margin-top: 0;
+  }
+
+  .intro-note p:last-child,
+  .advice-list p:last-child,
+  .pillar-card p,
+  .game-callout p,
+  .game-callout span,
+  .sources p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .pillar-card {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 4px 12px;
+    padding: 20px;
+    border: 2px solid rgba(8, 33, 74, 0.13);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.66);
+  }
+
+  .pillar-card > span {
+    display: grid;
+    grid-row: span 2;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 13px;
+    background: var(--color-blue);
+    color: #ffffff;
+    font-weight: 950;
+  }
+
+  .pillar-card:nth-child(2n) > span {
+    background: var(--color-purple);
+  }
+
+  .pillar-card:nth-child(3n) > span {
+    background: var(--color-green);
+    color: var(--color-text);
+  }
+
+  .pillar-card p {
+    grid-column: 2;
+    margin-top: 4px;
+    color: var(--color-muted);
+    font-weight: 700;
+    line-height: 1.55;
+  }
+
+  .at-home {
+    margin-top: 28px;
+    padding: 24px;
+    border-left: 6px solid var(--color-gold);
+    border-radius: 0 18px 18px 0;
+    background: rgba(255, 255, 255, 0.64);
+  }
+
+  .at-home ul,
+  .sources ul {
+    display: grid;
+    gap: 9px;
+    margin: 14px 0 0;
+    padding-left: 22px;
+    color: var(--color-muted);
+    font-weight: 720;
+    line-height: 1.6;
+  }
+
+  .game-callout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 22px;
+    align-items: center;
+    margin-top: 30px;
+    padding: 24px;
+    border: 3px solid var(--color-border);
+    border-radius: 22px;
+    box-shadow: 0 8px 0 rgba(8, 33, 74, 0.13);
+  }
+
+  .game-callout--blue {
+    background: #e3f2ff;
+  }
+
+  .game-callout--green {
+    background: #e8f9df;
+  }
+
+  .game-callout--purple {
+    background: #f0e9ff;
+  }
+
+  .game-callout p {
+    color: var(--color-blue-dark);
+    font-size: 0.78rem;
     font-weight: 950;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
-  .content-page h1 {
-    margin: 0;
-    font-size: clamp(3rem, 8vw, 5.4rem);
-    line-height: 1;
+  .game-callout h3 {
+    margin-bottom: 5px;
   }
 
-  .content-page h2 {
-    margin: 0 0 8px;
-    font-size: 2rem;
-  }
-
-  .content-page p {
+  .game-callout span {
+    display: block;
     color: var(--color-muted);
-    font-size: 1.15rem;
+    font-weight: 720;
+  }
+
+  .game-callout a {
+    display: inline-flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--color-border);
+    border-radius: 15px;
+    background: #ffffff;
+    padding-inline: 18px;
+    box-shadow: 0 5px 0 rgba(8, 33, 74, 0.14);
+    font-weight: 950;
+    text-align: center;
+  }
+
+  .checklist {
+    display: grid;
+    gap: 12px;
+    margin: 28px 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .signals-list {
+    display: grid;
+    gap: 10px;
+    margin: 18px 0 26px;
+    padding-left: 22px;
+    color: var(--color-muted);
+    font-weight: 720;
+    line-height: 1.6;
+  }
+
+  .checklist li {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 18px;
+    border: 2px solid rgba(8, 33, 74, 0.1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.62);
+    color: var(--color-muted);
     font-weight: 750;
   }
 
-  .content-page a {
-    display: inline-flex;
-    width: max-content;
-    min-height: 54px;
-    align-items: center;
-    border: 3px solid var(--color-border);
-    border-radius: 16px;
-    background: var(--color-gold);
-    padding-inline: 22px;
-    box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
+  .checklist span {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--color-green);
+    color: var(--color-text);
     font-weight: 950;
+  }
+
+  .advice-list {
+    display: grid;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .advice-list > div {
+    padding: 22px 24px;
+    border: 2px solid rgba(8, 33, 74, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.62);
+  }
+
+  .advice-list p {
+    margin-top: 7px;
+    font-size: 1rem;
+  }
+
+  .support-section {
+    padding: clamp(24px, 5vw, 36px);
+    border: 3px solid var(--color-border);
+    border-radius: 26px;
+    background: #fff0e0;
+    box-shadow: 0 9px 0 rgba(8, 33, 74, 0.11);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .faq-list details {
+    border: 2px solid rgba(8, 33, 74, 0.14);
+    border-radius: 17px;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0 20px;
+  }
+
+  .faq-list summary {
+    padding: 18px 34px 18px 0;
+    cursor: pointer;
+    font-size: 1.08rem;
+    font-weight: 900;
+  }
+
+  .faq-list details[open] summary {
+    color: var(--color-blue-dark);
+  }
+
+  .faq-list p {
+    margin: 0 0 20px;
+    color: var(--color-muted);
+    font-weight: 700;
+    line-height: 1.7;
+  }
+
+  .games-grid {
+    display: grid;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .sources {
+    padding-top: 28px;
+    border-top: 2px solid rgba(8, 33, 74, 0.15);
+  }
+
+  .sources h2 {
+    font-size: 1.65rem;
+  }
+
+  .sources a {
+    color: var(--color-blue-dark);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 960px) {
+    .article-layout {
+      grid-template-columns: minmax(0, 760px);
+    }
+
+    .article-toc {
+      position: static;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .article-hero {
+      padding-block: 40px 28px;
+      text-align: left;
+    }
+
+    .article-hero h1,
+    .article-hero__intro {
+      margin-inline: 0;
+    }
+
+    .article-hero h1 {
+      font-size: clamp(2.65rem, 13vw, 4rem);
+    }
+
+    .article-layout {
+      gap: 34px;
+    }
+
+    .article-toc {
+      padding: 18px;
+    }
+
+    .article-content > section {
+      scroll-margin-top: 78px;
+      margin-bottom: 58px;
+    }
+
+    .pillars-grid,
+    .game-callout {
+      grid-template-columns: 1fr;
+    }
+
+    .game-callout a {
+      width: 100%;
+    }
+
+    .intro-note,
+    .support-section {
+      border-radius: 21px;
+    }
   }
 </style>
