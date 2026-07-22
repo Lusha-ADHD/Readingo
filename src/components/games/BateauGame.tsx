@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import syllableEntries from "../../content/fr/syllables.json";
+import lessonEntries from "../../content/fr/lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import words from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
@@ -11,6 +12,16 @@ import { ProgressBar } from "../ui/ProgressBar";
 import { RewardBurst } from "../ui/RewardBurst";
 import { SyllableTile } from "../ui/SyllableTile";
 import { OceanCanvas } from "./OceanCanvas";
+import { LevelMap } from "./LevelMap";
+import type { BateauLevel } from "./LevelMap";
+import {
+  completeBateauLevel,
+  readBateauProgress,
+  saveBateauProgress,
+} from "./bateauProgress";
+import type { BateauProgress } from "./bateauProgress";
+import { createBateauTiles } from "./bateauTiles";
+import type { BateauTile } from "./bateauTiles";
 import { useGameAudio } from "./gameAudio";
 import { useVoiceAudio } from "./useVoiceAudio";
 import type { VoicePlaybackResult } from "./useVoiceAudio";
@@ -31,16 +42,7 @@ type WordChallenge = {
   tags: string[];
 };
 
-type Tile = {
-  id: string;
-  text: string;
-};
-
-type SavedProgress = {
-  bestTreasures: number;
-  sessions: number;
-  completedWords: string[];
-};
+type Tile = BateauTile;
 
 type SyllableEntry = {
   id: string;
@@ -59,7 +61,7 @@ type VoiceLines = {
   feedback: { tryAgain: VoiceLine; bravo: VoiceLine };
 };
 
-type GamePhase = "intro" | "dialog" | "playing" | "validating" | "sailing" | "done";
+type GamePhase = "intro" | "dialog" | "map" | "playing" | "validating" | "sailing" | "done";
 
 type SailingIsland = {
   id: string;
@@ -75,7 +77,6 @@ type Journey = {
   treasuresFound: number;
 };
 
-const STORAGE_KEY = "readingo:bateau:v2";
 const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 const BOAT_ASSET_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_WITH_CHEST_ASSET_PATH = sitePath("/assets/world/IslandWithChest.png");
@@ -98,6 +99,11 @@ const SCENE_CLOUDS = Array.from({ length: 18 }, (_, index) => ({
   delay: -1100 * (index % 7),
 }));
 const wordChallenges = words as WordChallenge[];
+const wordById = new Map(wordChallenges.map((word) => [word.id, word]));
+const bateauLevels = (lessonEntries as BateauLevel[])
+  .filter((level) => level.gameIds.includes("bateau"))
+  .sort((left, right) => left.level - right.level);
+const firstLevelWordIds = bateauLevels[0]?.wordIds ?? [];
 const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry]));
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.intro;
@@ -117,26 +123,12 @@ function shuffleSessionWords(previousOrder: WordChallenge[]) {
   return shuffled;
 }
 
-function shuffleTiles(challenge: WordChallenge): Tile[] {
-  return [...challenge.syllables, ...challenge.distractors]
-    .map((text, index) => ({ id: `${challenge.id}-${text}-${index}`, text }))
-    .sort((a, b) => {
-      const left = `${challenge.id}-${a.text}-${a.id}`.localeCompare(`${challenge.id}-${b.text}-${b.id}`);
-      return challenge.id.length % 2 === 0 ? left : -left;
-    });
+function wordsForLevel(level: BateauLevel) {
+  return level.wordIds.map((id) => wordById.get(id)).filter((word): word is WordChallenge => Boolean(word));
 }
 
-function getInitialProgress(): SavedProgress {
-  if (typeof window === "undefined") {
-    return { bestTreasures: 0, sessions: 0, completedWords: [] };
-  }
-
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as SavedProgress) : { bestTreasures: 0, sessions: 0, completedWords: [] };
-  } catch {
-    return { bestTreasures: 0, sessions: 0, completedWords: [] };
-  }
+function getInitialProgress(): BateauProgress {
+  return readBateauProgress(typeof window === "undefined" ? null : window.localStorage, firstLevelWordIds, bateauLevels.length);
 }
 
 function speak(text: string, options: { cancel?: boolean } = {}) {
@@ -284,7 +276,8 @@ function BoatAsset() {
 export function BateauGame() {
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [dialogLineIndex, setDialogLineIndex] = useState(0);
-  const [sessionWords, setSessionWords] = useState<WordChallenge[]>(() => [...wordChallenges]);
+  const [selectedLevel, setSelectedLevel] = useState<BateauLevel>(() => bateauLevels[0]);
+  const [sessionWords, setSessionWords] = useState<WordChallenge[]>(() => wordsForLevel(bateauLevels[0]));
   const [wordIndex, setWordIndex] = useState(0);
   const [placed, setPlaced] = useState<Array<Tile | null>>([]);
   const [usedTileIds, setUsedTileIds] = useState<string[]>([]);
@@ -299,16 +292,45 @@ export function BateauGame() {
   const [chestBursts, setChestBursts] = useState<number[]>([]);
   const [journey, setJourney] = useState<Journey | null>(null);
   const [wordImageFailed, setWordImageFailed] = useState(false);
-  const [progress, setProgress] = useState<SavedProgress>(() => getInitialProgress());
+  const [progress, setProgress] = useState<BateauProgress>(() => getInitialProgress());
+  const [newlyUnlockedLevel, setNewlyUnlockedLevel] = useState<number | null>(null);
+  const [lastCompletedLevel, setLastCompletedLevel] = useState<number | null>(null);
+  const [isResultLeaving, setIsResultLeaving] = useState(false);
+  const [isTestMode, setIsTestMode] = useState(false);
+  const [testToolsEnabled, setTestToolsEnabled] = useState(false);
   const dialogRunRef = useRef(0);
   const chestBurstIdRef = useRef(0);
   const savedSessionRef = useRef(false);
+  const directTestStartedRef = useRef(false);
   const { playEffect, setTravelAudio, startAmbience } = useGameAudio();
   const { cancelVoice, playVoice } = useVoiceAudio();
 
   const challenge = sessionWords[wordIndex];
-  const tiles = useMemo(() => shuffleTiles(challenge), [challenge]);
+  const tiles = useMemo(() => createBateauTiles(challenge), [challenge]);
   const completedCount = phase === "done" ? sessionWords.length : wordIndex;
+  const displayedTotalTreasures = progress.totalTreasures + (phase === "done" || phase === "map" ? 0 : treasures);
+
+  useEffect(() => {
+    const isLocalHost = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+
+    if (!isLocalHost) {
+      return;
+    }
+
+    setTestToolsEnabled(true);
+
+    if (directTestStartedRef.current) {
+      return;
+    }
+
+    const requestedLevel = Number.parseInt(new URLSearchParams(window.location.search).get("niveau") ?? "", 10);
+    const level = bateauLevels.find((candidate) => candidate.level === requestedLevel);
+
+    if (level) {
+      directTestStartedRef.current = true;
+      startLevel(level, true);
+    }
+  }, []);
 
   useEffect(() => {
     setPlaced(Array.from({ length: challenge.syllables.length }, () => null));
@@ -325,24 +347,24 @@ export function BateauGame() {
   }, [challenge]);
 
   useEffect(() => {
-    if (phase !== "done" || savedSessionRef.current) {
+    const isMapTravel = phase === "map" && newlyUnlockedLevel !== null;
+    setTravelAudio((phase === "sailing" && isSailingMotionActive) || isMapTravel, journey?.wind ?? 1, isCollectingChest || isMapTravel);
+  }, [isCollectingChest, isSailingMotionActive, journey?.wind, newlyUnlockedLevel, phase, setTravelAudio]);
+
+  useEffect(() => {
+    if (phase !== "map" || newlyUnlockedLevel !== bateauLevels.length + 1) {
       return;
     }
 
-    savedSessionRef.current = true;
-    const nextProgress: SavedProgress = {
-      bestTreasures: Math.max(progress.bestTreasures, treasures),
-      sessions: progress.sessions + 1,
-      completedWords: Array.from(new Set([...progress.completedWords, ...sessionWords.map((item) => item.id)])),
-    };
-
-    setProgress(nextProgress);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextProgress));
-  }, [phase, progress.bestTreasures, progress.completedWords, progress.sessions, sessionWords, treasures]);
+    const timeout = window.setTimeout(() => void playEffect("chest"), 900);
+    return () => window.clearTimeout(timeout);
+  }, [newlyUnlockedLevel, phase, playEffect]);
 
   useEffect(() => {
-    setTravelAudio(phase === "sailing" && isSailingMotionActive, journey?.wind ?? 1, isCollectingChest);
-  }, [isCollectingChest, isSailingMotionActive, journey?.wind, phase, setTravelAudio]);
+    if (phase === "done") {
+      saveCompletedLevel();
+    }
+  }, [phase]);
 
   function findTile(tileId: string) {
     return tiles.find((tile) => tile.id === tileId);
@@ -387,7 +409,6 @@ export function BateauGame() {
     dialogRunRef.current = runId;
     setPhase("dialog");
     setDialogLineIndex(0);
-    setSessionWords((currentOrder) => shuffleSessionWords(currentOrder));
 
     try {
       startAmbience();
@@ -401,8 +422,7 @@ export function BateauGame() {
       return;
     }
 
-    setPhase("playing");
-    setStartedAt(Date.now());
+    setPhase("map");
   }
 
   function skipIntroDialog() {
@@ -413,8 +433,68 @@ export function BateauGame() {
       window.speechSynthesis.cancel();
     }
 
+    setPhase("map");
+  }
+
+  function startLevel(level: BateauLevel, testMode = false) {
+    if (!testMode && level.level > progress.unlockedLevel) {
+      return;
+    }
+
+    cancelVoice();
+    savedSessionRef.current = false;
+    setSelectedLevel(level);
+    setSessionWords(shuffleSessionWords(wordsForLevel(level)));
+    setWordIndex(0);
+    setTreasures(0);
+    setIslandStartIndex(0);
+    setIsCollectingChest(false);
+    setIsSailingMotionActive(false);
+    setChestBursts([]);
+    setJourney(null);
+    setNewlyUnlockedLevel(null);
+    setLastCompletedLevel(null);
+    setIsResultLeaving(false);
+    setIsTestMode(testMode);
+
+    if (testMode && testToolsEnabled) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("niveau", String(level.level));
+      window.history.replaceState({}, "", url);
+    }
+
     setPhase("playing");
     setStartedAt(Date.now());
+  }
+
+  function saveCompletedLevel() {
+    if (savedSessionRef.current) {
+      return;
+    }
+
+    savedSessionRef.current = true;
+
+    if (isTestMode) {
+      return;
+    }
+
+    const isFirstFrontierCompletion =
+      selectedLevel.level === progress.unlockedLevel && !progress.completedLevels.includes(selectedLevel.level);
+    const nextProgress = completeBateauLevel(
+      progress,
+      selectedLevel.level,
+      treasures,
+      sessionWords.map((item) => item.id),
+      bateauLevels.length,
+    );
+
+    setProgress(nextProgress);
+    saveBateauProgress(typeof window === "undefined" ? null : window.localStorage, nextProgress);
+    setLastCompletedLevel(selectedLevel.level);
+
+    if (isFirstFrontierCompletion) {
+      setNewlyUnlockedLevel(selectedLevel.level < bateauLevels.length ? selectedLevel.level + 1 : bateauLevels.length + 1);
+    }
   }
 
   function placeTile(tileId: string, slotIndex: number) {
@@ -511,7 +591,9 @@ export function BateauGame() {
       if (wordIndex + 1 >= sessionWords.length) {
         setIslandStartIndex((value) => value + nextJourney.wind);
         setPhase("done");
-        void playEffect("levelComplete");
+        void playEffect("levelComplete").then(() =>
+          playRecordedVoice(voiceLines.feedback.bravo.audio, voiceLines.feedback.bravo.text),
+        );
       } else {
         setIslandStartIndex((value) => value + nextJourney.wind);
         setWordIndex((value) => value + 1);
@@ -532,16 +614,27 @@ export function BateauGame() {
   }
 
   function restartSession() {
+    startLevel(selectedLevel, isTestMode);
+  }
+
+  function showTestMap() {
+    dialogRunRef.current += 1;
     cancelVoice();
-    savedSessionRef.current = false;
-    setWordIndex(0);
-    setTreasures(0);
-    setIslandStartIndex(0);
-    setIsCollectingChest(false);
-    setIsSailingMotionActive(false);
-    setChestBursts([]);
-    setJourney(null);
-    setPhase("intro");
+    setIsTestMode(false);
+    setPhase("map");
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("niveau");
+    window.history.replaceState({}, "", url);
+  }
+
+  function continueAdventure() {
+    setIsResultLeaving(true);
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    window.setTimeout(() => {
+      setIsResultLeaving(false);
+      setPhase("map");
+    }, reduceMotion ? 0 : 220);
   }
 
   const showGamePanel = phase === "playing" || phase === "validating";
@@ -552,7 +645,10 @@ export function BateauGame() {
   const cloudEndDistance = (islandStartIndex + (phase === "sailing" ? (journey?.wind ?? 0) : 0)) * -13;
 
   return (
-    <section className={`bateau-game bateau-game--${phase} ${isCollectingChest ? "bateau-game--collecting" : ""}`} aria-label="Jeu Bateau">
+    <section
+      className={`bateau-game bateau-game--${phase} ${isCollectingChest ? "bateau-game--collecting" : ""}`}
+      aria-label="Jeu Bateau"
+    >
       <OceanCanvas
         paused={isCollectingChest}
         sailing={phase === "sailing" && isSailingMotionActive}
@@ -560,9 +656,42 @@ export function BateauGame() {
         wind={journey?.wind ?? 1}
       />
 
+      {testToolsEnabled ? (
+        <details className="bateau-game__test-tools">
+          <summary>🧪 {isTestMode ? `Test N${selectedLevel.level}` : "Tester"}</summary>
+          <div>
+            {bateauLevels.map((level) => (
+              <button key={level.id} onClick={() => startLevel(level, true)} type="button">
+                N{level.level}
+              </button>
+            ))}
+            <button onClick={showTestMap} type="button">Carte</button>
+          </div>
+        </details>
+      ) : null}
+
+      {phase === "map" ? (
+        <LevelMap
+          levels={bateauLevels}
+          progress={progress}
+          newlyUnlockedLevel={newlyUnlockedLevel}
+          recentlyCompletedLevel={lastCompletedLevel}
+          onSelectLevel={startLevel}
+          onClose={lastCompletedLevel ? () => setPhase("done") : undefined}
+          onUnlockAnimationComplete={() => setNewlyUnlockedLevel(null)}
+        />
+      ) : null}
+
       {showHud ? (
         <div className="bateau-game__hud">
-          <ProgressBar current={completedCount} total={sessionWords.length} score={treasures} />
+          <ProgressBar
+            current={completedCount}
+            total={sessionWords.length}
+            score={treasures}
+            level={selectedLevel.level}
+            levelTotal={bateauLevels.length}
+            totalTreasures={displayedTotalTreasures}
+          />
         </div>
       ) : null}
 
@@ -593,68 +722,72 @@ export function BateauGame() {
             />
           ))}
         </div>
-        <div
-          className={`bateau-game__island-track ${phase === "sailing" ? "bateau-game__island-track--sailing" : ""}`}
-          onAnimationEnd={(event) => {
-            if (event.target === event.currentTarget) {
-              setIsSailingMotionActive(false);
-            }
-          }}
-          style={
-            {
-              "--sailing-duration": `${sailingDuration}ms`,
-              "--sailing-distance-desktop": `${journey ? journey.wind * -48 : 0}vw`,
-              "--sailing-distance-mobile": `${journey ? journey.wind * -58 : 0}vw`,
-            } as CSSProperties
-          }
-        >
-          {visibleIslands.map((island, index) => (
+        {phase !== "map" ? (
+          <>
             <div
-              className={["bateau-game__island", `bateau-game__island--${island.size}`, island.hasTreasure ? "bateau-game__island--treasure" : ""]
-                .filter(Boolean)
-                .join(" ")}
-              key={island.id}
+              className={`bateau-game__island-track ${phase === "sailing" ? "bateau-game__island-track--sailing" : ""}`}
+              onAnimationEnd={(event) => {
+                if (event.target === event.currentTarget) {
+                  setIsSailingMotionActive(false);
+                }
+              }}
               style={
                 {
-                  "--island-left-desktop": `calc(7% + ${index * 48}vw)`,
-                  "--island-left-mobile": `calc(-24px + ${index * 58}vw)`,
+                  "--sailing-duration": `${sailingDuration}ms`,
+                  "--sailing-distance-desktop": `${journey ? journey.wind * -48 : 0}vw`,
+                  "--sailing-distance-mobile": `${journey ? journey.wind * -58 : 0}vw`,
                 } as CSSProperties
               }
             >
-              <img
-                className="bateau-game__island-asset"
-                src={island.hasTreasure ? ISLAND_WITH_CHEST_ASSET_PATH : ISLAND_WITHOUT_CHEST_ASSET_PATH}
-                alt=""
-                draggable={false}
-              />
+              {visibleIslands.map((island, index) => (
+                <div
+                  className={["bateau-game__island", `bateau-game__island--${island.size}`, island.hasTreasure ? "bateau-game__island--treasure" : ""]
+                    .filter(Boolean)
+                    .join(" ")}
+                  key={island.id}
+                  style={
+                    {
+                      "--island-left-desktop": `calc(7% + ${index * 48}vw)`,
+                      "--island-left-mobile": `calc(-24px + ${index * 58}vw)`,
+                    } as CSSProperties
+                  }
+                >
+                  <img
+                    className="bateau-game__island-asset"
+                    src={island.hasTreasure ? ISLAND_WITH_CHEST_ASSET_PATH : ISLAND_WITHOUT_CHEST_ASSET_PATH}
+                    alt=""
+                    draggable={false}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        {phase === "sailing"
-          ? Array.from({ length: 6 + (journey?.wind ?? 1) * 3 }, (_, index) => (
-              <span
-                className="bateau-game__wind"
-                key={`wind-${index}`}
-                style={
-                  {
-                    "--wind-top": `${166 + (index % 6) * 24}px`,
-                    "--wind-width": `${74 + (index % 6) * 7}px`,
-                    "--wind-delay": `${index * -180}ms`,
-                    "--wind-duration": `${2700 - (journey?.wind ?? 1) * 300}ms`,
-                  } as CSSProperties
-                }
-              />
-            ))
-          : null}
-        <BoatAsset />
-        {chestBursts.map((burstId) => (
-          <div className="bateau-game__collect-burst" key={burstId}>
-            <span className="bateau-game__collect-spark bateau-game__collect-spark--one" />
-            <span className="bateau-game__collect-spark bateau-game__collect-spark--two" />
-            <img src={CHEST_ICON_ASSET_PATH} alt="" draggable={false} />
-            <strong>+1</strong>
-          </div>
-        ))}
+            {phase === "sailing"
+              ? Array.from({ length: 6 + (journey?.wind ?? 1) * 3 }, (_, index) => (
+                  <span
+                    className="bateau-game__wind"
+                    key={`wind-${index}`}
+                    style={
+                      {
+                        "--wind-top": `${166 + (index % 6) * 24}px`,
+                        "--wind-width": `${74 + (index % 6) * 7}px`,
+                        "--wind-delay": `${index * -180}ms`,
+                        "--wind-duration": `${2700 - (journey?.wind ?? 1) * 300}ms`,
+                      } as CSSProperties
+                    }
+                  />
+                ))
+              : null}
+            <BoatAsset />
+            {chestBursts.map((burstId) => (
+              <div className="bateau-game__collect-burst" key={burstId}>
+                <span className="bateau-game__collect-spark bateau-game__collect-spark--one" />
+                <span className="bateau-game__collect-spark bateau-game__collect-spark--two" />
+                <img src={CHEST_ICON_ASSET_PATH} alt="" draggable={false} />
+                <strong>+1</strong>
+              </div>
+            ))}
+          </>
+        ) : null}
       </div>
 
       {phase === "intro" ? (
@@ -725,7 +858,12 @@ export function BateauGame() {
               </p>
               {lastTreasuresFound > 0 ? <RewardBurst points={lastTreasuresFound} /> : null}
             </div>
-            <div className="bateau-game__slots" aria-label="Emplacements des syllabes">
+            <div
+              className="bateau-game__slots"
+              aria-label="Emplacements des syllabes"
+              data-count={challenge.syllables.length}
+              style={{ "--slot-count": challenge.syllables.length } as CSSProperties}
+            >
               {placed.map((slot, index) => (
                 <SyllableSlot
                   index={index}
@@ -736,7 +874,10 @@ export function BateauGame() {
             </div>
           </div>
 
-          <div className="bateau-game__syllables" aria-label="Syllabes disponibles">
+          <div
+            className="bateau-game__syllables"
+            aria-label="Syllabes disponibles"
+          >
             {tiles.map((tile) => (
               <div className="bateau-game__tile-wrap" key={tile.id}>
                 <SyllableTile
@@ -763,23 +904,18 @@ export function BateauGame() {
       ) : null}
 
       {phase === "done" ? (
-        <div className="bateau-game__panel bateau-game__panel--end">
+        <div className={`bateau-game__panel bateau-game__panel--end ${isResultLeaving ? "bateau-game__panel--leaving" : ""}`}>
           <div className="bateau-game__end" aria-live="polite">
-            <p className="bateau-game__eyebrow">Coffres ouverts</p>
-            <h2>Session terminée</h2>
+            <p className="bateau-game__eyebrow">Niveau {selectedLevel.level} terminé</p>
+            <h2>{selectedLevel.level === bateauLevels.length ? "Cap sur le trésor !" : "Bravo !"}</h2>
             <p>
               {sessionWords.length} mots réussis, {treasures} coffre{treasures > 1 ? "s" : ""} collecté{treasures > 1 ? "s" : ""}.
             </p>
             <div className="bateau-game__end-actions">
-              <GameButton onClick={restartSession} variant="success">
-                Rejouer
+              <GameButton onClick={continueAdventure} variant="success">
+                Continuer l’aventure
               </GameButton>
-              <GameButton
-                onClick={() => void playRecordedVoice(voiceLines.feedback.bravo.audio, voiceLines.feedback.bravo.text)}
-                variant="secondary"
-              >
-                Écouter bravo
-              </GameButton>
+              <GameButton onClick={restartSession} variant="secondary">Rejouer</GameButton>
             </div>
           </div>
         </div>

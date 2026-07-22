@@ -1,8 +1,50 @@
 [
   {
     "id": "premieres-syllabes",
+    "level": 1,
     "title": "Premières syllabes",
+    "difficultyTier": 1,
     "gameIds": ["bateau"],
     "wordIds": ["chaton", "bateau", "moto", "lapin", "melon", "tapis", "panda", "maison"]
+  },
+  {
+    "id": "petite-traversee",
+    "level": 2,
+    "title": "Petite traversée",
+    "difficultyTier": 1,
+    "gameIds": ["bateau"],
+    "wordIds": ["velo", "fusee", "soleil", "requin", "citron", "pirate", "girafe", "cadeau"]
+  },
+  {
+    "id": "trois-syllabes",
+    "level": 3,
+    "title": "Trois syllabes",
+    "difficultyTier": 2,
+    "gameIds": ["bateau"],
+    "wordIds": ["domino", "canari", "animal", "parasol", "ananas", "chocolat", "papillon", "camera"]
+  },
+  {
+    "id": "sons-nouveaux",
+    "level": 4,
+    "title": "Sons nouveaux",
+    "difficultyTier": 2,
+    "gameIds": ["bateau"],
+    "wordIds": ["ecureuil", "elephant", "telephone", "dinosaure", "crocodile", "coquillage", "cheminee", "libellule"]
+  },
+  {
+    "id": "grand-defi",
+    "level": 5,
+    "title": "Grand défi",
+    "difficultyTier": 3,
+    "gameIds": ["bateau"],
+    "wordIds": ["hippopotame", "helicoptere", "alligator", "ordinateur", "calculatrice", "locomotive", "cameleon", "photographie"]
+  },
+  {
+    "id": "maitre-des-mots",
+    "level": 6,
+    "title": "Maître des mots",
+    "difficultyTier": 3,
+    "gameIds": ["bateau"],
+    "wordIds": ["aspirateur", "rhinoceros", "television", "epouvantail", "bibliotheque", "motocyclette", "accordeon", "macaroni"]
   }
 ]

@@ -38,7 +38,7 @@ await loadLocalEnvironment();
 
 const apiKey = process.env.ELEVENLABS_API_KEY;
 const voiceId = process.env.ELEVENLABS_VOICE_ID;
-const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
+const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_v3";
 const languageCode = process.env.ELEVENLABS_LANGUAGE_CODE || "fr";
 
 if (!apiKey || !voiceId) {

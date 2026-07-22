@@ -63,6 +63,18 @@ Il ne faut pas cacher la navigation derriere une interface parentale complexe. L
 
 ## Jeu Principal : Bateau
 
+### Mode de test local
+
+Sur `localhost`, `127.0.0.1` ou `::1`, un bouton discret `Tester` apparait en bas a gauche du jeu. Il permet de lancer directement chacun des six niveaux, meme s'il n'est pas encore debloque, ou de revenir a la carte.
+
+Un niveau peut aussi etre ouvert directement avec le parametre d'URL `niveau`, par exemple :
+
+```txt
+http://127.0.0.1:4321/jeux/bateau/?niveau=5
+```
+
+Une partie lancee en mode test ne modifie pas la sauvegarde, les niveaux debloques, les meilleurs scores ni le total de coffres. Ces outils restent masques lorsque le site est consulte depuis un autre domaine.
+
 ### Objectif
 
 Construire un mot a partir de syllabes.

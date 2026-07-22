@@ -289,3 +289,1295 @@ entries:
         format: PNG-RGBA
         role: selected_output
     validation: *passed_validation
+
+  - id: 2026-07-22-map-island-sandbar-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: small square transit-island icon for a children's educational reading game map
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable tiny sandy island for a vertical ocean map.
+      Subject: A low compact golden sandbar with a rounded silhouette, three simple cream seashells and one tiny coral-orange starfish embedded in the sand. No palm tree, no chest, no water, no grass.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one island centered, completely visible, generous even padding, readable around 70 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/world/map-island-sandbar.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-map-island-palms-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: small square transit-island icon for a children's educational reading game map
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable tiny rocky island for a vertical ocean map.
+      Subject: A compact cluster of three rounded warm-charcoal and brown rocks emerging from a small golden sand base, with one simple turquoise-green tuft of vegetation. No palm tree, no chest, no water.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one island centered, completely visible, generous even padding, readable around 70 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/world/map-island-palms.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+      note: The call requested the rocky variant; the returned image was a valid two-palm island and was selected for the palms slot.
+
+  - id: 2026-07-22-map-island-rocky-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: small square transit-island icon for a children's educational reading game map
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable tiny palm island for a vertical ocean map.
+      Subject: A compact golden sandy islet with exactly two small curved palm trees, simplified closed green leaf shapes and two tiny warm rocks. No chest, no water, no characters.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one island centered, completely visible, generous even padding, readable around 70 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/world/map-island-rocky.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+      note: The call requested the palms variant; the returned image was a valid rocky island and was selected for the rocky slot.
+
+  - id: 2026-07-22-velo-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "velo".
+      Subject: One friendly compact children's bicycle in three-quarter side view, with two chunky wheels, a coral-orange frame, cream saddle and turquoise details. No rider, basket, road or training wheels.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/velo.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-fusee-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "fusee".
+      Subject: One charming toy-like space rocket pointing upward at a gentle angle, with a cream body, coral fins, turquoise round window and a small stylized orange exhaust flame. No smoke, stars, planet or launch pad.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/fusee.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-soleil-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "soleil".
+      Subject: One cheerful golden sun with a round center and thick rounded rays, subtly friendly but with no human face, no clouds and no sky.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/soleil.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-requin-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "requin".
+      Subject: One friendly compact blue-gray shark in full side view with rounded fins, a curved tail and a small closed smile. Smooth skin, no teeth, no water, no bubbles and no prey.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/requin.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-citron-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "citron".
+      Subject: One whole ripe lemon, oval and plump, bright golden yellow with a small warm-green leaf and a tiny stem. No cut slice, plate, branch or additional fruit.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/citron.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-pirate-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "pirate".
+      Subject: One friendly young pirate child shown full body, wearing a coral coat, cream shirt, dark tricorn hat, turquoise scarf and simple boots, smiling and waving. No weapon, skull, treasure, ship or background.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/pirate.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-girafe-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "girafe".
+      Subject: One cheerful baby giraffe shown full body in three-quarter view, with a long neck, rounded golden-orange body, warm brown spots, small ossicones and simplified smooth fur. No grass or trees.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/girafe.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-cadeau-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "cadeau".
+      Subject: One wrapped square present box with coral-orange paper, a wide turquoise ribbon and one large golden bow. No tag, text, confetti or other gifts.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/cadeau.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-domino-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "domino".
+      Subject: One single rectangular domino tile standing at a gentle angle, cream colored with a dark warm-brown dividing line and a few large turquoise circular pips. No numbers, text, hand or other tiles.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/domino.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-canari-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "canari".
+      Subject: One cheerful small yellow canary perched naturally with both feet visible, full body in three-quarter view, rounded wings, coral beak and bright friendly eyes. No branch, cage or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/canari.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-animal-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "animal".
+      Subject: One friendly generic young four-legged animal resembling a simple warm-brown puppy, shown full body in three-quarter view with rounded ears, tail and paws. No collar, toy, grass or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/animal.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-parasol-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "parasol".
+      Subject: One open beach parasol in three-quarter view with alternating coral, cream and turquoise rounded fabric panels and a warm wooden pole. No sand, chair, people or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/parasol.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-ananas-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "ananas".
+      Subject: One whole ripe pineapple standing upright, with a plump golden-orange patterned body and a compact crown of smooth turquoise-green leaves. No cut slice, plate or extra fruit.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/ananas.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-chocolat-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "chocolat".
+      Subject: One thick chocolate bar in three-quarter view, partially unwrapped in a simple coral and cream wrapper with no text, showing large rounded milk-chocolate squares. No bite, crumbs or other sweets.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/chocolat.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-papillon-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "papillon".
+      Subject: One cheerful butterfly shown fully with wings open symmetrically, rounded coral and golden wing shapes, turquoise accents and a compact dark warm body. No flowers or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/papillon.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-camera-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "camera".
+      Subject: One compact handheld video camera in three-quarter view, with a large round lens, a folded-out turquoise screen and coral-orange body details. No tripod, hand, text or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/camera.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-ecureuil-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "ecureuil".
+      Subject: One cheerful red squirrel sitting upright in three-quarter view, with a very large curled fluffy tail rendered as smooth closed fur shapes, tiny paws and friendly bright eyes. No acorn, branch or grass.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/ecureuil.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-elephant-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "elephant".
+      Subject: One cheerful baby elephant shown full body in three-quarter view, with a compact rounded gray-blue body, large ears with coral inner color, a gently curled trunk and tiny tusks. No grass or water.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/elephant.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-telephone-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "telephone".
+      Subject: One classic friendly tabletop telephone in three-quarter view, with a coral-orange rounded base, cream handset, turquoise rotary dial shapes and no readable numbers or text.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/telephone.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-dinosaure-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "dinosaure".
+      Subject: One friendly toy-like green dinosaur shown full body in three-quarter view, a compact Tyrannosaurus shape with large head, tiny arms, rounded tail and cream belly. Closed smile, no teeth, scenery or other dinosaurs.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/dinosaure.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-crocodile-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "crocodile".
+      Subject: One friendly compact green crocodile shown full body in side view, with a long rounded snout, bumpy back, short legs, curled tail and a closed smile. No visible sharp teeth, water or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/crocodile.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-coquillage-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "coquillage".
+      Subject: One large spiral seashell in three-quarter view, cream colored with warm coral ridges and a turquoise inner opening, thick rounded silhouette. No sand, pearl or other shells.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/coquillage.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-cheminee-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "cheminee".
+      Subject: One compact freestanding brick fireplace with a short chimney breast, warm coral bricks, cream mantel and one small stylized golden flame in the opening. No room, tools, smoke or decorations.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/cheminee.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-libellule-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "libellule".
+      Subject: One friendly dragonfly shown from a gentle top three-quarter view, with a slender turquoise body, four rounded translucent-looking cream-and-coral wings rendered as solid closed shapes and large bright eyes. No flowers or water.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/libellule.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-hippopotame-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "hippopotame".
+      Subject: One cheerful baby hippopotamus shown full body in three-quarter view, with a plump rounded blue-gray body, short legs, tiny ears, broad cream muzzle and closed friendly smile. No water, grass or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/hippopotame.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-helicoptere-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "helicoptere".
+      Subject: One compact toy-like helicopter in three-quarter side view, with a coral-orange rounded cabin, turquoise windows, cream rotor blades and small golden details. The full rotor and tail must be visible. No pilot, sky or landing pad.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/helicoptere.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-alligator-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "alligator".
+      Subject: One friendly young alligator shown full body in side view, with a long rounded green snout, armored back, short legs, cream belly and curved tail. Closed smile, no sharp teeth, water or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/alligator.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-ordinateur-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "ordinateur".
+      Subject: One compact desktop computer in three-quarter view, consisting of one rounded turquoise monitor visibly attached to a coral-orange base and simple cream keyboard as a unified icon. Blank screen, no text, mouse or desk.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/ordinateur.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-calculatrice-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "calculatrice".
+      Subject: One compact pocket calculator in three-quarter view, with a coral-orange rounded body, blank turquoise display and a simple grid of large cream and golden buttons without text, digits or symbols.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/calculatrice.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-locomotive-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "locomotive".
+      Subject: One compact classic steam locomotive in three-quarter side view, with a coral-red boiler, turquoise cab, cream trim, golden chimney and three chunky dark wheels. No track, smoke, wagons or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/locomotive.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-cameleon-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "cameleon".
+      Subject: One cheerful chameleon shown full body in three-quarter side view, with a compact turquoise-and-coral body, large friendly eyes, mitten-like feet and a tightly curled tail. Smooth skin, no branch, insects or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/cameleon.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-photographie-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "photographie".
+      Subject: One single instant photograph print at a gentle angle, with a thick cream border and a simple stylized image inside showing one turquoise mountain and golden sun. No camera, hand, text or additional photos.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/photographie.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-aspirateur-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "aspirateur".
+      Subject: One compact upright vacuum cleaner in three-quarter view, with a coral-orange body, turquoise dust chamber, cream handle and a short neatly looped hose integrated into the silhouette. No cord, room, dust or person.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/aspirateur.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-rhinoceros-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "rhinoceros".
+      Subject: One cheerful baby rhinoceros shown full body in three-quarter view, with a compact rounded blue-gray body, two small cream horns, tiny ears, short legs and friendly eyes. No grass, mud or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/rhinoceros.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-television-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "television".
+      Subject: One classic compact television set in three-quarter view, with a rounded coral-orange case, blank turquoise screen, cream knobs and two short antenna rods. No furniture, remote, text or image on screen.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/television.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-epouvantail-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "epouvantail".
+      Subject: One friendly scarecrow shown full body, with a round smiling cream face, floppy coral hat, turquoise patched shirt, warm-brown trousers and straw hands, mounted on one simple wooden cross pole. No birds, field or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/epouvantail.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-bibliotheque-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "bibliotheque".
+      Subject: One compact freestanding bookcase in three-quarter view, with a warm wooden frame and three shelves filled with neat coral, cream, turquoise and golden books. Treat the bookcase and its contained books as one unified subject. No readable text, ladder, room or decorations.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/bibliotheque.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-motocyclette-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "motocyclette".
+      Subject: One friendly compact retro motorcycle in three-quarter side view, with two chunky wheels, rounded coral-red fuel tank, cream side panel, warm brown saddle, round headlamp and turquoise details. No rider, road or scenery.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/motocyclette.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-accordeon-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "accordeon".
+      Subject: One classic accordion in three-quarter view, with a coral-orange body, cream bellows, turquoise panels, golden corner details and simple blank cream keys. No musician, hands, text or music notes.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/accordeon.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-22-macaroni-v1
+    date: 2026-07-22
+    status: selected
+    operation: generate
+    recipe: readingo-pana-v1
+    tool: *image_gen_tool
+    inputs: *word_icon_inputs
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual square word-picture icon for a children's educational reading game
+      Input images: Image 1 is the primary character style reference; Images 2 and 3 are additional icon-set references. Match their shared rendering language, palette, outline weight and polish. Do not combine or copy their subjects.
+      Primary request: Create exactly one instantly recognizable icon representing the French word "macaroni".
+      Subject: One small rounded cream bowl filled with clearly visible golden elbow macaroni pasta, rendered as large simple curved tube shapes with subtle coral highlights. The bowl and pasta form one compact subject. No fork, sauce, table or text.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; continuous dark warm-brown outer outline; smooth vector-like shapes; subtle soft 3D shading and glossy highlights; friendly toy-like proportions; same detail level as the references.
+      Composition/framing: exactly one subject centered, completely visible, generous even padding, readable around 180 pixels, no scenery, no floor and no extra objects.
+      Color palette: warm coral, orange, cream, turquoise, dark warm charcoal and restrained golden accents, adapted naturally to the subject.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for removal.
+      Constraints: background must be exactly one uniform color with no shadow, gradient, texture, horizon, floor, reflection, or lighting variation. Crisp clean closed outer edges. Do not use #00ff00 anywhere on the subject.
+      Avoid: text, letters, numbers, logo, watermark, border, frame, cast shadow, contact shadow, photorealism, duplicated subject, cropped parts, background elements.
+    generated_dimensions: [1254, 1254]
+    post_processing: *word_icon_processing
+    outputs:
+      - path: public/assets/images/fr/words/macaroni.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation:
+      visual: passed
+      transparent_corners: passed

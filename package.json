@@ -9,7 +9,9 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run content:check && astro check && astro build",
+    "content:check": "node scripts/validate-content.mjs",
+    "test": "node --test --experimental-strip-types tests/bateauProgress.test.ts",
     "audio:generate": "node scripts/generate-voices.mjs",
     "preview": "astro preview",
     "astro": "astro"

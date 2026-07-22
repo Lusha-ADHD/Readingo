@@ -1,138 +1,303 @@
 [
   {
-    "id": "chaton",
-    "locale": "fr-FR",
-    "word": "chaton",
-    "displayWord": "chaton",
-    "syllables": ["cha", "ton"],
-    "spokenSyllables": ["cha", "ton"],
-    "distractors": ["ba", "ti"],
-    "image": "/assets/images/fr/words/chaton.png",
-    "audioWord": "/assets/audio/fr/words/chaton.mp3",
-    "audioSyllables": {
-      "cha": "/assets/audio/fr/syllables/cha.mp3",
-      "ton": "/assets/audio/fr/syllables/ton.mp3"
-    },
-    "difficulty": 2,
-    "tags": ["animal", "mot-bisyllabique", "son-ch"]
+    "id": "chaton", "locale": "fr-FR", "word": "chaton", "displayWord": "chaton",
+    "syllables": ["cha", "ton"], "spokenSyllables": ["cha", "ton"], "distractors": ["ba", "ti"],
+    "image": "/assets/images/fr/words/chaton.png", "audioWord": "/assets/audio/fr/words/chaton.mp3",
+    "audioSyllables": { "cha": "/assets/audio/fr/syllables/cha.mp3", "ton": "/assets/audio/fr/syllables/ton.mp3" },
+    "difficulty": 2, "tags": ["animal", "mot-bisyllabique", "son-ch"]
   },
   {
-    "id": "bateau",
-    "locale": "fr-FR",
-    "word": "bateau",
-    "displayWord": "bateau",
-    "syllables": ["ba", "teau"],
-    "spokenSyllables": ["bah", "tôt"],
-    "distractors": ["cha", "mi"],
-    "image": "/assets/images/fr/words/bateau.png",
-    "audioWord": "/assets/audio/fr/words/bateau.mp3",
-    "audioSyllables": {
-      "ba": "/assets/audio/fr/syllables/ba.mp3",
-      "teau": "/assets/audio/fr/syllables/teau.mp3"
-    },
-    "difficulty": 2,
-    "tags": ["objet", "mot-bisyllabique"]
+    "id": "bateau", "locale": "fr-FR", "word": "bateau", "displayWord": "bateau",
+    "syllables": ["ba", "teau"], "spokenSyllables": ["bah", "tôt"], "distractors": ["cha", "mi"],
+    "image": "/assets/images/fr/words/bateau.png", "audioWord": "/assets/audio/fr/words/bateau.mp3",
+    "audioSyllables": { "ba": "/assets/audio/fr/syllables/ba.mp3", "teau": "/assets/audio/fr/syllables/teau.mp3" },
+    "difficulty": 2, "tags": ["objet", "mot-bisyllabique"]
   },
   {
-    "id": "moto",
-    "locale": "fr-FR",
-    "word": "moto",
-    "displayWord": "moto",
-    "syllables": ["mo", "to"],
-    "spokenSyllables": ["mo", "tôt"],
-    "distractors": ["la", "ri"],
-    "image": "/assets/images/fr/words/moto.png",
-    "audioWord": "/assets/audio/fr/words/moto.mp3",
-    "audioSyllables": {
-      "mo": "/assets/audio/fr/syllables/mo.mp3",
-      "to": "/assets/audio/fr/syllables/to.mp3"
-    },
-    "difficulty": 1,
-    "tags": ["objet", "mot-bisyllabique"]
+    "id": "moto", "locale": "fr-FR", "word": "moto", "displayWord": "moto",
+    "syllables": ["mo", "to"], "spokenSyllables": ["mo", "tôt"], "distractors": ["la", "ri"],
+    "image": "/assets/images/fr/words/moto.png", "audioWord": "/assets/audio/fr/words/moto.mp3",
+    "audioSyllables": { "mo": "/assets/audio/fr/syllables/mo.mp3", "to": "/assets/audio/fr/syllables/to.mp3" },
+    "difficulty": 1, "tags": ["objet", "mot-bisyllabique"]
   },
   {
-    "id": "lapin",
-    "locale": "fr-FR",
-    "word": "lapin",
-    "displayWord": "lapin",
-    "syllables": ["la", "pin"],
-    "spokenSyllables": ["la", "pin"],
-    "distractors": ["mo", "teau"],
-    "image": "/assets/images/fr/words/lapin.png",
-    "audioWord": "/assets/audio/fr/words/lapin.mp3",
-    "audioSyllables": {
-      "la": "/assets/audio/fr/syllables/la.mp3",
-      "pin": "/assets/audio/fr/syllables/pin.mp3"
-    },
-    "difficulty": 2,
-    "tags": ["animal", "mot-bisyllabique"]
+    "id": "lapin", "locale": "fr-FR", "word": "lapin", "displayWord": "lapin",
+    "syllables": ["la", "pin"], "spokenSyllables": ["la", "pin"], "distractors": ["mo", "teau"],
+    "image": "/assets/images/fr/words/lapin.png", "audioWord": "/assets/audio/fr/words/lapin.mp3",
+    "audioSyllables": { "la": "/assets/audio/fr/syllables/la.mp3", "pin": "/assets/audio/fr/syllables/pin.mp3" },
+    "difficulty": 2, "tags": ["animal", "mot-bisyllabique"]
   },
   {
-    "id": "melon",
-    "locale": "fr-FR",
-    "word": "melon",
-    "displayWord": "melon",
-    "syllables": ["me", "lon"],
-    "spokenSyllables": ["meuh", "lon"],
-    "distractors": ["ba", "to"],
-    "image": "/assets/images/fr/words/melon.png",
-    "audioWord": "/assets/audio/fr/words/melon.mp3",
-    "audioSyllables": {
-      "me": "/assets/audio/fr/syllables/me.mp3",
-      "lon": "/assets/audio/fr/syllables/lon.mp3"
-    },
-    "difficulty": 2,
-    "tags": ["aliment", "mot-bisyllabique"]
+    "id": "melon", "locale": "fr-FR", "word": "melon", "displayWord": "melon",
+    "syllables": ["me", "lon"], "spokenSyllables": ["meuh", "lon"], "distractors": ["ba", "to"],
+    "image": "/assets/images/fr/words/melon.png", "audioWord": "/assets/audio/fr/words/melon.mp3",
+    "audioSyllables": { "me": "/assets/audio/fr/syllables/me.mp3", "lon": "/assets/audio/fr/syllables/lon.mp3" },
+    "difficulty": 2, "tags": ["aliment", "mot-bisyllabique"]
   },
   {
-    "id": "tapis",
-    "locale": "fr-FR",
-    "word": "tapis",
-    "displayWord": "tapis",
-    "syllables": ["ta", "pis"],
-    "spokenSyllables": ["ta", "pi"],
-    "distractors": ["la", "son"],
-    "image": "/assets/images/fr/words/tapis.png",
-    "audioWord": "/assets/audio/fr/words/tapis.mp3",
-    "audioSyllables": {
-      "ta": "/assets/audio/fr/syllables/ta.mp3",
-      "pis": "/assets/audio/fr/syllables/pis.mp3"
-    },
-    "difficulty": 2,
-    "tags": ["objet", "mot-bisyllabique"]
+    "id": "tapis", "locale": "fr-FR", "word": "tapis", "displayWord": "tapis",
+    "syllables": ["ta", "pis"], "spokenSyllables": ["ta", "pi"], "distractors": ["la", "son"],
+    "image": "/assets/images/fr/words/tapis.png", "audioWord": "/assets/audio/fr/words/tapis.mp3",
+    "audioSyllables": { "ta": "/assets/audio/fr/syllables/ta.mp3", "pis": "/assets/audio/fr/syllables/pis.mp3" },
+    "difficulty": 2, "tags": ["objet", "mot-bisyllabique"]
   },
   {
-    "id": "panda",
-    "locale": "fr-FR",
-    "word": "panda",
-    "displayWord": "panda",
-    "syllables": ["pan", "da"],
-    "spokenSyllables": ["pan", "da"],
-    "distractors": ["pi", "lon"],
-    "image": "/assets/images/fr/words/panda.png",
-    "audioWord": "/assets/audio/fr/words/panda.mp3",
-    "audioSyllables": {
-      "pan": "/assets/audio/fr/syllables/pan.mp3",
-      "da": "/assets/audio/fr/words/panda/da.mp3"
-    },
-    "difficulty": 2,
-    "tags": ["animal", "mot-bisyllabique"]
+    "id": "panda", "locale": "fr-FR", "word": "panda", "displayWord": "panda",
+    "syllables": ["pan", "da"], "spokenSyllables": ["pan", "da"], "distractors": ["pi", "lon"],
+    "image": "/assets/images/fr/words/panda.png", "audioWord": "/assets/audio/fr/words/panda.mp3",
+    "audioSyllables": { "pan": "/assets/audio/fr/syllables/pan.mp3", "da": "/assets/audio/fr/words/panda/da.mp3" },
+    "difficulty": 2, "tags": ["animal", "mot-bisyllabique"]
   },
   {
-    "id": "maison",
-    "locale": "fr-FR",
-    "word": "maison",
-    "displayWord": "maison",
-    "syllables": ["mai", "son"],
-    "spokenSyllables": ["mè", "zon"],
-    "distractors": ["cha", "da"],
-    "image": "/assets/images/fr/words/maison.png",
-    "audioWord": "/assets/audio/fr/words/maison.mp3",
-    "audioSyllables": {
-      "mai": "/assets/audio/fr/syllables/mai.mp3",
-      "son": "/assets/audio/fr/words/maison/son.mp3"
-    },
-    "difficulty": 3,
-    "tags": ["objet", "mot-bisyllabique", "son-ai"]
+    "id": "maison", "locale": "fr-FR", "word": "maison", "displayWord": "maison",
+    "syllables": ["mai", "son"], "spokenSyllables": ["mè", "zon"], "distractors": ["cha", "da"],
+    "image": "/assets/images/fr/words/maison.png", "audioWord": "/assets/audio/fr/words/maison.mp3",
+    "audioSyllables": { "mai": "/assets/audio/fr/syllables/mai.mp3", "son": "/assets/audio/fr/words/maison/son.mp3" },
+    "difficulty": 3, "tags": ["objet", "mot-bisyllabique", "son-ai"]
+  },
+
+  {
+    "id": "velo", "locale": "fr-FR", "word": "vélo", "displayWord": "vélo",
+    "syllables": ["vé", "lo"], "spokenSyllables": ["vé", "lo"], "distractors": ["fu", "ra"],
+    "image": "/assets/images/fr/words/velo.png", "audioWord": "/assets/audio/fr/words/velo.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["objet", "mot-bisyllabique"]
+  },
+  {
+    "id": "fusee", "locale": "fr-FR", "word": "fusée", "displayWord": "fusée",
+    "syllables": ["fu", "sée"], "spokenSyllables": ["fu", "zé"], "distractors": ["vé", "leil"],
+    "image": "/assets/images/fr/words/fusee.png", "audioWord": "/assets/audio/fr/words/fusee.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["objet", "mot-bisyllabique"]
+  },
+  {
+    "id": "soleil", "locale": "fr-FR", "word": "soleil", "displayWord": "soleil",
+    "syllables": ["so", "leil"], "spokenSyllables": ["so", "leille"], "distractors": ["ca", "quin"],
+    "image": "/assets/images/fr/words/soleil.png", "audioWord": "/assets/audio/fr/words/soleil.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["nature", "mot-bisyllabique"]
+  },
+  {
+    "id": "requin", "locale": "fr-FR", "word": "requin", "displayWord": "requin",
+    "syllables": ["re", "quin"], "spokenSyllables": ["reuh", "quin"], "distractors": ["ci", "rate"],
+    "image": "/assets/images/fr/words/requin.png", "audioWord": "/assets/audio/fr/words/requin.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["animal", "mot-bisyllabique"]
+  },
+  {
+    "id": "citron", "locale": "fr-FR", "word": "citron", "displayWord": "citron",
+    "syllables": ["ci", "tron"], "spokenSyllables": ["si", "tron"], "distractors": ["re", "deau"],
+    "image": "/assets/images/fr/words/citron.png", "audioWord": "/assets/audio/fr/words/citron.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["aliment", "mot-bisyllabique"]
+  },
+  {
+    "id": "pirate", "locale": "fr-FR", "word": "pirate", "displayWord": "pirate",
+    "syllables": ["pi", "rate"], "spokenSyllables": ["pi", "rate"], "distractors": ["gi", "lo"],
+    "image": "/assets/images/fr/words/pirate.png", "audioWord": "/assets/audio/fr/words/pirate.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["personnage", "mot-bisyllabique"]
+  },
+  {
+    "id": "girafe", "locale": "fr-FR", "word": "girafe", "displayWord": "girafe",
+    "syllables": ["gi", "rafe"], "spokenSyllables": ["ji", "rafe"], "distractors": ["ca", "sée"],
+    "image": "/assets/images/fr/words/girafe.png", "audioWord": "/assets/audio/fr/words/girafe.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["animal", "mot-bisyllabique"]
+  },
+  {
+    "id": "cadeau", "locale": "fr-FR", "word": "cadeau", "displayWord": "cadeau",
+    "syllables": ["ca", "deau"], "spokenSyllables": ["cas", "do"], "distractors": ["so", "fu"],
+    "image": "/assets/images/fr/words/cadeau.png", "audioWord": "/assets/audio/fr/words/cadeau.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["objet", "mot-bisyllabique"]
+  },
+
+  {
+    "id": "domino", "locale": "fr-FR", "word": "domino", "displayWord": "domino",
+    "syllables": ["do", "mi", "no"], "spokenSyllables": ["do", "mi!", "no"], "distractors": ["ca", "ri"],
+    "image": "/assets/images/fr/words/domino.png", "audioWord": "/assets/audio/fr/words/domino.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-trisyllabique"]
+  },
+  {
+    "id": "canari", "locale": "fr-FR", "word": "canari", "displayWord": "canari",
+    "syllables": ["ca", "na", "ri"], "spokenSyllables": ["cas", "na", "ri"], "distractors": ["do", "mal"],
+    "image": "/assets/images/fr/words/canari.png", "audioWord": "/assets/audio/fr/words/canari.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "animal", "locale": "fr-FR", "word": "animal", "displayWord": "animal",
+    "syllables": ["a", "ni", "mal"], "spokenSyllables": ["a", "ni", "mal"], "distractors": ["pa", "sol"],
+    "image": "/assets/images/fr/words/animal.png", "audioWord": "/assets/audio/fr/words/animal.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "parasol", "locale": "fr-FR", "word": "parasol", "displayWord": "parasol",
+    "syllables": ["pa", "ra", "sol"], "spokenSyllables": ["pa", "ra", "sol"], "distractors": ["a", "nas"],
+    "image": "/assets/images/fr/words/parasol.png", "audioWord": "/assets/audio/fr/words/parasol.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-trisyllabique"]
+  },
+  {
+    "id": "ananas", "locale": "fr-FR", "word": "ananas", "displayWord": "ananas",
+    "syllables": ["a", "na", "nas"], "spokenSyllables": ["a", "na", "nasse"], "distractors": ["cho", "lat"],
+    "image": "/assets/images/fr/words/ananas.png", "audioWord": "/assets/audio/fr/words/ananas.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["aliment", "mot-trisyllabique"]
+  },
+  {
+    "id": "chocolat", "locale": "fr-FR", "word": "chocolat", "displayWord": "chocolat",
+    "syllables": ["cho", "co", "lat"], "spokenSyllables": ["cho", "co", "la"], "distractors": ["pi", "llon"],
+    "image": "/assets/images/fr/words/chocolat.png", "audioWord": "/assets/audio/fr/words/chocolat.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["aliment", "mot-trisyllabique"]
+  },
+  {
+    "id": "papillon", "locale": "fr-FR", "word": "papillon", "displayWord": "papillon",
+    "syllables": ["pa", "pi", "llon"], "spokenSyllables": ["pa", "pi", "yon"], "distractors": ["ca", "mé"],
+    "image": "/assets/images/fr/words/papillon.png", "audioWord": "/assets/audio/fr/words/papillon.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "camera", "locale": "fr-FR", "word": "caméra", "displayWord": "caméra",
+    "syllables": ["ca", "mé", "ra"], "spokenSyllables": ["cas", "mé", "ra"], "distractors": ["do", "ni"],
+    "image": "/assets/images/fr/words/camera.png", "audioWord": "/assets/audio/fr/words/camera.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-trisyllabique"]
+  },
+
+  {
+    "id": "ecureuil", "locale": "fr-FR", "word": "écureuil", "displayWord": "écureuil",
+    "syllables": ["é", "cu", "reuil"], "spokenSyllables": ["é", "cu", "reuil"], "distractors": ["té", "dile", "née"],
+    "image": "/assets/images/fr/words/ecureuil.png", "audioWord": "/assets/audio/fr/words/ecureuil.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "elephant", "locale": "fr-FR", "word": "éléphant", "displayWord": "éléphant",
+    "syllables": ["é", "lé", "phant"], "spokenSyllables": ["é", "lé", "faon"], "distractors": ["cu", "phone", "cro"],
+    "image": "/assets/images/fr/words/elephant.png", "audioWord": "/assets/audio/fr/words/elephant.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "telephone", "locale": "fr-FR", "word": "téléphone", "displayWord": "téléphone",
+    "syllables": ["té", "lé", "phone"], "spokenSyllables": ["té", "lé", "fone"], "distractors": ["é", "no", "llage"],
+    "image": "/assets/images/fr/words/telephone.png", "audioWord": "/assets/audio/fr/words/telephone.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-trisyllabique"]
+  },
+  {
+    "id": "dinosaure", "locale": "fr-FR", "word": "dinosaure", "displayWord": "dinosaure",
+    "syllables": ["di", "no", "saure"], "spokenSyllables": ["di", "no", "zor"], "distractors": ["cro", "qui", "née"],
+    "image": "/assets/images/fr/words/dinosaure.png", "audioWord": "/assets/audio/fr/words/dinosaure.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "crocodile", "locale": "fr-FR", "word": "crocodile", "displayWord": "crocodile",
+    "syllables": ["cro", "co", "dile"], "spokenSyllables": ["cro", "co", "dile"], "distractors": ["di", "cu", "llule"],
+    "image": "/assets/images/fr/words/crocodile.png", "audioWord": "/assets/audio/fr/words/crocodile.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+  {
+    "id": "coquillage", "locale": "fr-FR", "word": "coquillage", "displayWord": "coquillage",
+    "syllables": ["co", "qui", "llage"], "spokenSyllables": ["co", "qui", "yage"], "distractors": ["cro", "mi", "phant"],
+    "image": "/assets/images/fr/words/coquillage.png", "audioWord": "/assets/audio/fr/words/coquillage.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["nature", "mot-trisyllabique"]
+  },
+  {
+    "id": "cheminee", "locale": "fr-FR", "word": "cheminée", "displayWord": "cheminée",
+    "syllables": ["che", "mi", "née"], "spokenSyllables": ["cheuh", "mi!", "née"], "distractors": ["li", "reuil", "phone"],
+    "image": "/assets/images/fr/words/cheminee.png", "audioWord": "/assets/audio/fr/words/cheminee.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-trisyllabique"]
+  },
+  {
+    "id": "libellule", "locale": "fr-FR", "word": "libellule", "displayWord": "libellule",
+    "syllables": ["li", "be", "llule"], "spokenSyllables": ["li", "bé", "lule"], "distractors": ["che", "lé", "saure"],
+    "image": "/assets/images/fr/words/libellule.png", "audioWord": "/assets/audio/fr/words/libellule.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-trisyllabique"]
+  },
+
+  {
+    "id": "hippopotame", "locale": "fr-FR", "word": "hippopotame", "displayWord": "hippopotame",
+    "syllables": ["hip", "po", "po", "tame"], "spokenSyllables": ["hippe", "po", "po", "tame"], "distractors": ["li", "lo", "tor"],
+    "image": "/assets/images/fr/words/hippopotame.png", "audioWord": "/assets/audio/fr/words/hippopotame.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["animal", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "helicoptere", "locale": "fr-FR", "word": "hélicoptère", "displayWord": "hélicoptère",
+    "syllables": ["hé", "li", "cop", "tère"], "spokenSyllables": ["hé", "li", "cop", "tère"], "distractors": ["é", "lé", "teur"],
+    "image": "/assets/images/fr/words/helicoptere.png", "audioWord": "/assets/audio/fr/words/helicoptere.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "alligator", "locale": "fr-FR", "word": "alligator", "displayWord": "alligator",
+    "syllables": ["al", "li", "ga", "tor"], "spokenSyllables": ["al", "li", "gars", "tor"], "distractors": ["cal", "lo", "tère"],
+    "image": "/assets/images/fr/words/alligator.png", "audioWord": "/assets/audio/fr/words/alligator.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["animal", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "ordinateur", "locale": "fr-FR", "word": "ordinateur", "displayWord": "ordinateur",
+    "syllables": ["or", "di", "na", "teur"], "spokenSyllables": ["or", "di", "na", "teur"], "distractors": ["al", "ra", "trice"],
+    "image": "/assets/images/fr/words/ordinateur.png", "audioWord": "/assets/audio/fr/words/ordinateur.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "calculatrice", "locale": "fr-FR", "word": "calculatrice", "displayWord": "calculatrice",
+    "syllables": ["cal", "cu", "la", "trice"], "spokenSyllables": ["cal", "cu", "la", "trice"], "distractors": ["cop", "ca", "teur"],
+    "image": "/assets/images/fr/words/calculatrice.png", "audioWord": "/assets/audio/fr/words/calculatrice.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "locomotive", "locale": "fr-FR", "word": "locomotive", "displayWord": "locomotive",
+    "syllables": ["lo", "co", "mo", "tive"], "spokenSyllables": ["lo", "co", "mo", "tive"], "distractors": ["po", "no", "phie"],
+    "image": "/assets/images/fr/words/locomotive.png", "audioWord": "/assets/audio/fr/words/locomotive.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "cameleon", "locale": "fr-FR", "word": "caméléon", "displayWord": "caméléon",
+    "syllables": ["ca", "mé", "lé", "on"], "spokenSyllables": ["cas", "mé", "lé", "on"], "distractors": ["ga", "na", "tère"],
+    "image": "/assets/images/fr/words/cameleon.png", "audioWord": "/assets/audio/fr/words/cameleon.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["animal", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "photographie", "locale": "fr-FR", "word": "photographie", "displayWord": "photographie",
+    "syllables": ["pho", "to", "gra", "phie"], "spokenSyllables": ["faux", "tôt", "gra", "fi"], "distractors": ["po", "co", "tive"],
+    "image": "/assets/images/fr/words/photographie.png", "audioWord": "/assets/audio/fr/words/photographie.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+
+  {
+    "id": "aspirateur", "locale": "fr-FR", "word": "aspirateur", "displayWord": "aspirateur",
+    "syllables": ["as", "pi", "ra", "teur"], "spokenSyllables": ["as", "pi", "ra", "teur"], "distractors": ["ac", "cor", "tail", "tor"],
+    "image": "/assets/images/fr/words/aspirateur.png", "audioWord": "/assets/audio/fr/words/aspirateur.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "rhinoceros", "locale": "fr-FR", "word": "rhinocéros", "displayWord": "rhinocéros",
+    "syllables": ["rhi", "no", "cé", "ros"], "spokenSyllables": ["ri", "no", "cé", "rosse"], "distractors": ["bi", "ni", "sion", "ro"],
+    "image": "/assets/images/fr/words/rhinoceros.png", "audioWord": "/assets/audio/fr/words/rhinoceros.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["animal", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "television", "locale": "fr-FR", "word": "télévision", "displayWord": "télévision",
+    "syllables": ["té", "lé", "vi", "sion"], "spokenSyllables": ["té", "lé", "vie", "zion"], "distractors": ["dé", "bli", "teur", "ci"],
+    "image": "/assets/images/fr/words/television.png", "audioWord": "/assets/audio/fr/words/television.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "epouvantail", "locale": "fr-FR", "word": "épouvantail", "displayWord": "épouvantail",
+    "syllables": ["é", "pou", "van", "tail"], "spokenSyllables": ["é", "pou", "van", "taille"], "distractors": ["on", "ros", "thèque", "pan"],
+    "image": "/assets/images/fr/words/epouvantail.png", "audioWord": "/assets/audio/fr/words/epouvantail.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "bibliotheque", "locale": "fr-FR", "word": "bibliothèque", "displayWord": "bibliothèque",
+    "syllables": ["bi", "bli", "o", "thèque"], "spokenSyllables": ["bi", "bli", "o", "tèque"], "distractors": ["rhi", "vi", "clette", "té"],
+    "image": "/assets/images/fr/words/bibliotheque.png", "audioWord": "/assets/audio/fr/words/bibliotheque.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "motocyclette", "locale": "fr-FR", "word": "motocyclette", "displayWord": "motocyclette",
+    "syllables": ["mo", "to", "cy", "clette"], "spokenSyllables": ["mo", "tôt", "si", "clette"], "distractors": ["ma", "dé", "thèque", "ci"],
+    "image": "/assets/images/fr/words/motocyclette.png", "audioWord": "/assets/audio/fr/words/motocyclette.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "accordeon", "locale": "fr-FR", "word": "accordéon", "displayWord": "accordéon",
+    "syllables": ["ac", "cor", "dé", "on"], "spokenSyllables": ["aque", "cor", "dé", "on"], "distractors": ["as", "van", "sion", "or"],
+    "image": "/assets/images/fr/words/accordeon.png", "audioWord": "/assets/audio/fr/words/accordeon.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["objet", "mot-quadrisyllabique"]
+  },
+  {
+    "id": "macaroni", "locale": "fr-FR", "word": "macaroni", "displayWord": "macaroni",
+    "syllables": ["ma", "ca", "ro", "ni"], "spokenSyllables": ["ma", "cas", "ro", "ni"], "distractors": ["mo", "cé", "tail", "no"],
+    "image": "/assets/images/fr/words/macaroni.png", "audioWord": "/assets/audio/fr/words/macaroni.mp3", "audioSyllables": {},
+    "difficulty": 4, "tags": ["aliment", "mot-quadrisyllabique"]
   }
 ]

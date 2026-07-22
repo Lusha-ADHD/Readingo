@@ -8,6 +8,8 @@ type ActiveVoice = {
   complete: (result: VoicePlaybackResult) => void;
 };
 
+const VOICE_ASSET_VERSION = "2026-07-22-8";
+
 export function useVoiceAudio() {
   const activeVoiceRef = useRef<ActiveVoice | null>(null);
 
@@ -22,7 +24,7 @@ export function useVoiceAudio() {
       }
 
       cancelVoice();
-      const audio = new Audio(sitePath(publicPath));
+      const audio = new Audio(`${sitePath(publicPath)}?v=${VOICE_ASSET_VERSION}`);
       audio.preload = "auto";
 
       return new Promise<VoicePlaybackResult>((resolve) => {

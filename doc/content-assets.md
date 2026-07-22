@@ -119,23 +119,79 @@ Regles :
 
 ### Voix ElevenLabs
 
-Les dialogues, mots et syllabes sont pre-generes avec ElevenLabs puis heberges comme assets statiques. La cle API reste uniquement dans `.env.local` et ne doit jamais etre exposee dans le code client.
+Les dialogues, mots et syllabes sont pre-generes avec ElevenLabs puis heberges comme assets statiques. Le navigateur ne contacte jamais ElevenLabs : la cle API reste uniquement dans `.env.local` et ne doit pas etre exposee dans le code client.
 
-La generation francaise utilise `ELEVENLABS_LANGUAGE_CODE=fr` avec `eleven_v3`. Le modele `eleven_multilingual_v2` ne doit pas etre utilise ici car son API ignore `language_code`, ce qui rend les syllabes tres courtes ambigues. Les graphies de generation peuvent differer du texte affiche, par exemple `tôt` pour garantir le son francais de `to` et `teau`.
+#### Configuration
 
-La generation se lance avec :
+Le fichier `.env.local` doit contenir :
+
+```dotenv
+ELEVENLABS_API_KEY=...
+ELEVENLABS_VOICE_ID=...
+ELEVENLABS_MODEL_ID=eleven_v3
+ELEVENLABS_LANGUAGE_CODE=fr
+```
+
+`ELEVENLABS_API_KEY` et `ELEVENLABS_VOICE_ID` sont obligatoires. Le modele et la langue sont optionnels dans le fichier : le script utilise respectivement `eleven_v3` et `fr` par defaut.
+
+Le modele `eleven_multilingual_v2` ne doit pas etre utilise ici car son API ignore `language_code`, ce qui rend les syllabes tres courtes ambigues. La voix configuree et sa compatibilite avec le modele peuvent etre controlees sans generer de fichier :
+
+```bash
+npm run audio:generate -- --check-voice
+```
+
+#### Sources de contenu
+
+Le script `scripts/generate-voices.mjs` construit la liste des clips a partir de trois fichiers :
+
+- `src/content/fr/voice-lines.json` pour les dialogues et retours de Pana ;
+- `src/content/fr/words.json` pour les mots complets et leurs syllabes contextuelles ;
+- `src/content/fr/syllables.json` pour les prononciations generiques partagees.
+
+Pour un mot, `displayWord` est le texte envoye a ElevenLabs pour le clip complet. `spokenSyllables` contient les textes de generation des syllabes dans le meme ordre que `syllables`. Dans `syllables.json`, `text` est la graphie affichee et `speechText` est la graphie envoyee au moteur vocal.
+
+Les graphies de generation peuvent donc differer du texte affiche. Par exemple, `tôt` produit le son francais de `to` et `teau`, `faux` celui de `pho`, et `leille` celui de `leil`. La ponctuation fait partie du texte de generation : `mi!` et `mi.` peuvent produire des resultats differents.
+
+Une syllabe generique utilise le chemin defini par `syllables.json`. Une variante propre a un mot utilise `audioSyllables` avec un chemin distinct, par exemple `words/maison/son.mp3`. Deux prononciations differentes ne doivent jamais viser le meme chemin : le script detecte ce conflit et interrompt la generation.
+
+#### Commandes de generation
+
+La commande normale genere uniquement les fichiers absents et conserve les clips existants :
 
 ```bash
 npm run audio:generate
 ```
 
-Le script `scripts/generate-voices.mjs` lit `words.json`, `syllables.json` et `voice-lines.json`. Il conserve les clips existants par defaut. Pour regenerer tous les fichiers apres un changement de voix ou de reglages :
+Pour regenerer tous les clips apres un changement de voix, de modele ou de reglages :
 
 ```bash
 npm run audio:generate -- --force
 ```
 
-Les variantes contextuelles utilisent un chemin propre au mot, par exemple `words/maison/son.mp3`, tandis que les distracteurs emploient la prononciation generique de la syllabe. Le navigateur utilise `speechSynthesis` uniquement comme solution de repli lorsqu'un MP3 ne peut pas etre lu.
+Pour regenerer un seul clip, utiliser son chemin public exact. `--force` est necessaire si le fichier existe deja :
+
+```bash
+npm run audio:generate -- --force --only=/assets/audio/fr/syllables/mi.mp3
+npm run audio:generate -- --force --only=/assets/audio/fr/words/domino.mp3
+```
+
+Le filtre `--only` accepte aussi un identifiant interne affiche par le script, mais le chemin public est preferable car il reste non ambigu pour les syllabes mutualisees.
+
+#### Parametres de sortie
+
+Les appels utilisent :
+
+- le format `mp3_44100_128` ;
+- une seed fixe `41807` pour limiter les variations ;
+- des reglages distincts pour les dialogues, les syllabes et les mots ;
+- une vitesse plus lente pour les syllabes (`0.82`) que pour les mots (`0.88`) et les dialogues (`0.94`) ;
+- jusqu'a trois nouvelles tentatives pour les erreurs temporaires `429` et `5xx`.
+
+Les fichiers sont ecrits sous `public/assets/audio` en suivant les chemins declares dans les fichiers de contenu. Le navigateur utilise `speechSynthesis` uniquement comme solution de repli lorsqu'un fichier ne peut pas etre lu.
+
+#### Cache navigateur
+
+Les noms des assets audio restent stables. Lorsqu'un son deja publie est remplace, la constante `VOICE_ASSET_VERSION` de `src/components/games/useVoiceAudio.ts` peut etre incrementee avant le deploiement. Elle ajoute un parametre de version a l'URL et force les navigateurs a telecharger la nouvelle copie. Il n'est pas necessaire de la modifier entre chaque essai local si le cache du navigateur est deja desactive ou vide.
 
 ### Bruitages du jeu Bateau
 

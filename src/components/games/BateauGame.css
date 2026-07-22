@@ -29,6 +29,56 @@
   margin-inline: auto;
 }
 
+.bateau-game__test-tools {
+  position: absolute;
+  z-index: 30;
+  bottom: 10px;
+  left: 10px;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.bateau-game__test-tools summary {
+  width: max-content;
+  padding: 5px 9px;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  border-radius: 10px;
+  background: rgba(8, 33, 74, 0.88);
+  box-shadow: 0 3px 0 rgba(8, 33, 74, 0.25);
+  cursor: pointer;
+  list-style: none;
+}
+
+.bateau-game__test-tools summary::-webkit-details-marker {
+  display: none;
+}
+
+.bateau-game__test-tools > div {
+  display: flex;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  width: max-content;
+  max-width: calc(100vw - 20px);
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 11px;
+  background: rgba(8, 33, 74, 0.94);
+}
+
+.bateau-game__test-tools button {
+  min-width: 34px;
+  padding: 5px 7px;
+  border: 0;
+  border-radius: 7px;
+  background: #ffd452;
+  color: #08214a;
+  cursor: pointer;
+  font: inherit;
+}
+
 .bateau-game__ocean {
   position: absolute;
   z-index: 0;
@@ -584,6 +634,11 @@
   grid-template-columns: 1fr;
 }
 
+.bateau-game__panel--leaving {
+  pointer-events: none;
+  animation: result-panel-leave 220ms ease-in both;
+}
+
 .bateau-game__image-card {
   position: relative;
   display: grid;
@@ -627,7 +682,8 @@
   box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
 }
 
-.bateau-game__audio {
+.bateau-game__audio,
+.bateau-game__tile-audio {
   position: absolute;
   z-index: 12;
   top: -10px;
@@ -639,7 +695,8 @@
   pointer-events: auto;
 }
 
-.bateau-game__audio .audio-button__icon {
+.bateau-game__audio .audio-button__icon,
+.bateau-game__tile-audio .audio-button__icon {
   width: 26px;
   height: 26px;
 }
@@ -665,36 +722,36 @@
 
 .bateau-game__slots {
   display: grid;
-  grid-template-columns: repeat(2, minmax(100px, 1fr));
-  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(var(--slot-count, 2), minmax(0, 1fr));
+  gap: clamp(6px, 1.4vw, 14px);
   margin-top: 18px;
 }
 
 .bateau-game__syllables {
   display: grid;
+  width: 100%;
+  min-width: 0;
   grid-column: 1 / -1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  gap: clamp(12px, 1.2vw, 14px);
 }
 
 .bateau-game__tile-wrap {
   display: grid;
   position: relative;
+  min-width: 0;
+  container-type: inline-size;
 }
 
-.bateau-game__tile-audio {
-  position: absolute;
-  top: -10px;
-  right: -6px;
-  width: 34px;
-  height: 34px;
-  border-width: 2px;
-  border-radius: 12px;
-}
-
-.bateau-game__tile-audio .audio-button__icon {
-  width: 22px;
-  height: 22px;
+.bateau-game__syllables .syllable-tile {
+  width: 100%;
+  min-width: 0;
+  min-height: 74px;
+  padding: 14px 4px 6px;
+  font-size: 1.25rem;
+  font-size: clamp(1rem, 22cqi, 2.5rem);
 }
 
 .bateau-game__end {
@@ -726,6 +783,18 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 14px;
+}
+
+@keyframes result-panel-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(26px);
+  }
 }
 
 @keyframes boat-bob {
@@ -931,14 +1000,16 @@
     bottom: 8px;
     left: 10px;
     width: auto;
-    height: var(--mobile-panel-height);
-    grid-template-columns: minmax(88px, 0.34fr) 1fr;
-    grid-template-rows: minmax(96px, 1fr) auto;
-    gap: 10px;
+    height: auto;
+    max-height: calc(100% - 76px);
+    grid-template-columns: minmax(82px, 0.3fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 12px 10px;
     margin: 0;
     padding: 12px;
     border-radius: 22px;
-    overflow: visible;
+    overflow-y: auto;
   }
 
   .bateau-game__image-card {
@@ -956,14 +1027,16 @@
     border-radius: 16px;
   }
 
-  .bateau-game__audio {
+  .bateau-game__audio,
+  .bateau-game__tile-audio {
     top: -7px;
     right: -7px;
     width: 34px;
     height: 34px;
   }
 
-  .bateau-game__audio .audio-button__icon {
+  .bateau-game__audio .audio-button__icon,
+  .bateau-game__tile-audio .audio-button__icon {
     width: 22px;
     height: 22px;
   }
@@ -977,26 +1050,30 @@
   }
 
   .bateau-game__slots {
-    gap: 8px;
+    grid-template-columns: repeat(var(--slot-count, 2), minmax(0, 1fr));
+    gap: 5px;
     margin-top: 6px;
   }
 
   .bateau-game__syllables {
-    align-self: end;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(58px, 18vw, 72px), 1fr));
+    gap: 12px 8px;
   }
 
-  .bateau-game__tile-audio {
-    top: -6px;
-    right: -4px;
-    width: 30px;
-    height: 30px;
+  .bateau-game__slots[data-count="4"] .syllable-slot {
+    min-height: 48px;
+    border-width: 2px;
+    border-radius: 11px;
+    font-size: clamp(0.88rem, 4.2vw, 1.25rem);
   }
 
-  .bateau-game__tile-audio .audio-button__icon {
-    width: 19px;
-    height: 19px;
+  .bateau-game__syllables .syllable-tile {
+    padding-inline: 2px;
+    border-width: 2px;
+    border-radius: 10px;
+    box-shadow: 0 4px 0 rgba(8, 33, 74, 0.25);
+    font-size: clamp(0.95rem, 4.2vw, 1.3rem);
+    letter-spacing: -0.025em;
   }
 
   .bateau-game__sailing-panel {
