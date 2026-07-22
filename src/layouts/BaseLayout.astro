@@ -6,13 +6,21 @@ type Props = {
   title?: string;
   description?: string;
   bodyClass?: string;
+  canonicalPath?: string;
+  ogType?: "website" | "article";
 };
 
 const {
   title = "Readingo - Apprendre à lire en jouant",
   description = "Des mini-jeux gratuits pour aider les enfants de 5 à 7 ans à apprendre les lettres, les syllabes et les mots.",
   bodyClass = "",
+  canonicalPath,
+  ogType = "website",
 } = Astro.props;
+
+const canonicalUrl = canonicalPath
+  ? new URL(sitePath(canonicalPath), Astro.site ?? Astro.url).toString()
+  : undefined;
 
 ---
 
@@ -24,9 +32,12 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <link rel="icon" href={sitePath("/favicon.svg")} type="image/svg+xml" />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body class={bodyClass}>
     <header class="site-header">
