@@ -7,7 +7,7 @@
     "syllables": ["cha", "ton"],
     "spokenSyllables": ["cha", "ton"],
     "distractors": ["ba", "ti"],
-    "image": "/assets/images/fr/words/chaton.webp",
+    "image": "/assets/images/fr/words/chaton.png",
     "audioWord": "/assets/audio/fr/words/chaton.mp3",
     "audioSyllables": {
       "cha": "/assets/audio/fr/syllables/cha.mp3",
@@ -24,7 +24,7 @@
     "syllables": ["ba", "teau"],
     "spokenSyllables": ["bah", "tôt"],
     "distractors": ["cha", "mi"],
-    "image": "/assets/images/fr/words/bateau.webp",
+    "image": "/assets/images/fr/words/bateau.png",
     "audioWord": "/assets/audio/fr/words/bateau.mp3",
     "audioSyllables": {
       "ba": "/assets/audio/fr/syllables/ba.mp3",
@@ -41,7 +41,7 @@
     "syllables": ["mo", "to"],
     "spokenSyllables": ["mo", "tôt"],
     "distractors": ["la", "ri"],
-    "image": "/assets/images/fr/words/moto.webp",
+    "image": "/assets/images/fr/words/moto.png",
     "audioWord": "/assets/audio/fr/words/moto.mp3",
     "audioSyllables": {
       "mo": "/assets/audio/fr/syllables/mo.mp3",
@@ -58,7 +58,7 @@
     "syllables": ["la", "pin"],
     "spokenSyllables": ["la", "pin"],
     "distractors": ["mo", "teau"],
-    "image": "/assets/images/fr/words/lapin.webp",
+    "image": "/assets/images/fr/words/lapin.png",
     "audioWord": "/assets/audio/fr/words/lapin.mp3",
     "audioSyllables": {
       "la": "/assets/audio/fr/syllables/la.mp3",
@@ -75,7 +75,7 @@
     "syllables": ["me", "lon"],
     "spokenSyllables": ["meuh", "lon"],
     "distractors": ["ba", "to"],
-    "image": "/assets/images/fr/words/melon.webp",
+    "image": "/assets/images/fr/words/melon.png",
     "audioWord": "/assets/audio/fr/words/melon.mp3",
     "audioSyllables": {
       "me": "/assets/audio/fr/syllables/me.mp3",
@@ -92,7 +92,7 @@
     "syllables": ["ta", "pis"],
     "spokenSyllables": ["ta", "pi"],
     "distractors": ["la", "son"],
-    "image": "/assets/images/fr/words/tapis.webp",
+    "image": "/assets/images/fr/words/tapis.png",
     "audioWord": "/assets/audio/fr/words/tapis.mp3",
     "audioSyllables": {
       "ta": "/assets/audio/fr/syllables/ta.mp3",
@@ -109,7 +109,7 @@
     "syllables": ["pan", "da"],
     "spokenSyllables": ["pan", "da"],
     "distractors": ["pi", "lon"],
-    "image": "/assets/images/fr/words/panda.webp",
+    "image": "/assets/images/fr/words/panda.png",
     "audioWord": "/assets/audio/fr/words/panda.mp3",
     "audioSyllables": {
       "pan": "/assets/audio/fr/syllables/pan.mp3",
@@ -126,7 +126,7 @@
     "syllables": ["mai", "son"],
     "spokenSyllables": ["mè", "zon"],
     "distractors": ["cha", "da"],
-    "image": "/assets/images/fr/words/maison.webp",
+    "image": "/assets/images/fr/words/maison.png",
     "audioWord": "/assets/audio/fr/words/maison.mp3",
     "audioSyllables": {
       "mai": "/assets/audio/fr/syllables/mai.mp3",

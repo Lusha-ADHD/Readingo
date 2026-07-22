@@ -24,6 +24,7 @@ type WordChallenge = {
   syllables: string[];
   spokenSyllables?: string[];
   distractors: string[];
+  image: string;
   audioWord: string;
   audioSyllables: Partial<Record<string, string>>;
   difficulty: number;
@@ -68,14 +69,6 @@ type SailingIsland = {
   sailingOrder: number | null;
 };
 
-type WordAtlasFrame = {
-  column: number;
-  row: number;
-  zoom?: number;
-  offsetX?: number;
-  offsetY?: number;
-};
-
 type Journey = {
   wind: 1 | 2 | 3;
   islands: SailingIsland[];
@@ -88,17 +81,6 @@ const BOAT_ASSET_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_WITH_CHEST_ASSET_PATH = sitePath("/assets/world/IslandWithChest.png");
 const ISLAND_WITHOUT_CHEST_ASSET_PATH = sitePath("/assets/world/IslandWithoutChest.png");
 const CHEST_ICON_ASSET_PATH = sitePath("/assets/world/Chest.png");
-const WORD_ATLAS_ASSET_PATH = sitePath("/assets/words/WordAtlas.png");
-const WORD_ATLAS_FRAMES: Record<string, WordAtlasFrame> = {
-  bateau: { column: 0, row: 0, offsetY: 2 },
-  moto: { column: 1, row: 0, offsetY: 1 },
-  lapin: { column: 2, row: 0, offsetY: 2 },
-  panda: { column: 3, row: 0, offsetY: 2 },
-  maison: { column: 0, row: 1, offsetY: -4 },
-  melon: { column: 1, row: 1, offsetY: -2 },
-  tapis: { column: 2, row: 1, offsetY: -3 },
-  chaton: { column: 3, row: 1, offsetY: -2 },
-};
 const CHEST_COLLECT_PAUSE_MS = 620;
 const CHEST_COLLECT_SEGMENT_RATIO = 0.58;
 const WORD_SUCCESS_SOUND_MS = 600;
@@ -245,20 +227,6 @@ function getWindLabel(wind: 1 | 2 | 3) {
   return "Vent faible";
 }
 
-function getWordAtlasStyle(frame: WordAtlasFrame) {
-  const zoom = frame.zoom ?? 1.22;
-  const centeredCropOffset = (zoom - 1) * -50;
-  const left = frame.column * -100 * zoom + centeredCropOffset + (frame.offsetX ?? 0);
-  const top = frame.row * -100 * zoom + centeredCropOffset + (frame.offsetY ?? 0);
-
-  return {
-    "--word-atlas-left": `${left}%`,
-    "--word-atlas-top": `${top}%`,
-    "--word-atlas-width": `${400 * zoom}%`,
-    "--word-atlas-height": `${300 * zoom}%`,
-  } as CSSProperties;
-}
-
 function PanaMascot({ compact = false }: { compact?: boolean }) {
   const [assetFailed, setAssetFailed] = useState(false);
 
@@ -330,6 +298,7 @@ export function BateauGame() {
   const [isSailingMotionActive, setIsSailingMotionActive] = useState(false);
   const [chestBursts, setChestBursts] = useState<number[]>([]);
   const [journey, setJourney] = useState<Journey | null>(null);
+  const [wordImageFailed, setWordImageFailed] = useState(false);
   const [progress, setProgress] = useState<SavedProgress>(() => getInitialProgress());
   const dialogRunRef = useRef(0);
   const chestBurstIdRef = useRef(0);
@@ -338,7 +307,6 @@ export function BateauGame() {
   const { cancelVoice, playVoice } = useVoiceAudio();
 
   const challenge = sessionWords[wordIndex];
-  const wordAtlasFrame = WORD_ATLAS_FRAMES[challenge.id];
   const tiles = useMemo(() => shuffleTiles(challenge), [challenge]);
   const completedCount = phase === "done" ? sessionWords.length : wordIndex;
 
@@ -352,6 +320,7 @@ export function BateauGame() {
     setIsSailingMotionActive(false);
     setChestBursts([]);
     setJourney(null);
+    setWordImageFailed(false);
     setStartedAt(Date.now());
   }, [challenge]);
 
@@ -730,12 +699,14 @@ export function BateauGame() {
         <div className="bateau-game__panel">
           <div className="bateau-game__image-card">
             <div className="bateau-game__picture" aria-hidden="true">
-              {wordAtlasFrame ? (
-                <span className="bateau-game__word-frame">
-                  <span className="bateau-game__word-atlas-viewport" style={getWordAtlasStyle(wordAtlasFrame)}>
-                    <img className="bateau-game__word-atlas" src={WORD_ATLAS_ASSET_PATH} alt="" draggable={false} />
-                  </span>
-                </span>
+              {!wordImageFailed ? (
+                <img
+                  className="bateau-game__word-image"
+                  src={sitePath(challenge.image)}
+                  alt=""
+                  draggable={false}
+                  onError={() => setWordImageFailed(true)}
+                />
               ) : (
                 <span className="bateau-game__picture-fallback" />
               )}

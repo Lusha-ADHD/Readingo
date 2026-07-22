@@ -44,7 +44,7 @@ Exemple :
   "displayWord": "chaton",
   "syllables": ["cha", "ton"],
   "distractors": ["ba", "ti", "ma"],
-  "image": "/assets/images/fr/words/chaton.webp",
+  "image": "/assets/images/fr/words/chaton.png",
   "audioWord": "/assets/audio/fr/words/chaton.mp3",
   "audioSyllables": {
     "cha": "/assets/audio/fr/syllables/cha.mp3",
@@ -161,8 +161,14 @@ Arborescence cible :
 public/assets/images/
   fr/
     words/
-      chaton.webp
-      bateau.webp
+      chaton.png
+      bateau.png
+      moto.png
+      lapin.png
+      melon.png
+      tapis.png
+      panda.png
+      maison.png
     characters/
     ui/
 ```
@@ -178,18 +184,13 @@ public/assets/
     IslandWithChest.png
     IslandWithoutChest.png
     Chest.png
-  words/
-    WordAtlas.png
 ```
 
 Ces assets sont charges automatiquement par l'interface Bateau si tu les ajoutes. Tant que Pana ou le bateau sont absents, le jeu garde un fallback CSS temporaire.
 
-Pour les images de mots du prototype, `WordAtlas.png` est utilise comme atlas 4 colonnes x 3 lignes. Les deux premieres lignes contiennent les mots du jeu Bateau :
+Chaque mot référence désormais son propre fichier transparent via le champ `image` de `src/content/fr/words.json`. Le composant `BateauGame` charge directement ce chemin ; ajouter un mot ne nécessite donc plus de modifier un atlas ou un mapping dans le composant.
 
-- ligne 1 : bateau, moto, lapin, panda ;
-- ligne 2 : maison, melon, tapis, chaton.
-
-Le composant `BateauGame` mappe explicitement chaque `id` de mot vers sa cellule d'atlas. Pour ajouter un mot, il faut soit ajouter l'image dans l'atlas et completer ce mapping, soit passer a des fichiers separes quand le volume d'assets augmente.
+La recette `readingo-pana-v1` et le pipeline de detourage sont documentes dans [Generation des assets images](./image-generation.md). Les prompts et inputs exacts de chaque asset sont conserves dans [l'historique YAML](./image-generation-history.yaml).
 
 Regles :
 

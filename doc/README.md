@@ -10,6 +10,8 @@ Le produit est pense pour etre utilise d'abord par un parent avec son enfant, pu
 - [Experience utilisateur et gameplay](./ux-gameplay.md)
 - [Direction artistique et design system](./design-direction.md)
 - [Contenu, assets et internationalisation](./content-assets.md)
+- [Generation reproductible des assets images](./image-generation.md)
+- [Historique des generations d'images](./image-generation-history.yaml)
 - [Roadmap d'implementation](./roadmap.md)
 
 ## Positionnement
@@ -29,4 +31,3 @@ Readingo doit combiner trois objectifs :
 - Le site doit rester gratuit et accessible sans creation de compte.
 - Les assets doivent etre coherents, propres et valides humainement.
 - Le contenu doit etre structure pour faciliter l'ajout de nouvelles langues.
-

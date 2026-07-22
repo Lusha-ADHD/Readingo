@@ -9,6 +9,9 @@ Fichiers attendus par le jeu Bateau :
 - `world/IslandWithChest.png` : île avec coffre.
 - `world/IslandWithoutChest.png` : île sans coffre.
 - `world/Chest.png` : icône de coffre pour le score et les récompenses.
+- `world/fishing-boat.png` : bateau de pêche, fond transparent.
+- `world/motorcycle.png` : moto rétro, fond transparent.
+- `images/fr/words/*.png` : illustrations individuelles des mots du jeu, fond transparent.
 
 Les chemins publics correspondants sont :
 
@@ -17,3 +20,6 @@ Les chemins publics correspondants sont :
 - `/assets/world/IslandWithChest.png`
 - `/assets/world/IslandWithoutChest.png`
 - `/assets/world/Chest.png`
+- `/assets/world/fishing-boat.png`
+- `/assets/world/motorcycle.png`
+- `/assets/images/fr/words/{mot}.png`

@@ -9,6 +9,8 @@ boat.png
 IslandWithChest.png
 IslandWithoutChest.png
 Chest.png
+fishing-boat.png
+motorcycle.png
 ```
 
 Format recommandé : PNG ou WebP avec fond transparent, sujet centré et marge suffisante autour de l'asset.
