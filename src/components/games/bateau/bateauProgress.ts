@@ -1,5 +1,5 @@
-import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
-import { readStoredJson, writeStoredJson } from "../../utils/storage.ts";
+import { GAME_BY_ID, GAME_IDS } from "../../../content/gameCatalog.ts";
+import { readStoredJson, writeStoredJson } from "../../../utils/storage.ts";
 
 export const [BATEAU_STORAGE_KEY, LEGACY_BATEAU_STORAGE_KEY] =
   GAME_BY_ID[GAME_IDS.BATEAU].progressKeys;

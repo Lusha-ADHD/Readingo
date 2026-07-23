@@ -1,0 +1,1 @@
+export { SentierGame } from "./SentierGame";

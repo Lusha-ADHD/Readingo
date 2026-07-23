@@ -14,7 +14,7 @@ test.describe("Introduction commune des jeux", () => {
 
   for (const game of games) {
     test(`${game.route} utilise l’introduction et la bulle communes`, async ({ page }) => {
-      await page.goto(game.route);
+      await page.goto(game.route, { waitUntil: "networkidle" });
 
       await expect(page.locator(".game-intro__title")).toHaveText(game.title);
       await expect(page.locator(".game-intro__pana--start")).toBeVisible();

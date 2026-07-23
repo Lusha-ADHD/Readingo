@@ -1,0 +1,1 @@
+export { BateauGame } from "./BateauGame";

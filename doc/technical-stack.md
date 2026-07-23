@@ -33,7 +33,7 @@ Astro produit le HTML des pages et hydrate uniquement les îlots React qui en on
 ---
 import { GAME_BY_ID, GAME_IDS } from "../content/gameCatalog";
 import GamePageLayout from "../layouts/GamePageLayout.astro";
-import { BateauGame } from "../components/games/BateauGame";
+import { BateauGame } from "../components/games/bateau";
 
 const game = GAME_BY_ID[GAME_IDS.BATEAU];
 ---
@@ -144,6 +144,11 @@ Voir [Contenu pédagogique et assets](./content-assets.md).
 src/
   components/
     games/
+      bateau/
+      letters/
+      sentier/
+      gameAudio.ts
+      useVoiceAudio.ts
     ui/
   content/
     fr/
@@ -170,6 +175,25 @@ La structure peut évoluer, mais un nouveau jeu doit conserver la séparation en
 - présentation ;
 - assets ;
 - documentation de game design.
+
+Chaque jeu possède un dossier et un `index.ts` servant de point d’entrée stable
+à sa page Astro. À l’intérieur :
+
+- `*Game.tsx` orchestre les phases, l’audio et la sauvegarde ;
+- `*Scene.tsx` possède le décor et ses animations ;
+- `*Challenge.tsx` possède l’exercice quand celui-ci justifie un composant ;
+- `*Result.tsx` possède le résultat lorsqu’il n’est pas trivial ;
+- `*Progress.ts` et `*State.ts` restent des modules métier testables.
+
+Cette convention n’impose pas les mêmes écrans aux jeux. Les futures cartes de
+Lettres et du Sentier seront propres à leur univers, tout en lisant une
+progression séquentielle compatible (`unlockedLevel`, `completedLevels`). Il
+n’existe volontairement ni moteur de jeu ni composant de carte universel.
+
+Les styles responsives restent regroupés par jeu tant que leurs media queries et
+leurs calques sont interdépendants. Le découpage vise d’abord les responsabilités
+React et métier ; il ne crée pas un petit fichier CSS par composant sans gain de
+lisibilité.
 
 ## Validation et build
 

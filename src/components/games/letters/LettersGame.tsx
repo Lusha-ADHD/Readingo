@@ -1,28 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { GAME_IDS } from "../../content/gameCatalog";
+import { GAME_IDS } from "../../../content/gameCatalog";
 import type {
   AudioLine,
   VoiceLine,
   WordReference,
-} from "../../content/types";
-import letterEntriesData from "../../content/fr/letters.json";
-import letterLessonsData from "../../content/fr/letter-lessons.json";
-import voiceLinesData from "../../content/fr/voice-lines.json";
-import wordsData from "../../content/fr/words.json";
-import { sitePath } from "../../utils/paths";
-import { rememberLastGame, shouldResumeFromUrl } from "../home/onboardingState";
-import { AudioButton } from "../ui/AudioButton";
-import { GameButton } from "../ui/GameButton";
+} from "../../../content/types";
+import letterEntriesData from "../../../content/fr/letters.json";
+import letterLessonsData from "../../../content/fr/letter-lessons.json";
+import voiceLinesData from "../../../content/fr/voice-lines.json";
+import wordsData from "../../../content/fr/words.json";
+import { rememberLastGame, shouldResumeFromUrl } from "../../home/onboardingState";
 import {
   GameDialogueOverlay,
   GameIntroOverlay,
-} from "../ui/GameIntroOverlay";
-import { LetterTile } from "../ui/LetterTile";
+} from "../../ui/GameIntroOverlay";
 import { ConstellationScene } from "./ConstellationScene";
-import {
-  isTargetCharacter,
-  shuffleLetterIds,
-} from "./letterGame";
+import { LettersChallenge } from "./LettersChallenge";
+import { LettersResult } from "./LettersResult";
+import { shuffleLetterIds } from "./letterGame";
 import type {
   LetterEntry,
   LetterLesson,
@@ -34,8 +29,8 @@ import {
   saveLettersProgress,
 } from "./lettersProgress";
 import type { LettersProgress } from "./lettersProgress";
-import { useGameAudio } from "./gameAudio";
-import { useVoiceAudio } from "./useVoiceAudio";
+import { useGameAudio } from "../gameAudio";
+import { useVoiceAudio } from "../useVoiceAudio";
 import "./LettersGame.css";
 
 type VoiceLines = {
@@ -50,7 +45,6 @@ type VoiceLines = {
 
 type GamePhase = "intro" | "dialog" | "question" | "wrong" | "correct" | "star" | "result";
 
-const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 const letters = letterEntriesData as LetterEntry[];
 const lessons = (letterLessonsData as LetterLesson[])
   .filter((lesson) => lesson.gameIds.includes(GAME_IDS.LETTERS))
@@ -385,6 +379,9 @@ export function LettersGame() {
       : phase === "correct" || phase === "star"
         ? `Bravo ! ${targetLetter.uppercase} comme dans ${anchorWord.displayWord}.`
         : "Écoute bien, puis choisis la bonne lettre.";
+  const choiceEntries = choiceIds
+    .map((letterId) => letterById.get(letterId))
+    .filter((entry): entry is LetterEntry => Boolean(entry));
 
   return (
     <section className={`letters-game letters-game--${phase}`} aria-label="L’Observatoire des lettres">
@@ -423,101 +420,31 @@ export function LettersGame() {
       )}
 
       {phase !== "intro" && phase !== "dialog" && phase !== "result" && (
-        <main className="letters-game__exercise">
-          <div className="letters-game__bottom-panels">
-            <div className="letters-game__pana-prompt">
-              <img className="letters-game__pana" src={PANA_ASSET_PATH} alt="" />
-              <p role="status" aria-live="polite">{panaMessage}</p>
-              <AudioButton
-                className="letters-game__prompt-audio"
-                disabled={inputLocked}
-                label="Réécouter la consigne de Pana"
-                onClick={() => void playPrompt(targetLetter)}
-                size="compact"
-              />
-            </div>
-
-            <div className="letters-game__challenge">
-              <div className="letters-game__anchor">
-                <img
-                  src={sitePath(anchorWord.image)}
-                  alt={revealWord ? anchorWord.displayWord : "Illustration indice"}
-                  draggable={false}
-                />
-                <AudioButton
-                  className="letters-game__anchor-audio"
-                  disabled={inputLocked}
-                  label={`Écouter le mot ${anchorWord.displayWord}`}
-                  onClick={() => void playLine(anchorWord.audioWord, anchorWord.displayWord)}
-                  size="compact"
-                />
-              </div>
-
-              <div className="letters-game__word-reveal" aria-live="polite">
-                {revealWord ? (
-                  <>
-                    <span className="sr-only">{anchorWord.displayWord}</span>
-                    <span aria-hidden="true">
-                      {Array.from(anchorWord.displayWord).map((character, index) =>
-                        isTargetCharacter(character, targetLetter) ? (
-                          <mark key={`${character}-${index}`}>{character}</mark>
-                        ) : (
-                          <span key={`${character}-${index}`}>{character}</span>
-                        ),
-                      )}
-                    </span>
-                    <small>
-                      {targetLetter.uppercase} fait {targetLetter.soundText}
-                    </small>
-                  </>
-                ) : (
-                  <span className="letters-game__listen-hint">Quelle lettre Pana demande-t-elle ?</span>
-                )}
-              </div>
-
-              <div className="letters-game__choices">
-                {choiceIds.map((letterId) => {
-                  const entry = letterById.get(letterId);
-
-                  if (!entry) {
-                    return null;
-                  }
-
-                  const state =
-                    selectedLetterId !== letterId
-                      ? "idle"
-                      : letterId === targetLetter.id
-                        ? "correct"
-                        : "wrong";
-
-                  return (
-                    <LetterTile
-                      disabled={inputLocked}
-                      key={entry.id}
-                      letter={entry[question.displayCase]}
-                      letterName={entry.nameText}
-                      onChoose={() => void handleChoice(entry.id)}
-                      onListen={() => void playLine(entry.nameAudio, entry.nameSpeechText)}
-                      state={state}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </main>
+        <LettersChallenge
+          anchorWord={anchorWord}
+          targetLetter={targetLetter}
+          displayCase={question.displayCase}
+          choices={choiceEntries}
+          selectedLetterId={selectedLetterId}
+          revealWord={revealWord}
+          inputLocked={inputLocked}
+          panaMessage={panaMessage}
+          onListenPrompt={() => void playPrompt(targetLetter)}
+          onListenWord={() =>
+            void playLine(anchorWord.audioWord, anchorWord.displayWord)
+          }
+          onListenLetter={(entry) =>
+            void playLine(entry.nameAudio, entry.nameSpeechText)
+          }
+          onChoose={(letterId) => void handleChoice(letterId)}
+        />
       )}
 
       {phase === "result" && (
-        <div className="letters-game__result">
-          <img className="letters-game__pana letters-game__pana--result" src={PANA_ASSET_PATH} alt="Pana" />
-          <div className="letters-game__result-panel">
-            <p className="letters-game__eyebrow">8 étoiles allumées</p>
-            <h2>Constellation terminée !</h2>
-            <p>Tu as retrouvé toutes les lettres demandées par Pana.</p>
-            <GameButton onClick={replayLevel}>Rejouer</GameButton>
-          </div>
-        </div>
+        <LettersResult
+          starCount={lesson.questions.length}
+          onReplay={replayLevel}
+        />
       )}
 
       {localToolsAvailable && (

@@ -3,13 +3,13 @@ import test from "node:test";
 import {
   isTargetCharacter,
   shuffleLetterIds,
-} from "../src/components/games/letterGame.ts";
-import type { LetterEntry } from "../src/components/games/letterGame.ts";
+} from "../src/components/games/letters/letterGame.ts";
+import type { LetterEntry } from "../src/components/games/letters/letterGame.ts";
 import {
   completeLettersLevel,
   createInitialLettersProgress,
   readLettersProgress,
-} from "../src/components/games/lettersProgress.ts";
+} from "../src/components/games/letters/lettersProgress.ts";
 
 const targetA: LetterEntry = {
   id: "a",
@@ -43,6 +43,7 @@ test("la lettre cible est reconnue sans dépendre de la casse", () => {
 test("la progression initiale ne contient aucune constellation terminée", () => {
   assert.deepEqual(createInitialLettersProgress(), {
     version: 1,
+    unlockedLevel: 1,
     completedLevels: [],
     sessions: 0,
   });
@@ -54,6 +55,30 @@ test("terminer le niveau enregistre une session sans dupliquer le niveau", () =>
 
   assert.deepEqual(replay.completedLevels, [1]);
   assert.equal(replay.sessions, 2);
+});
+
+test("terminer le niveau frontière débloque le niveau Lettres suivant", () => {
+  const progress = completeLettersLevel(
+    createInitialLettersProgress(),
+    1,
+    3,
+  );
+
+  assert.equal(progress.unlockedLevel, 2);
+  assert.deepEqual(progress.completedLevels, [1]);
+});
+
+test("une ancienne sauvegarde Lettres déduit le niveau débloqué", () => {
+  const storage = {
+    getItem: () =>
+      JSON.stringify({
+        version: 1,
+        completedLevels: [1],
+        sessions: 1,
+      }),
+  } as unknown as Storage;
+
+  assert.equal(readLettersProgress(storage, 3).unlockedLevel, 2);
 });
 
 test("une sauvegarde Lettres corrompue ne bloque pas le jeu", () => {

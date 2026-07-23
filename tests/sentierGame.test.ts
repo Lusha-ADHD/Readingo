@@ -6,12 +6,12 @@ import {
   rewardForErrors,
   sentierReducer,
   shuffleValues,
-} from "../src/components/games/sentierState.ts";
+} from "../src/components/games/sentier/sentierState.ts";
 import {
   completeSentierLevel,
   createInitialSentierProgress,
   readSentierProgress,
-} from "../src/components/games/sentierProgress.ts";
+} from "../src/components/games/sentier/sentierProgress.ts";
 
 function createStorage(value: string | null) {
   return {
@@ -76,6 +76,34 @@ test("la progression garde le meilleur score sans dupliquer le niveau", () => {
   assert.deepEqual(replay.completedLevels, [1]);
   assert.equal(replay.bestGemsByLevel["1"], 12);
   assert.equal(replay.sessions, 2);
+});
+
+test("terminer le niveau frontière débloque le niveau Sentier suivant", () => {
+  const progress = completeSentierLevel(
+    createInitialSentierProgress(),
+    1,
+    14,
+    3,
+  );
+
+  assert.equal(progress.unlockedLevel, 2);
+  assert.deepEqual(progress.completedLevels, [1]);
+});
+
+test("une ancienne sauvegarde Sentier déduit le niveau débloqué", () => {
+  const progress = readSentierProgress(
+    createStorage(
+      JSON.stringify({
+        version: 1,
+        completedLevels: [1],
+        bestGemsByLevel: { "1": 12 },
+        sessions: 1,
+      }),
+    ),
+    3,
+  );
+
+  assert.equal(progress.unlockedLevel, 2);
 });
 
 test("une sauvegarde corrompue est ignorée", () => {

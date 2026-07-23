@@ -14,8 +14,11 @@ Sources de vérité prévues :
 - mots, illustrations et prononciations : `src/content/fr/words.json` ;
 - niveaux et distracteurs : `src/content/fr/sentier-lessons.json` ;
 - dialogues et feedbacks : `src/content/fr/voice-lines.json` ;
-- logique pure : `src/components/games/sentierState.ts` ;
-- progression : `src/components/games/sentierProgress.ts`.
+- orchestration : `src/components/games/sentier/SentierGame.tsx` ;
+- scène, défi et résultat : `src/components/games/sentier/JungleScene.tsx`,
+  `SentierChallenge.tsx` et `SentierResult.tsx` ;
+- logique pure : `src/components/games/sentier/sentierState.ts` ;
+- progression : `src/components/games/sentier/sentierProgress.ts`.
 
 Le document complète le [socle commun Readingo](../game-design-system.md). Les conventions visuelles, audio et de contenu ne sont pas redéfinies lorsqu’elles sont déjà couvertes par les documents communs.
 
@@ -497,13 +500,17 @@ La sauvegarde est versionnée sous `readingo:sentier-des-mots:v1`.
 
 Elle contient :
 
+- `unlockedLevel` ;
 - `completedLevels` ;
 - `bestGemsByLevel` ;
 - `sessions`.
 
 La sauvegarde n’est écrite qu’après les huit mots. Une interruption ne termine pas le niveau et ne valide pas les gemmes temporaires. Une sauvegarde absente ou corrompue et un `localStorage` indisponible ne doivent jamais empêcher de jouer.
 
-Le total cumulé et les niveaux débloqués sont différés jusqu’à la conception du parcours long.
+Le niveau suivant est débloqué séquentiellement dès qu’un niveau frontière est
+terminé. Une ancienne sauvegarde sans `unlockedLevel` déduit cette valeur depuis
+les niveaux terminés. La représentation visuelle de ce parcours et son total
+cumulé restent différés jusqu’à la conception de la carte de la jungle.
 
 ## Responsive et accessibilité
 

@@ -11,9 +11,10 @@ Sources techniques de vérité :
 - lettres et consignes : `src/content/fr/letters.json` ;
 - niveau et choix : `src/content/fr/letter-lessons.json` ;
 - mots-indices et illustrations : `src/content/fr/words.json` ;
-- logique de jeu : `src/components/games/LettersGame.tsx` ;
-- thème : `src/components/games/ConstellationScene.tsx` et `LettersGame.css` ;
-- sauvegarde : `src/components/games/lettersProgress.ts`.
+- orchestration : `src/components/games/letters/LettersGame.tsx` ;
+- thème, défi et résultat : `src/components/games/letters/ConstellationScene.tsx`,
+  `LettersChallenge.tsx` et `LettersResult.tsx` ;
+- sauvegarde : `src/components/games/letters/lettersProgress.ts`.
 
 ## Intention pédagogique
 
@@ -167,10 +168,16 @@ La clé est `readingo:lettres:v1`.
 La sauvegarde contient :
 
 - `version` ;
+- `unlockedLevel` ;
 - `completedLevels` ;
 - `sessions`.
 
 La sauvegarde n’est écrite qu’à la fin des huit questions. Une session interrompue ne termine pas le niveau. Une donnée absente, invalide ou un `localStorage` indisponible ne doit jamais empêcher de jouer.
+
+Le premier niveau terminé débloque séquentiellement le suivant dès qu’il existe.
+Une ancienne sauvegarde sans `unlockedLevel` déduit cette frontière depuis les
+niveaux terminés. La future carte des constellations pourra donc lire la
+progression sans migration supplémentaire.
 
 ## Mode de test
 

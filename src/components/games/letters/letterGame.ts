@@ -1,4 +1,4 @@
-import type { LessonBase } from "../../content/types.ts";
+import type { LessonBase } from "../../../content/types.ts";
 
 export type LetterDisplayCase = "uppercase" | "lowercase";
 

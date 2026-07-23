@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
-import { GAME_IDS } from "../../content/gameCatalog";
+import { GAME_IDS } from "../../../content/gameCatalog";
 import type {
   AudioLine,
   LessonBase,
   VoiceLine,
   WordReference,
-} from "../../content/types";
-import sentierLessonsData from "../../content/fr/sentier-lessons.json";
-import voiceLinesData from "../../content/fr/voice-lines.json";
-import wordsData from "../../content/fr/words.json";
-import { sitePath } from "../../utils/paths";
-import { rememberLastGame } from "../home/onboardingState";
-import { GameButton } from "../ui/GameButton";
+} from "../../../content/types";
+import sentierLessonsData from "../../../content/fr/sentier-lessons.json";
+import voiceLinesData from "../../../content/fr/voice-lines.json";
+import wordsData from "../../../content/fr/words.json";
+import { sitePath } from "../../../utils/paths";
+import { rememberLastGame } from "../../home/onboardingState";
 import {
   GameDialogueOverlay,
   GameIntroOverlay,
-} from "../ui/GameIntroOverlay";
+} from "../../ui/GameIntroOverlay";
 import { JungleScene } from "./JungleScene";
 import { SentierChallenge } from "./SentierChallenge";
-import { useGameAudio } from "./gameAudio";
+import { SentierResult } from "./SentierResult";
+import { useGameAudio } from "../gameAudio";
 import {
   createInitialSentierState,
   rewardForErrors,
@@ -32,7 +32,7 @@ import {
   saveSentierProgress,
 } from "./sentierProgress";
 import type { SentierProgress } from "./sentierProgress";
-import { useVoiceAudio } from "./useVoiceAudio";
+import { useVoiceAudio } from "../useVoiceAudio";
 import "./SentierGame.css";
 
 type SentierQuestion = {
@@ -67,10 +67,8 @@ const wordById = new Map((wordsData as WordReference[]).map((word) => [word.id, 
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.sentierIntro;
 const feedback = voiceLines.feedback;
-const PANA_PATH = sitePath("/assets/characters/pana.png");
 const BACKDROP_PATH = sitePath("/assets/world/jungle/jungle-backdrop.png");
 const GEM_PATH = sitePath("/assets/world/jungle/gem.png");
-const MAX_GEMS = lesson.questions.length * 2;
 const TRAVEL_DURATION = 660;
 
 function speakFrench(text: string) {
@@ -129,6 +127,7 @@ export function SentierGame() {
   } = useGameAudio();
 
   const question = lesson.questions[state.questionIndex];
+  const maxGems = lesson.questions.length * 2;
   const target = wordById.get(question?.targetWordId ?? "") ?? wordById.values().next().value;
   const targetWord = target?.displayWord.toLocaleLowerCase("fr") ?? "";
   const selectedDirection =
@@ -508,7 +507,7 @@ export function SentierGame() {
         <div className="sentier-game__score">
           <img src={GEM_PATH} alt="" />
           <strong>{state.gems}</strong>
-          <span>/{MAX_GEMS}</span>
+          <span>/{maxGems}</span>
         </div>
         <div className="sentier-game__progress" aria-hidden="true">
           <span style={{ width: `${((state.questionIndex + (resultVisible ? 1 : 0)) / lesson.questions.length) * 100}%` }} />
@@ -526,21 +525,14 @@ export function SentierGame() {
       />
 
       {resultVisible ? (
-        <section className="sentier-result" data-testid="sentier-result">
-          <img src={PANA_PATH} alt="Pana" />
-          <div>
-            <p>Niveau {lesson.level} · {lesson.title}</p>
-            <h2>Étape terminée !</h2>
-            <strong>
-              <img src={GEM_PATH} alt="" /> {state.gems} gemmes sur {MAX_GEMS}
-            </strong>
-            {bestScore > 0 ? <span>Meilleur score : {Math.max(bestScore, state.gems)}</span> : null}
-          </div>
-          <div className="sentier-result__actions">
-            <GameButton onClick={replay}>Rejouer le niveau</GameButton>
-            <a href={sitePath("/#jeux")}>Retour aux jeux</a>
-          </div>
-        </section>
+        <SentierResult
+          level={lesson.level}
+          title={lesson.title}
+          gems={state.gems}
+          maxGems={maxGems}
+          bestScore={bestScore}
+          onReplay={replay}
+        />
       ) : (
         <SentierChallenge
           choices={state.choices}

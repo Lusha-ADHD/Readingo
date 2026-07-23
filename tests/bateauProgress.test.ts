@@ -5,8 +5,8 @@ import {
   createInitialProgress,
   migrateLegacyProgress,
   readBateauProgress,
-} from "../src/components/games/bateauProgress.ts";
-import { createBateauTiles } from "../src/components/games/bateauTiles.ts";
+} from "../src/components/games/bateau/bateauProgress.ts";
+import { createBateauTiles } from "../src/components/games/bateau/bateauTiles.ts";
 
 const firstLevelWords = ["chaton", "bateau", "moto", "lapin", "melon", "tapis", "panda", "maison"];
 

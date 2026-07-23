@@ -1,4 +1,4 @@
-import { sitePath } from "../../utils/paths";
+import { sitePath } from "../../../utils/paths";
 import type { SentierChoice, SentierDirection, SentierPhase } from "./sentierState";
 
 type Props = {

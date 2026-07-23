@@ -9,9 +9,11 @@ Sources techniques de vérité :
 - niveaux : `src/content/fr/lessons.json` ;
 - mots et découpages : `src/content/fr/words.json` ;
 - syllabes et prononciations : `src/content/fr/syllables.json` ;
-- logique de jeu : `src/components/games/BateauGame.tsx` ;
-- carte : `src/components/games/LevelMap.tsx` ;
-- sauvegarde : `src/components/games/bateauProgress.ts`.
+- orchestration : `src/components/games/bateau/BateauGame.tsx` ;
+- scène, défi et résultat : `src/components/games/bateau/BateauScene.tsx`,
+  `BateauChallenge.tsx` et `BateauResult.tsx` ;
+- carte : `src/components/games/bateau/LevelMap.tsx` ;
+- sauvegarde : `src/components/games/bateau/bateauProgress.ts`.
 
 Lorsqu’une valeur technique change, le code, les données, les validateurs et ce document doivent être mis à jour ensemble.
 

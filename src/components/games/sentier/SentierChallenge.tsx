@@ -1,6 +1,6 @@
-import type { WordReference } from "../../content/types";
-import { sitePath } from "../../utils/paths";
-import { AudioButton } from "../ui/AudioButton";
+import type { WordReference } from "../../../content/types";
+import { sitePath } from "../../../utils/paths";
+import { AudioButton } from "../../ui/AudioButton";
 import type { SentierChoice, SentierDirection, SentierPhase } from "./sentierState";
 
 type Props = {
