@@ -200,16 +200,3 @@ Definition of Done :
 - le francais continue de fonctionner ;
 - les jeux ne supposent pas une structure syllabique uniquement francaise.
 
-## Priorite MVP
-
-Ordre recommande :
-
-1. Setup Astro/React/TypeScript.
-2. Design system minimal mais soigne.
-3. Jeu Bateau complet avec placeholders.
-4. Donnees de 30 mots.
-5. Assets finaux pour ces 30 mots.
-6. Pages SEO initiales.
-7. Deploiement GitHub Pages.
-
-Le risque principal n'est pas technique. Le risque principal est la qualite percue : assets incoherents, audio moyen, animations pauvres ou progression confuse. Il faut donc livrer peu de contenu au debut, mais avec un niveau de finition eleve.
