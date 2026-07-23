@@ -117,14 +117,11 @@ export function LevelMap({
 
     const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const timeout = window.setTimeout(() => {
-      if (newlyUnlockedLevel <= levels.length) {
-        nodeRefs.current.get(newlyUnlockedLevel)?.focus({ preventScroll: true });
-      }
       onUnlockAnimationComplete();
     }, reduceMotion ? 150 : 1150);
 
     return () => window.clearTimeout(timeout);
-  }, [levels.length, newlyUnlockedLevel, onUnlockAnimationComplete]);
+  }, [newlyUnlockedLevel, onUnlockAnimationComplete]);
 
   return (
     <div className="level-map" aria-label="Carte des niveaux">

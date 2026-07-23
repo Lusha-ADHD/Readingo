@@ -1,18 +1,20 @@
 import { useCallback, useEffect, useRef } from "react";
 import { sitePath } from "../../utils/paths";
 
-type LoopName = "sea" | "wind" | "boat";
-type EffectName = "select" | "place" | "chest" | "levelComplete";
+type LoopName = "sea" | "wind" | "boat" | "night";
+type EffectName = "select" | "place" | "star" | "chest" | "levelComplete";
 
 const LOOP_PATHS: Record<LoopName, string> = {
   sea: sitePath("/assets/audio/sfx/sea-loop.mp3"),
   wind: sitePath("/assets/audio/sfx/wind-loop.mp3"),
   boat: sitePath("/assets/audio/sfx/boat-loop.mp3"),
+  night: sitePath("/assets/audio/sfx/night-loop.mp3"),
 };
 
 const EFFECT_PATHS: Record<EffectName, string> = {
   select: sitePath("/assets/audio/sfx/syllable-select.mp3"),
   place: sitePath("/assets/audio/sfx/syllable-drop.mp3"),
+  star: sitePath("/assets/audio/sfx/star-shine.mp3"),
   chest: sitePath("/assets/audio/sfx/chest-collect.mp3"),
   levelComplete: sitePath("/assets/audio/sfx/level-complete.mp3"),
 };
@@ -20,6 +22,7 @@ const EFFECT_PATHS: Record<EffectName, string> = {
 const EFFECT_VOLUMES: Record<EffectName, number> = {
   select: 0.28,
   place: 0.34,
+  star: 0.24,
   chest: 0.48,
   levelComplete: 0.52,
 };
@@ -27,6 +30,7 @@ const EFFECT_VOLUMES: Record<EffectName, number> = {
 const EFFECT_MAX_WAIT: Record<EffectName, number> = {
   select: 500,
   place: 350,
+  star: 900,
   chest: 1500,
   levelComplete: 3200,
 };
@@ -116,6 +120,24 @@ export function useGameAudio() {
     void sea.play().catch(() => undefined);
   }, [ensureAudio]);
 
+  const enableEffects = useCallback(() => {
+    enabledRef.current = true;
+    ensureAudio();
+  }, [ensureAudio]);
+
+  const startNightAmbience = useCallback(() => {
+    enabledRef.current = true;
+    ensureAudio();
+    const night = loopsRef.current.night;
+
+    if (!night) {
+      return;
+    }
+
+    night.volume = 0.165;
+    void night.play().catch(() => undefined);
+  }, [ensureAudio]);
+
   const setTravelAudio = useCallback(
     (active: boolean, wind: 1 | 2 | 3, paused: boolean) => {
       if (!enabledRef.current) {
@@ -171,5 +193,5 @@ export function useGameAudio() {
     [],
   );
 
-  return { playEffect, setTravelAudio, startAmbience };
+  return { enableEffects, playEffect, setTravelAudio, startAmbience, startNightAmbience };
 }

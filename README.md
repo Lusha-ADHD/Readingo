@@ -23,6 +23,7 @@ Ordre de lecture :
 | Direction artistique et composants UI | [Direction artistique et design UI](./doc/design-direction.md) |
 | Parcours utilisateur et principes UX | [Expérience utilisateur et gameplay](./doc/ux-gameplay.md) |
 | Game design du jeu Bateau | [Jeu Bateau — Game Design Document](./doc/games/bateau.md) |
+| Prototype du jeu Lettres | [Jeu Lettres — Game Design Document](./doc/games/lettres.md) |
 | Modèle de contenu pédagogique | [Contenu pédagogique et assets](./doc/content-assets.md) |
 | Génération et intégration des voix | [Pipeline audio](./doc/audio-generation.md) |
 | Génération des illustrations | [Pipeline image](./doc/image-generation.md) |
@@ -52,7 +53,7 @@ Avant l’implémentation :
 4. réutiliser les composants UI et les comportements audio communs ;
 5. lister les assets partagés et ceux propres au jeu ;
 6. documenter les variations de pipeline avant de produire les assets ;
-7. définir les critères de validation responsive, clavier, audio et mouvement réduit.
+7. définir les critères de validation responsive, audio et mouvement réduit.
 
 ### Entretien de la documentation
 

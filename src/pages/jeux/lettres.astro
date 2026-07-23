@@ -1,29 +1,37 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { sitePath } from "../../utils/paths";
+import { LettersGame } from "@components/games/LettersGame";
 ---
 
 <BaseLayout
+  bodyClass="game-layout"
   title="Jeu des lettres - Readingo"
-  description="Une future escale Readingo pour reconnaître les lettres et leurs sons."
+  description="Un mini-jeu Readingo pour reconnaître les lettres, leur nom et leur son."
 >
-  <main class="placeholder page-shell">
-    <p>Prochaine escale</p>
-    <h1>Lettres</h1>
-    <span>Ce mini-jeu sera implémenté après le prototype Bateau.</span>
-    <a href={sitePath("/jeux/bateau/")}>Essayer Bateau</a>
+  <main class="game-page">
+    <div class="game-page__header page-shell">
+      <p>Connaître les lettres</p>
+      <h1>L’Observatoire des lettres</h1>
+      <span>Aide Pana à allumer une constellation en retrouvant les bonnes lettres</span>
+    </div>
+    <div class="game-page__frame page-shell">
+      <LettersGame client:load />
+    </div>
   </main>
 </BaseLayout>
 
 <style>
-  .placeholder {
-    display: grid;
-    min-height: 58vh;
-    align-content: center;
-    gap: 14px;
+  .game-page {
+    padding-block: 32px 48px;
   }
 
-  .placeholder p {
+  .game-page__header {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .game-page__header p {
     margin: 0;
     color: var(--color-blue-dark);
     font-weight: 950;
@@ -31,27 +39,39 @@ import { sitePath } from "../../utils/paths";
     text-transform: uppercase;
   }
 
-  .placeholder h1 {
+  .game-page__header h1 {
     margin: 0;
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(2.8rem, 7vw, 5.4rem);
     line-height: 1;
   }
 
-  .placeholder span {
+  .game-page__header span {
     color: var(--color-muted);
     font-weight: 800;
   }
 
-  .placeholder a {
-    display: inline-flex;
-    width: max-content;
-    min-height: 54px;
-    align-items: center;
-    border: 3px solid var(--color-border);
-    border-radius: 16px;
-    background: var(--color-gold);
-    padding-inline: 22px;
-    box-shadow: 0 6px 0 rgba(8, 33, 74, 0.16);
-    font-weight: 950;
+  .game-page__frame {
+    max-width: 880px;
+  }
+
+  @media (max-width: 700px) {
+    .game-page {
+      height: calc(100vh - 65px);
+      height: calc(100dvh - 65px);
+      padding: 0;
+    }
+
+    .game-page__header {
+      display: none;
+    }
+
+    .game-page__frame {
+      width: 100%;
+      height: 100%;
+    }
+
+    :global(.game-layout .site-footer) {
+      display: none;
+    }
   }
 </style>

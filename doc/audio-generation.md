@@ -13,6 +13,9 @@ public/assets/audio/
   fr/
     dialogue/
     feedback/
+    letters/
+      names/
+      prompts/
     syllables/
     words/
   sfx/
@@ -57,6 +60,7 @@ Le modèle `eleven_multilingual_v2` n’est pas retenu pour ce pipeline, car la 
 Le script `scripts/generate-voices.mjs` construit les clips à partir de :
 
 - `src/content/fr/voice-lines.json` pour les dialogues et feedbacks ;
+- `src/content/fr/letters.json` pour les noms de lettres et les consignes complètes ;
 - `src/content/fr/words.json` pour les mots et leurs prononciations contextuelles ;
 - `src/content/fr/syllables.json` pour les syllabes mutualisées.
 
@@ -71,8 +75,13 @@ Une graphie pédagogique n’est pas toujours un bon texte de synthèse vocale. 
 - `spokenSyllables` : textes de génération dans le contexte du mot ;
 - `speechText` : texte de génération générique d’une syllabe ;
 - `audioWord` et `audio` : chemins des clips.
+- `nameSpeechText` et `promptSpeechText` : textes de génération propres au jeu Lettres.
 
 Exemples : `llon` peut être généré avec `yon`, `pho` avec `faux` et `cy` avec `si`. La ponctuation peut également influencer le résultat, comme dans `mi!`.
+
+Dans une consigne complète sur une lettre, la notation du phonème entre barres obliques fonctionne généralement mieux que la répétition de la lettre. Par exemple, utiliser « La lettre L fait /l/, comme dans lapin » plutôt que `lll`, qui peut être prononcé comme trois noms de lettre distincts. Cette notation doit être essayée en premier ; une graphie phonétique de remplacement ne sert que si le rendu reste incorrect.
+
+Pour générer le nom d’une lettre seule, l’entourer de guillemets aide généralement le moteur à l’interpréter comme une unité. Par exemple, le texte de génération `"M"` donne souvent un meilleur résultat que `M` sans guillemets. Cette règle concerne le nom isolé de la lettre ; pour son phonème dans une phrase, utiliser plutôt la notation `/m/`.
 
 Une prononciation générique réutilise le chemin défini dans `syllables.json`. Si un mot nécessite une variante, `audioSyllables` doit pointer vers un chemin propre au mot, par exemple `/assets/audio/fr/words/maison/son.mp3`.
 
@@ -110,6 +119,8 @@ Le pipeline actuel utilise :
 - une vitesse de `0.94` pour les dialogues ;
 - une vitesse de `0.88` pour les mots ;
 - une vitesse de `0.82` pour les syllabes ;
+- une vitesse de `0.84` pour les noms de lettres ;
+- une vitesse de `0.90` pour les consignes complètes du jeu Lettres ;
 - des réglages de stabilité et de style propres à chaque catégorie ;
 - jusqu’à trois nouvelles tentatives après une réponse `429` ou `5xx`.
 
@@ -159,6 +170,15 @@ Cette version ajoute un paramètre à l’URL. Elle n’a pas besoin de changer 
 Dans Bateau, la mer commence après « Commencer ». Le vent et le bateau sont synchronisés avec la traversée. Pendant une collecte, le bateau s’arrête et le vent reste plus discret.
 
 Les règles fonctionnelles complètes sont dans le [GDD de Bateau](./games/bateau.md).
+
+### Inventaire propre à Lettres
+
+| Usage | Fichier | Source |
+| --- | --- | --- |
+| Ambiance nocturne | `public/assets/audio/sfx/night-loop.mp3` | [Crickets Chirping & Ocean Waves](https://pixabay.com/sound-effects/nature-crickets-chirping-amp-ocean-waves-by-prettysleepy-art-10372/), Prettysleepy, licence de contenu Pixabay |
+| Allumage d’une étoile | `public/assets/audio/sfx/star-shine.mp3` | [Shine 11](https://pixabay.com/sound-effects/film-special-effects-shine-11-268907/), BenKirb, licence de contenu Pixabay |
+
+L’ambiance nocturne démarre après l’action « Commencer » afin de respecter les restrictions d’autoplay. Elle reste très discrète sous les consignes. L’effet scintillant est joué au moment précis où l’étoile et son éventuel segment deviennent actifs.
 
 ## Variations par jeu
 

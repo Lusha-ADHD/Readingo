@@ -91,7 +91,6 @@ Tokens communs de référence :
 
   --color-success: #26b96f;
   --color-error: #ff6b6b;
-  --color-focus: #1d4ed8;
 }
 ```
 
@@ -153,7 +152,7 @@ La typographie du contenu pédagogique peut différer de celle des pages éditor
 - action principale visuellement dominante ;
 - label court ;
 - zone tactile d’au moins 44 × 44 px ;
-- états normal, survol si disponible, pressé, focus, désactivé et chargement ;
+- états normal, survol si disponible, pressé, désactivé et chargement ;
 - ombre qui se réduit à l’enfoncement ;
 - icône accompagnée d’un libellé accessible.
 
@@ -302,13 +301,13 @@ Les contrôles ne doivent pas être réduits jusqu’à devenir difficiles à to
 Minimum :
 
 - contraste suffisant ;
-- focus clavier visible ;
-- ordre de focus logique ;
 - libellés accessibles ;
 - état désactivé sémantique ;
 - feedback visuel en complément du son ;
 - mouvement réduit ;
 - contenu utilisable au zoom ;
 - langage court et compréhensible.
+
+Les jeux sont conçus pour le toucher et la souris. Ils n’ajoutent pas de navigation clavier ou de gestion programmatique du focus.
 
 Les besoins propres à une mécanique sont précisés dans son GDD.

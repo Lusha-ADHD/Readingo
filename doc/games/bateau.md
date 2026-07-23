@@ -247,8 +247,7 @@ Après la première réussite du niveau le plus avancé :
 5. les petites îles s’illuminent dans l’ordre ;
 6. le bateau rejoint le niveau suivant ;
 7. le cadenas disparaît ;
-8. le nouveau niveau retrouve ses couleurs et son halo ;
-9. le focus va sur « Démarrer le niveau suivant ».
+8. le nouveau niveau retrouve ses couleurs et son halo.
 
 Une interaction peut terminer l’animation immédiatement. En mouvement réduit, les états sont appliqués directement avec un fondu court.
 
@@ -397,8 +396,6 @@ La validation doit notamment vérifier :
 
 - Toutes les îles jouables sont de vrais boutons accessibles.
 - Les boutons iconiques possèdent un libellé.
-- Le focus reste visible.
-- Le niveau nouvellement débloqué reçoit le focus après l’animation.
 - Les états verrouillé, terminé et courant ne reposent pas uniquement sur la couleur.
 - Les sons peuvent être relancés depuis les objets pédagogiques.
 - Le jeu reste compréhensible si un son échoue.
@@ -443,7 +440,7 @@ Le game design est respecté si :
 - le bateau de la carte ne rejoue un déblocage qu’une seule fois ;
 - le résultat joue automatiquement « Bravo » après l’effet sonore ;
 - la carte centre correctement la progression ;
-- le clavier, les libellés accessibles et le mouvement réduit restent fonctionnels ;
+- les libellés accessibles et le mouvement réduit restent fonctionnels ;
 - le mode de test donne accès aux six niveaux sans contaminer la progression.
 
 ## Évolutions futures

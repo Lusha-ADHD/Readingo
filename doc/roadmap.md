@@ -56,12 +56,12 @@ Taches :
 - barre de progression ;
 - bouton audio ;
 - ecran de fin de session ;
-- etats focus/accessibilite.
+- états interactifs et accessibilité.
 
 Definition of Done :
 
 - les composants sont reutilisables ;
-- les etats normal, hover, pressed, disabled et focus sont couverts ;
+- les états normal, hover, pressed et disabled sont couverts ;
 - le rendu mobile ne deborde pas ;
 - le style ne ressemble pas a une interface generique.
 
@@ -199,4 +199,3 @@ Definition of Done :
 - la langue peut etre changee ;
 - le francais continue de fonctionner ;
 - les jeux ne supposent pas une structure syllabique uniquement francaise.
-

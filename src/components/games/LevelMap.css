@@ -78,8 +78,7 @@
   line-height: 1;
 }
 
-.level-map__close:hover,
-.level-map__close:focus-visible {
+.level-map__close:hover {
   background: rgba(8, 33, 74, 0.58);
   outline: 3px solid #ffd958;
   outline-offset: 2px;
@@ -204,18 +203,8 @@
   animation: level-score-pop 340ms ease-out both;
 }
 
-.level-map__node:hover:not(:disabled) .level-map__island-wrap,
-.level-map__node:focus-visible .level-map__island-wrap {
+.level-map__node:hover:not(:disabled) .level-map__island-wrap {
   transform: translateY(-5px) scale(1.04);
-}
-
-.level-map__node:focus-visible {
-  outline: none;
-}
-
-.level-map__node:focus-visible .level-map__label {
-  outline: 4px solid #ffd452;
-  outline-offset: 3px;
 }
 
 .level-map__node--locked .level-map__island-wrap {

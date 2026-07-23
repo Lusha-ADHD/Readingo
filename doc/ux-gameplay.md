@@ -128,6 +128,12 @@ Bateau fait recomposer des mots à partir de syllabes et transforme chaque réus
 
 Sa boucle, ses six niveaux, sa carte, son scoring, sa sauvegarde et son mode de test sont décrits dans le [Game Design Document de Bateau](./games/bateau.md).
 
+### Lettres
+
+Lettres demande d’identifier un graphème à partir du nom, du son et d’un mot-indice prononcés par Pana. Chaque bonne réponse allume une étoile d’une constellation.
+
+Le premier niveau est un vertical slice de huit questions. Sa boucle, son contenu provisoire et le statut expérimental du thème sont décrits dans le [Game Design Document de Lettres](./games/lettres.md).
+
 ## Concepts de jeux futurs
 
 Les concepts ci-dessous ne sont pas des fonctionnalités implémentées. Chacun devra recevoir un GDD avant sa conception visuelle ou son développement.

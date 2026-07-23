@@ -7,6 +7,8 @@ const readJson = async (relativePath) => JSON.parse(await readFile(path.join(roo
 const words = await readJson("src/content/fr/words.json");
 const levels = await readJson("src/content/fr/lessons.json");
 const syllables = await readJson("src/content/fr/syllables.json");
+const letters = await readJson("src/content/fr/letters.json");
+const letterLevels = await readJson("src/content/fr/letter-lessons.json");
 const errors = [];
 
 function assert(condition, message) {
@@ -41,6 +43,7 @@ assert(duplicates(syllables.map((syllable) => syllable.text)).length === 0, "Tex
 
 const wordById = new Map(words.map((word) => [word.id, word]));
 const syllableByText = new Map(syllables.map((syllable) => [syllable.text, syllable]));
+const letterById = new Map(letters.map((letter) => [letter.id, letter]));
 const referencedWordIds = levels.flatMap((level) => level.wordIds);
 
 assert(duplicates(referencedWordIds).length === 0, "Un mot est référencé par plusieurs niveaux");
@@ -76,6 +79,50 @@ for (const word of words) {
   assert(referencedWordIds.includes(word.id), `${word.id}: aucun niveau associé`);
 }
 
+assert(letterLevels.length === 1, `1 niveau Lettres attendu, ${letterLevels.length} trouvé(s)`);
+assert(duplicates(letters.map((letter) => letter.id)).length === 0, "Identifiants de lettres dupliqués");
+assert(duplicates(letters.map((letter) => letter.uppercase)).length === 0, "Capitales de lettres dupliquées");
+assert(duplicates(letters.map((letter) => letter.lowercase)).length === 0, "Minuscules de lettres dupliquées");
+
+for (const [index, level] of letterLevels.entries()) {
+  assert(level.level === index + 1, `Ordre invalide pour le niveau Lettres ${level.id}`);
+  assert(level.gameIds?.includes("lettres"), `${level.id}: gameIds doit contenir lettres`);
+  assert(level.questions?.length === 8, `${level.id}: 8 questions attendues`);
+  assert(duplicates(level.questions?.map((question) => question.id) ?? []).length === 0, `${level.id}: questions dupliquées`);
+
+  for (const question of level.questions ?? []) {
+    const target = letterById.get(question.targetLetterId);
+    assert(Boolean(target), `${question.id}: lettre cible inconnue ${question.targetLetterId}`);
+    assert(
+      question.displayCase === "uppercase" || question.displayCase === "lowercase",
+      `${question.id}: casse d'affichage invalide`,
+    );
+    assert(question.choiceLetterIds?.length >= 2, `${question.id}: au moins 2 choix attendus`);
+    assert(duplicates(question.choiceLetterIds ?? []).length === 0, `${question.id}: choix dupliqués`);
+    assert(
+      question.choiceLetterIds?.filter((id) => id === question.targetLetterId).length === 1,
+      `${question.id}: la bonne réponse doit apparaître exactement une fois`,
+    );
+
+    for (const choiceId of question.choiceLetterIds ?? []) {
+      assert(letterById.has(choiceId), `${question.id}: choix inconnu ${choiceId}`);
+    }
+
+    if (!target) continue;
+    const anchorWord = wordById.get(target.anchorWordId);
+    assert(Boolean(anchorWord), `${target.id}: mot-indice inconnu ${target.anchorWordId}`);
+    assert(
+      anchorWord?.displayWord.toLocaleLowerCase("fr").includes(target.lowercase.toLocaleLowerCase("fr")),
+      `${target.id}: la lettre est absente du mot-indice ${target.anchorWordId}`,
+    );
+    assert(Boolean(target.promptText), `${target.id}: consigne affichée absente`);
+    assert(Boolean(target.promptSpeechText), `${target.id}: consigne vocale absente`);
+    await assertAsset(target.nameAudio, `${target.id} nom audio`);
+    await assertAsset(target.promptAudio, `${target.id} consigne audio`);
+    if (anchorWord) await assertAsset(anchorWord.image, `${target.id} image-indice`);
+  }
+}
+
 for (const asset of ["map-island-sandbar.png", "map-island-rocky.png", "map-island-palms.png"]) {
   await assertAsset(`/assets/world/${asset}`, `Carte ${asset}`);
 }
@@ -85,4 +132,6 @@ if (errors.length) {
   process.exit(1);
 }
 
-process.stdout.write(`Contenu valide : ${levels.length} niveaux, ${words.length} mots et ${syllables.length} syllabes.\n`);
+process.stdout.write(
+  `Contenu valide : ${levels.length} niveaux Bateau, ${letterLevels.length} niveau Lettres, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
+);

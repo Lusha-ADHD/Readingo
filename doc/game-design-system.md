@@ -34,7 +34,7 @@ Chaque écran possède une action principale évidente. Les informations seconda
 
 ### Manipulation
 
-Les réponses se donnent principalement par toucher ou clic. Les éléments interactifs ressemblent à des objets manipulables et possèdent des états normal, pressé, validé, incorrect, désactivé et focus.
+Les réponses se donnent par toucher ou clic. Les éléments interactifs ressemblent à des objets manipulables et possèdent des états normal, pressé, validé, incorrect et désactivé.
 
 ### Écoute
 
@@ -152,7 +152,6 @@ Conventions fonctionnelles :
 - bouton audio placé de manière cohérente sur l’objet associé ;
 - texte court et jamais tronqué ;
 - grille responsive pilotée par l’espace disponible, pas par une liste d’exceptions par niveau ;
-- focus clavier visible ;
 - état désactivé compréhensible sans dépendre uniquement de la couleur ;
 - HUD limité au niveau, à la progression immédiate et à la récompense utile.
 
@@ -227,12 +226,12 @@ Minimum commun :
 - contrôle à 320, 375, 768 px et bureau ;
 - aucune barre de défilement horizontale involontaire ;
 - contenu principal utilisable avec zoom ;
-- navigation clavier pour les actions essentielles ;
 - libellés accessibles pour les boutons iconiques ;
-- ordre de focus logique ;
 - contraste suffisant ;
 - support de `prefers-reduced-motion` ;
 - aucun feedback transmis uniquement par couleur ou son.
+
+Les jeux n’ajoutent pas de navigation clavier ni de déplacement automatique du focus. Les contrôles HTML conservent uniquement leur comportement natif.
 
 ## Pipelines communs et variations
 

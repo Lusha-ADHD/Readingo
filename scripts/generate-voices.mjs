@@ -108,6 +108,7 @@ function sentence(text) {
 const words = await readJson("src/content/fr/words.json");
 const syllables = await readJson("src/content/fr/syllables.json");
 const voiceLines = await readJson("src/content/fr/voice-lines.json");
+const letters = await readJson("src/content/fr/letters.json");
 const genericSyllables = new Map(syllables.map((entry) => [entry.text, entry]));
 const targets = new Map();
 
@@ -155,6 +156,21 @@ for (const word of words) {
   });
 }
 
+for (const letter of letters) {
+  addTarget({
+    id: `letter-name-${letter.id}`,
+    text: letter.nameSpeechText,
+    audio: letter.nameAudio,
+    kind: "letterName",
+  });
+  addTarget({
+    id: `letter-prompt-${letter.id}`,
+    text: letter.promptSpeechText,
+    audio: letter.promptAudio,
+    kind: "letterPrompt",
+  });
+}
+
 function voiceSettings(kind) {
   if (kind === "dialogue") {
     return { stability: 0.58, similarity_boost: 0.82, style: 0.16, use_speaker_boost: true, speed: 0.94 };
@@ -162,6 +178,14 @@ function voiceSettings(kind) {
 
   if (kind === "syllable") {
     return { stability: 0.76, similarity_boost: 0.84, style: 0.03, use_speaker_boost: true, speed: 0.82 };
+  }
+
+  if (kind === "letterName") {
+    return { stability: 0.76, similarity_boost: 0.84, style: 0.03, use_speaker_boost: true, speed: 0.84 };
+  }
+
+  if (kind === "letterPrompt") {
+    return { stability: 0.62, similarity_boost: 0.84, style: 0.12, use_speaker_boost: true, speed: 0.9 };
   }
 
   return { stability: 0.72, similarity_boost: 0.84, style: 0.05, use_speaker_boost: true, speed: 0.88 };

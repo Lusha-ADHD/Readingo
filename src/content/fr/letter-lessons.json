@@ -1,0 +1,18 @@
+[
+  {
+    "id": "premiere-constellation",
+    "level": 1,
+    "title": "Première constellation",
+    "gameIds": ["lettres"],
+    "questions": [
+      { "id": "lettre-a", "targetLetterId": "a", "choiceLetterIds": ["a", "m", "l"], "displayCase": "uppercase" },
+      { "id": "lettre-m", "targetLetterId": "m", "choiceLetterIds": ["f", "m", "a"], "displayCase": "uppercase" },
+      { "id": "lettre-l", "targetLetterId": "l", "choiceLetterIds": ["s", "a", "l"], "displayCase": "uppercase" },
+      { "id": "lettre-f", "targetLetterId": "f", "choiceLetterIds": ["m", "f", "s"], "displayCase": "uppercase" },
+      { "id": "lettre-s", "targetLetterId": "s", "choiceLetterIds": ["r", "s", "f"], "displayCase": "uppercase" },
+      { "id": "lettre-r", "targetLetterId": "r", "choiceLetterIds": ["l", "v", "r"], "displayCase": "uppercase" },
+      { "id": "lettre-v", "targetLetterId": "v", "choiceLetterIds": ["b", "v", "f"], "displayCase": "uppercase" },
+      { "id": "lettre-b", "targetLetterId": "b", "choiceLetterIds": ["r", "m", "b"], "displayCase": "uppercase" }
+    ]
+  }
+]

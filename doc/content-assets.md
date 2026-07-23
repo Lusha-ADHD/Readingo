@@ -10,7 +10,7 @@ Procédures associées :
 - [pipeline image](./image-generation.md) ;
 - [socle de game design](./game-design-system.md).
 
-Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Pour Bateau, voir [Jeu Bateau — Game Design Document](./games/bateau.md).
+Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [Bateau](./games/bateau.md) et de [Lettres](./games/lettres.md).
 
 ## Principe général
 
@@ -37,6 +37,8 @@ Cette séparation permet :
 src/content/
   fr/
     lessons.json
+    letter-lessons.json
+    letters.json
     syllables.json
     voice-lines.json
     words.json
@@ -128,6 +130,12 @@ type Lesson = {
 ### `voice-lines.json`
 
 Contient les dialogues et feedbacks localisés. Une entrée possède un texte et un chemin audio. Les composants utilisent un identifiant fonctionnel tel que `tryAgain`, pas une phrase écrite en dur.
+
+### `letters.json` et `letter-lessons.json`
+
+`letters.json` associe le nom, les graphies, le son travaillé, le mot-indice et les clips d’une lettre. `letter-lessons.json` ordonne les questions et définit les choix proposés.
+
+Le mot-indice référence `words.json` : son illustration et son audio ne sont pas dupliqués. Les contraintes du premier niveau sont détaillées dans le [GDD de Lettres](./games/lettres.md).
 
 ## Validation pédagogique
 
