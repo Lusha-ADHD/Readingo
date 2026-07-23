@@ -4,6 +4,7 @@ import process from "node:process";
 
 const root = process.cwd();
 const readJson = async (relativePath) => JSON.parse(await readFile(path.join(root, relativePath), "utf8"));
+const games = await readJson("src/content/fr/games.json");
 const words = await readJson("src/content/fr/words.json");
 const levels = await readJson("src/content/fr/lessons.json");
 const syllables = await readJson("src/content/fr/syllables.json");
@@ -38,6 +39,19 @@ async function assertAsset(publicPath, label) {
 }
 
 assert(levels.length === 6, `6 niveaux attendus, ${levels.length} trouvés`);
+assert(duplicates(games.map((game) => game.id)).length === 0, "Identifiants de jeux dupliqués");
+assert(
+  ["letters", "bateau", "sentier"].every((id) => games.some((game) => game.id === id)),
+  "Le catalogue doit contenir letters, bateau et sentier",
+);
+
+for (const game of games) {
+  assert(typeof game.route === "string" && game.route.startsWith("/jeux/"), `${game.id}: route invalide`);
+  assert(Boolean(game.title), `${game.id}: titre absent`);
+  assert(Boolean(game.cta), `${game.id}: CTA absent`);
+  assert(Array.isArray(game.progressKeys) && game.progressKeys.length > 0, `${game.id}: clé de progression absente`);
+}
+
 assert(words.length === 48, `48 mots attendus, ${words.length} trouvés`);
 assert(duplicates(words.map((word) => word.id)).length === 0, "Identifiants de mots dupliqués");
 assert(duplicates(syllables.map((syllable) => syllable.id)).length === 0, "Identifiants de syllabes dupliqués");
@@ -53,6 +67,7 @@ assert(referencedWordIds.length === words.length, "Tous les mots doivent apparte
 
 for (const [index, level] of levels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau ${level.id}`);
+  assert(level.gameIds?.includes("bateau"), `${level.id}: gameIds doit contenir bateau`);
   assert(level.wordIds.length === 8, `${level.id}: 8 mots attendus`);
   const expectedSyllables = level.level <= 2 ? 2 : level.level <= 4 ? 3 : 4;
   const expectedDistractors = level.level <= 3 ? 2 : level.level <= 5 ? 3 : 4;
@@ -88,7 +103,7 @@ assert(duplicates(letters.map((letter) => letter.lowercase)).length === 0, "Minu
 
 for (const [index, level] of letterLevels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau Lettres ${level.id}`);
-  assert(level.gameIds?.includes("lettres"), `${level.id}: gameIds doit contenir lettres`);
+  assert(level.gameIds?.includes("letters"), `${level.id}: gameIds doit contenir letters`);
   assert(level.questions?.length === 8, `${level.id}: 8 questions attendues`);
   assert(duplicates(level.questions?.map((question) => question.id) ?? []).length === 0, `${level.id}: questions dupliquées`);
 
@@ -130,8 +145,8 @@ assert(sentierLevels.length === 1, `1 niveau Sentier attendu, ${sentierLevels.le
 for (const [index, level] of sentierLevels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau Sentier ${level.id}`);
   assert(
-    level.gameIds?.includes("sentier-des-mots"),
-    `${level.id}: gameIds doit contenir sentier-des-mots`,
+    level.gameIds?.includes("sentier"),
+    `${level.id}: gameIds doit contenir sentier`,
   );
   assert(level.questions?.length === 8, `${level.id}: 8 questions attendues`);
   assert(

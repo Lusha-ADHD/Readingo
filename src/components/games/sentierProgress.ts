@@ -1,4 +1,6 @@
-export const SENTIER_STORAGE_KEY = "readingo:sentier-des-mots:v1";
+import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
+
+export const SENTIER_STORAGE_KEY = GAME_BY_ID[GAME_IDS.SENTIER].progressKeys[0];
 
 export type SentierProgress = {
   version: 1;

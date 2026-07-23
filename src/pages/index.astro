@@ -2,6 +2,7 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { HomeOnboarding } from "@components/home/HomeOnboarding";
 import GameCard from "@components/ui/GameCard.astro";
+import { GAME_CATALOG } from "../content/gameCatalog";
 import { sitePath } from "../utils/paths";
 ---
 
@@ -44,36 +45,18 @@ import { sitePath } from "../utils/paths";
       </div>
 
       <div class="games__grid">
-        <GameCard
-          title="L’Observatoire des lettres"
-          description="Retrouve les bonnes lettres et découvre leur nom et leur son."
-          href="/jeux/lettres/"
-          icon="A"
-          meta="Lettres · 5 min"
-          cta="Observer les lettres"
-          progressKey="readingo:lettres:v1"
-          theme="letters"
-        />
-        <GameCard
-          title="L’Archipel des mots"
-          description="Aide Pana à former des mots en assemblant les bonnes syllabes."
-          href="/jeux/bateau/"
-          icon="BA"
-          meta="Syllabes · 5–10 min"
-          cta="Prendre la mer"
-          progressKey="readingo:bateau:v3,readingo:bateau:v2"
-          theme="bateau"
-        />
-        <GameCard
-          title="Le Sentier des mots"
-          description="Lis les mots et guide Pana jusqu’au trésor."
-          href="/jeux/mots/"
-          icon="MOT"
-          meta="Mots · 5–10 min"
-          cta="Entrer dans la jungle"
-          progressKey="readingo:sentier-des-mots:v1"
-          theme="forest"
-        />
+        {GAME_CATALOG.map((game) => (
+          <GameCard
+            title={game.title}
+            description={game.description}
+            href={game.route}
+            icon={game.icon}
+            meta={game.meta}
+            cta={game.cta}
+            progressKey={game.progressKeys.join(",")}
+            theme={game.theme}
+          />
+        ))}
       </div>
     </section>
 

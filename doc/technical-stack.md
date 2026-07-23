@@ -31,13 +31,22 @@ Astro produit le HTML des pages et hydrate uniquement les îlots React qui en on
 
 ```astro
 ---
-import BateauGame from "../../components/games/BateauGame";
+import { GAME_BY_ID, GAME_IDS } from "../content/gameCatalog";
+import GamePageLayout from "../layouts/GamePageLayout.astro";
+import { BateauGame } from "../components/games/BateauGame";
+
+const game = GAME_BY_ID[GAME_IDS.BATEAU];
 ---
 
-<BateauGame client:load />
+<GamePageLayout game={game}>
+  <BateauGame client:load />
+</GamePageLayout>
 ```
 
 Cette séparation limite le JavaScript des pages éditoriales tout en laissant les jeux gérer leur état local.
+
+`GamePageLayout.astro` possède le cadre, l’en-tête éditorial et les règles mobiles
+communes. Une page de jeu ne redéfinit pas ces styles.
 
 ## React
 
@@ -52,6 +61,10 @@ React gère :
 - la progression en mémoire avant sauvegarde.
 
 Un jeu complexe peut être divisé en composants de scène, de carte et de contrôles. Les données pédagogiques restent en dehors de ces composants.
+
+Les introductions utilisent `GameIntroOverlay` et `GameDialogueOverlay`. Ces
+composants possèdent Pana, la bulle de dialogue et les actions « Commencer » et
+« Passer » ; le décor demeure la responsabilité du jeu.
 
 ## Animation
 
@@ -94,6 +107,11 @@ La progression est non critique et peut disparaître lorsque les données du nav
 ## Contenu piloté par les données
 
 Les fichiers de `src/content/<locale>/` sont chargés par les pages ou composants et transmis au jeu.
+
+`src/content/fr/games.json` est le catalogue localisé des jeux. Il contient la
+route, les titres, les textes de carte et de page, le thème et les clés de
+progression. `src/content/gameCatalog.ts` fournit la couche typée utilisée par
+l’accueil, l’onboarding, les pages de jeu et les modules de sauvegarde.
 
 Avantages :
 

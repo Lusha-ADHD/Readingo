@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { GAME_IDS } from "../../content/gameCatalog";
 import letterEntriesData from "../../content/fr/letters.json";
 import letterLessonsData from "../../content/fr/letter-lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
@@ -7,6 +8,10 @@ import { sitePath } from "../../utils/paths";
 import { rememberLastGame, shouldResumeFromUrl } from "../home/onboardingState";
 import { AudioButton } from "../ui/AudioButton";
 import { GameButton } from "../ui/GameButton";
+import {
+  GameDialogueOverlay,
+  GameIntroOverlay,
+} from "../ui/GameIntroOverlay";
 import { LetterTile } from "../ui/LetterTile";
 import { ConstellationScene } from "./ConstellationScene";
 import {
@@ -55,7 +60,7 @@ type GamePhase = "intro" | "dialog" | "question" | "wrong" | "correct" | "star" 
 const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 const letters = letterEntriesData as LetterEntry[];
 const lessons = (letterLessonsData as LetterLesson[])
-  .filter((lesson) => lesson.gameIds.includes("lettres"))
+  .filter((lesson) => lesson.gameIds.includes(GAME_IDS.LETTERS))
   .sort((left, right) => left.level - right.level);
 const lesson = lessons[0];
 const letterById = new Map(letters.map((letter) => [letter.id, letter]));
@@ -411,23 +416,17 @@ export function LettersGame() {
       )}
 
       {phase === "intro" && (
-        <div className="letters-game__intro">
-          <h2 className="letters-game__intro-title">Découvrir les lettres avec Pana</h2>
-          <img className="letters-game__pana letters-game__pana--intro" src={PANA_ASSET_PATH} alt="Pana" />
-          <GameButton onClick={() => void startIntroDialog()}>Commencer</GameButton>
-        </div>
+        <GameIntroOverlay
+          title="Découvrir les lettres avec Pana"
+          onStart={() => void startIntroDialog()}
+        />
       )}
 
       {phase === "dialog" && (
-        <div className="letters-game__intro letters-game__intro--dialog">
-          <img className="letters-game__pana letters-game__pana--dialog" src={PANA_ASSET_PATH} alt="Pana" />
-          <div className="letters-game__speech" aria-live="polite">
-            {lettersIntroLines[dialogLineIndex]?.text}
-          </div>
-          <GameButton onClick={skipIntroDialog} variant="secondary">
-            Passer
-          </GameButton>
-        </div>
+        <GameDialogueOverlay
+          text={lettersIntroLines[dialogLineIndex]?.text ?? ""}
+          onSkip={skipIntroDialog}
+        />
       )}
 
       {phase !== "intro" && phase !== "dialog" && phase !== "result" && (

@@ -129,8 +129,8 @@ test.describe("Le Sentier des mots", () => {
     await expect(page.getByRole("button", { name: "Commencer" })).toBeVisible();
 
     await page.goto("/jeux/mots/?test=1&state=dialogue");
-    const pana = page.locator(".sentier-opening__pana--dialogue");
-    const speech = page.locator(".sentier-opening__speech");
+    const pana = page.locator(".game-intro__pana--dialogue");
+    const speech = page.locator(".game-intro__speech");
 
     await expect(pana).toBeVisible();
     await expect(speech).toBeVisible();

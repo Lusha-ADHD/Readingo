@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { GAME_BY_ID } from "../../content/gameCatalog";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import { sitePath } from "../../utils/paths";
 import { useVoiceAudio } from "../games/useVoiceAudio";
@@ -113,35 +114,6 @@ const FLOATING_TOKEN_POSITIONS = [
   "nine",
   "ten",
 ] as const;
-
-const GAME_DETAILS: Record<
-  HomeGameId,
-  {
-    title: string;
-    shortTitle: string;
-    href: string;
-    cta: string;
-  }
-> = {
-  letters: {
-    title: "L’Observatoire des lettres",
-    shortTitle: "l’Observatoire",
-    href: "/jeux/lettres/",
-    cta: "Observer les lettres",
-  },
-  bateau: {
-    title: "L’Archipel des mots",
-    shortTitle: "l’Archipel",
-    href: "/jeux/bateau/",
-    cta: "Prendre la mer",
-  },
-  sentier: {
-    title: "Le Sentier des mots",
-    shortTitle: "le Sentier",
-    href: "/jeux/mots/",
-    cta: "Entrer dans la jungle",
-  },
-};
 
 function speakFrench(text: string) {
   if (!("speechSynthesis" in window)) {
@@ -369,7 +341,7 @@ export function HomeOnboarding() {
   }
 
   function resumeHref(gameId: HomeGameId) {
-    return `${sitePath(GAME_DETAILS[gameId].href)}?reprendre=1`;
+    return `${sitePath(GAME_BY_ID[gameId].route)}?reprendre=1`;
   }
 
   function entryAction() {
@@ -444,7 +416,7 @@ export function HomeOnboarding() {
               key={gameId}
               onClick={() => remember(gameId)}
             >
-              Reprendre {GAME_DETAILS[gameId].shortTitle}
+              Reprendre {GAME_BY_ID[gameId].shortTitle}
               <span aria-hidden="true">→</span>
             </a>
           ))}
@@ -558,18 +530,18 @@ export function HomeOnboarding() {
       <div className="home-onboarding__response-panel home-onboarding__response-panel--result">
         <a
           className="home-onboarding__button home-onboarding__button--primary"
-          href={sitePath(GAME_DETAILS[recommendedGame].href)}
+          href={sitePath(GAME_BY_ID[recommendedGame].route)}
           onClick={() => remember(recommendedGame)}
         >
-          {GAME_DETAILS[recommendedGame].cta}
+          {GAME_BY_ID[recommendedGame].cta}
           <span aria-hidden="true">→</span>
         </a>
         <a
           className="home-onboarding__alternative"
-          href={sitePath(GAME_DETAILS[alternativeGame].href)}
+          href={sitePath(GAME_BY_ID[alternativeGame].route)}
           onClick={() => remember(alternativeGame)}
         >
-          Voir plutôt {GAME_DETAILS[alternativeGame].shortTitle}
+          Voir plutôt {GAME_BY_ID[alternativeGame].shortTitle}
         </a>
       </div>
     );

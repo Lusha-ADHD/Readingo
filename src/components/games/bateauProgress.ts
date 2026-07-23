@@ -1,5 +1,7 @@
-export const BATEAU_STORAGE_KEY = "readingo:bateau:v3";
-export const LEGACY_BATEAU_STORAGE_KEY = "readingo:bateau:v2";
+import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
+
+export const [BATEAU_STORAGE_KEY, LEGACY_BATEAU_STORAGE_KEY] =
+  GAME_BY_ID[GAME_IDS.BATEAU].progressKeys;
 
 export type BateauProgress = {
   version: 3;

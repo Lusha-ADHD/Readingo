@@ -1,4 +1,6 @@
-export const LETTERS_STORAGE_KEY = "readingo:lettres:v1";
+import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
+
+export const LETTERS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.LETTERS].progressKeys[0];
 
 export type LettersProgress = {
   version: 1;

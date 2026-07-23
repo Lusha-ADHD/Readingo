@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import { GAME_IDS } from "../../content/gameCatalog";
 import syllableEntries from "../../content/fr/syllables.json";
 import lessonEntries from "../../content/fr/lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
@@ -7,8 +8,13 @@ import words from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
 import { rememberLastGame, shouldResumeFromUrl } from "../home/onboardingState";
 import { AudioButton } from "../ui/AudioButton";
+import {
+  GameDialogueOverlay,
+  GameIntroOverlay,
+} from "../ui/GameIntroOverlay";
 import { SyllableSlot } from "../ui/SyllableSlot";
 import { GameButton } from "../ui/GameButton";
+import { PanaMascot } from "../ui/PanaMascot";
 import { ProgressBar } from "../ui/ProgressBar";
 import { RewardBurst } from "../ui/RewardBurst";
 import { SyllableTile } from "../ui/SyllableTile";
@@ -78,7 +84,6 @@ type Journey = {
   treasuresFound: number;
 };
 
-const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 const BOAT_ASSET_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_WITH_CHEST_ASSET_PATH = sitePath("/assets/world/IslandWithChest.png");
 const ISLAND_WITHOUT_CHEST_ASSET_PATH = sitePath("/assets/world/IslandWithoutChest.png");
@@ -102,7 +107,7 @@ const SCENE_CLOUDS = Array.from({ length: 18 }, (_, index) => ({
 const wordChallenges = words as WordChallenge[];
 const wordById = new Map(wordChallenges.map((word) => [word.id, word]));
 const bateauLevels = (lessonEntries as BateauLevel[])
-  .filter((level) => level.gameIds.includes("bateau"))
+  .filter((level) => level.gameIds.includes(GAME_IDS.BATEAU))
   .sort((left, right) => left.level - right.level);
 const firstLevelWordIds = bateauLevels[0]?.wordIds ?? [];
 const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry]));
@@ -218,37 +223,6 @@ function getWindLabel(wind: 1 | 2 | 3) {
   }
 
   return "Vent faible";
-}
-
-function PanaMascot({ compact = false }: { compact?: boolean }) {
-  const [assetFailed, setAssetFailed] = useState(false);
-
-  return (
-    <div className={`${compact ? "pana pana--compact" : "pana"} ${assetFailed ? "pana--asset-failed" : ""}`} role="img" aria-label="Pana">
-      <img
-        className="pana__asset"
-        src={PANA_ASSET_PATH}
-        alt=""
-        draggable={false}
-        hidden={assetFailed}
-        onError={(event) => {
-          event.currentTarget.hidden = true;
-          setAssetFailed(true);
-        }}
-      />
-      <div className="pana__fallback" aria-hidden="true">
-        <div className="pana__hat" />
-        <div className="pana__head">
-          <span className="pana__ear pana__ear--left" />
-          <span className="pana__ear pana__ear--right" />
-          <span className="pana__patch" />
-          <span className="pana__eye" />
-          <span className="pana__muzzle" />
-        </div>
-        <div className="pana__scarf" />
-      </div>
-    </div>
-  );
 }
 
 function BoatAsset() {
@@ -803,25 +777,17 @@ export function BateauGame() {
       </div>
 
       {phase === "intro" ? (
-        <div className="bateau-game__intro">
-          <h2 className="bateau-game__intro-title">Maîtriser les syllabes avec Pana</h2>
-          <PanaMascot />
-          <GameButton onClick={() => void startIntroDialog()} variant="primary">
-            Commencer
-          </GameButton>
-        </div>
+        <GameIntroOverlay
+          title="Maîtriser les syllabes avec Pana"
+          onStart={() => void startIntroDialog()}
+        />
       ) : null}
 
       {phase === "dialog" ? (
-        <div className="bateau-game__intro bateau-game__intro--dialog">
-          <PanaMascot />
-          <div className="bateau-game__speech" aria-live="polite">
-            {introLines[dialogLineIndex].text}
-          </div>
-          <GameButton onClick={skipIntroDialog} variant="secondary">
-            Passer
-          </GameButton>
-        </div>
+        <GameDialogueOverlay
+          text={introLines[dialogLineIndex].text}
+          onSkip={skipIntroDialog}
+        />
       ) : null}
 
       {phase === "sailing" && journey ? (

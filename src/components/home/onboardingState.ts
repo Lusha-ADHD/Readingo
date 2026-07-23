@@ -1,9 +1,17 @@
-export const HOME_LAST_GAME_STORAGE_KEY = "readingo:last-game:v1";
-export const LETTERS_PROGRESS_STORAGE_KEY = "readingo:lettres:v1";
-export const BATEAU_PROGRESS_STORAGE_KEYS = ["readingo:bateau:v3", "readingo:bateau:v2"] as const;
-export const SENTIER_PROGRESS_STORAGE_KEY = "readingo:sentier-des-mots:v1";
+import {
+  GAME_BY_ID,
+  GAME_CATALOG,
+  GAME_IDS,
+  isGameId,
+} from "../../content/gameCatalog.ts";
+import type { GameId } from "../../content/gameCatalog.ts";
 
-export type HomeGameId = "letters" | "bateau" | "sentier";
+export const HOME_LAST_GAME_STORAGE_KEY = "readingo:last-game:v1";
+export const LETTERS_PROGRESS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.LETTERS].progressKeys[0];
+export const BATEAU_PROGRESS_STORAGE_KEYS = GAME_BY_ID[GAME_IDS.BATEAU].progressKeys;
+export const SENTIER_PROGRESS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.SENTIER].progressKeys[0];
+
+export type HomeGameId = GameId;
 export type AgeChoice = "5" | "6" | "7" | "other";
 export type SkillChoice =
   | "discovering-letters"
@@ -58,42 +66,23 @@ function hasProgress(value: unknown) {
   );
 }
 
-function isHomeGameId(value: unknown): value is HomeGameId {
-  return value === "letters" || value === "bateau" || value === "sentier";
-}
-
 export function recommendHomeGame(skill: SkillChoice, _age?: AgeChoice): HomeGameId {
   if (skill === "discovering-letters") {
-    return "letters";
+    return GAME_IDS.LETTERS;
   }
 
-  return skill === "reads-words" ? "sentier" : "bateau";
+  return skill === "reads-words" ? GAME_IDS.SENTIER : GAME_IDS.BATEAU;
 }
 
 export function readResumeState(storage: Storage | null): ResumeState {
-  const progressGames: HomeGameId[] = [];
-  const lettersProgress = readJson(storage, LETTERS_PROGRESS_STORAGE_KEY);
-  const bateauProgress = BATEAU_PROGRESS_STORAGE_KEYS
-    .map((key) => readJson(storage, key))
-    .find(hasProgress);
-  const sentierProgress = readJson(storage, SENTIER_PROGRESS_STORAGE_KEY);
-
-  if (hasProgress(lettersProgress)) {
-    progressGames.push("letters");
-  }
-
-  if (bateauProgress) {
-    progressGames.push("bateau");
-  }
-
-  if (hasProgress(sentierProgress)) {
-    progressGames.push("sentier");
-  }
+  const progressGames = GAME_CATALOG
+    .filter((game) => game.progressKeys.some((key) => hasProgress(readJson(storage, key))))
+    .map((game) => game.id);
 
   const savedLastGame = readJson(storage, HOME_LAST_GAME_STORAGE_KEY) as SavedLastGame | null;
   const lastGame =
     savedLastGame &&
-    isHomeGameId(savedLastGame.gameId) &&
+    isGameId(savedLastGame.gameId) &&
     Number.isFinite(savedLastGame.updatedAt) &&
     progressGames.includes(savedLastGame.gameId)
       ? savedLastGame.gameId

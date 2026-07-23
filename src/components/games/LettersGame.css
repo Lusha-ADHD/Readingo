@@ -368,16 +368,6 @@
   font-size: 1.25rem;
 }
 
-.letters-game__intro {
-  position: absolute;
-  z-index: 4;
-  inset: 0 18px;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 22px;
-}
-
 .letters-game__result {
   position: relative;
   z-index: 4;
@@ -387,38 +377,6 @@
   justify-content: center;
   gap: 8px;
   padding: 120px 28px 32px;
-}
-
-.letters-game__intro--dialog {
-  inset-block: 0;
-  gap: 18px;
-}
-
-.letters-game__intro-title {
-  position: relative;
-  z-index: 5;
-  max-width: 14ch;
-  margin: 0;
-  color: #fff3bf;
-  font-size: 2.65rem;
-  line-height: 1.05;
-  paint-order: stroke fill;
-  text-align: center;
-  -webkit-text-stroke: 6px var(--color-border);
-}
-
-.letters-game__speech {
-  width: min(600px, calc(100% - 24px));
-  border: 4px solid var(--color-border);
-  border-radius: 24px;
-  background: var(--color-panel-light);
-  padding: 18px 22px;
-  box-shadow: 0 9px 0 rgba(8, 33, 74, 0.2);
-  color: var(--color-text);
-  font-size: clamp(1.25rem, 3vw, 1.8rem);
-  font-weight: 900;
-  line-height: 1.25;
-  text-align: center;
 }
 
 .letters-game__result-panel {
@@ -469,16 +427,6 @@
   height: 150px;
   margin-right: -28px;
   margin-bottom: 20px;
-}
-
-.letters-game__pana--intro {
-  width: 210px;
-  height: 232px;
-}
-
-.letters-game__pana--dialog {
-  width: 176px;
-  height: 176px;
 }
 
 .letters-game__exercise {
@@ -832,32 +780,11 @@
     font-size: 0.96rem;
   }
 
-  .letters-game__intro {
-    inset-block: 0;
-    gap: 14px;
-  }
-
   .letters-game__result {
     align-items: flex-end;
     flex-direction: column;
     justify-content: flex-end;
     padding: 112px 12px 16px;
-  }
-
-  .letters-game__intro--dialog {
-    gap: 14px;
-  }
-
-  .letters-game__intro-title {
-    font-size: 1.9rem;
-    -webkit-text-stroke-width: 5px;
-  }
-
-  .letters-game__speech {
-    width: calc(100% - 12px);
-    border-width: 3px;
-    padding: 12px 14px;
-    font-size: clamp(1rem, 4.6vw, 1.35rem);
   }
 
   .letters-game__result-panel {
@@ -874,18 +801,6 @@
     left: 10px;
     width: 112px;
     height: 112px;
-    margin: 0;
-  }
-
-  .letters-game__pana--intro {
-    width: 156px;
-    height: 174px;
-  }
-
-  .letters-game__pana--dialog {
-    position: static;
-    width: 132px;
-    height: 132px;
     margin: 0;
   }
 

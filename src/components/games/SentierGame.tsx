@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { GAME_IDS } from "../../content/gameCatalog";
 import sentierLessonsData from "../../content/fr/sentier-lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import wordsData from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
 import { rememberLastGame } from "../home/onboardingState";
 import { GameButton } from "../ui/GameButton";
+import {
+  GameDialogueOverlay,
+  GameIntroOverlay,
+} from "../ui/GameIntroOverlay";
 import { JungleScene } from "./JungleScene";
 import { SentierChallenge } from "./SentierChallenge";
 import { useGameAudio } from "./gameAudio";
@@ -66,7 +71,7 @@ type VoiceLines = {
 };
 
 const lessons = (sentierLessonsData as SentierLesson[])
-  .filter((entry) => entry.gameIds.includes("sentier-des-mots"))
+  .filter((entry) => entry.gameIds.includes(GAME_IDS.SENTIER))
   .sort((left, right) => left.level - right.level);
 const lesson = lessons[0];
 const wordById = new Map((wordsData as WordEntry[]).map((word) => [word.id, word]));
@@ -472,16 +477,11 @@ export function SentierGame() {
       <section className="sentier-game sentier-game--opening" data-testid="sentier-game">
         <img className="sentier-opening__backdrop" src={BACKDROP_PATH} alt="" />
         <div className="sentier-opening__shade" />
-        <div className="sentier-opening__intro">
-          <h2 className="sentier-opening__intro-title">Le Sentier des mots</h2>
-          <p className="sentier-opening__intro-subtitle">
-            Lis les mots et guide Pana jusqu’au trésor.
-          </p>
-          <img className="sentier-opening__pana" src={PANA_PATH} alt="Pana" />
-          <GameButton onClick={() => void startIntro()}>
-            Commencer
-          </GameButton>
-        </div>
+        <GameIntroOverlay
+          title="Le Sentier des mots"
+          subtitle="Lis les mots et guide Pana jusqu’au trésor."
+          onStart={() => void startIntro()}
+        />
         {localTools ? (
           <button
             className="sentier-game__test sentier-game__test--opening"
@@ -502,19 +502,7 @@ export function SentierGame() {
       <section className="sentier-game sentier-game--opening" data-testid="sentier-game">
         <img className="sentier-opening__backdrop" src={BACKDROP_PATH} alt="" />
         <div className="sentier-opening__shade" />
-        <div className="sentier-opening__intro sentier-opening__intro--dialogue">
-          <img
-            className="sentier-opening__pana sentier-opening__pana--dialogue"
-            src={PANA_PATH}
-            alt="Pana"
-          />
-          <div className="sentier-opening__speech" aria-live="polite">
-            {line.text}
-          </div>
-          <GameButton onClick={skipIntro} variant="secondary">
-            Passer
-          </GameButton>
-        </div>
+        <GameDialogueOverlay text={line.text} onSkip={skipIntro} />
       </section>
     );
   }

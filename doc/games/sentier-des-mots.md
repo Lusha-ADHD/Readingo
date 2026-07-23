@@ -425,7 +425,7 @@ Le fichier de leçons définit :
   "id": "sentier-1",
   "level": 1,
   "title": "Lisière de la jungle",
-  "gameIds": ["sentier-des-mots"],
+  "gameIds": ["sentier"],
   "questions": [
     {
       "id": "sentier-1-moto",

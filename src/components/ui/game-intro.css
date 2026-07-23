@@ -1,0 +1,333 @@
+.game-intro {
+  position: absolute;
+  z-index: 9;
+  inset: 0 18px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 22px;
+}
+
+.game-intro--dialogue {
+  gap: 18px;
+}
+
+.game-intro__title {
+  position: relative;
+  z-index: 10;
+  max-width: 14ch;
+  margin: 0;
+  color: #fff3bf;
+  font-size: 2.65rem;
+  line-height: 1.05;
+  paint-order: stroke fill;
+  text-align: center;
+  -webkit-text-stroke: 6px var(--color-border);
+}
+
+.game-intro__subtitle {
+  max-width: 32ch;
+  margin: -10px 0 0;
+  color: #ffffff;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  text-shadow: 0 3px 0 rgba(8, 33, 74, 0.55);
+}
+
+.game-intro__speech {
+  position: relative;
+  width: min(600px, calc(100% - 24px));
+  border: 4px solid var(--color-border);
+  border-radius: 24px;
+  background: var(--color-panel-light);
+  padding: 18px 22px;
+  box-shadow: 0 9px 0 rgba(8, 33, 74, 0.2);
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.game-intro__speech::before,
+.game-intro__speech::after {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  content: "";
+  transform: translateX(-50%);
+}
+
+.game-intro__speech::before {
+  top: -24px;
+  border-width: 0 20px 24px;
+  border-color: transparent transparent var(--color-border);
+}
+
+.game-intro__speech::after {
+  top: -17px;
+  border-width: 0 15px 18px;
+  border-color: transparent transparent var(--color-panel-light);
+}
+
+.game-intro__pana--start {
+  width: 210px;
+  height: 232px;
+}
+
+.game-intro__pana--dialogue {
+  width: 176px;
+  height: 176px;
+}
+
+.pana {
+  position: relative;
+  width: 210px;
+  height: 232px;
+  filter: drop-shadow(0 12px 0 rgba(8, 33, 74, 0.16));
+}
+
+.pana--compact {
+  width: 74px;
+  height: 82px;
+}
+
+.pana__asset {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.pana__fallback {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.pana--asset-failed .pana__fallback {
+  opacity: 1;
+}
+
+.pana__head {
+  position: absolute;
+  right: 12px;
+  bottom: 22px;
+  left: 12px;
+  height: 150px;
+  border: 4px solid var(--color-border);
+  border-radius: 44% 44% 48% 48%;
+  background: linear-gradient(135deg, #ff7a42, #ff4f37);
+}
+
+.pana--compact .pana__head {
+  right: 4px;
+  bottom: 8px;
+  left: 4px;
+  height: 52px;
+  border-width: 2px;
+}
+
+.pana__ear {
+  position: absolute;
+  top: 28px;
+  width: 44px;
+  height: 54px;
+  border: 4px solid var(--color-border);
+  background: #ff6a3d;
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+.pana__ear--left {
+  left: -18px;
+  transform: rotate(-28deg);
+}
+
+.pana__ear--right {
+  right: -18px;
+  transform: rotate(28deg);
+}
+
+.pana--compact .pana__ear {
+  top: 10px;
+  width: 16px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.pana__hat {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 10px;
+  left: 10px;
+  height: 86px;
+  border: 4px solid #4c4436;
+  border-radius: 18px 18px 34px 34px;
+  background: #111a24;
+  clip-path: polygon(7% 48%, 28% 34%, 35% 6%, 50% 30%, 66% 6%, 72% 34%, 94% 48%, 76% 70%, 24% 70%);
+}
+
+.pana--compact .pana__hat {
+  top: 0;
+  right: 3px;
+  left: 3px;
+  height: 30px;
+  border-width: 2px;
+}
+
+.pana__patch {
+  position: absolute;
+  z-index: 3;
+  top: 48px;
+  left: 52px;
+  width: 52px;
+  height: 42px;
+  border: 4px solid #5d4637;
+  border-radius: 48%;
+  background: #3c302a;
+}
+
+.pana--compact .pana__patch {
+  top: 18px;
+  left: 18px;
+  width: 18px;
+  height: 15px;
+  border-width: 2px;
+}
+
+.pana__eye {
+  position: absolute;
+  top: 58px;
+  right: 50px;
+  width: 30px;
+  height: 30px;
+  border: 4px solid var(--color-border);
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.pana__eye::after {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-border);
+  content: "";
+}
+
+.pana--compact .pana__eye {
+  top: 20px;
+  right: 16px;
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+}
+
+.pana__muzzle {
+  position: absolute;
+  right: 44px;
+  bottom: 20px;
+  left: 44px;
+  height: 50px;
+  border-radius: 48%;
+  background: #ffffff;
+}
+
+.pana__muzzle::before {
+  position: absolute;
+  top: 8px;
+  left: calc(50% - 10px);
+  width: 20px;
+  height: 16px;
+  border-radius: 46%;
+  background: var(--color-border);
+  content: "";
+}
+
+.pana--compact .pana__muzzle {
+  right: 16px;
+  bottom: 8px;
+  left: 16px;
+  height: 18px;
+}
+
+.pana__scarf {
+  position: absolute;
+  right: 42px;
+  bottom: 4px;
+  left: 42px;
+  height: 42px;
+  border: 4px solid var(--color-border);
+  border-radius: 0 0 18px 18px;
+  background: repeating-linear-gradient(0deg, #ffffff 0 10px, #cf2f30 10px 20px);
+}
+
+.pana--compact .pana__scarf {
+  right: 16px;
+  bottom: 0;
+  left: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+@media (max-width: 700px) {
+  .game-intro {
+    inset-block: 0;
+    gap: 14px;
+  }
+
+  .game-intro--dialogue {
+    gap: 14px;
+  }
+
+  .game-intro__title {
+    font-size: 1.9rem;
+    -webkit-text-stroke-width: 5px;
+  }
+
+  .game-intro__subtitle {
+    max-width: 28ch;
+    margin-top: -5px;
+    font-size: clamp(0.9rem, 4.2vw, 1.08rem);
+  }
+
+  .game-intro__speech {
+    width: calc(100% - 12px);
+    border-width: 3px;
+    padding: 12px 14px;
+    font-size: clamp(1rem, 4.6vw, 1.35rem);
+  }
+
+  .game-intro__speech::before {
+    top: -22px;
+    border-width: 0 18px 22px;
+  }
+
+  .game-intro__speech::after {
+    top: -16px;
+    border-width: 0 14px 17px;
+  }
+
+  .game-intro__pana--start {
+    width: 156px;
+    height: 174px;
+  }
+
+  .game-intro__pana--dialogue {
+    width: 132px;
+    height: 132px;
+  }
+}

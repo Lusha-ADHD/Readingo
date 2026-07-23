@@ -3,7 +3,7 @@
     "id": "premiere-constellation",
     "level": 1,
     "title": "Première constellation",
-    "gameIds": ["lettres"],
+    "gameIds": ["letters"],
     "questions": [
       { "id": "lettre-a", "targetLetterId": "a", "choiceLetterIds": ["a", "m", "l"], "displayCase": "uppercase" },
       { "id": "lettre-m", "targetLetterId": "m", "choiceLetterIds": ["f", "m", "a"], "displayCase": "uppercase" },
