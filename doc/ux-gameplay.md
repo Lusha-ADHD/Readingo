@@ -1,225 +1,155 @@
-# Experience Utilisateur et Gameplay
+# Expérience utilisateur et gameplay
 
-## Hypothese d'Usage
+## Rôle du document
 
-L'utilisateur initial est le parent. Il arrive sur le site via une recherche, un lien ou une recommandation, puis lance une activite avec son enfant.
+Ce document décrit le parcours global autour des jeux Readingo. Les principes de conception communs sont dans le [socle de game design](./game-design-system.md), tandis que chaque mécanique possède son propre GDD.
 
-Le produit ne separe pas l'espace parent et l'espace enfant. Toute l'experience est commune, mais elle doit avoir deux niveaux de lecture :
+## Deux niveaux de lecture
 
-- pour le parent : comprendre rapidement l'objectif pedagogique et choisir une activite pertinente ;
-- pour l'enfant : voir immediatement quoi toucher, quoi ecouter et comment rejouer.
+Le parent arrive généralement par une recherche, un lien ou une recommandation. L’enfant devient ensuite l’utilisateur principal de la partie.
 
-Le parent doit pouvoir accompagner sans mode d'emploi. L'enfant doit pouvoir relancer une partie ou changer de jeu seul apres une premiere session.
+L’expérience doit donc permettre :
 
-## Premiere Impression
+- au parent de comprendre l’âge, la compétence et la durée ;
+- à l’enfant d’identifier immédiatement quoi toucher et quoi écouter ;
+- aux deux de relancer ou changer de jeu sans mode d’emploi.
 
-La premiere page doit donner acces directement au jeu. Elle ne doit pas ressembler a une landing page marketing.
+Il n’est pas nécessaire de créer deux interfaces séparées au début. La hiérarchie visuelle distingue le contexte destiné au parent de l’action destinée à l’enfant.
 
-Elements prioritaires :
+## Entrée dans Readingo
 
-- bouton principal "Jouer" tres visible ;
-- choix rapide d'une activite ;
-- progression simple ;
-- indication d'age et de competence travaillee ;
-- acces discret aux pages d'information pour les parents.
+La page d’entrée donne rapidement accès aux activités. Elle ne doit pas repousser le jeu derrière une longue présentation marketing.
 
-Exemple de structure :
+Priorités :
 
-```txt
-[Logo Readingo]              [Son on/off]
-
-Bonjour !
-Que veux-tu travailler ?
-
-[Lettres] [Syllabes] [Mots]
-
-[Continuer]   [Changer de jeu]
-
-Progression du jour : 3 mots reussis
-```
-
-## Principes UX
-
-- Chaque ecran doit avoir une action principale evidente.
-- Les textes doivent etre courts et lus par la voix quand c'est utile.
-- Les zones tactiles doivent etre grandes.
-- Les erreurs doivent etre douces et encourageantes.
-- Les animations doivent confirmer l'action de l'enfant.
-- Le score doit encourager, jamais stresser.
-- Le jeu doit fonctionner en portrait mobile, paysage tablette et desktop.
+- action « Jouer » visible ;
+- objectif pédagogique compréhensible ;
+- choix d’une activité ;
+- reprise de la progression locale ;
+- informations parentales secondaires mais accessibles.
 
 ## Navigation
 
-Navigation cible :
+Parcours cible :
 
-- Accueil jouable
-- Selection de jeu
-- Selection de niveau
-- Partie
-- Fin de session
-- Pages SEO et conseils accessibles depuis le bas de page ou des liens secondaires
-
-Il ne faut pas cacher la navigation derriere une interface parentale complexe. Le changement de jeu doit etre possible depuis une icone simple ou un bouton clair.
-
-## Jeu Principal : Bateau
-
-### Mode de test local
-
-Sur `localhost`, `127.0.0.1` ou `::1`, un bouton discret `Tester` apparait en bas a gauche du jeu. Il permet de lancer directement chacun des six niveaux, meme s'il n'est pas encore debloque, ou de revenir a la carte.
-
-Un niveau peut aussi etre ouvert directement avec le parametre d'URL `niveau`, par exemple :
-
-```txt
-http://127.0.0.1:4321/jeux/bateau/?niveau=5
+```text
+Accueil
+  → choix d’un jeu
+  → présentation courte
+  → carte ou sélection de niveau
+  → partie
+  → résultat
+  → continuer, rejouer ou changer de jeu
 ```
 
-Une partie lancee en mode test ne modifie pas la sauvegarde, les niveaux debloques, les meilleurs scores ni le total de coffres. Ces outils restent masques lorsque le site est consulte depuis un autre domaine.
+Règles :
 
-### Objectif
+- une action principale par écran ;
+- retour ou fermeture explicite ;
+- changement de jeu accessible hors d’un exercice actif ;
+- aucune navigation essentielle cachée derrière un geste non indiqué ;
+- progression locale chargée sans imposer de compte.
 
-Construire un mot a partir de syllabes.
+## Avant une partie
 
-Exemple corrige :
+Le joueur doit comprendre :
 
-- image : chaton
-- mot attendu : chaton
-- syllabes correctes : "cha", "ton"
-- distracteurs : "ba", "ti"
+- ce qu’il va travailler ;
+- comment donner une réponse ;
+- comment écouter ;
+- quelle unité constitue une session.
 
-Note : "chaton" doit etre utilise sans accent pour designer le petit chat. La graphie avec accent circonflexe sur le "a" renvoie a un autre sens en francais et doit etre evitee dans ce jeu.
+Une introduction parlée peut compléter le visuel, mais elle commence après l’interaction nécessaire à l’audio navigateur. Une consigne déjà comprise ne doit pas être répétée avant chaque exercice.
 
-### Boucle de Jeu
+## Pendant une partie
 
-1. L'ecran affiche l'ocean, le bateau, des iles et Pana au centre.
-2. L'enfant appuie sur "Commencer".
-3. Pana donne la consigne vocale et visuelle.
-4. Une image apparait avec les emplacements de syllabes.
-5. L'enfant peut toucher le haut-parleur de l'image pour entendre le mot.
-6. L'enfant peut toucher le haut-parleur d'une syllabe pour l'entendre.
-7. L'enfant touche une syllabe pour la placer automatiquement dans le premier emplacement libre a gauche.
-8. Le jeu valide chaque placement.
-9. Si la syllabe est correcte, elle se fixe et le son de la syllabe est joue.
-10. Si la syllabe est incorrecte, son son est joue puis Pana dit "Essaie encore".
-11. Quand le mot est complet, le vent se leve.
-12. Le bateau reste au centre et les iles defilent de droite a gauche.
-13. Selon la rapidite, le bateau parcourt 1, 2 ou 3 iles.
-14. Une ile sur deux en moyenne contient un coffre.
-15. Si un coffre est trouve, le bateau marque un petit arret, le coffre s'ouvre et le compteur de coffres collectes augmente.
-16. Une fois la navigation terminee, le mot suivant apparait.
+Une partie alterne :
 
-### Feedback Positif
+1. cible pédagogique ;
+2. action ;
+3. validation immédiate ;
+4. feedback ;
+5. progression.
 
-Un feedback positif doit combiner :
+Le décor peut raconter une aventure, mais ne doit pas déplacer les commandes de manière imprévisible. Les transitions plus longues ont une fonction de récompense et peuvent être passées.
 
-- petit son court ;
-- rebond de la carte ;
-- couleur de validation ;
+## Erreur et réussite
+
+Une réussite combine au moins deux formes de retour parmi :
+
+- changement d’état ;
+- animation courte ;
+- son ;
 - progression visible ;
-- voix optionnelle : "Bravo", "Oui", "C'est ca".
+- récompense.
 
-### Feedback Negatif
+Une erreur :
 
-Un feedback negatif doit rester bienveillant :
+- explique quel objet doit être réessayé ;
+- rend rapidement le contrôle ;
+- ne retire rien ;
+- évite le buzzer agressif et le rouge dominant ;
+- ne déclenche pas une longue prise de parole.
 
-- tremblement court ;
-- retour automatique de la carte ;
-- son doux, non agressif ;
-- voix optionnelle : "Essaie encore".
+## Fin de session
 
-Pas de buzzer dur, pas de rouge agressif, pas de message culpabilisant.
+Une session cible dure environ 3 à 7 minutes.
 
-### Scoring
+Le résultat :
 
-Le scoring sert a motiver, pas a evaluer strictement. Pour cet age, il doit utiliser de petits nombres.
+- nomme clairement la réussite ;
+- montre une petite quantité compréhensible ;
+- propose une action principale pour continuer ;
+- laisse le joueur observer son résultat ;
+- sépare les suggestions destinées au parent des récompenses enfant.
 
-Proposition :
+La promotion d’un autre produit ne doit jamais ressembler à un coffre, un badge ou une récompense du jeu.
 
-- le score principal est le nombre de coffres collectes ;
-- chaque coffre ajoute 1 tresor ;
-- la rapidite ne donne pas de points directs ;
-- la rapidite influence la force du vent ;
-- vent fort : 3 iles parcourues ;
-- vent moyen : 2 iles parcourues ;
-- vent faible : 1 ile parcourue.
+## Progression pédagogique globale
 
-Le timer ne doit pas etre central visuellement. Pour cet age, la pression temporelle doit rester secondaire.
+La collection Readingo peut couvrir progressivement :
 
-## Autres Mini-Jeux
+1. reconnaissance des lettres ;
+2. association des formes majuscules et minuscules ;
+3. identification de sons simples ;
+4. formation de syllabes ;
+5. lecture de mots courts ;
+6. manipulation de sons complexes ;
+7. lecture de mots longs ;
+8. lecture de phrases courtes.
 
-### Lettres Magiques
+Cette séquence est une orientation de collection. Chaque jeu précise son périmètre réel et ses prérequis dans son GDD.
 
-Objectif : reconnaitre une lettre entendue.
+## Jeux documentés
 
-Gameplay :
+### Bateau
 
-- une voix dit "Trouve la lettre M" ;
-- plusieurs lettres apparaissent ;
-- l'enfant touche la bonne lettre ;
-- progression vers majuscule/minuscule.
+Bateau fait recomposer des mots à partir de syllabes et transforme chaque réussite en traversée maritime.
 
-### Ballons Sons
+Sa boucle, ses six niveaux, sa carte, son scoring, sa sauvegarde et son mode de test sont décrits dans le [Game Design Document de Bateau](./games/bateau.md).
 
-Objectif : associer un son a une lettre ou une syllabe.
+## Concepts de jeux futurs
 
-Gameplay :
+Les concepts ci-dessous ne sont pas des fonctionnalités implémentées. Chacun devra recevoir un GDD avant sa conception visuelle ou son développement.
 
-- des ballons montent doucement ;
-- chaque ballon contient une lettre ou syllabe ;
-- l'enfant touche celui qui correspond au son entendu.
+### Lettres magiques
 
-### Train des Syllabes
+Reconnaître une lettre entendue parmi plusieurs formes.
 
-Objectif : remettre les syllabes dans l'ordre.
+### Ballons sons
 
-Gameplay :
+Associer un son à une lettre ou une syllabe portée par un objet en mouvement.
 
-- une locomotive attend des wagons ;
-- chaque wagon contient une syllabe ;
-- l'enfant place les wagons dans l'ordre du mot.
+### Train des syllabes
 
-### Mot Mystere
+Remettre les syllabes d’un mot dans l’ordre sous la forme de wagons.
 
-Objectif : completer un mot avec une syllabe manquante.
+### Mot mystère
 
-Gameplay :
+Compléter un mot avec une syllabe manquante.
 
-- image + mot partiellement affiche ;
-- l'enfant choisit la syllabe manquante ;
-- le mot complet est prononce.
+### Image-mot
 
-### Image-Mot
+Associer une image et un son au mot écrit correspondant.
 
-Objectif : associer image, son et mot ecrit.
-
-Gameplay :
-
-- une image est affichee ;
-- trois mots sont proposes ;
-- l'enfant touche le bon mot.
-
-## Progression Pedagogique
-
-La progression doit suivre une logique simple :
-
-1. Reconnaitre les lettres majuscules.
-2. Associer majuscules et minuscules.
-3. Identifier des sons simples.
-4. Former des syllabes simples.
-5. Lire des mots courts.
-6. Manipuler des sons complexes.
-7. Lire des mots plus longs.
-8. Lire de petites phrases.
-
-## Fin de Session
-
-Une session doit durer environ 3 a 7 minutes.
-
-Ecran de fin :
-
-- nombre de mots ou lettres reussis ;
-- coffres collectes ;
-- bouton "Rejouer" ;
-- bouton "Changer de jeu" ;
-- suggestion douce : "Encore 3 mots demain".
-
-La promotion d'autres produits peut apparaitre ici, mais uniquement comme contenu secondaire et non bloquant.
+Ces thèmes peuvent employer des territoires différents tout en réutilisant Pana, les composants UI, les conventions audio et les pipelines d’assets.

@@ -1,22 +1,60 @@
-# Contenu, Assets et Internationalisation
+# Contenu pédagogique et assets
 
-## Principe General
+## Rôle du document
 
-Le contenu doit etre structure comme une base pedagogique reutilisable. Les mini-jeux consomment ces donnees, mais ne les definissent pas directement.
+Ce document décrit le modèle de contenu commun aux jeux Readingo et la relation entre données pédagogiques, images et sons.
 
-Chaque item doit relier :
+Procédures associées :
 
-- un objectif pedagogique ;
-- un mot ou son ;
-- des syllabes ;
-- une image ;
-- des fichiers audio ;
-- un niveau de difficulte ;
-- des tags.
+- [pipeline audio](./audio-generation.md) ;
+- [pipeline image](./image-generation.md) ;
+- [socle de game design](./game-design-system.md).
 
-## Donnees de Mot
+Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Pour Bateau, voir [Jeu Bateau — Game Design Document](./games/bateau.md).
 
-Modele cible :
+## Principe général
+
+Les jeux consomment une base pédagogique. Ils ne définissent pas leurs mots, syllabes ou chemins d’assets dans les composants React.
+
+```text
+Fichiers de contenu
+  → validation automatique
+  → chargement par le jeu
+  → rendu de l’exercice
+```
+
+Cette séparation permet :
+
+- de réutiliser un mot dans plusieurs mécaniques ;
+- de faire évoluer un niveau sans modifier l’interface ;
+- de valider les assets avant le build ;
+- de localiser les contenus ;
+- de mutualiser les syllabes et les prononciations.
+
+## Organisation actuelle
+
+```text
+src/content/
+  fr/
+    lessons.json
+    syllables.json
+    voice-lines.json
+    words.json
+
+public/assets/
+  audio/
+    fr/
+    sfx/
+  characters/
+  images/
+    fr/
+      words/
+  world/
+```
+
+### `words.json`
+
+Contient la donnée pédagogique et les assets d’un mot :
 
 ```ts
 type WordChallenge = {
@@ -25,6 +63,7 @@ type WordChallenge = {
   word: string;
   displayWord: string;
   syllables: string[];
+  spokenSyllables: string[];
   distractors: string[];
   image: string;
   audioWord: string;
@@ -34,300 +73,187 @@ type WordChallenge = {
 };
 ```
 
-Exemple :
+Rôle des champs :
 
-```json
-{
-  "id": "chaton",
-  "locale": "fr-FR",
-  "word": "chaton",
-  "displayWord": "chaton",
-  "syllables": ["cha", "ton"],
-  "distractors": ["ba", "ti", "ma"],
-  "image": "/assets/images/fr/words/chaton.png",
-  "audioWord": "/assets/audio/fr/words/chaton.mp3",
-  "audioSyllables": {
-    "cha": "/assets/audio/fr/syllables/cha.mp3",
-    "ton": "/assets/audio/fr/syllables/ton.mp3"
-  },
-  "difficulty": 2,
-  "tags": ["animal", "mot-bisyllabique", "son-ch"]
-}
+| Champ | Usage |
+| --- | --- |
+| `id` | identifiant stable, sans accent ni espace |
+| `locale` | langue et variante du contenu |
+| `word` | forme linguistique du mot |
+| `displayWord` | texte affiché ou prononcé comme mot complet |
+| `syllables` | unités affichées dans l’ordre attendu |
+| `spokenSyllables` | textes utilisés pour générer les prononciations contextuelles |
+| `distractors` | unités incorrectes proposées avec la réponse |
+| `image` | chemin public de l’illustration |
+| `audioWord` | chemin public du mot complet |
+| `audioSyllables` | éventuelles variantes audio propres au mot |
+| `difficulty` | classement pédagogique transversal |
+| `tags` | recherche, regroupement et futurs jeux |
+
+`audioSyllables` peut être vide lorsque toutes les syllabes utilisent les clips mutualisés.
+
+### `syllables.json`
+
+Contient le référentiel mutualisé :
+
+```ts
+type Syllable = {
+  id: string;
+  text: string;
+  speechText: string;
+  locale: string;
+  audio: string;
+};
 ```
 
-## Validation Pedagogique
+`text` correspond à la graphie de jeu. `speechText` correspond au texte envoyé au moteur vocal. Ils peuvent différer.
 
-Le contenu doit etre valide avant integration :
+### `lessons.json`
 
-- mot courant et connu des enfants ;
-- image non ambigue ;
-- decoupage syllabique adapte a l'objectif ;
-- distracteurs plausibles mais pas trop piegeux ;
-- son audio clair ;
-- pas de mot a double sens problematique ;
-- pas de graphie inutilement complexe au debut.
+Décrit les regroupements de contenu :
 
-Exemples de mots adaptés au demarrage :
-
-- moto
-- lama
-- papa
-- tapis
-- tomate
-- bateau
-- ballon
-- chaton
-- maison
-- melon
-
-Exemples a eviter au tout debut :
-
-- mots avec lettres muettes difficiles ;
-- mots avec graphies rares ;
-- mots visuellement ambigus ;
-- mots dont l'image peut etre interpretee de plusieurs facons.
-
-## Audio
-
-Arborescence cible :
-
-```txt
-public/assets/audio/
-  fr/
-    letters/
-      a.mp3
-      b.mp3
-    syllables/
-      cha.mp3
-      ton.mp3
-    words/
-      chaton.mp3
-    ui/
-      correct-01.mp3
-      wrong-soft-01.mp3
-      victory-01.mp3
+```ts
+type Lesson = {
+  id: string;
+  level: number;
+  title: string;
+  difficultyTier: number;
+  gameIds: string[];
+  wordIds: string[];
+};
 ```
 
-Regles :
+`gameIds` indique les mécaniques compatibles. Les contraintes de quantité et de difficulté sont définies par le GDD et vérifiées par le validateur.
 
-- fichiers courts ;
-- volume normalise ;
-- nommage stable ;
-- voix claire ;
-- articulation lente mais naturelle ;
-- pas de musique de fond dans le MVP.
+### `voice-lines.json`
 
-### Voix ElevenLabs
+Contient les dialogues et feedbacks localisés. Une entrée possède un texte et un chemin audio. Les composants utilisent un identifiant fonctionnel tel que `tryAgain`, pas une phrase écrite en dur.
 
-Les dialogues, mots et syllabes sont pre-generes avec ElevenLabs puis heberges comme assets statiques. Le navigateur ne contacte jamais ElevenLabs : la cle API reste uniquement dans `.env.local` et ne doit pas etre exposee dans le code client.
+## Validation pédagogique
 
-#### Configuration
+Avant intégration, vérifier :
 
-Le fichier `.env.local` doit contenir :
+- mot courant et adapté à l’âge ;
+- image non ambiguë ;
+- découpage cohérent avec l’objectif ;
+- distracteurs plausibles mais non ambigus ;
+- nombre de choix compatible avec le niveau ;
+- prononciation naturelle ;
+- graphie suffisamment simple pour l’étape ;
+- absence de double sens problématique.
 
-```dotenv
-ELEVENLABS_API_KEY=...
-ELEVENLABS_VOICE_ID=...
-ELEVENLABS_MODEL_ID=eleven_v3
-ELEVENLABS_LANGUAGE_CODE=fr
-```
+La difficulté doit être décrite par la compétence réellement travaillée, pas seulement par la longueur du mot.
 
-`ELEVENLABS_API_KEY` et `ELEVENLABS_VOICE_ID` sont obligatoires. Le modele et la langue sont optionnels dans le fichier : le script utilise respectivement `eleven_v3` et `fr` par defaut.
+## Validation automatique
 
-Le modele `eleven_multilingual_v2` ne doit pas etre utilise ici car son API ignore `language_code`, ce qui rend les syllabes tres courtes ambigues. La voix configuree et sa compatibilite avec le modele peuvent etre controlees sans generer de fichier :
+La commande commune est :
 
 ```bash
-npm run audio:generate -- --check-voice
+npm run content:check
 ```
 
-#### Sources de contenu
+Le validateur actuel contrôle notamment :
 
-Le script `scripts/generate-voices.mjs` construit la liste des clips a partir de trois fichiers :
+- identifiants uniques ;
+- appartenance de chaque mot à un niveau ;
+- références de mots valides ;
+- quantité de contenu attendue ;
+- nombre de syllabes et de distracteurs ;
+- présence des prononciations ;
+- chemins publics valides ;
+- existence et taille non nulle des assets ;
+- limite du nombre de tuiles.
 
-- `src/content/fr/voice-lines.json` pour les dialogues et retours de Pana ;
-- `src/content/fr/words.json` pour les mots complets et leurs syllabes contextuelles ;
-- `src/content/fr/syllables.json` pour les prononciations generiques partagees.
-
-Pour un mot, `displayWord` est le texte envoye a ElevenLabs pour le clip complet. `spokenSyllables` contient les textes de generation des syllabes dans le meme ordre que `syllables`. Dans `syllables.json`, `text` est la graphie affichee et `speechText` est la graphie envoyee au moteur vocal.
-
-Les graphies de generation peuvent donc differer du texte affiche. Par exemple, `tôt` produit le son francais de `to` et `teau`, `faux` celui de `pho`, et `leille` celui de `leil`. La ponctuation fait partie du texte de generation : `mi!` et `mi.` peuvent produire des resultats differents.
-
-Une syllabe generique utilise le chemin defini par `syllables.json`. Une variante propre a un mot utilise `audioSyllables` avec un chemin distinct, par exemple `words/maison/son.mp3`. Deux prononciations differentes ne doivent jamais viser le meme chemin : le script detecte ce conflit et interrompt la generation.
-
-#### Commandes de generation
-
-La commande normale genere uniquement les fichiers absents et conserve les clips existants :
-
-```bash
-npm run audio:generate
-```
-
-Pour regenerer tous les clips apres un changement de voix, de modele ou de reglages :
-
-```bash
-npm run audio:generate -- --force
-```
-
-Pour regenerer un seul clip, utiliser son chemin public exact. `--force` est necessaire si le fichier existe deja :
-
-```bash
-npm run audio:generate -- --force --only=/assets/audio/fr/syllables/mi.mp3
-npm run audio:generate -- --force --only=/assets/audio/fr/words/domino.mp3
-```
-
-Le filtre `--only` accepte aussi un identifiant interne affiche par le script, mais le chemin public est preferable car il reste non ambigu pour les syllabes mutualisees.
-
-#### Parametres de sortie
-
-Les appels utilisent :
-
-- le format `mp3_44100_128` ;
-- une seed fixe `41807` pour limiter les variations ;
-- des reglages distincts pour les dialogues, les syllabes et les mots ;
-- une vitesse plus lente pour les syllabes (`0.82`) que pour les mots (`0.88`) et les dialogues (`0.94`) ;
-- jusqu'a trois nouvelles tentatives pour les erreurs temporaires `429` et `5xx`.
-
-Les fichiers sont ecrits sous `public/assets/audio` en suivant les chemins declares dans les fichiers de contenu. Le navigateur utilise `speechSynthesis` uniquement comme solution de repli lorsqu'un fichier ne peut pas etre lu.
-
-#### Cache navigateur
-
-Les noms des assets audio restent stables. Lorsqu'un son deja publie est remplace, la constante `VOICE_ASSET_VERSION` de `src/components/games/useVoiceAudio.ts` peut etre incrementee avant le deploiement. Elle ajoute un parametre de version a l'URL et force les navigateurs a telecharger la nouvelle copie. Il n'est pas necessaire de la modifier entre chaque essai local si le cache du navigateur est deja desactive ou vide.
-
-### Bruitages du jeu Bateau
-
-Les bruitages sont heberges localement pour garantir leur lecture sur GitHub Pages. Ils proviennent de Pixabay et sont utilises selon la Pixabay Content License.
-
-| Usage | Fichier local | Source |
-| --- | --- | --- |
-| Ambiance de la mer | `public/assets/audio/sfx/sea-loop.mp3` | [Sea Wave](https://pixabay.com/sound-effects/nature-sea-wave-34088/) |
-| Vent pendant le voyage | `public/assets/audio/sfx/wind-loop.mp3` | [Wind Blowing SFX 01](https://pixabay.com/sound-effects/nature-wind-blowing-sfx-01-423673/) |
-| Mouvement du bateau | `public/assets/audio/sfx/boat-loop.mp3` | [Boat Squeaking](https://pixabay.com/sound-effects/film-special-effects-boat-squeaking-44883/) |
-| Selection d'une syllabe | `public/assets/audio/sfx/syllable-select.mp3` | [UI Pop sound](https://pixabay.com/sound-effects/film-special-effects-ui-pop-sound-316482/) |
-| Placement d'une syllabe | `public/assets/audio/sfx/syllable-drop.mp3` | [app_interface_click_2](https://pixabay.com/sound-effects/app-interface-click-2-476372/) |
-| Collecte d'un coffre | `public/assets/audio/sfx/chest-collect.mp3` | [Opening Bell](https://pixabay.com/sound-effects/film-special-effects-opening-bell-421471/) |
-| Niveau termine | `public/assets/audio/sfx/level-complete.mp3` | [Short Success Sound Glockenspiel Treasure Video Game](https://pixabay.com/sound-effects/film-special-effects-short-success-sound-glockenspiel-treasure-video-game-6346/) |
-
-L'ambiance de la mer ne demarre qu'apres l'action `Commencer`, conformement aux restrictions de lecture automatique des navigateurs. Le vent et le bateau sont synchronises avec le mouvement du voyage. Pendant la collecte d'un coffre, le bateau s'arrete mais le vent reste audible en arriere-plan a un volume reduit.
+Lorsqu’un nouveau jeu possède d’autres contraintes, le validateur doit être étendu de manière explicite, idéalement par règle liée à `gameIds`.
 
 ## Images
 
-Arborescence cible :
+### Illustrations pédagogiques
 
-```txt
-public/assets/images/
-  fr/
-    words/
-      chaton.png
-      bateau.png
-      moto.png
-      lapin.png
-      melon.png
-      tapis.png
-      panda.png
-      maison.png
-    characters/
-    ui/
+Les illustrations de mots sont actuellement des PNG carrés transparents :
+
+```text
+public/assets/images/<locale>/words/<id>.png
 ```
 
-Assets partages deja reserves pour le jeu Bateau :
+Chaque mot référence directement son fichier avec `image`. Aucun atlas ou mapping dans le composant n’est nécessaire.
 
-```txt
-public/assets/
-  characters/
-    pana.png
-  world/
-    boat.png
-    IslandWithChest.png
-    IslandWithoutChest.png
-    Chest.png
+### Personnages et monde
+
+- `public/assets/characters/` contient les personnages partagés ;
+- `public/assets/world/` contient les objets et décors réutilisables ;
+- un futur jeu peut ajouter un sous-ensemble thématique lorsque le volume le justifie.
+
+Un asset n’est partagé que si sa représentation et sa signification restent cohérentes entre les jeux.
+
+La production, le détourage, les formats et l’historique sont définis dans le [pipeline image](./image-generation.md).
+
+## Audio
+
+Les contenus linguistiques sont localisés :
+
+```text
+public/assets/audio/<locale>/
+  dialogue/
+  feedback/
+  syllables/
+  words/
 ```
 
-Ces assets sont charges automatiquement par l'interface Bateau si tu les ajoutes. Tant que Pana ou le bateau sont absents, le jeu garde un fallback CSS temporaire.
+Les effets indépendants de la langue se trouvent dans `public/assets/audio/sfx/`.
 
-Chaque mot référence désormais son propre fichier transparent via le champ `image` de `src/content/fr/words.json`. Le composant `BateauGame` charge directement ce chemin ; ajouter un mot ne nécessite donc plus de modifier un atlas ou un mapping dans le composant.
-
-La recette `readingo-pana-v1` et le pipeline de detourage sont documentes dans [Generation des assets images](./image-generation.md). Les prompts et inputs exacts de chaque asset sont conserves dans [l'historique YAML](./image-generation-history.yaml).
-
-Regles :
-
-- format web optimise ;
-- ratio coherent ;
-- poids reduit ;
-- sujet centre ;
-- pas de texte ;
-- validation humaine obligatoire.
+Les textes de génération, commandes, variantes contextuelles et règles de cache sont définis dans le [pipeline audio](./audio-generation.md).
 
 ## Internationalisation
 
-Le produit doit etre pense multilingue des le debut, meme si seule la langue francaise est implementee au MVP.
+Le modèle doit permettre plusieurs langues même si le français est actuellement la locale de production.
 
 Principes :
 
-- utiliser des dossiers par locale ;
-- ne jamais coder les textes de jeu en dur ;
-- separer les contenus pedagogiques par langue ;
-- separer les assets audio par langue ;
-- ne pas supposer que les syllabes fonctionnent pareil dans toutes les langues.
+- un dossier de contenu par locale ;
+- aucun texte pédagogique écrit dans un composant ;
+- voix séparées par locale ;
+- images mutualisées uniquement si elles gardent le même sens pédagogique ;
+- aucun découpage syllabique supposé universel ;
+- niveaux et distracteurs réévalués pour chaque langue ;
+- feedbacks localisés dans les données.
 
 Structure cible :
 
-```txt
+```text
 src/content/
   fr/
-    words.json
-    lessons.json
   en/
-    words.json
-    lessons.json
-public/assets/audio/
-  fr/
-  en/
-public/assets/images/
-  shared/
-  fr/
-  en/
+public/assets/
+  audio/
+    fr/
+    en/
+  images/
+    shared/
+    fr/
+    en/
 ```
 
-Les images peuvent parfois etre mutualisees entre langues, mais il faut rester prudent : certains mots ou objets ne se traduisent pas de facon pedagogiquement equivalente.
+Traduire un mot ne suffit pas : son image, son découpage, sa difficulté et ses distracteurs doivent former un nouvel item pédagogique cohérent.
 
-## SEO
+## Ajouter un mot
 
-Les pages SEO doivent etre construites autour des intentions de recherche des parents :
+1. Ajouter son entrée dans `words.json`.
+2. Ajouter toute nouvelle syllabe mutualisée dans `syllables.json`.
+3. Référencer le mot dans une leçon compatible.
+4. Produire l’image avec le pipeline commun ou la variante documentée du jeu.
+5. Produire le mot et les syllabes avec le pipeline audio.
+6. Déclarer tous les chemins dans les données.
+7. Lancer `npm run content:check`.
+8. Lancer le jeu concerné dans son mode de test.
 
-- apprendre a lire a 5 ans ;
-- apprendre a lire a 6 ans ;
-- jeux de lecture CP ;
-- jeux de lecture grande section ;
-- apprendre les syllabes ;
-- apprendre les lettres ;
-- exercices de lecture gratuits ;
-- jeux educatifs lecture gratuits.
+## Ajouter un nouveau jeu
 
-Types de pages :
+1. Définir dans son GDD les compétences et contraintes de contenu.
+2. Réutiliser les champs communs lorsque leur sens est identique.
+3. Ajouter un nouveau fichier de données seulement si la mécanique exige une structure différente.
+4. Référencer le jeu dans `gameIds`.
+5. Étendre la validation automatique.
+6. Documenter les variations d’images ou de sons dans les pipelines communs.
 
-- pages piliers ;
-- pages par competence ;
-- pages par age ;
-- pages par mini-jeu ;
-- articles conseils.
-
-Les jeux doivent etre integres dans les pages SEO quand cela sert l'intention utilisateur. Le contenu editorial ne doit pas etre artificiel : il doit expliquer ce que l'activite travaille et comment l'utiliser avec l'enfant.
-
-## Mise en Avant d'Autres Produits
-
-La promotion doit etre discrete et compatible avec une experience enfant.
-
-Emplacements acceptables :
-
-- fin de session ;
-- footer ;
-- pages conseils ;
-- encart bas de page sur les pages SEO ;
-- page ressources.
-
-Emplacements a eviter :
-
-- pendant une partie ;
-- entre deux mots ;
-- pop-up bloquante ;
-- elements qui ressemblent a une recompense enfant.
+Un nouveau jeu ne doit pas dupliquer `words.json` uniquement pour changer son thème visuel.

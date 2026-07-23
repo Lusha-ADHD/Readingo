@@ -1,32 +1,80 @@
-# Direction Artistique et Design System
+# Direction artistique et design UI Readingo
+
+## Rôle du document
+
+Ce document définit le langage visuel commun à tous les jeux Readingo. Il décrit les invariants de marque et d’interface, sans imposer un même décor à toutes les mécaniques.
+
+Documents associés :
+
+- [socle de game design](./game-design-system.md) pour les règles fonctionnelles communes ;
+- [GDD de Bateau](./games/bateau.md) pour le thème de l’archipel ;
+- [pipeline image](./image-generation.md) pour la production des illustrations ;
+- [pipeline audio](./audio-generation.md) pour l’identité sonore.
 
 ## Intention
 
-Readingo doit donner l'impression d'une application educative premium : simple, coloree, animee, chaleureuse et solide. Le rendu ne doit pas faire cheap, generique ou bricolage.
+Readingo doit évoquer une application éducative chaleureuse, solide et immédiatement manipulable. Le rendu recherché est :
 
-Le territoire principal est l'Archipel des mots : un ocean fantastique, des iles, un bateau, du vent, des coffres et des tresors. La reference d'esprit reste l'immediatete et le polish d'applications comme Duolingo ou Lingokids, mais l'identite visuelle doit venir du voyage en bateau et de la chasse aux tresors.
+- joyeux sans être surchargé ;
+- premium sans devenir froid ;
+- enfantin sans être infantilisant ;
+- animé sans distraire de la lecture ;
+- cohérent entre plusieurs jeux et plusieurs territoires.
 
-Pana est le personnage accompagnateur. Il introduit l'aventure, rassure l'enfant et donne les consignes importantes. Il doit etre present comme compagnon de voyage, pas comme mascotte envahissante.
+Pana relie les expériences. Les décors, véhicules et récompenses peuvent changer selon la thématique d’un jeu.
 
-## Mots-Cles
+## Principes visuels
 
-- ludique
-- clair
-- tactile
-- bienveillant
-- joyeux
-- premium
-- progressif
-- rassurant
-- aventure
-- tresor
-- ocean
+### Lisibilité
+
+Le contenu pédagogique domine le décor. Une image, une syllabe ou une action principale doit rester identifiable au premier regard.
+
+### Tactilité
+
+Les contrôles ressemblent à des objets que l’on peut presser :
+
+- contour épais ;
+- surface colorée ;
+- ombre courte ;
+- changement d’état visible ;
+- mouvement bref au toucher.
+
+### Chaleur
+
+Les formes sont arrondies, les contrastes francs et les matières légèrement illustrées. Les angles durs, textures réalistes et effets métalliques agressifs sont évités.
+
+### Profondeur maîtrisée
+
+Le décor peut utiliser plusieurs plans et un mouvement lent. Les panneaux pédagogiques restent stables, clairs et placés au premier plan.
+
+## Univers commun et thèmes
+
+Readingo se déroule dans un monde d’aventure guidé par Pana. Chaque jeu peut explorer un territoire adapté à sa mécanique : archipel, forêt, ciel, atelier, train ou autre environnement.
+
+Éléments communs :
+
+- Pana ;
+- palette de base ;
+- formes compactes ;
+- contours brun foncé ;
+- panneaux crème ou blancs ;
+- récompenses concrètes ;
+- vocabulaire visuel d’exploration et de découverte.
+
+Éléments variables :
+
+- décor ;
+- véhicule ou objet central ;
+- ambiance lumineuse ;
+- motif de progression ;
+- récompense ;
+- bruitages d’environnement.
+
+Une variation thématique doit être décrite dans le GDD du jeu. L’archipel, le bateau, les îles et les coffres appartiennent ainsi au thème de [Bateau](./games/bateau.md), pas à tous les jeux Readingo.
 
 ## Palette
 
-La palette doit etre vive mais equilibree. Eviter une interface dominee par une seule couleur.
-
-Proposition de tokens :
+Tokens communs de référence :
 
 ```css
 :root {
@@ -47,212 +95,220 @@ Proposition de tokens :
 }
 ```
 
-Le fond peut etre legerement chaud pour les pages editoriales. Les ecrans de jeu utilisent plutot une mer violette/bleue tres saturee, des iles colorees et des panneaux clairs pour la lecture. Les zones interactives doivent rester tres lisibles.
+Les jeux peuvent compléter cette palette avec des couleurs de territoire. Ils ne redéfinissent pas la signification des couleurs sémantiques.
 
-## Univers Archipel
+Règles :
 
-Le jeu doit donner l'impression que l'enfant avance physiquement dans un monde.
-
-Elements recurrents :
-
-- mer violette/bleue avec reflets simples ;
-- bateau au centre de l'action ;
-- iles qui defilent de droite a gauche ;
-- coffres sur certaines iles ;
-- cartes, coquillages, boussoles, voiles et fanions ;
-- particules de vent pour montrer la vitesse.
-
-Le bateau reste stable au centre pendant les sequences de navigation. Le mouvement est donne par les iles et les particules qui defilent. Cette convention rend l'action plus lisible sur mobile.
+- le fond éditorial reste chaud et discret ;
+- les scènes de jeu peuvent être saturées ;
+- les panneaux de lecture utilisent une surface calme ;
+- le texte principal conserve un contraste élevé ;
+- un état n’est jamais transmis uniquement par la couleur.
 
 ## Pana
 
-Pana est un compagnon pirate bienveillant. Il accompagne l'enfant au debut de la session puis ponctuellement lors des moments importants.
+Pana est un guide d’aventure bienveillant.
 
-Regles visuelles :
+Règles visuelles :
 
-- silhouette tres lisible ;
+- silhouette immédiatement reconnaissable ;
 - regard expressif ;
-- chapeau pirate sans signes agressifs ;
-- pas d'armes ;
-- pas de cranes ;
-- couleurs chaudes pour contraster avec la mer violette ;
-- utilisation en grand dans l'introduction, en plus petit pendant le jeu.
+- proportions rondes et compactes ;
+- couleurs chaudes ;
+- accessoires d’aventure stylisés, jamais réalistes ou menaçants ;
+- aucune arme ;
+- taille adaptée à son rôle : grand dans une introduction, discret dans le HUD.
 
-Regles UX :
+Règles d’usage :
 
-- Pana parle apres une action utilisateur, jamais automatiquement au chargement ;
-- les textes de Pana doivent etre courts ;
-- quand Pana parle, le jeu attend la fin du dialogue avant de commencer ;
-- l'enfant doit pouvoir comprendre la consigne avec la voix et le visuel.
+- Pana intervient pour présenter, encourager ou marquer une étape importante ;
+- ses textes restent courts ;
+- sa voix démarre après une interaction lorsque le navigateur l’exige ;
+- il ne masque pas durablement la cible pédagogique ;
+- il n’interrompt pas chaque action réussie.
 
 ## Typographie
 
 Objectifs :
 
-- lisibilite maximale ;
-- formes de lettres claires pour enfants ;
-- pas de police trop fantaisie ;
-- bonne distinction entre b/d, p/q, i/l.
+- formes de lettres claires ;
+- distinction nette entre `b/d`, `p/q` et `i/l` ;
+- excellente lisibilité en petite taille ;
+- graisse suffisante sur les décors colorés ;
+- fantaisie réservée aux titres, jamais au contenu à lire.
 
-Pistes :
+Familles à privilégier ou évaluer :
 
 - Atkinson Hyperlegible ;
 - Lexend ;
 - Nunito Sans ;
 - Andika.
 
-Pour l'apprentissage de la lecture, il faudra tester la lisibilite des lettres minuscules. La typographie du jeu peut differer legerement de la typographie editoriale si necessaire.
+La typographie du contenu pédagogique peut différer de celle des pages éditoriales si cela améliore l’apprentissage.
 
 ## Composants UI
 
 ### Boutons
 
-- grands ;
-- contrastes ;
-- etats hover/pressed/focus ;
-- feedback tactile visible ;
-- icone quand utile ;
-- label court.
+- action principale visuellement dominante ;
+- label court ;
+- zone tactile d’au moins 44 × 44 px ;
+- états normal, survol si disponible, pressé, focus, désactivé et chargement ;
+- ombre qui se réduit à l’enfoncement ;
+- icône accompagnée d’un libellé accessible.
 
-### Cartes de Syllabes
+### Bouton audio
 
-Les cartes doivent ressembler a des objets manipulables :
+Le haut-parleur utilise le même composant dans tous les jeux :
 
-- taille stable ;
-- ombre courte ;
-- bord epais ou contour clair ;
-- etat "presse" ;
-- etat "correct" ;
-- etat "incorrect" ;
-- animation courte au toucher et au placement.
+- forme et dimensions stables ;
+- contraste élevé ;
+- état pressé visible ;
+- libellé accessible décrivant le contenu lu ;
+- placement dans le coin supérieur droit de l’objet associé lorsque l’audio appartient à une carte, une image ou une tuile.
 
-### Emplacements de Syllabes
+L’image et une tuile de syllabe ne doivent pas définir deux variantes incompatibles de ce contrôle.
 
-Les emplacements doivent etre visibles avant l'action :
+### Cartes et tuiles pédagogiques
 
-- emplacement clair ;
-- contour pointille ou surface douce ;
-- changement d'etat quand une carte survole la zone ;
-- taille suffisante sur mobile.
+- taille stable à l’intérieur d’une même grille ;
+- contour lisible ;
+- texte centré ;
+- états correct et incorrect distincts ;
+- contenu jamais tronqué ;
+- grille calculée selon l’espace disponible.
 
-### Barre de Progression
+### Emplacements de réponse
 
-La progression doit etre simple :
+- visibles avant l’action ;
+- contour pointillé ou surface douce ;
+- même rythme visuel que les tuiles ;
+- largeur distribuée selon le nombre d’unités ;
+- alignement sur une ligne lorsque l’espace et la taille tactile le permettent.
 
-- nombre de mots restants ;
-- coffres collectes ;
-- chemin court ;
-- pas de tableau de statistiques complexe dans le MVP.
+### Panneaux
 
-Pour les enfants de 5 a 7 ans, eviter les grands scores. Le score principal du jeu Bateau est le nombre de coffres collectes. Il reste petit, concret et facile a comprendre.
+- surface calme, généralement crème ou blanche ;
+- bordure forte sur un décor saturé ;
+- rayon cohérent ;
+- marges internes généreuses mais compressibles sur petit écran ;
+- une seule action principale.
+
+### HUD et progression
+
+Le HUD montre seulement les informations utiles pendant l’action :
+
+- niveau ou étape ;
+- progression immédiate ;
+- récompense pertinente ;
+- réglage indispensable.
+
+Le type de récompense et sa représentation sont définis par le GDD de chaque jeu.
+
+## États et feedback
+
+### Réussite
+
+- couleur positive ;
+- petit rebond ou éclat ;
+- son bref ;
+- progression visible.
+
+### Erreur
+
+- tremblement doux ;
+- couleur d’attention non agressive ;
+- retour rapide à l’état manipulable ;
+- aucune perte ou formulation culpabilisante.
+
+### Verrouillage
+
+- contraste et saturation réduits ;
+- pictogramme ou texte explicite ;
+- état désactivé réel ;
+- information non dépendante de la couleur.
 
 ## Animation
 
-Les animations doivent etre courtes, energiques et lisibles :
+Repères :
 
-- 120 a 180 ms pour les reactions simples ;
-- 250 a 400 ms pour les transitions de mot ;
-- easing elastique leger pour les succes ;
-- pas d'animation permanente inutile.
+- réaction simple : 120 à 180 ms ;
+- transition de panneau : 220 à 400 ms ;
+- progression narrative : durée définie dans le GDD ;
+- léger easing élastique uniquement pour une réussite.
 
-Exemples :
+Les animations doivent expliquer une sélection, une validation, un déplacement ou une récompense. Les boucles décoratives restent lentes et peu contrastées.
 
-- carte correcte : scale 1.06 puis retour a 1 ;
-- erreur : shake horizontal doux ;
-- mot complete : confettis legers + image qui rebondit ;
-- mot complete : vent qui se leve, iles qui defilent, bateau qui avance ;
-- coffre trouve : petit arret visuel, coffre qui s'ouvre, compteur de coffres collectes qui augmente ;
-- changement de mot : le jeu revient au panneau de lecture apres la navigation.
+`prefers-reduced-motion` :
 
-## Vent et Tresors
+- supprime les grands déplacements ;
+- remplace les transitions par un fondu d’environ 150 ms ;
+- conserve l’état final et le feedback essentiel ;
+- ne retarde jamais l’interaction.
 
-Le vent traduit la rapidite et la precision.
+## Direction sonore
 
-- Vent fort : le bateau parcourt 3 iles.
-- Vent moyen : le bateau parcourt 2 iles.
-- Vent faible : le bateau parcourt 1 ile.
+L’identité sonore suit les mêmes principes que l’image :
 
-En moyenne, une ile sur deux contient un coffre. Les iles avec coffre provoquent une micro-pause : le coffre s'ouvre, un tresor est collecte, puis le bateau reprend son trajet.
+- sons courts et doux ;
+- voix pédagogique prioritaire ;
+- ambiances discrètes ;
+- même signification pour un son UI mutualisé ;
+- variation thématique réservée aux ambiances et objets du monde.
 
-## Sound Design
+Les formats, commandes et règles d’intégration vivent dans le [pipeline audio](./audio-generation.md).
 
-Le son est une partie centrale du produit.
+## Direction des images
 
-Il faut prevoir :
+Invariants :
 
-- voix pour lettres ;
-- voix pour syllabes ;
-- voix pour mots ;
-- consignes courtes ;
-- feedbacks positifs ;
-- feedbacks d'erreur doux ;
-- sons UI courts.
+- sujet immédiatement reconnaissable ;
+- silhouette compacte ;
+- contour brun foncé ;
+- formes lisses et arrondies ;
+- palette chaude complétée par du turquoise ;
+- ombrage 2D doux ;
+- aucun texte intégré ;
+- niveau de détail compatible avec la taille réelle d’affichage.
 
-Principes :
+Le format dépend de l’usage :
 
-- volume normalise ;
-- pas de sons agressifs ;
-- pas de musique bouclee au MVP ;
-- bouton son visible et facile a trouver ;
-- pas de lecture automatique excessive apres la premiere interaction.
+- carré détouré pour une illustration de mot ;
+- transparent compact pour un objet de monde ;
+- décor large ou tuile répétable pour un environnement ;
+- portrait détouré pour un personnage.
 
-## Direction des Images IA
-
-Les images doivent etre generees avec une charte stricte.
-
-Contraintes :
-
-- sujet centre ;
-- fond simple ;
-- pas de texte dans l'image ;
-- forme identifiable par un enfant ;
-- style coherent sur toute la bibliotheque ;
-- couleurs compatibles avec l'interface ;
-- pas de details ambigus ;
-- format carre ou 4:3 selon le jeu.
-
-Prompt de reference a affiner :
-
-```txt
-Illustration 3D douce pour enfant, objet unique centre, fond clair uni,
-formes simples, couleurs joyeuses, lumiere douce, style coherent application
-educative premium, pas de texte, pas de decor complexe.
-```
-
-Chaque image doit etre validee humainement. Pour l'apprentissage de la lecture, une image ambigue peut nuire a l'exercice.
+La recette, les références et l’historique de génération sont décrits dans le [pipeline image](./image-generation.md). Une nouvelle thématique peut créer une recette dérivée documentée, sans perdre les invariants Readingo.
 
 ## Responsive
 
-Le jeu doit etre prioritaire en mobile portrait.
+Le mobile portrait est prioritaire.
 
 Contraintes :
 
-- largeur minimale cible : 320 px ;
-- zones tactiles de 44 px minimum ;
-- syllabes utilisables par simple toucher ;
-- aucune action necessitant un hover ;
-- pas de texte qui deborde dans les boutons ;
-- hauteur du jeu ajustee au viewport dynamique mobile ;
-- panneau de jeu fixe en bas et autorise a masquer une partie du bateau ;
-- dimensions identiques entre les phases de composition et de navigation ;
-- header Readingo non flottant sur la page de jeu ;
-- mode tablette avec plus d'espace mais meme logique ;
-- desktop compatible souris.
+- largeur minimale : 320 px ;
+- aucune interaction dépendante du survol ;
+- aucun débordement horizontal ;
+- texte non tronqué dans les boutons ;
+- grilles fluides sans exception par contenu ;
+- décor autorisé à être rogné avant l’interface ;
+- hauteur adaptée au viewport dynamique ;
+- tablette et bureau fondés sur la même hiérarchie.
 
-## Accessibilite
+Les contrôles ne doivent pas être réduits jusqu’à devenir difficiles à toucher pour préserver un espace décoratif.
 
-MVP :
+## Accessibilité
+
+Minimum :
 
 - contraste suffisant ;
 - focus clavier visible ;
-- boutons avec labels accessibles ;
-- controle du son ;
-- pas d'information transmise uniquement par couleur ;
-- support clavier basique sur les jeux simples.
+- ordre de focus logique ;
+- libellés accessibles ;
+- état désactivé sémantique ;
+- feedback visuel en complément du son ;
+- mouvement réduit ;
+- contenu utilisable au zoom ;
+- langage court et compréhensible.
 
-Plus tard :
-
-- mode dyslexie/lisibilite ;
-- rythme ralenti ;
-- reduction des animations ;
-- choix de casse typographique.
+Les besoins propres à une mécanique sont précisés dans son GDD.

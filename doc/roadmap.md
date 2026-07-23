@@ -1,5 +1,7 @@
 # Roadmap d'Implementation
 
+> **Statut : document historique de planification.** Certaines phases décrivent l’intention initiale et non l’état actuel du produit. Les comportements implémentés sont documentés dans le [socle de game design](./game-design-system.md), les [GDD des jeux](./games/) et les documents de pipeline. Toute nouvelle planification doit distinguer clairement l’existant, le travail décidé et les idées à évaluer.
+
 ## Phase 0 - Cadrage
 
 Objectif : verrouiller les fondations produit avant de coder trop large.

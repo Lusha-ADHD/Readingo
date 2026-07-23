@@ -1,166 +1,164 @@
-# Choix Techniques
+# Choix techniques
 
-## Stack Retenu
+## Rôle du document
 
-Le stack technique cible est :
+Ce document décrit l’architecture actuellement utilisée. Les bibliothèques envisagées mais non installées doivent être présentées comme des options, jamais comme des dépendances du produit.
 
-- Astro pour le site statique, les pages SEO et la structure globale.
-- React pour les mini-jeux interactifs.
-- TypeScript pour fiabiliser la logique de jeu et les donnees de contenu.
-- Motion pour les animations d'interface et les micro-interactions.
-- Howler.js pour la gestion audio.
-- CSS Modules et variables CSS pour le design system.
-- LocalStorage pour la progression locale dans le MVP.
-- GitHub Pages pour l'hebergement initial.
-- GitHub Actions pour le build et le deploiement.
+## Stack actuelle
 
-## Pourquoi Astro
+- Astro pour les pages statiques, le routage et l’intégration globale.
+- React pour les jeux interactifs.
+- TypeScript pour la logique, les composants et les tests.
+- CSS global ou propre aux composants pour les scènes et animations.
+- Canvas lorsque le décor animé le justifie.
+- API `Audio` du navigateur pour les clips et boucles.
+- `speechSynthesis` comme repli des voix préenregistrées.
+- `localStorage` pour la progression locale.
+- JSON sous `src/content/<locale>/` pour le contenu pédagogique.
+- Scripts Node.js pour la validation et la génération des voix.
+- GitHub Pages et GitHub Actions pour l’hébergement et le déploiement.
 
-Astro est adapte parce que Readingo doit combiner deux natures de pages :
+Motion, Howler.js, PixiJS ou Rive peuvent être évalués si une future mécanique le nécessite. Ils ne font pas partie de la stack actuelle.
 
-- des pages editoriales tres rapides et indexables ;
-- des zones de jeu interactives avec du JavaScript cote client.
+## Astro
 
-Astro genere du HTML statique par defaut, ce qui aide le referencement, la performance mobile et la simplicite d'hebergement. Les mini-jeux peuvent etre ajoutes comme ilots interactifs React uniquement sur les pages qui en ont besoin.
+Readingo combine :
 
-Exemple cible :
+- des pages éditoriales statiques et indexables ;
+- des jeux riches exécutés dans le navigateur.
+
+Astro produit le HTML des pages et hydrate uniquement les îlots React qui en ont besoin.
 
 ```astro
 ---
-import BateauGame from "../components/games/BateauGame.tsx";
+import BateauGame from "../../components/games/BateauGame";
 ---
 
-<main>
-  <BateauGame client:load />
-</main>
+<BateauGame client:load />
 ```
 
-## Pourquoi React
+Cette séparation limite le JavaScript des pages éditoriales tout en laissant les jeux gérer leur état local.
 
-React est adapte pour gerer :
+## React
 
-- l'etat du jeu : mot courant, syllabes disponibles, score, erreurs, temps ;
-- les interactions tactiles et souris ;
-- les transitions entre etats ;
-- la composition de composants reutilisables ;
-- l'integration de bibliotheques specialisees comme Motion, Howler.js, PixiJS ou Rive.
+React gère :
 
-React n'est pas limitant pour ce projet. Les mini-jeux vises sont principalement des experiences 2D d'interface : selection au toucher, placement automatique, feedback, audio, progression. Pour des scenes plus proches d'un moteur de jeu 2D, PixiJS pourra etre ajoute ponctuellement sans remettre en cause l'architecture.
+- les phases d’un jeu ;
+- la sélection du niveau ;
+- les exercices et réponses ;
+- les transitions fonctionnelles ;
+- la carte et les panneaux ;
+- l’intégration audio ;
+- la progression en mémoire avant sauvegarde.
+
+Un jeu complexe peut être divisé en composants de scène, de carte et de contrôles. Les données pédagogiques restent en dehors de ces composants.
 
 ## Animation
 
-Motion doit etre utilise pour :
+Les animations actuelles sont réalisées en CSS, SVG et Canvas selon leur nature :
 
-- apparition des cartes ;
-- rebond lors d'une bonne reponse ;
-- tremblement doux lors d'une erreur ;
-- transitions entre mots ;
-- feedback de score ;
-- moments de celebration courts.
+- CSS pour les transitions de panneaux et contrôles ;
+- SVG pour les chemins et tracés ;
+- Canvas pour un fond animé contenant de nombreux éléments ;
+- coordonnées partagées pour synchroniser un objet et son trajet.
 
-Les animations doivent rester courtes et lisibles. Elles servent la comprehension, pas la decoration gratuite.
+Une bibliothèque d’animation n’est justifiée que si elle réduit réellement la complexité d’une nouvelle mécanique. Le support de `prefers-reduced-motion` reste obligatoire quelle que soit la technique.
 
 ## Audio
 
-Howler.js doit etre utilise pour :
+Les clips sont servis comme fichiers statiques et lus avec l’API `Audio`.
 
-- precharger les sons utiles a la session ;
-- jouer les sons de syllabes, mots et feedbacks ;
-- eviter les lectures superposees ;
-- gerer proprement les differences entre navigateurs mobiles.
+Responsabilités du lecteur commun :
 
-Le Web Speech API peut servir au prototypage rapide, mais la version produit doit utiliser des clips audio pre-generes pour garantir une voix stable, claire et qualitative.
+- interrompre les voix qui ne doivent pas se superposer ;
+- gérer les boucles ;
+- régler les volumes relatifs ;
+- arrêter les sons lors d’un changement de phase ;
+- utiliser la synthèse du navigateur en repli ;
+- tolérer une erreur de chargement.
 
-## Persistance Locale
+Le pipeline de fabrication est décrit dans [Pipeline audio](./audio-generation.md).
 
-Le MVP ne necessite pas de compte utilisateur. La progression peut etre stockee dans LocalStorage :
+## Persistance locale
 
-- dernier jeu joue ;
-- niveau courant ;
-- score total ;
-- badges debloques ;
-- mots deja reussis ;
-- preference audio active/desactivee.
+Chaque jeu utilise une clé versionnée. La sauvegarde doit être :
 
-La progression doit etre consideree comme non critique : elle peut etre perdue si le navigateur est nettoye.
+- validée à la lecture ;
+- migrable ;
+- non bloquante ;
+- écrite à la fin de l’unité prévue ;
+- séparée du mode de test.
 
-## Deploiement
+La progression est non critique et peut disparaître lorsque les données du navigateur sont effacées. Le GDD de chaque jeu documente son schéma exact.
 
-GitHub Pages est suffisant pour le MVP :
+## Contenu piloté par les données
 
-- site statique ;
-- pas de backend ;
-- pas de base de donnees ;
-- pas d'authentification ;
-- cout d'hebergement nul ;
-- integration simple avec GitHub Actions.
+Les fichiers de `src/content/<locale>/` sont chargés par les pages ou composants et transmis au jeu.
 
-Limite a anticiper : les assets audio et image peuvent grossir vite. Si le trafic ou le volume d'assets augmente, il faudra envisager un CDN externe.
+Avantages :
 
-## Structure Cible
+- ajout de contenu sans modifier la mécanique ;
+- validation automatique ;
+- génération d’assets depuis les mêmes sources ;
+- internationalisation ;
+- réutilisation entre jeux.
 
-```txt
+Voir [Contenu pédagogique et assets](./content-assets.md).
+
+## Structure actuelle utile
+
+```text
 src/
   components/
     games/
-      BateauGame.tsx
-      LetterPopGame.tsx
-      SyllableTrainGame.tsx
     ui/
-      Button.tsx
-      ProgressBar.tsx
-      AudioButton.tsx
-      RewardBurst.tsx
   content/
     fr/
-      words.json
-      syllables.json
-      lessons.json
-      games.json
   layouts/
-    BaseLayout.astro
   pages/
-    index.astro
     jeux/
-      bateau.astro
-      lettres.astro
-      syllabes.astro
-    apprendre-a-lire.astro
-    apprendre-les-lettres.astro
-    apprendre-les-syllabes.astro
+  styles/
+scripts/
+tests/
 public/
   assets/
     audio/
-      fr/
+    characters/
     images/
-      fr/
+    world/
+doc/
+  games/
 ```
 
-## Donnees de Jeu
+La structure peut évoluer, mais un nouveau jeu doit conserver la séparation entre :
 
-Les jeux doivent etre pilotes par des donnees, pas par du contenu code en dur.
+- contenu ;
+- logique ;
+- présentation ;
+- assets ;
+- documentation de game design.
 
-Exemple :
+## Validation et build
 
-```ts
-export type WordChallenge = {
-  id: string;
-  locale: "fr-FR";
-  word: string;
-  syllables: string[];
-  distractors: string[];
-  image: string;
-  audioWord: string;
-  audioSyllables: Record<string, string>;
-  difficulty: 1 | 2 | 3 | 4 | 5;
-  tags: string[];
-};
+Commandes principales :
+
+```bash
+npm run content:check
+npm test
+npm run build
 ```
 
-Cette approche facilite :
+`npm run build` exécute la validation du contenu, la vérification Astro et la production statique.
 
-- l'ajout de nouveaux mots ;
-- la validation pedagogique ;
-- l'internationalisation ;
-- la generation d'assets ;
-- la reutilisation d'un meme contenu dans plusieurs mini-jeux.
+Les tests unitaires actuels couvrent notamment la progression et la migration de Bateau. Chaque nouveau jeu doit tester au minimum sa progression sauvegardée et ses règles de déblocage.
+
+## Déploiement
+
+GitHub Pages convient tant que Readingo reste :
+
+- statique ;
+- sans compte ;
+- sans base de données ;
+- sans backend de jeu.
+
+Les chemins publics d’assets doivent fonctionner avec le préfixe de déploiement configuré par le projet. Le volume d’images et d’audio devra être surveillé ; un CDN pourra être ajouté sans modifier le modèle de contenu si les URL restent pilotées par les données.

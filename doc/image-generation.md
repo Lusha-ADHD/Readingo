@@ -1,12 +1,39 @@
-# Generation des assets images
+# Pipeline de génération des images
 
-Ce document decrit la recette utilisee pour produire les illustrations individuelles du jeu Bateau. La recette de style est nommee `readingo-pana-v1`.
+## Rôle du document
 
-L'objectif est de pouvoir generer de nouveaux mots visuellement coherents avec les assets actuels. Le pipeline reproduit la direction artistique, le cadrage, la palette et le traitement de la transparence. Il ne garantit pas une reproduction pixel pour pixel : le mode `image_gen` integre ne fournit ni seed ni version de modele verrouillable dans le projet.
+Ce document décrit le pipeline commun de production des images Readingo. La recette actuellement utilisée pour les illustrations pédagogiques et les objets du jeu Bateau se nomme `readingo-pana-v1`.
+
+Le pipeline commun définit :
+
+- la traçabilité d’une génération ;
+- le recours aux références visuelles ;
+- les formats de sortie ;
+- le détourage ;
+- les contrôles techniques ;
+- l’intégration dans les données.
+
+Un nouveau jeu peut créer une recette dérivée pour son territoire ou son type d’asset. Cette variante doit être documentée ici et conserver les invariants de la [direction artistique](./design-direction.md).
+
+Le pipeline reproduit le cadrage, la palette et le traitement de transparence. Il ne garantit pas une reproduction pixel pour pixel : l’outil intégré `image_gen` ne fournit ni seed ni version de modèle verrouillable dans le projet.
+
+## Catégories d’assets
+
+| Catégorie | Format courant | Exemple |
+| --- | --- | --- |
+| Illustration pédagogique | carré transparent | image d’un mot |
+| Personnage | portrait ou carré transparent | Pana |
+| Objet de monde | transparent, silhouette compacte | bateau, coffre |
+| Élément de parcours | transparent, échelle variable | petite île |
+| Décor | large ou répétable | fond de scène |
+
+La recette `readingo-pana-v1` concerne d’abord les sujets isolés transparents. Un décor complet doit disposer d’un contrat de cadrage propre.
 
 ## Sorties et historique
 
-Les images finales des mots sont stockees dans `public/assets/images/<locale>/words/`. Elles sont produites en PNG RGBA de 768 x 768 pixels, avec un sujet centre, une marge reguliere et des coins completement transparents.
+Les images finales des mots sont stockées dans `public/assets/images/<locale>/words/`. Avec `readingo-pana-v1`, elles sont produites en PNG RGBA de 768 × 768 pixels, avec un sujet centré, une marge régulière et des coins complètement transparents.
+
+Les personnages et objets de monde sont rangés dans `public/assets/characters/` et `public/assets/world/`.
 
 Ce document ne repertorie pas les generations individuelles. Le prompt exact, les references ordonnees et le post-traitement de chaque asset sont archives dans [`image-generation-history.yaml`](./image-generation-history.yaml).
 
@@ -47,7 +74,7 @@ Role : references secondaires recommandees pour stabiliser l'epaisseur des conto
 
 Les images de reference servent uniquement a la direction artistique. Leur sujet ne doit pas etre recopie ou ajoute a une autre illustration. L'ordre et le role exacts des references reellement envoyees sont toujours consignes dans l'archive.
 
-## Contrat visuel `readingo-pana-v1`
+## Contrat visuel actuel `readingo-pana-v1`
 
 Tout nouveau prompt de la serie doit conserver les invariants suivants :
 
@@ -160,7 +187,23 @@ Le build final est valide avec :
 npm run build
 ```
 
-## Integration d'un nouveau mot
+## Variations par jeu
+
+Le GDD d’un nouveau jeu doit lister les catégories d’images nécessaires et indiquer :
+
+- la recette commune réutilisée ;
+- les références supplémentaires ;
+- le cadrage ou ratio différent ;
+- la palette propre au territoire ;
+- le mode de transparence ou d’assemblage ;
+- le dossier de sortie ;
+- les contrôles techniques spécifiques.
+
+Une recette dérivée reçoit un nom versionné, par exemple `readingo-foret-v1`. Elle réutilise Pana et des assets Readingo comme références principales, puis ajoute au plus les références nécessaires au nouveau territoire.
+
+Créer une variation ne dispense pas d’ajouter chaque génération à l’historique append-only.
+
+## Intégration d’un nouveau mot
 
 1. Ajouter le mot et ses donnees pedagogiques dans `src/content/fr/words.json`.
 2. Generer un asset avec le template `readingo-pana-v1` et une description de sujet non ambigue.
@@ -168,6 +211,16 @@ npm run build
 4. Detourer, redimensionner et valider l'image, puis completer l'entree d'archive avec les sorties et le resultat de validation.
 5. Enregistrer le fichier sous `public/assets/images/fr/words/<id>.png`.
 6. Renseigner `"image": "/assets/images/fr/words/<id>.png"` dans le mot.
-7. Lancer `npm run build`.
+7. Lancer `npm run content:check`, puis `npm run build`.
 
 `BateauGame` lit directement le champ `image`. Aucun atlas ni mapping d'image supplementaire n'est necessaire.
+
+## Intégration d’un asset propre à un jeu
+
+1. Identifier sa catégorie et sa recette dans le GDD.
+2. Choisir des références ordonnées et compatibles avec la direction artistique.
+3. Effectuer un appel distinct pour l’asset.
+4. Ajouter l’entrée complète dans `image-generation-history.yaml`.
+5. Appliquer le post-traitement prévu par la recette.
+6. Enregistrer l’asset dans `characters`, `world` ou le dossier thématique documenté.
+7. Le référencer depuis les données lorsque l’asset représente du contenu, ou depuis le composant de monde lorsqu’il appartient à la scène.
