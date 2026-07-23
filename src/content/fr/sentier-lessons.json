@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sentier-1",
+    "level": 1,
+    "title": "Lisière de la jungle",
+    "gameIds": ["sentier-des-mots"],
+    "questions": [
+      {
+        "id": "sentier-1-moto",
+        "targetWordId": "moto",
+        "distractors": ["melon", "maison"]
+      },
+      {
+        "id": "sentier-1-panda",
+        "targetWordId": "panda",
+        "distractors": ["lapin", "moto"]
+      },
+      {
+        "id": "sentier-1-tapis",
+        "targetWordId": "tapis",
+        "distractors": ["lapin", "bateau"]
+      },
+      {
+        "id": "sentier-1-lapin",
+        "targetWordId": "lapin",
+        "distractors": ["tapis", "panda"]
+      },
+      {
+        "id": "sentier-1-melon",
+        "targetWordId": "melon",
+        "distractors": ["maison", "moto"]
+      },
+      {
+        "id": "sentier-1-chaton",
+        "targetWordId": "chaton",
+        "distractors": ["maison", "bateau"]
+      },
+      {
+        "id": "sentier-1-bateau",
+        "targetWordId": "bateau",
+        "distractors": ["chaton", "tapis"]
+      },
+      {
+        "id": "sentier-1-maison",
+        "targetWordId": "maison",
+        "distractors": ["melon", "panda"]
+      }
+    ]
+  }
+]

@@ -180,6 +180,16 @@ Les règles fonctionnelles complètes sont dans le [GDD de Bateau](./games/batea
 
 L’ambiance nocturne démarre après l’action « Commencer » afin de respecter les restrictions d’autoplay. Elle reste très discrète sous les consignes. L’effet scintillant est joué au moment précis où l’étoile et son éventuel segment deviennent actifs.
 
+### Inventaire propre au Sentier des mots
+
+| Usage | Fichier | Provenance |
+| --- | --- | --- |
+| Ambiance de jungle | `public/assets/audio/sfx/jungle-loop.mp3` | variante locale provisoire de l’ambiance nocturne ; source cible : [Jungle Nature](https://pixabay.com/sound-effects/nature-jungle-nature-229896/) |
+| Déplacement | `public/assets/audio/sfx/jungle-step.mp3` | variante locale provisoire du mouvement du bateau ; source cible : [Footstep Rustling](https://pixabay.com/sound-effects/nature-footstep-rustling-499643/) |
+| Collecte d’une gemme | `public/assets/audio/sfx/gem-collect.mp3` | variante locale provisoire de l’effet scintillant ; source cible : [Soft Treble Fast Collect](https://pixabay.com/sound-effects/soft-treble-fast-collect-fade-out-ending-sound-effect-416828/) |
+
+Ces variantes permettent de tester immédiatement le mixage et les timings sans dépendre d’un téléchargement externe. Elles doivent être remplacées par les trois sources cibles avant publication. L’ambiance démarre après « Entrer dans la jungle », baisse pendant la voix de Pana et reste silencieuse si l’autoplay est refusé.
+
 ## Variations par jeu
 
 Le GDD d’un nouveau jeu doit préciser :

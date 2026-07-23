@@ -34,6 +34,23 @@
         "audio": "/assets/audio/fr/dialogue/letters-intro-03.mp3"
       }
     ],
+    "sentierIntro": [
+      {
+        "id": "sentier-intro-01",
+        "text": "J’ai accosté sur une île couverte d’une immense jungle. Un grand trésor serait caché tout au fond !",
+        "audio": "/assets/audio/fr/dialogue/sentier-intro-01.mp3"
+      },
+      {
+        "id": "sentier-intro-02",
+        "text": "Mais tous les chemins se ressemblent… J’ai besoin de toi pour ne pas me perdre.",
+        "audio": "/assets/audio/fr/dialogue/sentier-intro-02.mp3"
+      },
+      {
+        "id": "sentier-intro-03",
+        "text": "Écoute le mot, regarde l’image et retrouve-le parmi les chemins. En route vers le trésor !",
+        "audio": "/assets/audio/fr/dialogue/sentier-intro-03.mp3"
+      }
+    ],
     "homeOnboarding": [
       {
         "id": "home-welcome",
@@ -47,7 +64,7 @@
       },
       {
         "id": "home-skill",
-        "text": "Dis-moi maintenant où tu en es avec les lettres et les syllabes.",
+        "text": "Dis-moi maintenant où tu en es avec les lettres, les syllabes et les mots.",
         "audio": "/assets/audio/fr/dialogue/home-skill.mp3"
       },
       {
@@ -59,6 +76,11 @@
         "id": "home-result-bateau",
         "text": "Je te conseille l'Archipel des mots. Tu vas assembler des syllabes pour faire avancer ton bateau.",
         "audio": "/assets/audio/fr/dialogue/home-result-bateau.mp3"
+      },
+      {
+        "id": "home-result-sentier",
+        "text": "Je te conseille Le Sentier des mots. Tu vas reconnaître les mots pour guider Pana dans la jungle.",
+        "audio": "/assets/audio/fr/dialogue/home-result-sentier.mp3"
       },
       {
         "id": "home-return",
@@ -101,6 +123,11 @@
         "id": "home-answer-reads-syllables",
         "text": "Je commence à lire des syllabes",
         "audio": "/assets/audio/fr/dialogue/home-answer-reads-syllables.mp3"
+      },
+      {
+        "id": "home-answer-reads-words",
+        "text": "Je commence à lire des mots",
+        "audio": "/assets/audio/fr/dialogue/home-answer-reads-words.mp3"
       }
     ]
   },
@@ -112,6 +139,30 @@
     "bravo": {
       "text": "Bravo !",
       "audio": "/assets/audio/fr/feedback/bravo.mp3"
+    },
+    "sentierWrong": {
+      "text": "Je crois qu’on n’a pas pris le bon chemin…",
+      "audio": "/assets/audio/fr/feedback/sentier-mauvais-chemin.mp3"
+    },
+    "sentierUturn": {
+      "text": "Je crois qu’il faut faire demi-tour !",
+      "audio": "/assets/audio/fr/feedback/sentier-demi-tour.mp3"
+    },
+    "sentierCorrect2": {
+      "text": "Oui ! Nous sommes sur le bon chemin !",
+      "audio": "/assets/audio/fr/feedback/sentier-bon-chemin-2.mp3"
+    },
+    "sentierCorrect1": {
+      "text": "Je crois que nous nous rapprochons.",
+      "audio": "/assets/audio/fr/feedback/sentier-bon-chemin-1.mp3"
+    },
+    "sentierCorrect0": {
+      "text": "Continuons, le trésor n’est peut-être plus très loin.",
+      "audio": "/assets/audio/fr/feedback/sentier-bon-chemin-0.mp3"
+    },
+    "sentierComplete": {
+      "text": "Bravo ! Nous avons traversé la lisière de la jungle !",
+      "audio": "/assets/audio/fr/feedback/sentier-niveau-termine.mp3"
     }
   }
 }

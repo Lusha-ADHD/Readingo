@@ -22,6 +22,7 @@ test("chaque âge conserve la recommandation liée à la compétence", () => {
     assert.equal(recommendHomeGame("discovering-letters", age), "letters");
     assert.equal(recommendHomeGame("knows-letters", age), "bateau");
     assert.equal(recommendHomeGame("reads-syllables", age), "bateau");
+    assert.equal(recommendHomeGame("reads-words", age), "sentier");
   }
 });
 
@@ -48,6 +49,18 @@ test("deux anciennes sauvegardes sans récence proposent les deux jeux", () => {
   });
 
   assert.deepEqual(readResumeState(storage).resumeGames, ["letters", "bateau"]);
+});
+
+test("une progression du Sentier permet de reprendre la jungle", () => {
+  const storage = createStorage({
+    "readingo:sentier-des-mots:v1": JSON.stringify({
+      sessions: 1,
+      completedLevels: [1],
+      bestGemsByLevel: { "1": 12 },
+    }),
+  });
+
+  assert.deepEqual(readResumeState(storage).resumeGames, ["sentier"]);
 });
 
 test("le dernier jeu valide devient l’action de reprise principale", () => {

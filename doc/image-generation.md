@@ -203,6 +203,21 @@ Une recette dérivée reçoit un nom versionné, par exemple `readingo-foret-v1`
 
 Créer une variation ne dispense pas d’ajouter chaque génération à l’historique append-only.
 
+### Recette `readingo-jungle-v1`
+
+Le Sentier des mots utilise une recette dérivée pour des décors modulaires :
+
+- langage graphique hérité de `readingo-pana-v1` sans imposer un sujet carré ;
+- palette vert profond, turquoise, ocre et lumière dorée ;
+- formes tropicales arrondies avec contours brun chaud ;
+- centre et tiers inférieur dégagés pour les chemins SVG et l’interface ;
+- décor principal opaque en ratio proche de 16:9 ;
+- calques de végétation sur chroma magenta `#ff00ff`, car le vert ne peut pas servir de clé ;
+- aucun chemin, personnage, texte ou élément pédagogique intégré au raster ;
+- cadrage contrôlé à 320, 375, 768 px et sur bureau.
+
+Les sorties sont stockées dans `public/assets/world/jungle/`. Les chemins, flèches, brume, rayons, halos et particules restent produits en SVG/CSS. Les variantes d’égarement réutilisent les mêmes images avec des filtres et changements d’opacité.
+
 ## Intégration d’un nouveau mot
 
 1. Ajouter le mot et ses donnees pedagogiques dans `src/content/fr/words.json`.

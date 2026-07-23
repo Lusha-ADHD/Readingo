@@ -1,14 +1,22 @@
 import { useCallback, useEffect, useRef } from "react";
 import { sitePath } from "../../utils/paths";
 
-type LoopName = "sea" | "wind" | "boat" | "night";
-type EffectName = "select" | "place" | "star" | "chest" | "levelComplete";
+type LoopName = "sea" | "wind" | "boat" | "night" | "jungle";
+type EffectName =
+  | "select"
+  | "place"
+  | "star"
+  | "chest"
+  | "levelComplete"
+  | "jungleStep"
+  | "gem";
 
 const LOOP_PATHS: Record<LoopName, string> = {
   sea: sitePath("/assets/audio/sfx/sea-loop.mp3"),
   wind: sitePath("/assets/audio/sfx/wind-loop.mp3"),
   boat: sitePath("/assets/audio/sfx/boat-loop.mp3"),
   night: sitePath("/assets/audio/sfx/night-loop.mp3"),
+  jungle: sitePath("/assets/audio/sfx/jungle-loop.mp3"),
 };
 
 const EFFECT_PATHS: Record<EffectName, string> = {
@@ -17,6 +25,8 @@ const EFFECT_PATHS: Record<EffectName, string> = {
   star: sitePath("/assets/audio/sfx/star-shine.mp3"),
   chest: sitePath("/assets/audio/sfx/chest-collect.mp3"),
   levelComplete: sitePath("/assets/audio/sfx/level-complete.mp3"),
+  jungleStep: sitePath("/assets/audio/sfx/jungle-step.mp3"),
+  gem: sitePath("/assets/audio/sfx/gem-collect.mp3"),
 };
 
 const EFFECT_VOLUMES: Record<EffectName, number> = {
@@ -25,6 +35,8 @@ const EFFECT_VOLUMES: Record<EffectName, number> = {
   star: 0.24,
   chest: 0.48,
   levelComplete: 0.52,
+  jungleStep: 0.26,
+  gem: 0.34,
 };
 
 const EFFECT_MAX_WAIT: Record<EffectName, number> = {
@@ -33,6 +45,8 @@ const EFFECT_MAX_WAIT: Record<EffectName, number> = {
   star: 900,
   chest: 1500,
   levelComplete: 3200,
+  jungleStep: 850,
+  gem: 950,
 };
 
 function createAudio(source: string, loop = false) {
@@ -138,6 +152,27 @@ export function useGameAudio() {
     void night.play().catch(() => undefined);
   }, [ensureAudio]);
 
+  const startJungleAmbience = useCallback(() => {
+    enabledRef.current = true;
+    ensureAudio();
+    const jungle = loopsRef.current.jungle;
+
+    if (!jungle) {
+      return;
+    }
+
+    jungle.volume = 0.13;
+    void jungle.play().catch(() => undefined);
+  }, [ensureAudio]);
+
+  const setJungleDucked = useCallback((ducked: boolean) => {
+    const jungle = loopsRef.current.jungle;
+
+    if (jungle) {
+      jungle.volume = ducked ? 0.055 : 0.13;
+    }
+  }, []);
+
   const setTravelAudio = useCallback(
     (active: boolean, wind: 1 | 2 | 3, paused: boolean) => {
       if (!enabledRef.current) {
@@ -193,5 +228,13 @@ export function useGameAudio() {
     [],
   );
 
-  return { enableEffects, playEffect, setTravelAudio, startAmbience, startNightAmbience };
+  return {
+    enableEffects,
+    playEffect,
+    setJungleDucked,
+    setTravelAudio,
+    startAmbience,
+    startJungleAmbience,
+    startNightAmbience,
+  };
 }

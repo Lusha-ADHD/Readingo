@@ -1581,3 +1581,224 @@ entries:
     validation:
       visual: passed
       transparent_corners: passed
+
+  - id: 2026-07-23-jungle-backdrop-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: &jungle_image_gen_tool
+      provider: OpenAI
+      interface: Codex built-in image_gen
+      model: not_exposed
+      seed: not_exposed
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: wide layered game background for a children's educational reading adventure
+      Primary request: Create a lush tropical jungle clearing viewed from a close first-person perspective, designed as the background of a guided path-choice game.
+      Scene/backdrop: dense but welcoming island jungle, tall rounded tree trunks and broad leaves framing a luminous central clearing, layered depth, soft atmospheric haze, warm golden light filtering through the canopy. The lower center must stay visually open so code-drawn paths can be overlaid.
+      Style/medium: established Readingo/Pana art direction; polished cute 2D children's game illustration; smooth vector-like shapes; subtle soft 3D volume; chunky rounded foliage; warm dark-brown outlines on nearer plants; no photorealism.
+      Composition/framing: landscape 16:9, camera near ground level, central vanishing area, important visual content inside the central 60 percent, safe crop for portrait mobile screens. Foliage frames the sides and top without blocking the center or lower third.
+      Color palette: deep jungle green #123f32, mid green #2d6b43, leaf green #4c9f53, touches of turquoise, warm light #ffd76d and restrained ochre.
+      Constraints: one continuous opaque background. No characters, animals, treasure, buildings, signs, text, letters, arrows, explicit branching paths, UI or watermark.
+      Avoid: scary mood, realistic photography, excessive micro-detail, symmetrical foliage, flat wallpaper pattern, dark unreadable center, hard black shadows.
+    generated_dimensions: [1672, 941]
+    post_processing: none
+    outputs:
+      - path: public/assets/world/jungle/jungle-backdrop.png
+        dimensions: [1672, 941]
+        format: PNG-RGB
+        role: selected_output
+    validation:
+      visual: passed
+      central_safe_zone: passed
+
+  - id: 2026-07-23-jungle-canopy-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: transparent layered foreground asset for a children's educational jungle game
+      Primary request: Create one wide tropical jungle canopy strip made of overlapping large rounded leaves and a few curved vines, designed to frame only the top edge of a game scene.
+      Style/medium: polished cute 2D children's game asset, smooth vector-like shapes, subtle soft 3D volume, continuous warm dark-brown outlines on the main silhouette, friendly Readingo/Pana visual language.
+      Composition/framing: wide landscape strip, foliage occupies the upper third and hangs slightly downward at irregular natural depths; the center opening remains broad; complete leaves, no ground.
+      Color palette: deep green #123f32, mid green #2d6b43, leaf green #4c9f53, small turquoise highlights and restrained warm golden rim light.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: background exactly uniform #ff00ff with no shadow, gradient, texture, horizon, reflection or lighting variation. Do not use #ff00ff in the foliage. Crisp closed outer silhouette.
+      Avoid: character, animal, flowers, fruit, text, UI, arrows, watermark, photorealism, symmetrical repeating pattern, cast shadow.
+    generated_dimensions: not_recorded
+    post_processing: &jungle_chroma_processing
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+    outputs:
+      - path: public/assets/world/jungle/jungle-canopy.png
+        dimensions: [1400, 700]
+        format: PNG-RGBA
+        role: selected_output
+    validation: &jungle_alpha_validation
+      visual: passed
+      transparent_corners: passed
+
+  - id: 2026-07-23-foliage-left-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: transparent modular foreground cutout for a children's educational jungle game
+      Primary request: Create one compact cluster of large tropical leaves and broad ferns for the lower-left edge of a game scene.
+      Style/medium: polished cute 2D children's game asset; rounded vector-like shapes; warm dark-brown closed outlines; soft toy-like shading and small golden highlights; established Readingo/Pana visual language.
+      Composition/framing: one cohesive asymmetrical foliage cluster leaning inward from the left, fully visible, compact silhouette, generous padding, designed to be scaled in UI; no ground plane.
+      Color palette: deep green #123f32, mid #2d6b43, leaf #4c9f53, restrained turquoise and coral accent leaves.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: exactly one uniform #ff00ff background with no gradients, shadows, texture, floor or reflection. Do not use #ff00ff in the subject. Crisp closed edges.
+      Avoid: character, animal, fruit, text, UI, path, landscape, watermark, photorealism, symmetrical bouquet, cropped subject, cast shadow.
+    generated_dimensions: not_recorded
+    post_processing: *jungle_chroma_processing
+    outputs:
+      - path: public/assets/world/jungle/foliage-left.png
+        dimensions: [900, 900]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *jungle_alpha_validation
+
+  - id: 2026-07-23-foliage-right-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: transparent modular foreground cutout for a children's educational jungle game
+      Primary request: Create one compact cluster of layered tropical leaves, curled ferns and two smooth jungle stones for the lower-right edge of a game scene.
+      Style/medium: polished cute 2D children's game asset; rounded vector-like shapes; warm dark-brown closed outlines; soft toy-like shading and small golden highlights; established Readingo/Pana visual language.
+      Composition/framing: one cohesive asymmetrical foliage cluster leaning inward from the right, fully visible, compact silhouette, generous padding, visually distinct from a mirrored left cluster; no ground plane.
+      Color palette: deep green #123f32, mid #2d6b43, leaf #4c9f53, restrained turquoise, ochre stones and one coral accent leaf.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: exactly one uniform #ff00ff background with no gradients, shadows, texture, floor or reflection. Do not use #ff00ff in the subject. Crisp closed edges.
+      Avoid: character, animal, fruit, text, UI, path, landscape, watermark, photorealism, symmetrical bouquet, cropped subject, cast shadow.
+    generated_dimensions: not_recorded
+    post_processing: *jungle_chroma_processing
+    outputs:
+      - path: public/assets/world/jungle/foliage-right.png
+        dimensions: [900, 675]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *jungle_alpha_validation
+
+  - id: 2026-07-23-vines-a-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: transparent modular overlay for a children's educational jungle game
+      Primary request: Create one irregular hanging jungle vine with two broad looping curves, a handful of rounded leaves and one small curled tendril.
+      Style/medium: polished cute 2D children's game asset; smooth vector-like shapes; continuous warm dark-brown outline; soft toy-like shading; Readingo/Pana visual language.
+      Composition/framing: tall narrow cutout, vine enters from the upper-left and curves downward, fully visible with generous padding, sparse enough not to cover gameplay.
+      Color palette: deep green, mid green, leaf green, restrained turquoise highlights and warm brown stem.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: uniform #ff00ff only, no shadow, gradient, texture, floor or reflection. Do not use #ff00ff in subject. Crisp closed edges.
+      Avoid: flowers, fruit, snake, character, text, UI, landscape, watermark, photorealism, dense curtain, duplicated vine.
+    generated_dimensions: not_recorded
+    post_processing: *jungle_chroma_processing
+    outputs:
+      - path: public/assets/world/jungle/vines-a.png
+        dimensions: [495, 900]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *jungle_alpha_validation
+
+  - id: 2026-07-23-vines-b-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: transparent modular overlay for a children's educational jungle game
+      Primary request: Create one irregular hanging jungle liana with a single long S-curve, several small rounded leaves and two compact curling tendrils.
+      Style/medium: polished cute 2D children's game asset; smooth vector-like shapes; continuous warm dark-brown outline; soft toy-like shading; Readingo/Pana visual language.
+      Composition/framing: tall narrow cutout, liana enters from the upper-right and curves downward, fully visible with generous padding, distinct from a mirrored first variant, sparse enough not to cover gameplay.
+      Color palette: deep green, mid green, leaf green, restrained turquoise highlights and warm brown stem.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: uniform #ff00ff only, no shadow, gradient, texture, floor or reflection. Do not use #ff00ff in subject. Crisp closed edges.
+      Avoid: flowers, fruit, snake, character, text, UI, landscape, watermark, photorealism, dense curtain, duplicated vine.
+    generated_dimensions: not_recorded
+    post_processing: *jungle_chroma_processing
+    outputs:
+      - path: public/assets/world/jungle/vines-b.png
+        dimensions: [450, 900]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *jungle_alpha_validation
+
+  - id: 2026-07-23-rock-fern-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: transparent modular scenery cutout for a children's educational jungle game
+      Primary request: Create one small jungle ground cluster containing three rounded warm ochre stones, two compact ferns and a few broad leaves.
+      Style/medium: polished cute 2D children's game asset; chunky rounded silhouette; warm dark-brown closed outline; smooth vector-like shapes; soft toy-like 2D shading; Readingo/Pana visual language.
+      Composition/framing: one low wide cohesive cluster, fully visible, centered with generous padding, readable at small size, no separate objects floating away.
+      Color palette: ochre and warm brown stones, deep and mid jungle greens, restrained turquoise highlight and golden rim light.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: exactly uniform #ff00ff background, no gradient, texture, horizon, floor, shadow or reflection. Do not use #ff00ff in subject. Crisp closed silhouette.
+      Avoid: character, animal, treasure, skull, flowers, text, UI, path, landscape, watermark, photorealism, cropped subject.
+    generated_dimensions: not_recorded
+    post_processing: *jungle_chroma_processing
+    outputs:
+      - path: public/assets/world/jungle/rock-fern.png
+        dimensions: [900, 600]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *jungle_alpha_validation
+
+  - id: 2026-07-23-gem-v1
+    date: 2026-07-23
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool: *jungle_image_gen_tool
+    inputs: []
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: individual reward icon for a children's educational jungle game
+      Primary request: Create exactly one sparkling turquoise emerald gemstone with a chunky rounded faceted shape and a tiny restrained golden highlight.
+      Style/medium: polished cute 2D children's game asset, smooth vector-like facets, continuous warm dark-brown outer outline, subtle soft 3D volume and glossy highlights, friendly toy-like Readingo visual language.
+      Composition/framing: exactly one gem centered, fully visible, generous even padding, compact silhouette, readable at 32 pixels, no floor and no extra objects.
+      Color palette: turquoise, emerald green, dark teal, warm cream glints and restrained gold.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: background must be exactly uniform #ff00ff with no shadow, gradient, texture, floor, reflection or lighting variation. Do not use #ff00ff in the gem. Crisp closed outer edge.
+      Avoid: text, letters, numbers, treasure chest, coins, character, border, frame, watermark, photorealism, duplicated gem, cast shadow.
+    generated_dimensions: not_recorded
+    post_processing: *jungle_chroma_processing
+    outputs:
+      - path: public/assets/world/jungle/gem.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *jungle_alpha_validation

@@ -1,0 +1,1046 @@
+.sentier-game {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: var(--play-frame-height);
+  min-height: var(--play-frame-height);
+  overflow: hidden;
+  border: 4px solid var(--color-border);
+  border-radius: 32px;
+  background: #123f32;
+  box-shadow: var(--shadow-raised);
+  grid-template-rows: auto minmax(220px, 1fr) auto;
+  isolation: isolate;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.sentier-game *,
+.sentier-game *::before,
+.sentier-game *::after {
+  box-sizing: border-box;
+}
+
+.sentier-game__hud {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  min-height: 68px;
+  padding: 11px 20px 15px;
+  align-items: center;
+  background: linear-gradient(135deg, #09265a, #134f61);
+  color: #fff;
+  font-size: clamp(1rem, 2.6vw, 1.25rem);
+  font-weight: 900;
+  grid-template-columns: minmax(0, 1fr) auto;
+  letter-spacing: -0.01em;
+}
+
+.sentier-game__hud > div:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sentier-game__score {
+  display: flex;
+  min-width: 94px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sentier-game__score img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.sentier-game__progress {
+  position: absolute;
+  right: 18px;
+  bottom: 7px;
+  left: 18px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.sentier-game__progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22d3b6, #ffd65c);
+  transition: width 320ms ease;
+}
+
+.jungle-scene {
+  position: relative;
+  z-index: 1;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  background: #214e37;
+  cursor: default;
+  isolation: isolate;
+}
+
+.jungle-scene--travelling {
+  cursor: pointer;
+}
+
+.jungle-scene__world {
+  position: absolute;
+  inset: -2%;
+  display: block;
+  transform-origin: 50% 62%;
+  will-change: transform, filter, opacity;
+}
+
+.jungle-scene__backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: center 55%;
+}
+
+.jungle-scene__light {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 228, 113, 0.36), transparent 30%),
+    linear-gradient(180deg, transparent 55%, rgba(31, 90, 58, 0.12));
+  mix-blend-mode: screen;
+  transition: opacity 300ms ease;
+}
+
+.jungle-scene__canopy {
+  position: absolute;
+  z-index: 5;
+  top: -6%;
+  left: 50%;
+  width: min(112%, 1100px);
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.jungle-scene__paths {
+  position: absolute;
+  z-index: 4;
+  inset: 5% 7% -2%;
+  width: 86%;
+  height: 97%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.jungle-scene__path {
+  fill: none;
+  filter: drop-shadow(0 3px 2px rgba(51, 51, 20, 0.25));
+  opacity: 0.78;
+  stroke: rgba(255, 219, 129, 0.88);
+  stroke-dasharray: 8 6;
+  stroke-linecap: round;
+  stroke-width: clamp(11px, 2vw, 18px);
+  transition:
+    opacity 180ms ease,
+    stroke 180ms ease,
+    stroke-width 180ms ease;
+}
+
+.jungle-scene__path--selected {
+  opacity: 1;
+  stroke: #fff2a4;
+  stroke-width: clamp(14px, 2.4vw, 22px);
+}
+
+.jungle-scene__rock-fern {
+  position: absolute;
+  z-index: 6;
+  right: 10%;
+  bottom: 4%;
+  width: clamp(72px, 15%, 132px);
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.jungle-scene__foliage,
+.jungle-scene__vines {
+  position: absolute;
+  z-index: 8;
+  pointer-events: none;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.jungle-scene__foliage--left {
+  bottom: -16%;
+  left: -8%;
+  width: clamp(170px, 38%, 360px);
+}
+
+.jungle-scene__foliage--right {
+  right: -5%;
+  bottom: -12%;
+  width: clamp(170px, 40%, 380px);
+}
+
+.jungle-scene__vines--a {
+  top: -18%;
+  left: -4%;
+  width: clamp(100px, 18%, 170px);
+  opacity: 0.35;
+}
+
+.jungle-scene__vines--b {
+  top: -15%;
+  right: -3%;
+  width: clamp(90px, 17%, 155px);
+  opacity: 0.25;
+}
+
+.jungle-scene__mist {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(220, 255, 218, 0.16), transparent 36%),
+    linear-gradient(180deg, transparent 52%, rgba(79, 148, 113, 0.12));
+  opacity: 0.22;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.jungle-scene--lost-1 .jungle-scene__world {
+  filter: brightness(0.91) saturate(0.94);
+}
+
+.jungle-scene--lost-1 .jungle-scene__mist {
+  opacity: 0.55;
+}
+
+.jungle-scene--lost-1 .jungle-scene__vines {
+  opacity: 0.65;
+}
+
+.jungle-scene--lost-1 .jungle-scene__foliage {
+  transform: scale(1.06);
+}
+
+.jungle-scene--lost-2 .jungle-scene__world {
+  filter: brightness(0.79) saturate(0.82) hue-rotate(7deg);
+}
+
+.jungle-scene--lost-2 .jungle-scene__light {
+  opacity: 0.45;
+}
+
+.jungle-scene--lost-2 .jungle-scene__mist {
+  opacity: 0.82;
+}
+
+.jungle-scene--lost-2 .jungle-scene__vines {
+  opacity: 0.94;
+  transform: scale(1.08);
+}
+
+.jungle-scene--lost-2 .jungle-scene__foliage {
+  transform: scale(1.13);
+}
+
+.jungle-scene--travelling .jungle-scene__world {
+  animation: sentier-travel 660ms cubic-bezier(0.25, 0.7, 0.2, 1) both;
+}
+
+.jungle-scene--left {
+  --travel-x: 18%;
+  --travel-scale: 1.18;
+  --travel-rotate: 1deg;
+}
+
+.jungle-scene--right {
+  --travel-x: -18%;
+  --travel-scale: 1.18;
+  --travel-rotate: -1deg;
+}
+
+.jungle-scene--far-left {
+  --travel-x: 32%;
+  --travel-scale: 1.16;
+  --travel-rotate: 1.5deg;
+}
+
+.jungle-scene--far-right {
+  --travel-x: -32%;
+  --travel-scale: 1.16;
+  --travel-rotate: -1.5deg;
+}
+
+.jungle-scene--forward {
+  --travel-x: 0%;
+  --travel-scale: 1.2;
+  --travel-rotate: 0deg;
+}
+
+.jungle-scene--uturn .jungle-scene__world {
+  animation-name: sentier-uturn;
+}
+
+.jungle-scene__rewards {
+  position: absolute;
+  z-index: 14;
+  inset: 0;
+  pointer-events: none;
+}
+
+.jungle-scene__gem {
+  position: absolute;
+  width: clamp(44px, 8vw, 72px);
+  height: clamp(44px, 8vw, 72px);
+  object-fit: contain;
+  animation:
+    sentier-gem-pop 520ms cubic-bezier(0.2, 1.6, 0.45, 1) both,
+    sentier-gem-fly 620ms 620ms ease-in both;
+}
+
+.jungle-scene__gem--1 {
+  top: 48%;
+  left: 44%;
+}
+
+.jungle-scene__gem--2 {
+  top: 29%;
+  left: 52%;
+  animation-delay: 140ms, 760ms;
+}
+
+.sentier-challenge {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  padding: 7px 12px 11px;
+  background: linear-gradient(180deg, rgba(10, 43, 62, 0.93), #0b3850);
+}
+
+.sentier-challenge__pana {
+  display: grid;
+  min-height: 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px 5px 7px;
+  border: 2px solid rgba(255, 255, 255, 0.58);
+  border-radius: 19px;
+  background: rgba(9, 38, 90, 0.84);
+  color: #fff;
+  grid-template-columns: 54px minmax(0, 1fr);
+}
+
+.sentier-challenge__pana img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.sentier-challenge__pana p {
+  margin: 0;
+  font-size: clamp(0.92rem, 2.4vw, 1.14rem);
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+.sentier-challenge__card {
+  display: grid;
+  min-width: 0;
+  min-height: 136px;
+  gap: 5px 14px;
+  padding: 9px 12px;
+  border: 4px solid var(--color-border);
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 214, 89, 0.22), transparent 30%),
+    #fff3cf;
+  box-shadow: 0 7px 0 rgba(6, 29, 61, 0.34);
+  container-type: inline-size;
+  grid-template-columns: 116px minmax(0, 1fr);
+  grid-template-rows: auto minmax(72px, auto);
+}
+
+.sentier-challenge__target {
+  position: relative;
+  display: grid;
+  width: 116px;
+  height: 116px;
+  align-self: center;
+  overflow: visible;
+  border: 4px solid var(--color-border);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 6px 0 rgba(8, 33, 74, 0.18);
+  grid-row: 1 / 3;
+  place-items: center;
+}
+
+.sentier-challenge__target > img {
+  width: 94%;
+  height: 94%;
+  object-fit: contain;
+}
+
+.sentier-challenge__audio.audio-button {
+  position: absolute;
+  z-index: 3;
+  top: -9px;
+  right: -9px;
+  width: 40px;
+  height: 40px;
+}
+
+.sentier-challenge__card h2 {
+  align-self: end;
+  margin: 0;
+  color: #53627a;
+  font-size: clamp(0.86rem, 2.5cqi, 1.1rem);
+  font-weight: 1000;
+  letter-spacing: 0.035em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sentier-challenge__choices {
+  display: grid;
+  min-width: 0;
+  min-height: 72px;
+  align-self: stretch;
+  gap: clamp(5px, 1.2cqi, 9px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sentier-challenge__choices[data-choice-count="1"] {
+  grid-template-columns: minmax(120px, 240px);
+}
+
+.sentier-challenge__choices[data-choice-count="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sentier-challenge__choices[data-choice-count="4"],
+.sentier-challenge__choices[data-choice-count="5"] {
+  min-height: 136px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sentier-choice {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 66px;
+  overflow: hidden;
+  border: 3px solid var(--color-border);
+  border-radius: 17px;
+  padding: 7px;
+  background: linear-gradient(180deg, #3199ff, #1167d8);
+  box-shadow: 0 6px 0 rgba(8, 33, 74, 0.24);
+  color: #fff;
+  cursor: pointer;
+  place-items: center;
+  transition:
+    filter 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.sentier-choice:not(:disabled):hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.sentier-choice--selected {
+  box-shadow: 0 2px 0 rgba(8, 33, 74, 0.24);
+  filter: saturate(1.1);
+  transform: translateY(4px);
+}
+
+.sentier-choice--correct {
+  background: linear-gradient(180deg, #65d94e, #2a9e33);
+}
+
+.sentier-choice:disabled:not(.sentier-choice--selected) {
+  cursor: default;
+  filter: saturate(0.58) brightness(0.86);
+  opacity: 0.74;
+}
+
+.sentier-choice__word {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: clamp(0.9rem, 4.4cqi, 1.45rem);
+  font-weight: 1000;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sentier-choice__direction {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  border: 2px solid rgba(9, 38, 90, 0.88);
+  border-radius: 50%;
+  background: rgba(255, 242, 181, 0.96);
+  color: #09265a;
+  place-items: center;
+  pointer-events: none;
+}
+
+.sentier-choice__direction svg {
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.sentier-result {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  min-height: 198px;
+  align-items: center;
+  gap: 12px 18px;
+  padding: 14px 20px;
+  border-top: 4px solid var(--color-border);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 214, 89, 0.28), transparent 32%),
+    #fff3cf;
+  color: var(--color-text);
+  grid-template-columns: 100px minmax(0, 1fr) auto;
+}
+
+.sentier-result > img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.sentier-result p,
+.sentier-result h2 {
+  margin: 0;
+}
+
+.sentier-result p {
+  color: #53627a;
+  font-size: 0.86rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.sentier-result h2 {
+  font-size: clamp(1.65rem, 4vw, 2.4rem);
+  line-height: 1;
+}
+
+.sentier-result strong {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.1rem;
+}
+
+.sentier-result strong img {
+  width: 30px;
+  height: 30px;
+}
+
+.sentier-result > div > span {
+  display: block;
+  color: #53627a;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.sentier-result__actions {
+  display: grid;
+  gap: 9px;
+  justify-items: stretch;
+  text-align: center;
+}
+
+.sentier-result__actions a {
+  color: #174a77;
+  font-weight: 950;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sentier-game--opening {
+  display: grid;
+  background: #173f31;
+  grid-template-rows: 1fr;
+  place-items: center;
+}
+
+.sentier-opening__backdrop,
+.sentier-opening__shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sentier-opening__backdrop {
+  object-fit: cover;
+  object-position: center;
+}
+
+.sentier-opening__shade {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 221, 111, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(6, 38, 32, 0.08), rgba(6, 37, 31, 0.38));
+  pointer-events: none;
+}
+
+.sentier-opening__intro {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  inset: 0 18px;
+  align-content: center;
+  justify-items: center;
+  gap: 18px;
+}
+
+.sentier-opening__intro--dialogue {
+  gap: 18px;
+}
+
+.sentier-opening__intro-title {
+  position: relative;
+  z-index: 4;
+  max-width: 14ch;
+  margin: 0;
+  color: #fff3bf;
+  font-size: 2.65rem;
+  line-height: 1.05;
+  paint-order: stroke fill;
+  text-align: center;
+  -webkit-text-stroke: 6px var(--color-border);
+}
+
+.sentier-opening__intro-subtitle {
+  max-width: 32ch;
+  margin: -8px 0 0;
+  color: #fff;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  text-shadow: 0 3px 0 rgba(8, 33, 74, 0.55);
+}
+
+.sentier-opening__pana {
+  display: block;
+  width: 210px;
+  height: 232px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 0 rgba(8, 33, 74, 0.18));
+}
+
+.sentier-opening__pana--dialogue {
+  width: 176px;
+  height: 176px;
+}
+
+.sentier-opening__speech {
+  position: relative;
+  z-index: 4;
+  width: min(600px, calc(100% - 24px));
+  border: 4px solid var(--color-border);
+  border-radius: 24px;
+  background: var(--color-panel-light);
+  padding: 18px 22px;
+  box-shadow: 0 9px 0 rgba(8, 33, 74, 0.2);
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.sentier-opening__speech::before,
+.sentier-opening__speech::after {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  content: "";
+  transform: translateX(-50%);
+}
+
+.sentier-opening__speech::before {
+  top: -24px;
+  border-width: 0 20px 24px;
+  border-color: transparent transparent var(--color-border);
+}
+
+.sentier-opening__speech::after {
+  top: -17px;
+  border-width: 0 15px 18px;
+  border-color: transparent transparent var(--color-panel-light);
+}
+
+.sentier-game__test {
+  position: absolute;
+  z-index: 50;
+  top: 76px;
+  left: 7px;
+  min-height: 34px;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: 11px;
+  padding: 4px 9px;
+  background: rgba(9, 38, 90, 0.9);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 950;
+}
+
+.sentier-game__test--opening {
+  top: auto;
+  bottom: 8px;
+}
+
+@keyframes sentier-travel {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0);
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+    transform: translateX(var(--travel-x, 0%)) scale(var(--travel-scale, 1.2))
+      rotate(var(--travel-rotate, 0deg));
+  }
+}
+
+@keyframes sentier-uturn {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  48% {
+    opacity: 0.7;
+    transform: translateX(-18%) scale(1.08) rotate(-2deg);
+  }
+  100% {
+    opacity: 0.08;
+    transform: translateX(34%) scale(1.13) rotate(2deg);
+  }
+}
+
+@keyframes sentier-gem-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.16);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sentier-gem-fly {
+  to {
+    top: -20%;
+    left: 91%;
+    opacity: 0;
+    transform: scale(0.38);
+  }
+}
+
+@media (max-width: 700px) {
+  .sentier-game {
+    height: 100%;
+    min-height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    grid-template-rows: auto minmax(170px, 1fr) auto;
+  }
+
+  .sentier-game__hud {
+    min-height: 56px;
+    padding: 8px 12px 12px;
+    font-size: clamp(0.88rem, 4vw, 1.05rem);
+  }
+
+  .sentier-game__score {
+    min-width: 76px;
+  }
+
+  .sentier-game__score img {
+    width: 31px;
+    height: 31px;
+  }
+
+  .sentier-game__progress {
+    right: 10px;
+    bottom: 5px;
+    left: 10px;
+    height: 5px;
+  }
+
+  .sentier-game__test {
+    top: 62px;
+  }
+
+  .sentier-game__test--opening {
+    top: auto;
+  }
+
+  .jungle-scene__canopy {
+    top: -2%;
+    width: 145%;
+  }
+
+  .jungle-scene__foliage--left {
+    left: -18%;
+    width: 58%;
+  }
+
+  .jungle-scene__foliage--right {
+    right: -14%;
+    width: 60%;
+  }
+
+  .jungle-scene__rock-fern {
+    right: 8%;
+    width: 20%;
+  }
+
+  .jungle-scene__vines--a {
+    left: -9%;
+  }
+
+  .jungle-scene__vines--b {
+    right: -7%;
+  }
+
+  .sentier-challenge {
+    gap: 5px;
+    padding: 5px 6px 7px;
+  }
+
+  .sentier-challenge__pana {
+    min-height: 54px;
+    border-radius: 16px;
+    padding: 3px 8px 3px 4px;
+    grid-template-columns: 47px minmax(0, 1fr);
+  }
+
+  .sentier-challenge__pana img {
+    width: 47px;
+    height: 47px;
+  }
+
+  .sentier-challenge__pana p {
+    font-size: clamp(0.78rem, 3.5vw, 0.98rem);
+  }
+
+  .sentier-challenge__card {
+    min-height: 151px;
+    gap: 5px 9px;
+    padding: 7px;
+    border-width: 3px;
+    border-radius: 21px;
+    grid-template-columns: 78px minmax(0, 1fr);
+    grid-template-rows: 72px minmax(66px, auto);
+  }
+
+  .sentier-challenge__target {
+    width: 78px;
+    height: 78px;
+    align-self: start;
+    border-width: 3px;
+    border-radius: 17px;
+    grid-row: 1;
+  }
+
+  .sentier-challenge__audio.audio-button {
+    top: -7px;
+    right: -7px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .sentier-challenge__card h2 {
+    align-self: center;
+    font-size: clamp(0.78rem, 4.2cqi, 1rem);
+  }
+
+  .sentier-challenge__choices {
+    min-height: 66px;
+    gap: 5px;
+    grid-column: 1 / -1;
+  }
+
+  .sentier-choice {
+    min-height: 62px;
+    border-width: 3px;
+    border-radius: 15px;
+    padding: 5px;
+  }
+
+  .sentier-choice__word {
+    font-size: clamp(0.78rem, 6.1cqi, 1.12rem);
+  }
+
+  .sentier-choice__direction {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sentier-choice__direction svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .sentier-result {
+    min-height: 225px;
+    gap: 7px 11px;
+    padding: 10px 12px;
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+
+  .sentier-result > img {
+    width: 76px;
+    height: 76px;
+  }
+
+  .sentier-result__actions {
+    grid-column: 1 / -1;
+  }
+
+  .sentier-opening__intro {
+    inset-block: 0;
+    gap: 14px;
+  }
+
+  .sentier-opening__intro--dialogue {
+    gap: 14px;
+  }
+
+  .sentier-opening__intro-title {
+    font-size: 1.9rem;
+    -webkit-text-stroke-width: 5px;
+  }
+
+  .sentier-opening__intro-subtitle {
+    max-width: 28ch;
+    margin-top: -5px;
+    font-size: clamp(0.9rem, 4.2vw, 1.08rem);
+  }
+
+  .sentier-opening__pana {
+    width: 156px;
+    height: 174px;
+  }
+
+  .sentier-opening__pana--dialogue {
+    width: 132px;
+    height: 132px;
+  }
+
+  .sentier-opening__speech {
+    width: calc(100% - 24px);
+    border-width: 3px;
+    padding: 12px 14px;
+    font-size: clamp(1rem, 4.6vw, 1.35rem);
+  }
+
+  .sentier-opening__speech::before {
+    top: -22px;
+    border-width: 0 18px 22px;
+  }
+
+  .sentier-opening__speech::after {
+    top: -16px;
+    border-width: 0 14px 17px;
+  }
+}
+
+@media (max-height: 680px) and (max-width: 700px) {
+  .sentier-challenge__pana {
+    min-height: 48px;
+    grid-template-columns: 41px minmax(0, 1fr);
+  }
+
+  .sentier-challenge__pana img {
+    width: 41px;
+    height: 41px;
+  }
+
+  .sentier-challenge__card {
+    min-height: 138px;
+    grid-template-rows: 64px minmax(59px, auto);
+  }
+
+  .sentier-challenge__target {
+    width: 68px;
+    height: 68px;
+  }
+
+  .sentier-choice {
+    min-height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jungle-scene--travelling .jungle-scene__world {
+    animation: sentier-fade 150ms ease both;
+  }
+
+  .jungle-scene__gem {
+    animation: sentier-fade 150ms ease both;
+  }
+
+  .sentier-game *,
+  .sentier-game *::before,
+  .sentier-game *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes sentier-fade {
+  to {
+    opacity: 0.35;
+  }
+}

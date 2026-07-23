@@ -50,6 +50,7 @@ const voiceLineById = new Map(voiceLines.map((line) => [line.id, line]));
 const PANA_PATH = sitePath("/assets/characters/pana-home.png");
 const BOAT_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_PATH = sitePath("/assets/world/IslandWithChest.png");
+const JUNGLE_PATH = sitePath("/assets/world/jungle/jungle-backdrop.png");
 const FLOATING_READING_TOKENS = {
   mixed: [
     { text: "A", kind: "letter" },
@@ -87,6 +88,18 @@ const FLOATING_READING_TOKENS = {
     { text: "CARTE", kind: "word" },
     { text: "TRÉSOR", kind: "word" },
   ],
+  sentier: [
+    { text: "MOT", kind: "word" },
+    { text: "LIRE", kind: "word" },
+    { text: "MOTO", kind: "word" },
+    { text: "PANDA", kind: "word" },
+    { text: "LAPIN", kind: "word" },
+    { text: "TAPIS", kind: "word" },
+    { text: "MAISON", kind: "word" },
+    { text: "CHEMIN", kind: "word" },
+    { text: "GEMME", kind: "word" },
+    { text: "TRÉSOR", kind: "word" },
+  ],
 } as const;
 const FLOATING_TOKEN_POSITIONS = [
   "one",
@@ -121,6 +134,12 @@ const GAME_DETAILS: Record<
     shortTitle: "l’Archipel",
     href: "/jeux/bateau/",
     cta: "Prendre la mer",
+  },
+  sentier: {
+    title: "Le Sentier des mots",
+    shortTitle: "le Sentier",
+    href: "/jeux/mots/",
+    cta: "Entrer dans la jungle",
   },
 };
 
@@ -200,7 +219,10 @@ function SceneDecor({
       {theme === "bateau" ? (
         <img className="home-onboarding__island" src={ISLAND_PATH} alt="" draggable={false} />
       ) : null}
-      {theme !== "mixed" ? (
+      {theme === "sentier" ? (
+        <img className="home-onboarding__jungle" src={JUNGLE_PATH} alt="" draggable={false} />
+      ) : null}
+      {theme !== "mixed" && theme !== "sentier" ? (
         <img className="home-onboarding__boat" src={BOAT_PATH} alt="" draggable={false} />
       ) : null}
     </div>
@@ -269,7 +291,9 @@ export function HomeOnboarding() {
           : phase === "result"
             ? recommendedGame === "letters"
               ? "home-result-letters"
-              : "home-result-bateau"
+              : recommendedGame === "sentier"
+                ? "home-result-sentier"
+                : "home-result-bateau"
             : null;
   const currentLine = currentVoiceId ? voiceLineById.get(currentVoiceId) : undefined;
   const sceneTheme: "mixed" | HomeGameId =
@@ -330,7 +354,14 @@ export function HomeOnboarding() {
   function chooseSkill(choice: SkillChoice) {
     const game = recommendHomeGame(choice, age ?? undefined);
     setSkill(choice);
-    moveTo("result", game === "letters" ? "home-result-letters" : "home-result-bateau");
+    moveTo(
+      "result",
+      game === "letters"
+        ? "home-result-letters"
+        : game === "sentier"
+          ? "home-result-sentier"
+          : "home-result-bateau",
+    );
   }
 
   function remember(gameId: HomeGameId) {
@@ -503,6 +534,15 @@ export function HomeOnboarding() {
             onChoose={() => chooseSkill("reads-syllables")}
             onListen={(line) => void playLine(line)}
           />
+          <ChoiceOption
+            lineId="home-answer-reads-words"
+            label="Je commence à lire des mots"
+            token="MOT"
+            kind="skill"
+            playingLineId={playingLineId}
+            onChoose={() => chooseSkill("reads-words")}
+            onListen={(line) => void playLine(line)}
+          />
         </div>
       );
     }
@@ -511,7 +551,8 @@ export function HomeOnboarding() {
       return null;
     }
 
-    const alternativeGame = recommendedGame === "letters" ? "bateau" : "letters";
+    const alternativeGame =
+      recommendedGame === "letters" ? "bateau" : recommendedGame === "sentier" ? "bateau" : "letters";
 
     return (
       <div className="home-onboarding__response-panel home-onboarding__response-panel--result">

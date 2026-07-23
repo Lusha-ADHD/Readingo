@@ -10,5 +10,11 @@
     "title": "Lettres",
     "description": "Reconnaître les lettres et leurs sons.",
     "skills": ["lettres", "sons"]
+  },
+  {
+    "id": "sentier-des-mots",
+    "title": "Le Sentier des mots",
+    "description": "Reconnaître des mots écrits pour guider Pana dans la jungle.",
+    "skills": ["mots", "lecture"]
   }
 ]

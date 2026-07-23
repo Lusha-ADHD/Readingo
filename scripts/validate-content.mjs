@@ -9,6 +9,7 @@ const levels = await readJson("src/content/fr/lessons.json");
 const syllables = await readJson("src/content/fr/syllables.json");
 const letters = await readJson("src/content/fr/letters.json");
 const letterLevels = await readJson("src/content/fr/letter-lessons.json");
+const sentierLevels = await readJson("src/content/fr/sentier-lessons.json");
 const voiceLines = await readJson("src/content/fr/voice-lines.json");
 const errors = [];
 
@@ -124,8 +125,77 @@ for (const [index, level] of letterLevels.entries()) {
   }
 }
 
+assert(sentierLevels.length === 1, `1 niveau Sentier attendu, ${sentierLevels.length} trouvé(s)`);
+
+for (const [index, level] of sentierLevels.entries()) {
+  assert(level.level === index + 1, `Ordre invalide pour le niveau Sentier ${level.id}`);
+  assert(
+    level.gameIds?.includes("sentier-des-mots"),
+    `${level.id}: gameIds doit contenir sentier-des-mots`,
+  );
+  assert(level.questions?.length === 8, `${level.id}: 8 questions attendues`);
+  assert(
+    duplicates(level.questions?.map((question) => question.id) ?? []).length === 0,
+    `${level.id}: questions dupliquées`,
+  );
+
+  for (const question of level.questions ?? []) {
+    const target = wordById.get(question.targetWordId);
+    const choices = [
+      target?.displayWord.toLocaleLowerCase("fr") ?? "",
+      ...(question.distractors ?? []).map((value) => String(value).toLocaleLowerCase("fr").trim()),
+    ];
+    const choiceCount = choices.length;
+    const longestChoice = Math.max(...choices.map((value) => Array.from(value).length));
+
+    assert(Boolean(target), `${question.id}: mot cible inconnu ${question.targetWordId}`);
+    assert(
+      choiceCount >= 2 && choiceCount <= 5,
+      `${question.id}: entre 2 et 5 choix attendus`,
+    );
+    assert(
+      duplicates(choices).length === 0,
+      `${question.id}: réponses dupliquées ou mot cible répété`,
+    );
+    assert(
+      question.distractors?.every((value) => typeof value === "string" && value.trim()),
+      `${question.id}: distracteur vide ou invalide`,
+    );
+    assert(
+      choiceCount < 5 || longestChoice <= 7,
+      `${question.id}: 5 choix nécessitent des mots de 7 caractères maximum`,
+    );
+    assert(
+      choiceCount < 4 || longestChoice <= 10,
+      `${question.id}: 4 choix nécessitent des mots de 10 caractères maximum`,
+    );
+
+    if (target) {
+      await assertAsset(target.image, `${question.id} image cible`);
+      await assertAsset(target.audioWord, `${question.id} audio cible`);
+    }
+  }
+}
+
 for (const asset of ["map-island-sandbar.png", "map-island-rocky.png", "map-island-palms.png"]) {
   await assertAsset(`/assets/world/${asset}`, `Carte ${asset}`);
+}
+
+for (const asset of [
+  "jungle-backdrop.png",
+  "jungle-canopy.png",
+  "foliage-left.png",
+  "foliage-right.png",
+  "vines-a.png",
+  "vines-b.png",
+  "rock-fern.png",
+  "gem.png",
+]) {
+  await assertAsset(`/assets/world/jungle/${asset}`, `Sentier ${asset}`);
+}
+
+for (const asset of ["jungle-loop.mp3", "jungle-step.mp3", "gem-collect.mp3"]) {
+  await assertAsset(`/assets/audio/sfx/${asset}`, `Sentier ${asset}`);
 }
 
 for (const [dialogueId, lines] of Object.entries(voiceLines.dialogue ?? {})) {
@@ -144,5 +214,5 @@ if (errors.length) {
 }
 
 process.stdout.write(
-  `Contenu valide : ${levels.length} niveaux Bateau, ${letterLevels.length} niveau Lettres, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
+  `Contenu valide : ${levels.length} niveaux Bateau, ${letterLevels.length} niveau Lettres, ${sentierLevels.length} niveau Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
 );

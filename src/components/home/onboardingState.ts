@@ -1,10 +1,15 @@
 export const HOME_LAST_GAME_STORAGE_KEY = "readingo:last-game:v1";
 export const LETTERS_PROGRESS_STORAGE_KEY = "readingo:lettres:v1";
 export const BATEAU_PROGRESS_STORAGE_KEYS = ["readingo:bateau:v3", "readingo:bateau:v2"] as const;
+export const SENTIER_PROGRESS_STORAGE_KEY = "readingo:sentier-des-mots:v1";
 
-export type HomeGameId = "letters" | "bateau";
+export type HomeGameId = "letters" | "bateau" | "sentier";
 export type AgeChoice = "5" | "6" | "7" | "other";
-export type SkillChoice = "discovering-letters" | "knows-letters" | "reads-syllables";
+export type SkillChoice =
+  | "discovering-letters"
+  | "knows-letters"
+  | "reads-syllables"
+  | "reads-words";
 
 export type ResumeState = {
   progressGames: HomeGameId[];
@@ -54,11 +59,15 @@ function hasProgress(value: unknown) {
 }
 
 function isHomeGameId(value: unknown): value is HomeGameId {
-  return value === "letters" || value === "bateau";
+  return value === "letters" || value === "bateau" || value === "sentier";
 }
 
 export function recommendHomeGame(skill: SkillChoice, _age?: AgeChoice): HomeGameId {
-  return skill === "discovering-letters" ? "letters" : "bateau";
+  if (skill === "discovering-letters") {
+    return "letters";
+  }
+
+  return skill === "reads-words" ? "sentier" : "bateau";
 }
 
 export function readResumeState(storage: Storage | null): ResumeState {
@@ -67,6 +76,7 @@ export function readResumeState(storage: Storage | null): ResumeState {
   const bateauProgress = BATEAU_PROGRESS_STORAGE_KEYS
     .map((key) => readJson(storage, key))
     .find(hasProgress);
+  const sentierProgress = readJson(storage, SENTIER_PROGRESS_STORAGE_KEY);
 
   if (hasProgress(lettersProgress)) {
     progressGames.push("letters");
@@ -74,6 +84,10 @@ export function readResumeState(storage: Storage | null): ResumeState {
 
   if (bateauProgress) {
     progressGames.push("bateau");
+  }
+
+  if (hasProgress(sentierProgress)) {
+    progressGames.push("sentier");
   }
 
   const savedLastGame = readJson(storage, HOME_LAST_GAME_STORAGE_KEY) as SavedLastGame | null;

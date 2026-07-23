@@ -9,6 +9,9 @@ export default defineConfig({
   site: process.env.SITE_URL ?? `https://${owner}.github.io`,
   base: process.env.GITHUB_ACTIONS ? `/${repositoryName}` : "/",
   output: "static",
+  devToolbar: {
+    enabled: false,
+  },
   integrations: [react()],
   vite: {
     // A production build can run while the local server stays open. Keeping

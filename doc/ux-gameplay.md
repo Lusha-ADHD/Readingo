@@ -134,6 +134,12 @@ Lettres demande d’identifier un graphème à partir du nom, du son et d’un m
 
 Le premier niveau est un vertical slice de huit questions. Sa boucle, son contenu provisoire et le statut expérimental du thème sont décrits dans le [Game Design Document de Lettres](./games/lettres.md).
 
+### Le Sentier des mots
+
+Le Sentier des mots demande de retrouver un mot écrit à partir de sa prononciation et de son illustration. Chaque réponse choisit une direction dans une jungle en vue rapprochée : une bonne réponse rapproche Pana du trésor, tandis qu’une erreur conduit à un nouveau carrefour avec les réponses restantes.
+
+La boucle d’exploration, les gemmes, le demi-tour, l’ambiance d’égarement et la stratégie d’assets sont décrits dans le [Game Design Document du Sentier des mots](./games/sentier-des-mots.md).
+
 ## Concepts de jeux futurs
 
 Les concepts ci-dessous ne sont pas des fonctionnalités implémentées. Chacun devra recevoir un GDD avant sa conception visuelle ou son développement.
@@ -153,9 +159,5 @@ Remettre les syllabes d’un mot dans l’ordre sous la forme de wagons.
 ### Mot mystère
 
 Compléter un mot avec une syllabe manquante.
-
-### Image-mot
-
-Associer une image et un son au mot écrit correspondant.
 
 Ces thèmes peuvent employer des territoires différents tout en réutilisant Pana, les composants UI, les conventions audio et les pipelines d’assets.

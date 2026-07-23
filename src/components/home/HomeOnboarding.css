@@ -38,6 +38,22 @@
   --scene-sea-bottom: #0860ae;
 }
 
+.home-onboarding--sentier {
+  --scene-sky-top: #123f32;
+  --scene-sky-bottom: #2d6b43;
+  --scene-sea-top: #34734a;
+  --scene-sea-bottom: #123f32;
+}
+
+.home-onboarding--sentier .home-onboarding__moon,
+.home-onboarding--sentier .home-onboarding__cloud,
+.home-onboarding--sentier .home-onboarding__star,
+.home-onboarding--sentier .home-onboarding__constellation,
+.home-onboarding--sentier .home-onboarding__wave,
+.home-onboarding--sentier .home-onboarding__decor::before {
+  opacity: 0;
+}
+
 .home-onboarding__decor {
   position: absolute;
   z-index: 0;
@@ -416,6 +432,17 @@
   animation: home-island-arrive 480ms ease-out both;
 }
 
+.home-onboarding__jungle {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  animation: home-jungle-arrive 520ms ease-out both;
+}
+
 .home-onboarding__boat {
   position: absolute;
   z-index: 3;
@@ -761,6 +788,18 @@
   from {
     opacity: 0;
     transform: translateX(40px);
+  }
+}
+
+@keyframes home-jungle-arrive {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

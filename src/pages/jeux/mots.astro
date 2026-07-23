@@ -1,0 +1,76 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SentierGame } from "@components/games/SentierGame";
+---
+
+<BaseLayout
+  bodyClass="game-layout"
+  title="Le Sentier des mots - Readingo"
+  description="Un jeu de lecture pour reconnaître des mots et guider Pana dans la jungle."
+>
+  <main class="game-page">
+    <div class="game-page__header page-shell">
+      <p>Reconnaître les mots</p>
+      <h1>Le Sentier des mots</h1>
+      <span>Lis les mots et guide Pana jusqu’au trésor.</span>
+    </div>
+    <div class="game-page__frame page-shell">
+      <SentierGame client:load />
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .game-page {
+    padding-block: 32px 48px;
+  }
+
+  .game-page__header {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .game-page__header p {
+    margin: 0;
+    color: var(--color-blue-dark);
+    font-weight: 950;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .game-page__header h1 {
+    margin: 0;
+    font-size: clamp(2.8rem, 7vw, 5.4rem);
+    line-height: 1;
+  }
+
+  .game-page__header span {
+    color: var(--color-muted);
+    font-weight: 800;
+  }
+
+  .game-page__frame {
+    max-width: var(--play-frame-max-width);
+  }
+
+  @media (max-width: 700px) {
+    .game-page {
+      height: var(--play-frame-mobile-height);
+      padding: 0;
+    }
+
+    .game-page__header {
+      display: none;
+    }
+
+    .game-page__frame {
+      width: 100%;
+      height: 100%;
+    }
+
+    :global(.game-layout .site-footer) {
+      display: none;
+    }
+  }
+</style>
