@@ -31,6 +31,14 @@ L’image du mot sert d’ancrage sémantique. Le mot écrit n’est révélé q
 
 ## Boucle principale
 
+Après l’écran d’accueil, Pana présente l’enjeu en trois répliques successives :
+
+1. « Oh non ! Les étoiles qui me montrent le chemin se sont éteintes. Sans elles, je ne peux plus guider mon navire dans la nuit ! »
+2. « Aide-moi à les rallumer ! Pour chaque étoile, tu devras retrouver la lettre qui lui est associée. »
+3. « Chaque bonne réponse fera briller une étoile et nous montrera la route. En avant pour notre grand voyage ! »
+
+Chaque réplique est affichée et prononcée. Le joueur peut passer toute l’introduction. La première consigne de lettre démarre automatiquement après la troisième réplique.
+
 La boucle ne change pas entre les questions :
 
 ```text

@@ -123,8 +123,10 @@ function addTarget({ id, text, audio, kind }) {
   targets.set(audio, { id, text: normalizedText, audio, kind });
 }
 
-for (const line of voiceLines.dialogue.intro) {
-  addTarget({ ...line, kind: "dialogue" });
+for (const lines of Object.values(voiceLines.dialogue)) {
+  for (const line of lines) {
+    addTarget({ ...line, kind: "dialogue" });
+  }
 }
 
 for (const [id, line] of Object.entries(voiceLines.feedback)) {

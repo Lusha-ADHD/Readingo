@@ -9,6 +9,7 @@ const levels = await readJson("src/content/fr/lessons.json");
 const syllables = await readJson("src/content/fr/syllables.json");
 const letters = await readJson("src/content/fr/letters.json");
 const letterLevels = await readJson("src/content/fr/letter-lessons.json");
+const voiceLines = await readJson("src/content/fr/voice-lines.json");
 const errors = [];
 
 function assert(condition, message) {
@@ -125,6 +126,16 @@ for (const [index, level] of letterLevels.entries()) {
 
 for (const asset of ["map-island-sandbar.png", "map-island-rocky.png", "map-island-palms.png"]) {
   await assertAsset(`/assets/world/${asset}`, `Carte ${asset}`);
+}
+
+for (const [dialogueId, lines] of Object.entries(voiceLines.dialogue ?? {})) {
+  assert(Array.isArray(lines) && lines.length > 0, `${dialogueId}: dialogue vide`);
+
+  for (const line of lines ?? []) {
+    assert(Boolean(line.id), `${dialogueId}: identifiant de réplique absent`);
+    assert(Boolean(line.text), `${line.id ?? dialogueId}: texte de réplique absent`);
+    await assertAsset(line.audio, `${line.id ?? dialogueId} audio`);
+  }
 }
 
 if (errors.length) {

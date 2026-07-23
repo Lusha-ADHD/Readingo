@@ -16,6 +16,23 @@
         "text": "Je compte sur toi !",
         "audio": "/assets/audio/fr/dialogue/intro-03.mp3"
       }
+    ],
+    "lettersIntro": [
+      {
+        "id": "letters-intro-01",
+        "text": "Oh non ! Les étoiles qui me montrent le chemin se sont éteintes. Sans elles, je ne peux plus guider mon navire dans la nuit !",
+        "audio": "/assets/audio/fr/dialogue/letters-intro-01.mp3"
+      },
+      {
+        "id": "letters-intro-02",
+        "text": "Aide-moi à les rallumer ! Pour chaque étoile, tu devras retrouver la lettre qui lui est associée.",
+        "audio": "/assets/audio/fr/dialogue/letters-intro-02.mp3"
+      },
+      {
+        "id": "letters-intro-03",
+        "text": "Chaque bonne réponse fera briller une étoile et nous montrera la route. En avant pour notre grand voyage !",
+        "audio": "/assets/audio/fr/dialogue/letters-intro-03.mp3"
+      }
     ]
   },
   "feedback": {

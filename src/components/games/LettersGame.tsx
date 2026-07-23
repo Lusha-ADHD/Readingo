@@ -40,13 +40,16 @@ type VoiceLine = {
 };
 
 type VoiceLines = {
+  dialogue: {
+    lettersIntro: VoiceLine[];
+  };
   feedback: {
     tryAgain: VoiceLine;
     bravo: VoiceLine;
   };
 };
 
-type GamePhase = "intro" | "question" | "wrong" | "correct" | "star" | "result";
+type GamePhase = "intro" | "dialog" | "question" | "wrong" | "correct" | "star" | "result";
 
 const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 const letters = letterEntriesData as LetterEntry[];
@@ -56,7 +59,9 @@ const lessons = (letterLessonsData as LetterLesson[])
 const lesson = lessons[0];
 const letterById = new Map(letters.map((letter) => [letter.id, letter]));
 const wordById = new Map((wordsData as WordEntry[]).map((word) => [word.id, word]));
-const feedback = (voiceLinesData as VoiceLines).feedback;
+const voiceLines = voiceLinesData as VoiceLines;
+const lettersIntroLines = voiceLines.dialogue.lettersIntro;
+const feedback = voiceLines.feedback;
 const NEXT_QUESTION_DELAY_MS = 480;
 
 function speakFrench(text: string) {
@@ -87,14 +92,16 @@ function isLocalTestHost(hostname: string) {
 
 export function LettersGame() {
   const [phase, setPhase] = useState<GamePhase>("intro");
+  const [dialogLineIndex, setDialogLineIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [litStars, setLitStars] = useState(0);
   const [selectedLetterId, setSelectedLetterId] = useState<string | null>(null);
   const [choiceVersion, setChoiceVersion] = useState(0);
-  const [progress, setProgress] = useState<LettersProgress>(createInitialLettersProgress);
+  const [, setProgress] = useState<LettersProgress>(createInitialLettersProgress);
   const [testMode, setTestMode] = useState(false);
   const [localToolsAvailable, setLocalToolsAvailable] = useState(false);
   const actionTokenRef = useRef(0);
+  const dialogRunRef = useRef(0);
   const { cancelVoice, playVoice } = useVoiceAudio();
   const { enableEffects, playEffect, startNightAmbience } = useGameAudio();
 
@@ -106,8 +113,6 @@ export function LettersGame() {
     [choiceVersion, question],
   );
   const inputLocked = phase !== "question";
-  const levelCompleted = progress.completedLevels.includes(lesson?.level ?? 1);
-
   const playLine = useCallback(
     async (audioPath: string, fallbackText: string) => {
       const result = await playVoice(audioPath);
@@ -244,11 +249,36 @@ export function LettersGame() {
     ],
   );
 
-  const startLevel = useCallback(() => {
+  const startIntroDialog = useCallback(async () => {
+    const runId = dialogRunRef.current + 1;
+    dialogRunRef.current = runId;
     enableEffects();
     startNightAmbience();
+    setDialogLineIndex(0);
+    setPhase("dialog");
+
+    for (const [index, line] of lettersIntroLines.entries()) {
+      if (dialogRunRef.current !== runId) {
+        return;
+      }
+
+      setDialogLineIndex(index);
+      await playLine(line.audio, line.text);
+
+      if (dialogRunRef.current !== runId) {
+        return;
+      }
+    }
+
     loadQuestion(0, 0, false);
-  }, [enableEffects, loadQuestion, startNightAmbience]);
+  }, [enableEffects, loadQuestion, playLine, startNightAmbience]);
+
+  const skipIntroDialog = useCallback(() => {
+    dialogRunRef.current += 1;
+    cancelVoice();
+    window.speechSynthesis?.cancel();
+    loadQuestion(0, 0, false);
+  }, [cancelVoice, loadQuestion]);
 
   const replayLevel = useCallback(() => {
     enableEffects();
@@ -309,6 +339,7 @@ export function LettersGame() {
   useEffect(
     () => () => {
       actionTokenRef.current += 1;
+      dialogRunRef.current += 1;
       cancelVoice();
       window.speechSynthesis?.cancel();
     },
@@ -344,33 +375,40 @@ export function LettersGame() {
         pendingStarIndex={questionIndex}
       />
 
-      <header className="letters-game__hud">
-        <div>
-          <span>Niveau {lesson.level}</span>
-          <strong>{lesson.title}</strong>
-        </div>
-        <div className="letters-game__star-progress" aria-label={`${litStars} étoiles sur ${lesson.questions.length}`}>
-          <span aria-hidden="true">★</span>
-          <strong>{litStars}/{lesson.questions.length}</strong>
-        </div>
-      </header>
+      {phase !== "intro" && phase !== "dialog" && (
+        <header className="letters-game__hud">
+          <div>
+            <span>Niveau {lesson.level}</span>
+            <strong>{lesson.title}</strong>
+          </div>
+          <div className="letters-game__star-progress" aria-label={`${litStars} étoiles sur ${lesson.questions.length}`}>
+            <span aria-hidden="true">★</span>
+            <strong>{litStars}/{lesson.questions.length}</strong>
+          </div>
+        </header>
+      )}
 
       {phase === "intro" && (
         <div className="letters-game__intro">
+          <h2 className="letters-game__intro-title">Découvrir les lettres avec Pana</h2>
           <img className="letters-game__pana letters-game__pana--intro" src={PANA_ASSET_PATH} alt="Pana" />
-          <div className="letters-game__intro-panel">
-            <p className="letters-game__eyebrow">L’Observatoire des lettres</p>
-            <h2>Allumons une constellation !</h2>
-            <p>
-              Écoute Pana, retrouve la bonne lettre et gagne une étoile à chaque réponse.
-            </p>
-            {levelCompleted && <span className="letters-game__completed-note">Constellation déjà découverte</span>}
-            <GameButton onClick={startLevel}>Commencer</GameButton>
-          </div>
+          <GameButton onClick={() => void startIntroDialog()}>Commencer</GameButton>
         </div>
       )}
 
-      {phase !== "intro" && phase !== "result" && (
+      {phase === "dialog" && (
+        <div className="letters-game__intro letters-game__intro--dialog">
+          <img className="letters-game__pana letters-game__pana--dialog" src={PANA_ASSET_PATH} alt="Pana" />
+          <div className="letters-game__speech" aria-live="polite">
+            {lettersIntroLines[dialogLineIndex]?.text}
+          </div>
+          <GameButton onClick={skipIntroDialog} variant="secondary">
+            Passer
+          </GameButton>
+        </div>
+      )}
+
+      {phase !== "intro" && phase !== "dialog" && phase !== "result" && (
         <main className="letters-game__exercise">
           <div className="letters-game__bottom-panels">
             <div className="letters-game__pana-prompt">
