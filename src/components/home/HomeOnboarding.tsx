@@ -50,6 +50,56 @@ const voiceLineById = new Map(voiceLines.map((line) => [line.id, line]));
 const PANA_PATH = sitePath("/assets/characters/pana-home.png");
 const BOAT_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_PATH = sitePath("/assets/world/IslandWithChest.png");
+const FLOATING_READING_TOKENS = {
+  mixed: [
+    { text: "A", kind: "letter" },
+    { text: "M", kind: "letter" },
+    { text: "S", kind: "letter" },
+    { text: "BA", kind: "syllable" },
+    { text: "LO", kind: "syllable" },
+    { text: "MI", kind: "syllable" },
+    { text: "MOT", kind: "word" },
+    { text: "LIRE", kind: "word" },
+    { text: "LUNE", kind: "word" },
+    { text: "BATEAU", kind: "word" },
+  ],
+  letters: [
+    { text: "A", kind: "letter" },
+    { text: "E", kind: "letter" },
+    { text: "M", kind: "letter" },
+    { text: "R", kind: "letter" },
+    { text: "LA", kind: "syllable" },
+    { text: "LU", kind: "syllable" },
+    { text: "S", kind: "letter" },
+    { text: "LUNE", kind: "word" },
+    { text: "MER", kind: "word" },
+    { text: "ÉTOILE", kind: "word" },
+  ],
+  bateau: [
+    { text: "B", kind: "letter" },
+    { text: "T", kind: "letter" },
+    { text: "BA", kind: "syllable" },
+    { text: "TO", kind: "syllable" },
+    { text: "TEAU", kind: "syllable" },
+    { text: "ÎLE", kind: "word" },
+    { text: "MER", kind: "word" },
+    { text: "BATEAU", kind: "word" },
+    { text: "CARTE", kind: "word" },
+    { text: "TRÉSOR", kind: "word" },
+  ],
+} as const;
+const FLOATING_TOKEN_POSITIONS = [
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+] as const;
 
 const GAME_DETAILS: Record<
   HomeGameId,
@@ -64,7 +114,7 @@ const GAME_DETAILS: Record<
     title: "L’Observatoire des lettres",
     shortTitle: "l’Observatoire",
     href: "/jeux/lettres/",
-    cta: "Explorer l’Observatoire",
+    cta: "Observer les lettres",
   },
   bateau: {
     title: "L’Archipel des mots",
@@ -106,7 +156,13 @@ function SpeakerIcon({ playing }: { playing: boolean }) {
   );
 }
 
-function SceneDecor({ theme }: { theme: "mixed" | HomeGameId }) {
+function SceneDecor({
+  theme,
+  showReadingCurrent,
+}: {
+  theme: "mixed" | HomeGameId;
+  showReadingCurrent: boolean;
+}) {
   return (
     <div className="home-onboarding__decor" aria-hidden="true">
       <span className="home-onboarding__moon" />
@@ -125,6 +181,22 @@ function SceneDecor({ theme }: { theme: "mixed" | HomeGameId }) {
       </svg>
       <span className="home-onboarding__wave home-onboarding__wave--one" />
       <span className="home-onboarding__wave home-onboarding__wave--two" />
+      {showReadingCurrent ? (
+        <span className="home-onboarding__reading-current">
+          {FLOATING_READING_TOKENS[theme].map((token, index) => (
+            <span
+              className={`home-onboarding__reading-track home-onboarding__reading-track--${FLOATING_TOKEN_POSITIONS[index]}`}
+              key={`${theme}-${token.text}`}
+            >
+              <span
+                className={`home-onboarding__reading-token home-onboarding__reading-token--${token.kind}`}
+              >
+                <span className="home-onboarding__reading-label">{token.text}</span>
+              </span>
+            </span>
+          ))}
+        </span>
+      ) : null}
       {theme === "bateau" ? (
         <img className="home-onboarding__island" src={ISLAND_PATH} alt="" draggable={false} />
       ) : null}
@@ -315,6 +387,15 @@ export function HomeOnboarding() {
       return (
         <div className="home-onboarding__response-panel home-onboarding__response-panel--entry">
           {entryAction()}
+          {isReturning ? (
+            <button
+              className="home-onboarding__alternative"
+              type="button"
+              onClick={beginOnboarding}
+            >
+              Recommencer
+            </button>
+          ) : null}
         </div>
       );
     }
@@ -458,7 +539,7 @@ export function HomeOnboarding() {
       className={`home-onboarding home-onboarding--${sceneTheme} home-onboarding--${phase}`}
       aria-label="Pana t’aide à choisir un jeu"
     >
-      <SceneDecor theme={sceneTheme} />
+      <SceneDecor theme={sceneTheme} showReadingCurrent={phase !== "result"} />
 
       {phase === "age" || phase === "skill" || phase === "result" || phase === "resume" ? (
         <button

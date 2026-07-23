@@ -209,10 +209,207 @@
   animation: home-wave-two 8.5s ease-in-out infinite alternate;
 }
 
+.home-onboarding__reading-current {
+  --reading-water-upper:
+    color-mix(in srgb, var(--scene-sea-top) 91%, var(--scene-sea-bottom));
+  --reading-water-wave-one:
+    color-mix(
+      in srgb,
+      color-mix(in srgb, var(--scene-sea-top) 82%, var(--scene-sea-bottom)) 58%,
+      rgb(5 69 151) 42%
+    );
+  --reading-water-wave-both:
+    color-mix(
+      in srgb,
+      color-mix(
+          in srgb,
+          color-mix(in srgb, var(--scene-sea-top) 64%, var(--scene-sea-bottom)) 58%,
+          rgb(5 69 151) 42%
+        )
+        62%,
+      rgb(5 48 129) 38%
+    );
+  --reading-water-wave-two:
+    color-mix(
+      in srgb,
+      color-mix(in srgb, var(--scene-sea-top) 39%, var(--scene-sea-bottom)) 62%,
+      rgb(5 48 129) 38%
+    );
+  --reading-water-lower:
+    color-mix(in srgb, var(--scene-sea-top) 25%, var(--scene-sea-bottom));
+  position: absolute;
+  z-index: 1;
+  inset: var(--scene-horizon) 0 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-onboarding__reading-track {
+  --reading-water-color: var(--reading-water-wave-both);
+  position: absolute;
+  left: calc(100% + 36px);
+  animation: home-reading-drift 22s linear infinite;
+  will-change: transform;
+}
+
+.home-onboarding__reading-track--one {
+  --reading-water-color: var(--reading-water-upper);
+  top: 9%;
+  animation-duration: 34s;
+  animation-delay: -6s;
+}
+
+.home-onboarding__reading-track--two {
+  top: 28%;
+  animation-duration: 43s;
+  animation-delay: -29s;
+}
+
+.home-onboarding__reading-track--three {
+  top: 49%;
+  animation-duration: 38s;
+  animation-delay: -17s;
+}
+
+.home-onboarding__reading-track--four {
+  --reading-water-color: var(--reading-water-lower);
+  top: 69%;
+  animation-duration: 49s;
+  animation-delay: -43s;
+}
+
+.home-onboarding__reading-track--five {
+  --reading-water-color: var(--reading-water-wave-one);
+  top: 18%;
+  animation-duration: 52s;
+  animation-delay: -36s;
+}
+
+.home-onboarding__reading-track--six {
+  top: 39%;
+  animation-duration: 36s;
+  animation-delay: -11s;
+}
+
+.home-onboarding__reading-track--seven {
+  --reading-water-color: var(--reading-water-wave-two);
+  top: 61%;
+  animation-duration: 56s;
+  animation-delay: -52s;
+}
+
+.home-onboarding__reading-track--eight {
+  --reading-water-color: var(--reading-water-lower);
+  top: 78%;
+  animation-duration: 42s;
+  animation-delay: -24s;
+}
+
+.home-onboarding__reading-track--nine {
+  top: 34%;
+  animation-duration: 49s;
+  animation-delay: -47s;
+}
+
+.home-onboarding__reading-track--ten {
+  --reading-water-color: var(--reading-water-lower);
+  top: 73%;
+  animation-duration: 33s;
+  animation-delay: -31s;
+}
+
+.home-onboarding__reading-token {
+  --reading-token-angle: -1deg;
+  display: grid;
+  position: relative;
+  min-width: 48px;
+  min-height: 42px;
+  place-items: center;
+  padding: 6px 11px;
+  border: 3px solid rgba(8, 33, 74, 0.88);
+  border-radius: 15px;
+  background: rgba(255, 250, 240, 0.94);
+  box-shadow:
+    0 6px 0 rgba(8, 33, 74, 0.2),
+    0 10px 18px rgba(8, 33, 74, 0.12);
+  color: var(--color-blue-dark);
+  font-size: 1rem;
+  font-weight: 1000;
+  letter-spacing: 0.02em;
+  animation: home-reading-bob 2.6s ease-in-out infinite alternate;
+}
+
+.home-onboarding__reading-token::after {
+  position: absolute;
+  z-index: 2;
+  inset: 50% -4px -4px;
+  border-radius: 0 0 18px 18px;
+  background: var(--reading-water-color);
+  content: "";
+  opacity: 0.82;
+  pointer-events: none;
+  transform: rotate(calc(0deg - var(--reading-token-angle)));
+  transform-origin: 50% 0;
+}
+
+.home-onboarding__reading-label {
+  position: relative;
+  z-index: 3;
+}
+
+.home-onboarding__reading-token--syllable {
+  background: rgba(255, 234, 151, 0.96);
+  color: #0a4b9d;
+}
+
+.home-onboarding__reading-token--word {
+  min-width: 64px;
+  border-radius: 999px;
+  background: rgba(218, 244, 255, 0.94);
+  font-size: 0.78rem;
+}
+
+.home-onboarding__reading-track--two .home-onboarding__reading-token {
+  --reading-token-angle: 3deg;
+  animation-delay: -1.2s;
+}
+
+.home-onboarding__reading-track--three .home-onboarding__reading-token {
+  --reading-token-angle: -3deg;
+  animation-delay: -2s;
+}
+
+.home-onboarding__reading-track--four .home-onboarding__reading-token {
+  --reading-token-angle: 2deg;
+  animation-delay: -0.7s;
+}
+
+.home-onboarding__reading-track--five .home-onboarding__reading-token,
+.home-onboarding__reading-track--nine .home-onboarding__reading-token {
+  --reading-token-angle: -2deg;
+  animation-delay: -1.6s;
+}
+
+.home-onboarding__reading-track--six .home-onboarding__reading-token,
+.home-onboarding__reading-track--ten .home-onboarding__reading-token {
+  --reading-token-angle: 3deg;
+  animation-delay: -2.2s;
+}
+
+.home-onboarding__reading-track--seven .home-onboarding__reading-token {
+  --reading-token-angle: 1deg;
+  animation-delay: -0.9s;
+}
+
+.home-onboarding__reading-track--eight .home-onboarding__reading-token {
+  --reading-token-angle: -3deg;
+  animation-delay: -1.9s;
+}
+
 .home-onboarding__island {
   position: absolute;
   z-index: 2;
-  top: 205px;
+  top: calc(var(--scene-horizon) - 88px);
   right: -18px;
   width: 185px;
   filter: drop-shadow(0 10px 0 rgba(8, 33, 74, 0.18));
@@ -584,6 +781,22 @@
   to {
     opacity: 0.45;
     transform: scale(0.9);
+  }
+}
+
+@keyframes home-reading-drift {
+  to {
+    transform: translateX(-1550px);
+  }
+}
+
+@keyframes home-reading-bob {
+  from {
+    transform: translateY(0) rotate(var(--reading-token-angle));
+  }
+
+  to {
+    transform: translateY(7px) rotate(var(--reading-token-angle));
   }
 }
 
@@ -1083,6 +1296,46 @@
 
 @media (prefers-reduced-motion: reduce) {
   .home-onboarding__response-panel--entry {
+    animation: none;
+  }
+
+  .home-onboarding__reading-track {
+    left: 8%;
+    animation: none;
+    opacity: 0.62;
+  }
+
+  .home-onboarding__reading-track--two {
+    top: 31%;
+    right: 10%;
+    left: auto;
+  }
+
+  .home-onboarding__reading-track--three {
+    top: 58%;
+    left: 18%;
+  }
+
+  .home-onboarding__reading-track--four {
+    top: 67%;
+    right: 17%;
+    left: auto;
+  }
+
+  .home-onboarding__reading-track--five {
+    top: 79%;
+    left: 52%;
+  }
+
+  .home-onboarding__reading-track--six,
+  .home-onboarding__reading-track--seven,
+  .home-onboarding__reading-track--eight,
+  .home-onboarding__reading-track--nine,
+  .home-onboarding__reading-track--ten {
+    display: none;
+  }
+
+  .home-onboarding__reading-token {
     animation: none;
   }
 
