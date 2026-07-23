@@ -2,7 +2,7 @@
 
 Readingo est un site de mini-jeux gratuits pour aider les enfants de 5 a 7 ans a apprendre les bases de la lecture, en francais dans un premier temps.
 
-Le produit est pense pour etre utilise d'abord par un parent avec son enfant, puis progressivement par l'enfant en autonomie. Il n'y a pas de separation stricte entre espace parent et espace enfant dans le MVP : l'experience doit rester commune, simple, lisible et suffisamment explicite pour qu'un enfant puisse relancer une partie ou changer de jeu seul.
+Le produit est pense pour etre utilise d'abord par un parent avec son enfant, puis progressivement par l'enfant en autonomie. Il n'y a pas de separation stricte entre espace parent et espace enfant : l'experience doit rester commune, simple, lisible et suffisamment explicite pour qu'un enfant puisse relancer une partie ou changer de jeu seul.
 
 ## Documents
 
@@ -10,6 +10,7 @@ Le produit est pense pour etre utilise d'abord par un parent avec son enfant, pu
 - [Experience utilisateur et gameplay](./ux-gameplay.md)
 - [Direction artistique et design system](./design-direction.md)
 - [Contenu, assets et internationalisation](./content-assets.md)
+- [Règles éditoriales des guides pour les parents](./editorial-guidelines.md)
 - [Generation reproductible des assets images](./image-generation.md)
 - [Historique des generations d'images](./image-generation-history.yaml)
 - [Roadmap d'implementation](./roadmap.md)
@@ -31,3 +32,11 @@ Readingo doit combiner trois objectifs :
 - Le site doit rester gratuit et accessible sans creation de compte.
 - Les assets doivent etre coherents, propres et valides humainement.
 - Le contenu doit etre structure pour faciliter l'ajout de nouvelles langues.
+
+## Droits d'utilisation
+
+Copyright 2026 Readingo. Tous droits reserves.
+
+Ce depot est public afin de permettre la consultation du projet. Sauf autorisation ecrite prealable, aucune licence n'est accordee pour copier, modifier, reutiliser, publier ou redistribuer les elements originaux du projet. La mise a disposition sur GitHub reste soumise aux droits prevus par les conditions d'utilisation de la plateforme.
+
+Les bibliotheques, outils et ressources provenant de tiers restent soumis a leurs licences respectives.
