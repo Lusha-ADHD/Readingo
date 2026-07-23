@@ -85,10 +85,15 @@ Responsabilités du lecteur commun :
 
 - interrompre les voix qui ne doivent pas se superposer ;
 - gérer les boucles ;
+- créer une ambiance ou un effet uniquement lors de son premier usage ;
 - régler les volumes relatifs ;
 - arrêter les sons lors d’un changement de phase ;
 - utiliser la synthèse du navigateur en repli ;
 - tolérer une erreur de chargement.
+
+L’activation audio ne précharge pas tout le catalogue. Démarrer un jeu ne doit
+demander que son ambiance ; les effets de réponse et les boucles de déplacement
+sont chargés lorsqu’ils deviennent nécessaires.
 
 Le pipeline de fabrication est décrit dans [Pipeline audio](./audio-generation.md).
 

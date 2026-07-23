@@ -62,18 +62,22 @@ export function useGameAudio() {
   const effectSourcesRef = useRef<Partial<Record<EffectName, HTMLAudioElement>>>({});
   const activeEffectsRef = useRef(new Set<HTMLAudioElement>());
 
-  const ensureAudio = useCallback(() => {
+  const getLoop = useCallback((name: LoopName) => {
     if (typeof window === "undefined") {
-      return;
+      return undefined;
     }
 
-    for (const [name, source] of Object.entries(LOOP_PATHS) as Array<[LoopName, string]>) {
-      loopsRef.current[name] ??= createAudio(source, true);
+    loopsRef.current[name] ??= createAudio(LOOP_PATHS[name], true);
+    return loopsRef.current[name];
+  }, []);
+
+  const getEffectSource = useCallback((name: EffectName) => {
+    if (typeof window === "undefined") {
+      return undefined;
     }
 
-    for (const [name, source] of Object.entries(EFFECT_PATHS) as Array<[EffectName, string]>) {
-      effectSourcesRef.current[name] ??= createAudio(source);
-    }
+    effectSourcesRef.current[name] ??= createAudio(EFFECT_PATHS[name]);
+    return effectSourcesRef.current[name];
   }, []);
 
   const playEffect = useCallback(
@@ -82,8 +86,7 @@ export function useGameAudio() {
         return Promise.resolve();
       }
 
-      ensureAudio();
-      const source = effectSourcesRef.current[name];
+      const source = getEffectSource(name);
 
       if (!source) {
         return Promise.resolve();
@@ -118,13 +121,12 @@ export function useGameAudio() {
         void audio.play().catch(complete);
       });
     },
-    [ensureAudio],
+    [getEffectSource],
   );
 
   const startAmbience = useCallback(() => {
     enabledRef.current = true;
-    ensureAudio();
-    const sea = loopsRef.current.sea;
+    const sea = getLoop("sea");
 
     if (!sea) {
       return;
@@ -132,17 +134,15 @@ export function useGameAudio() {
 
     sea.volume = 0.15;
     void sea.play().catch(() => undefined);
-  }, [ensureAudio]);
+  }, [getLoop]);
 
   const enableEffects = useCallback(() => {
     enabledRef.current = true;
-    ensureAudio();
-  }, [ensureAudio]);
+  }, []);
 
   const startNightAmbience = useCallback(() => {
     enabledRef.current = true;
-    ensureAudio();
-    const night = loopsRef.current.night;
+    const night = getLoop("night");
 
     if (!night) {
       return;
@@ -150,12 +150,11 @@ export function useGameAudio() {
 
     night.volume = 0.165;
     void night.play().catch(() => undefined);
-  }, [ensureAudio]);
+  }, [getLoop]);
 
   const startJungleAmbience = useCallback(() => {
     enabledRef.current = true;
-    ensureAudio();
-    const jungle = loopsRef.current.jungle;
+    const jungle = getLoop("jungle");
 
     if (!jungle) {
       return;
@@ -163,7 +162,7 @@ export function useGameAudio() {
 
     jungle.volume = 0.13;
     void jungle.play().catch(() => undefined);
-  }, [ensureAudio]);
+  }, [getLoop]);
 
   const setJungleDucked = useCallback((ducked: boolean) => {
     const jungle = loopsRef.current.jungle;
@@ -179,19 +178,27 @@ export function useGameAudio() {
         return;
       }
 
-      ensureAudio();
-      const windAudio = loopsRef.current.wind;
-      const boatAudio = loopsRef.current.boat;
+      if (!active) {
+        const windAudio = loopsRef.current.wind;
+        const boatAudio = loopsRef.current.boat;
+        windAudio?.pause();
+        boatAudio?.pause();
 
-      if (!windAudio || !boatAudio) {
+        if (windAudio) {
+          windAudio.currentTime = 0;
+        }
+
+        if (boatAudio) {
+          boatAudio.currentTime = 0;
+        }
+
         return;
       }
 
-      if (!active) {
-        windAudio.pause();
-        boatAudio.pause();
-        windAudio.currentTime = 0;
-        boatAudio.currentTime = 0;
+      const windAudio = getLoop("wind");
+      const boatAudio = getLoop("boat");
+
+      if (!windAudio || !boatAudio) {
         return;
       }
 
@@ -210,7 +217,7 @@ export function useGameAudio() {
       void windAudio.play().catch(() => undefined);
       void boatAudio.play().catch(() => undefined);
     },
-    [ensureAudio],
+    [getLoop],
   );
 
   useEffect(
