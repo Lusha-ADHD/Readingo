@@ -5,12 +5,19 @@ type AudioButtonProps = {
   onClick: () => void;
   className?: string;
   disabled?: boolean;
+  size?: "default" | "compact";
 };
 
-export function AudioButton({ label, onClick, className = "", disabled = false }: AudioButtonProps) {
+export function AudioButton({
+  label,
+  onClick,
+  className = "",
+  disabled = false,
+  size = "default",
+}: AudioButtonProps) {
   return (
     <button
-      className={`audio-button ${className}`.trim()}
+      className={`audio-button audio-button--${size} ${className}`.trim()}
       disabled={disabled}
       onClick={onClick}
       type="button"

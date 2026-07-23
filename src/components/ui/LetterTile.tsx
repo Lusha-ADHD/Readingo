@@ -34,6 +34,7 @@ export function LetterTile({
         disabled={disabled}
         label={`Écouter le nom de la lettre ${letterName}`}
         onClick={onListen}
+        size="compact"
       />
     </div>
   );

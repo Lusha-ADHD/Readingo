@@ -95,6 +95,18 @@
   stroke-width: 2.35;
 }
 
+.audio-button.audio-button--compact {
+  width: 40px;
+  height: 40px;
+  border-width: 2px;
+  border-radius: 13px;
+}
+
+.audio-button--compact .audio-button__icon {
+  width: 26px;
+  height: 26px;
+}
+
 .letter-tile {
   position: relative;
   min-width: 0;
@@ -277,6 +289,16 @@
 }
 
 @media (max-width: 700px) {
+  .audio-button.audio-button--compact {
+    width: 34px;
+    height: 34px;
+  }
+
+  .audio-button--compact .audio-button__icon {
+    width: 22px;
+    height: 22px;
+  }
+
   .letter-tile__choice {
     min-height: 76px;
     border-width: 3px;

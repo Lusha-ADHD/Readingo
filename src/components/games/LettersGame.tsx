@@ -441,6 +441,7 @@ export function LettersGame() {
                 disabled={inputLocked}
                 label="Réécouter la consigne de Pana"
                 onClick={() => void playPrompt(targetLetter)}
+                size="compact"
               />
             </div>
 
@@ -456,6 +457,7 @@ export function LettersGame() {
                   disabled={inputLocked}
                   label={`Écouter le mot ${anchorWord.displayWord}`}
                   onClick={() => void playLine(anchorWord.audioWord, anchorWord.displayWord)}
+                  size="compact"
                 />
               </div>
 
