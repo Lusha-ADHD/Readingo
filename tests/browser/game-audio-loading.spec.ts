@@ -16,7 +16,7 @@ test.describe("Chargement audio à la demande", () => {
         await route.abort();
       });
 
-      await page.goto(game.route);
+      await page.goto(game.route, { waitUntil: "networkidle" });
       expect(requestedEffects.size).toBe(0);
 
       await page.getByRole("button", { name: "Commencer", exact: true }).click();

@@ -1,4 +1,5 @@
 import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
+import { readStoredJson, writeStoredJson } from "../../utils/storage.ts";
 
 export const [BATEAU_STORAGE_KEY, LEGACY_BATEAU_STORAGE_KEY] =
   GAME_BY_ID[GAME_IDS.BATEAU].progressKeys;
@@ -69,24 +70,16 @@ export function migrateLegacyProgress(legacy: LegacyProgress, firstLevelWordIds:
 }
 
 export function readBateauProgress(storage: Storage | null, firstLevelWordIds: string[], totalLevels: number): BateauProgress {
-  if (!storage) {
-    return createInitialProgress();
+  const saved = readStoredJson<Partial<BateauProgress>>(storage, BATEAU_STORAGE_KEY);
+
+  if (saved !== null) {
+    return normalizeProgress(saved, totalLevels);
   }
 
-  try {
-    const saved = storage.getItem(BATEAU_STORAGE_KEY);
+  const legacy = readStoredJson<LegacyProgress>(storage, LEGACY_BATEAU_STORAGE_KEY);
 
-    if (saved) {
-      return normalizeProgress(JSON.parse(saved) as Partial<BateauProgress>, totalLevels);
-    }
-
-    const legacy = storage.getItem(LEGACY_BATEAU_STORAGE_KEY);
-
-    if (legacy) {
-      return migrateLegacyProgress(JSON.parse(legacy) as LegacyProgress, firstLevelWordIds, totalLevels);
-    }
-  } catch {
-    return createInitialProgress();
+  if (legacy !== null) {
+    return migrateLegacyProgress(legacy, firstLevelWordIds, totalLevels);
   }
 
   return createInitialProgress();
@@ -121,9 +114,5 @@ export function completeBateauLevel(
 }
 
 export function saveBateauProgress(storage: Storage | null, progress: BateauProgress) {
-  try {
-    storage?.setItem(BATEAU_STORAGE_KEY, JSON.stringify(progress));
-  } catch {
-    // A blocked or full localStorage must not prevent play.
-  }
+  writeStoredJson(storage, BATEAU_STORAGE_KEY, progress);
 }

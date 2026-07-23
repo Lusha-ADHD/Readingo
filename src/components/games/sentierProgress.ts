@@ -1,4 +1,5 @@
 import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
+import { readStoredJson, writeStoredJson } from "../../utils/storage.ts";
 
 export const SENTIER_STORAGE_KEY = GAME_BY_ID[GAME_IDS.SENTIER].progressKeys[0];
 
@@ -54,18 +55,11 @@ export function readSentierProgress(
   storage: Storage | null,
   totalLevels: number,
 ): SentierProgress {
-  if (!storage) {
-    return createInitialSentierProgress();
-  }
+  const saved = readStoredJson<Partial<SentierProgress>>(storage, SENTIER_STORAGE_KEY);
 
-  try {
-    const saved = storage.getItem(SENTIER_STORAGE_KEY);
-    return saved
-      ? normalizeProgress(JSON.parse(saved) as Partial<SentierProgress>, totalLevels)
-      : createInitialSentierProgress();
-  } catch {
-    return createInitialSentierProgress();
-  }
+  return saved !== null
+    ? normalizeProgress(saved, totalLevels)
+    : createInitialSentierProgress();
 }
 
 export function completeSentierLevel(
@@ -89,9 +83,5 @@ export function completeSentierLevel(
 }
 
 export function saveSentierProgress(storage: Storage | null, progress: SentierProgress) {
-  try {
-    storage?.setItem(SENTIER_STORAGE_KEY, JSON.stringify(progress));
-  } catch {
-    // La partie reste jouable si le stockage est bloqué ou plein.
-  }
+  writeStoredJson(storage, SENTIER_STORAGE_KEY, progress);
 }

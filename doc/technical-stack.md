@@ -109,6 +109,11 @@ Chaque jeu utilise une clé versionnée. La sauvegarde doit être :
 
 La progression est non critique et peut disparaître lorsque les données du navigateur sont effacées. Le GDD de chaque jeu documente son schéma exact.
 
+`src/utils/storage.ts` centralise uniquement la lecture et l’écriture JSON
+tolérantes aux erreurs. Les schémas, normalisations et migrations restent dans
+le module de progression de chaque jeu : ils répondent à des règles métier
+différentes et ne doivent pas être masqués par une couche générique.
+
 ## Contenu piloté par les données
 
 Les fichiers de `src/content/<locale>/` sont chargés par les pages ou composants et transmis au jeu.
@@ -117,6 +122,11 @@ Les fichiers de `src/content/<locale>/` sont chargés par les pages ou composant
 route, les titres, les textes de carte et de page, le thème et les clés de
 progression. `src/content/gameCatalog.ts` fournit la couche typée utilisée par
 l’accueil, l’onboarding, les pages de jeu et les modules de sauvegarde.
+
+`src/content/types.ts` contient les formes réellement partagées par plusieurs
+jeux (`WordEntry`, référence légère vers un mot, lignes audio et base d’une
+leçon). Les questions et données spécifiques à une mécanique restent près de
+son jeu.
 
 Avantages :
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GAME_BY_ID } from "../../content/gameCatalog";
+import type { VoiceLine } from "../../content/types";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import { sitePath } from "../../utils/paths";
 import { useVoiceAudio } from "../games/useVoiceAudio";
@@ -17,12 +18,6 @@ import type {
 import "./HomeOnboarding.css";
 
 type OnboardingPhase = "entry" | "intro" | "age" | "skill" | "result" | "resume";
-
-type VoiceLine = {
-  id: string;
-  text: string;
-  audio: string;
-};
 
 type HomeVoiceLines = {
   dialogue: {

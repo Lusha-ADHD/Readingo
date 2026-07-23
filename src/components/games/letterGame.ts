@@ -1,3 +1,5 @@
+import type { LessonBase } from "../../content/types.ts";
+
 export type LetterDisplayCase = "uppercase" | "lowercase";
 
 export type LetterEntry = {
@@ -21,11 +23,7 @@ export type LetterQuestion = {
   displayCase: LetterDisplayCase;
 };
 
-export type LetterLesson = {
-  id: string;
-  level: number;
-  title: string;
-  gameIds: string[];
+export type LetterLesson = LessonBase & {
   questions: LetterQuestion[];
 };
 

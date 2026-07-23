@@ -1,16 +1,10 @@
+import type { WordReference } from "../../content/types";
 import { sitePath } from "../../utils/paths";
 import { AudioButton } from "../ui/AudioButton";
 import type { SentierChoice, SentierDirection, SentierPhase } from "./sentierState";
 
-type WordEntry = {
-  id: string;
-  displayWord: string;
-  image: string;
-  audioWord: string;
-};
-
 type Props = {
-  target: WordEntry;
+  target: WordReference;
   choices: SentierChoice[];
   phase: SentierPhase;
   selectedWord: string | null;

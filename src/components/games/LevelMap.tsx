@@ -1,15 +1,12 @@
 import { useEffect, useMemo, useRef } from "react";
 import type { CSSProperties } from "react";
+import type { LessonBase } from "../../content/types";
 import { sitePath } from "../../utils/paths";
 import type { BateauProgress } from "./bateauProgress";
 import "./LevelMap.css";
 
-export type BateauLevel = {
-  id: string;
-  level: number;
-  title: string;
+export type BateauLevel = LessonBase & {
   difficultyTier: number;
-  gameIds: string[];
   wordIds: string[];
 };
 

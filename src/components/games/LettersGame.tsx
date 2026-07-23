@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GAME_IDS } from "../../content/gameCatalog";
+import type {
+  AudioLine,
+  VoiceLine,
+  WordReference,
+} from "../../content/types";
 import letterEntriesData from "../../content/fr/letters.json";
 import letterLessonsData from "../../content/fr/letter-lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
@@ -33,25 +38,13 @@ import { useGameAudio } from "./gameAudio";
 import { useVoiceAudio } from "./useVoiceAudio";
 import "./LettersGame.css";
 
-type WordEntry = {
-  id: string;
-  displayWord: string;
-  image: string;
-  audioWord: string;
-};
-
-type VoiceLine = {
-  text: string;
-  audio: string;
-};
-
 type VoiceLines = {
   dialogue: {
     lettersIntro: VoiceLine[];
   };
   feedback: {
-    tryAgain: VoiceLine;
-    bravo: VoiceLine;
+    tryAgain: AudioLine;
+    bravo: AudioLine;
   };
 };
 
@@ -64,7 +57,7 @@ const lessons = (letterLessonsData as LetterLesson[])
   .sort((left, right) => left.level - right.level);
 const lesson = lessons[0];
 const letterById = new Map(letters.map((letter) => [letter.id, letter]));
-const wordById = new Map((wordsData as WordEntry[]).map((word) => [word.id, word]));
+const wordById = new Map((wordsData as WordReference[]).map((word) => [word.id, word]));
 const voiceLines = voiceLinesData as VoiceLines;
 const lettersIntroLines = voiceLines.dialogue.lettersIntro;
 const feedback = voiceLines.feedback;

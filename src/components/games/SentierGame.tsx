@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { GAME_IDS } from "../../content/gameCatalog";
+import type {
+  AudioLine,
+  LessonBase,
+  VoiceLine,
+  WordReference,
+} from "../../content/types";
 import sentierLessonsData from "../../content/fr/sentier-lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import wordsData from "../../content/fr/words.json";
@@ -29,31 +35,14 @@ import type { SentierProgress } from "./sentierProgress";
 import { useVoiceAudio } from "./useVoiceAudio";
 import "./SentierGame.css";
 
-type WordEntry = {
-  id: string;
-  displayWord: string;
-  image: string;
-  audioWord: string;
-};
-
 type SentierQuestion = {
   id: string;
   targetWordId: string;
   distractors: string[];
 };
 
-type SentierLesson = {
-  id: string;
-  level: number;
-  title: string;
-  gameIds: string[];
+type SentierLesson = LessonBase & {
   questions: SentierQuestion[];
-};
-
-type VoiceLine = {
-  id?: string;
-  text: string;
-  audio: string;
 };
 
 type VoiceLines = {
@@ -61,12 +50,12 @@ type VoiceLines = {
     sentierIntro: VoiceLine[];
   };
   feedback: {
-    sentierWrong: VoiceLine;
-    sentierUturn: VoiceLine;
-    sentierCorrect2: VoiceLine;
-    sentierCorrect1: VoiceLine;
-    sentierCorrect0: VoiceLine;
-    sentierComplete: VoiceLine;
+    sentierWrong: AudioLine;
+    sentierUturn: AudioLine;
+    sentierCorrect2: AudioLine;
+    sentierCorrect1: AudioLine;
+    sentierCorrect0: AudioLine;
+    sentierComplete: AudioLine;
   };
 };
 
@@ -74,7 +63,7 @@ const lessons = (sentierLessonsData as SentierLesson[])
   .filter((entry) => entry.gameIds.includes(GAME_IDS.SENTIER))
   .sort((left, right) => left.level - right.level);
 const lesson = lessons[0];
-const wordById = new Map((wordsData as WordEntry[]).map((word) => [word.id, word]));
+const wordById = new Map((wordsData as WordReference[]).map((word) => [word.id, word]));
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.sentierIntro;
 const feedback = voiceLines.feedback;
@@ -147,7 +136,7 @@ export function SentierGame() {
   const bestScore = progress.bestGemsByLevel[String(lesson.level)] ?? 0;
 
   const playLine = useCallback(
-    async (line: VoiceLine) => {
+    async (line: AudioLine) => {
       setJungleDucked(true);
       const result = await playVoice(line.audio);
 
@@ -161,7 +150,7 @@ export function SentierGame() {
   );
 
   const playTarget = useCallback(
-    async (entry: WordEntry) => {
+    async (entry: WordReference) => {
       await playLine({ text: entry.displayWord, audio: entry.audioWord });
     },
     [playLine],

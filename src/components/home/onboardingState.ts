@@ -5,6 +5,7 @@ import {
   isGameId,
 } from "../../content/gameCatalog.ts";
 import type { GameId } from "../../content/gameCatalog.ts";
+import { readStoredJson, writeStoredJson } from "../../utils/storage.ts";
 
 export const HOME_LAST_GAME_STORAGE_KEY = "readingo:last-game:v1";
 export const LETTERS_PROGRESS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.LETTERS].progressKeys[0];
@@ -38,19 +39,6 @@ type SavedLastGame = {
   updatedAt?: unknown;
 };
 
-function readJson(storage: Storage | null, key: string): unknown {
-  if (!storage) {
-    return null;
-  }
-
-  try {
-    const saved = storage.getItem(key);
-    return saved ? JSON.parse(saved) : null;
-  } catch {
-    return null;
-  }
-}
-
 function hasProgress(value: unknown) {
   if (!value || typeof value !== "object") {
     return false;
@@ -76,10 +64,15 @@ export function recommendHomeGame(skill: SkillChoice, _age?: AgeChoice): HomeGam
 
 export function readResumeState(storage: Storage | null): ResumeState {
   const progressGames = GAME_CATALOG
-    .filter((game) => game.progressKeys.some((key) => hasProgress(readJson(storage, key))))
+    .filter((game) =>
+      game.progressKeys.some((key) => hasProgress(readStoredJson(storage, key))),
+    )
     .map((game) => game.id);
 
-  const savedLastGame = readJson(storage, HOME_LAST_GAME_STORAGE_KEY) as SavedLastGame | null;
+  const savedLastGame = readStoredJson<SavedLastGame>(
+    storage,
+    HOME_LAST_GAME_STORAGE_KEY,
+  );
   const lastGame =
     savedLastGame &&
     isGameId(savedLastGame.gameId) &&
@@ -96,11 +89,7 @@ export function readResumeState(storage: Storage | null): ResumeState {
 }
 
 export function rememberLastGame(storage: Storage | null, gameId: HomeGameId, updatedAt = Date.now()) {
-  try {
-    storage?.setItem(HOME_LAST_GAME_STORAGE_KEY, JSON.stringify({ gameId, updatedAt }));
-  } catch {
-    // La navigation et les jeux restent disponibles si le stockage est bloqué.
-  }
+  writeStoredJson(storage, HOME_LAST_GAME_STORAGE_KEY, { gameId, updatedAt });
 }
 
 export function shouldResumeFromUrl(locationSearch: string) {

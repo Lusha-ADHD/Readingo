@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { GAME_IDS } from "../../content/gameCatalog";
+import type {
+  AudioLine,
+  SyllableEntry,
+  VoiceLine,
+  WordEntry,
+} from "../../content/types";
 import syllableEntries from "../../content/fr/syllables.json";
 import lessonEntries from "../../content/fr/lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
@@ -34,38 +40,11 @@ import { useVoiceAudio } from "./useVoiceAudio";
 import type { VoicePlaybackResult } from "./useVoiceAudio";
 import "./BateauGame.css";
 
-type WordChallenge = {
-  id: string;
-  locale: string;
-  word: string;
-  displayWord: string;
-  syllables: string[];
-  spokenSyllables?: string[];
-  distractors: string[];
-  image: string;
-  audioWord: string;
-  audioSyllables: Partial<Record<string, string>>;
-  difficulty: number;
-  tags: string[];
-};
-
 type Tile = BateauTile;
-
-type SyllableEntry = {
-  id: string;
-  text: string;
-  speechText?: string;
-  audio: string;
-};
-
-type VoiceLine = {
-  text: string;
-  audio: string;
-};
 
 type VoiceLines = {
   dialogue: { intro: VoiceLine[] };
-  feedback: { tryAgain: VoiceLine; bravo: VoiceLine };
+  feedback: { tryAgain: AudioLine; bravo: AudioLine };
 };
 
 type GamePhase = "intro" | "dialog" | "map" | "playing" | "validating" | "sailing" | "done";
@@ -104,7 +83,7 @@ const SCENE_CLOUDS = Array.from({ length: 18 }, (_, index) => ({
   duration: 8200 + (index % 5) * 1300,
   delay: -1100 * (index % 7),
 }));
-const wordChallenges = words as WordChallenge[];
+const wordChallenges = words as WordEntry[];
 const wordById = new Map(wordChallenges.map((word) => [word.id, word]));
 const bateauLevels = (lessonEntries as BateauLevel[])
   .filter((level) => level.gameIds.includes(GAME_IDS.BATEAU))
@@ -114,7 +93,7 @@ const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) 
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.intro;
 
-function shuffleSessionWords(previousOrder: WordChallenge[]) {
+function shuffleSessionWords(previousOrder: WordEntry[]) {
   const shuffled = [...previousOrder];
 
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -130,7 +109,7 @@ function shuffleSessionWords(previousOrder: WordChallenge[]) {
 }
 
 function wordsForLevel(level: BateauLevel) {
-  return level.wordIds.map((id) => wordById.get(id)).filter((word): word is WordChallenge => Boolean(word));
+  return level.wordIds.map((id) => wordById.get(id)).filter((word): word is WordEntry => Boolean(word));
 }
 
 function getInitialProgress(): BateauProgress {
@@ -166,16 +145,16 @@ function getSyllableAudioPath(text: string) {
   return syllableByText.get(text)?.audio;
 }
 
-function getChallengeSyllableSpeechText(challenge: WordChallenge, text: string) {
+function getChallengeSyllableSpeechText(challenge: WordEntry, text: string) {
   const syllableIndex = challenge.syllables.indexOf(text);
   return syllableIndex >= 0 ? (challenge.spokenSyllables?.[syllableIndex] ?? getSyllableSpeechText(text)) : getSyllableSpeechText(text);
 }
 
-function getChallengeSyllableAudioPath(challenge: WordChallenge, text: string) {
+function getChallengeSyllableAudioPath(challenge: WordEntry, text: string) {
   return challenge.audioSyllables[text] ?? getSyllableAudioPath(text);
 }
 
-function getPlacedSyllableSpeechText(challenge: WordChallenge, tile: Tile, slotIndex: number) {
+function getPlacedSyllableSpeechText(challenge: WordEntry, tile: Tile, slotIndex: number) {
   return challenge.spokenSyllables?.[slotIndex] ?? getSyllableSpeechText(tile.text);
 }
 
@@ -252,7 +231,7 @@ export function BateauGame() {
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [dialogLineIndex, setDialogLineIndex] = useState(0);
   const [selectedLevel, setSelectedLevel] = useState<BateauLevel>(() => bateauLevels[0]);
-  const [sessionWords, setSessionWords] = useState<WordChallenge[]>(() => wordsForLevel(bateauLevels[0]));
+  const [sessionWords, setSessionWords] = useState<WordEntry[]>(() => wordsForLevel(bateauLevels[0]));
   const [wordIndex, setWordIndex] = useState(0);
   const [placed, setPlaced] = useState<Array<Tile | null>>([]);
   const [usedTileIds, setUsedTileIds] = useState<string[]>([]);

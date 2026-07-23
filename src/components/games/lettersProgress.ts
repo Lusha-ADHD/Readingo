@@ -1,4 +1,5 @@
 import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog.ts";
+import { readStoredJson, writeStoredJson } from "../../utils/storage.ts";
 
 export const LETTERS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.LETTERS].progressKeys[0];
 
@@ -33,18 +34,11 @@ function normalizeProgress(value: Partial<LettersProgress>, totalLevels: number)
 }
 
 export function readLettersProgress(storage: Storage | null, totalLevels: number): LettersProgress {
-  if (!storage) {
-    return createInitialLettersProgress();
-  }
+  const saved = readStoredJson<Partial<LettersProgress>>(storage, LETTERS_STORAGE_KEY);
 
-  try {
-    const saved = storage.getItem(LETTERS_STORAGE_KEY);
-    return saved
-      ? normalizeProgress(JSON.parse(saved) as Partial<LettersProgress>, totalLevels)
-      : createInitialLettersProgress();
-  } catch {
-    return createInitialLettersProgress();
-  }
+  return saved !== null
+    ? normalizeProgress(saved, totalLevels)
+    : createInitialLettersProgress();
 }
 
 export function completeLettersLevel(
@@ -63,9 +57,5 @@ export function completeLettersLevel(
 }
 
 export function saveLettersProgress(storage: Storage | null, progress: LettersProgress) {
-  try {
-    storage?.setItem(LETTERS_STORAGE_KEY, JSON.stringify(progress));
-  } catch {
-    // Le jeu reste jouable si localStorage est bloqué ou plein.
-  }
+  writeStoredJson(storage, LETTERS_STORAGE_KEY, progress);
 }

@@ -110,32 +110,25 @@ import { sitePath } from "../utils/paths";
   </main>
 
   <script>
+    import { readStoredJson } from "../utils/storage";
+
     for (const card of document.querySelectorAll<HTMLElement>("[data-progress-key]")) {
       const keys = card.dataset.progressKey?.split(",") ?? [];
       const hasProgress = keys.some((key) => {
-        try {
-          const saved = window.localStorage.getItem(key);
+        const progress = readStoredJson<{
+          sessions?: number;
+          unlockedLevel?: number;
+          completedLevels?: unknown[];
+          completedWords?: unknown[];
+        }>(window.localStorage, key);
 
-          if (!saved) {
-            return false;
-          }
-
-          const progress = JSON.parse(saved) as {
-            sessions?: number;
-            unlockedLevel?: number;
-            completedLevels?: unknown[];
-            completedWords?: unknown[];
-          };
-
-          return Boolean(
-            (progress.sessions ?? 0) > 0 ||
+        return Boolean(
+          progress &&
+          ((progress.sessions ?? 0) > 0 ||
             (progress.unlockedLevel ?? 1) > 1 ||
             progress.completedLevels?.length ||
-            progress.completedWords?.length
-          );
-        } catch {
-          return false;
-        }
+            progress.completedWords?.length)
+        );
       });
 
       if (hasProgress) {
