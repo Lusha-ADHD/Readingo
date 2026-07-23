@@ -4,6 +4,7 @@ import letterLessonsData from "../../content/fr/letter-lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import wordsData from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
+import { rememberLastGame, shouldResumeFromUrl } from "../home/onboardingState";
 import { AudioButton } from "../ui/AudioButton";
 import { GameButton } from "../ui/GameButton";
 import { LetterTile } from "../ui/LetterTile";
@@ -287,9 +288,23 @@ export function LettersGame() {
   }, [enableEffects, loadQuestion, startNightAmbience, testMode]);
 
   useEffect(() => {
-    setProgress(readLettersProgress(window.localStorage, lessons.length));
+    const savedProgress = readLettersProgress(window.localStorage, lessons.length);
+    setProgress(savedProgress);
+    rememberLastGame(window.localStorage, "letters");
     const local = isLocalTestHost(window.location.hostname);
     setLocalToolsAvailable(local);
+    const resumeRequested =
+      shouldResumeFromUrl(window.location.search) &&
+      (savedProgress.sessions > 0 || savedProgress.completedLevels.length > 0);
+
+    if (!local && resumeRequested) {
+      setQuestionIndex(0);
+      setLitStars(0);
+      setSelectedLetterId(null);
+      setChoiceVersion((version) => version + 1);
+      setPhase("question");
+      return;
+    }
 
     if (!local) {
       return;
@@ -313,6 +328,13 @@ export function LettersGame() {
     const hasTestParameter = requestedResult || hasRequestedQuestion || hasRequestedStars;
 
     if (!hasTestParameter) {
+      if (resumeRequested) {
+        setQuestionIndex(0);
+        setLitStars(0);
+        setSelectedLetterId(null);
+        setChoiceVersion((version) => version + 1);
+        setPhase("question");
+      }
       return;
     }
 

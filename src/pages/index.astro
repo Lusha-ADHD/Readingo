@@ -1,104 +1,260 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { BateauGame } from "@components/games/BateauGame";
+import { HomeOnboarding } from "@components/home/HomeOnboarding";
 import GameCard from "@components/ui/GameCard.astro";
 import { sitePath } from "../utils/paths";
 ---
 
 <BaseLayout
   title="Readingo - Apprendre à lire en jouant"
-  description="Explore l'Archipel des mots avec des mini-jeux gratuits pour apprendre les lettres, les syllabes et les mots."
+  description="Des jeux de lecture courts et gratuits pour aider les enfants de 5 à 7 ans à reconnaître les lettres et assembler les syllabes."
 >
   <main>
-    <section class="hero page-shell">
+    <section class="hero page-shell" aria-labelledby="hero-title">
       <div class="hero__copy">
-        <p class="hero__kicker">Jeux éducatifs pour la lecture</p>
-        <h1>Apprendre à lire en jouant</h1>
-        <p>
-          Des mini-jeux gratuits pour les 5-7 ans pour découvrir les lettres, les syllabes, et les mots.
+        <p class="hero__kicker">Jeux de lecture · 5 à 7 ans</p>
+        <h1 id="hero-title">Apprendre à lire devient une aventure</h1>
+        <p class="hero__description">
+          Des jeux courts et gratuits pour reconnaître les lettres, écouter leurs sons et assembler
+          les premiers mots.
         </p>
+
+        <ul class="hero__benefits" aria-label="Les avantages de Readingo">
+          <li><span aria-hidden="true">✓</span> Sans compte</li>
+          <li><span aria-hidden="true">✓</span> 5 à 10 minutes</li>
+          <li><span aria-hidden="true">✓</span> Progression enregistrée</li>
+        </ul>
+
         <div class="hero__actions">
-          <a class="button button--primary" href={sitePath("/jeux/bateau/")}>Jouer maintenant</a>
-          <a class="button button--secondary" href="#jeux">Voir les jeux</a>
+          <a class="button button--primary" href="#jeux">Choisir un jeu</a>
+          <a class="button button--secondary" href="#parents">Pour les parents</a>
         </div>
       </div>
-      <BateauGame client:load />
+
+      <HomeOnboarding client:load />
     </section>
 
     <section id="jeux" class="games page-shell" aria-labelledby="games-title">
-      <div class="section-heading">
-        <p>Premières escales</p>
-        <h2 id="games-title">Choisir un jeu</h2>
+      <div class="section-heading section-heading--split">
+        <div>
+          <p>À toi de jouer</p>
+          <h2 id="games-title">Choisis ton aventure</h2>
+        </div>
+        <span>Chaque jeu travaille une compétence précise, à son rythme.</span>
       </div>
+
       <div class="games__grid">
-        <GameCard title="Lettres" description="Reconnaître les lettres et leurs sons." href="/jeux/lettres/" variant="blue" />
-        <GameCard title="Syllabes" description="Assembler les syllabes pour former des mots." href="/jeux/bateau/" variant="green" />
-        <GameCard title="Mots" description="Lire et comprendre des mots simples." href="/jeux/syllabes/" variant="purple" />
+        <GameCard
+          title="L’Observatoire des lettres"
+          description="Retrouve les bonnes lettres et découvre leur nom et leur son."
+          href="/jeux/lettres/"
+          icon="A"
+          meta="Lettres · 5 min"
+          cta="Explorer l’Observatoire"
+          progressKey="readingo:lettres:v1"
+          theme="letters"
+        />
+        <GameCard
+          title="L’Archipel des mots"
+          description="Aide Pana à former des mots en assemblant les bonnes syllabes."
+          href="/jeux/bateau/"
+          icon="BA"
+          meta="Syllabes · 5–10 min"
+          cta="Prendre la mer"
+          progressKey="readingo:bateau:v3,readingo:bateau:v2"
+          theme="bateau"
+        />
+        <GameCard
+          title="La Forêt des mots"
+          description="Une future aventure pour lire et comprendre des mots simples."
+          icon="MOT"
+          meta="Lecture"
+          cta="Prochaine escale"
+          status="Bientôt"
+          theme="forest"
+        />
       </div>
+    </section>
+
+    <section id="parents" class="parent-note page-shell" aria-labelledby="parent-title">
+      <div class="parent-note__badge" aria-hidden="true">
+        <span>5</span>
+        <small>min</small>
+      </div>
+      <div>
+        <p>Pour les parents</p>
+        <h2 id="parent-title">Des sessions courtes, sans pression</h2>
+        <span>
+          Readingo accompagne les premiers apprentissages avec des consignes simples, un retour
+          immédiat et une progression adaptée aux petites sessions.
+        </span>
+      </div>
+      <a href={sitePath("/apprendre-a-lire/")}>Découvrir nos conseils <span aria-hidden="true">→</span></a>
     </section>
 
     <section class="resources page-shell" aria-labelledby="resources-title">
       <div class="section-heading">
-        <p>Ressources</p>
-        <h2 id="resources-title">Pour accompagner la lecture</h2>
+        <p>Ressources pour les parents</p>
+        <h2 id="resources-title">Accompagner les premiers pas</h2>
       </div>
       <div class="resources__grid">
-        <a href={sitePath("/apprendre-a-lire/")}>Lecture en maternelle</a>
-        <a href={sitePath("/apprendre-les-lettres/")}>Apprendre les lettres</a>
-        <a href={sitePath("/apprendre-les-syllabes/")}>Apprendre les syllabes</a>
-        <a href={sitePath("/conscience-phonologique-maternelle/")}>Conscience phonologique</a>
-        <a href={sitePath("/preparer-entree-cp/")}>Préparer l’entrée au CP</a>
+        <a href={sitePath("/apprendre-a-lire/")}>
+          <span>Lecture en maternelle</span><span aria-hidden="true">→</span>
+        </a>
+        <a href={sitePath("/apprendre-les-lettres/")}>
+          <span>Apprendre les lettres</span><span aria-hidden="true">→</span>
+        </a>
+        <a href={sitePath("/apprendre-les-syllabes/")}>
+          <span>Apprendre les syllabes</span><span aria-hidden="true">→</span>
+        </a>
+        <a href={sitePath("/conscience-phonologique-maternelle/")}>
+          <span>Conscience phonologique</span><span aria-hidden="true">→</span>
+        </a>
+        <a href={sitePath("/preparer-entree-cp/")}>
+          <span>Préparer l’entrée au CP</span><span aria-hidden="true">→</span>
+        </a>
       </div>
     </section>
+
+    <section class="final-cta page-shell" aria-labelledby="final-cta-title">
+      <div>
+        <p>Prêt pour la première aventure&nbsp;?</p>
+        <h2 id="final-cta-title">Quelques minutes suffisent pour commencer.</h2>
+      </div>
+      <a class="button button--primary" href="#jeux">Choisir un jeu</a>
+    </section>
   </main>
+
+  <script>
+    for (const card of document.querySelectorAll<HTMLElement>("[data-progress-key]")) {
+      const keys = card.dataset.progressKey?.split(",") ?? [];
+      const hasProgress = keys.some((key) => {
+        try {
+          const saved = window.localStorage.getItem(key);
+
+          if (!saved) {
+            return false;
+          }
+
+          const progress = JSON.parse(saved) as {
+            sessions?: number;
+            unlockedLevel?: number;
+            completedLevels?: unknown[];
+            completedWords?: unknown[];
+          };
+
+          return Boolean(
+            (progress.sessions ?? 0) > 0 ||
+            (progress.unlockedLevel ?? 1) > 1 ||
+            progress.completedLevels?.length ||
+            progress.completedWords?.length
+          );
+        } catch {
+          return false;
+        }
+      });
+
+      if (hasProgress) {
+        const label = card.querySelector<HTMLElement>("[data-game-cta]");
+
+        if (label) {
+          label.textContent = "Reprendre";
+        }
+
+        if (card instanceof HTMLAnchorElement) {
+          const resumeUrl = new URL(card.href);
+          resumeUrl.searchParams.set("reprendre", "1");
+          card.href = resumeUrl.toString();
+        }
+      }
+    }
+  </script>
 </BaseLayout>
 
 <style>
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 0.86fr) minmax(520px, 1.24fr);
-    gap: 40px;
+    grid-template-columns: minmax(0, 0.92fr) minmax(440px, 1.08fr);
+    gap: clamp(36px, 6vw, 76px);
     align-items: center;
-    padding-block: 54px 36px;
+    padding-block: clamp(48px, 7vw, 86px) 68px;
   }
 
   .hero__copy {
     display: grid;
+    justify-items: start;
     gap: 22px;
   }
 
   .hero__kicker,
-  .section-heading p {
+  .section-heading > p,
+  .section-heading > div > p,
+  .parent-note > div > p {
     margin: 0;
     color: var(--color-blue-dark);
+    font-size: 0.9rem;
     font-weight: 950;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.055em;
     text-transform: uppercase;
   }
 
   h1,
-  h2 {
+  h2,
+  h3,
+  p {
     margin: 0;
-    letter-spacing: 0;
-    line-height: 1;
+  }
+
+  h1,
+  h2 {
+    letter-spacing: -0.035em;
+    line-height: 0.98;
   }
 
   h1 {
-    width: 100%;
     max-width: 11ch;
-    font-size: 4.5rem;
+    font-size: clamp(3.5rem, 6.2vw, 5.35rem);
   }
 
   h2 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-size: clamp(2.35rem, 4.6vw, 3.9rem);
   }
 
-  .hero p:not(.hero__kicker) {
-    max-width: 36rem;
-    margin: 0;
+  .hero__description {
+    max-width: 37rem;
     color: var(--color-muted);
-    font-size: clamp(1.1rem, 2.1vw, 1.35rem);
+    font-size: clamp(1.12rem, 2vw, 1.35rem);
     font-weight: 750;
+    line-height: 1.55;
+  }
+
+  .hero__benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin: 0;
+    padding: 0;
+    color: var(--color-text);
+    font-size: 0.94rem;
+    font-weight: 900;
+    list-style: none;
+  }
+
+  .hero__benefits li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .hero__benefits li > span {
+    display: grid;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(83, 201, 63, 0.2);
+    color: #237a22;
+    font-size: 0.78rem;
   }
 
   .hero__actions {
@@ -112,75 +268,228 @@ import { sitePath } from "../utils/paths";
     min-height: 58px;
     align-items: center;
     justify-content: center;
+    padding-inline: 24px;
     border: 3px solid var(--color-border);
     border-radius: 18px;
     box-shadow: 0 7px 0 rgba(8, 33, 74, 0.18);
     font-weight: 950;
+    transition:
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .button:hover {
+    box-shadow: 0 10px 0 rgba(8, 33, 74, 0.2);
+    transform: translateY(-3px);
+  }
+
+  .button:active {
+    box-shadow: 0 3px 0 rgba(8, 33, 74, 0.18);
+    transform: translateY(4px);
   }
 
   .button--primary {
-    min-width: 210px;
+    min-width: 190px;
     background: linear-gradient(180deg, var(--color-gold), var(--color-orange));
     color: var(--color-text);
   }
 
   .button--secondary {
-    min-width: 160px;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.82);
     color: var(--color-blue-dark);
   }
 
   .games,
   .resources {
-    padding-block: 32px;
+    scroll-margin-top: 96px;
+    padding-block: 56px;
   }
 
   .section-heading {
     display: grid;
-    gap: 8px;
-    margin-bottom: 22px;
+    gap: 10px;
+    margin-bottom: 28px;
   }
 
-  .games__grid,
-  .resources__grid {
+  .section-heading--split {
+    grid-template-columns: 1fr minmax(240px, 380px);
+    align-items: end;
+    gap: 32px;
+  }
+
+  .section-heading--split > div {
+    display: grid;
+    gap: 10px;
+  }
+
+  .section-heading--split > span {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    font-weight: 750;
+  }
+
+  .games__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: 20px;
+  }
+
+  .parent-note {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+    margin-block: 58px;
+    padding: 28px 32px;
+    border: 3px solid var(--color-border);
+    border-radius: 28px;
+    background: linear-gradient(120deg, #fffef8, #fff0bb);
+    box-shadow: 0 8px 0 rgba(8, 33, 74, 0.12);
+    scroll-margin-top: 96px;
+  }
+
+  .parent-note__badge {
+    display: grid;
+    width: 82px;
+    height: 82px;
+    place-content: center;
+    border: 3px solid var(--color-border);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fff5c9, var(--color-gold));
+    box-shadow: 0 6px 0 rgba(8, 33, 74, 0.15);
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  .parent-note__badge span {
+    font-size: 2rem;
+    font-weight: 950;
+    line-height: 0.85;
+  }
+
+  .parent-note__badge small {
+    font-weight: 950;
+    text-transform: uppercase;
+  }
+
+  .parent-note > div:not(.parent-note__badge) {
+    display: grid;
+    gap: 7px;
+  }
+
+  .parent-note h2 {
+    font-size: clamp(1.8rem, 3vw, 2.7rem);
+  }
+
+  .parent-note > div > span {
+    max-width: 47rem;
+    color: var(--color-muted);
+    font-weight: 700;
+  }
+
+  .parent-note > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-blue-dark);
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
+  .resources__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .resources__grid a {
     display: flex;
-    min-height: 96px;
+    min-height: 76px;
+    flex: 1 1 198px;
     align-items: center;
-    padding: 22px;
-    border: 3px solid rgba(8, 33, 74, 0.18);
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.7);
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 2px solid rgba(8, 33, 74, 0.18);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
     color: var(--color-text);
-    font-size: 1.35rem;
     font-weight: 900;
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
   }
 
-  @media (max-width: 1000px) {
+  .resources__grid a:hover {
+    border-color: var(--color-blue);
+    background: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .resources__grid a > span:last-child {
+    color: var(--color-blue-dark);
+    font-size: 1.2rem;
+  }
+
+  .final-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin-top: 38px;
+    padding: clamp(28px, 5vw, 48px);
+    border: 4px solid var(--color-border);
+    border-radius: 32px;
+    background:
+      radial-gradient(circle at 92% 20%, rgba(255, 224, 110, 0.5), transparent 12rem),
+      linear-gradient(135deg, #6b51d7, #2f82d6);
+    box-shadow: var(--shadow-raised);
+    color: #ffffff;
+  }
+
+  .final-cta > div {
+    display: grid;
+    gap: 8px;
+  }
+
+  .final-cta p {
+    color: #fff2ad;
+    font-weight: 950;
+  }
+
+  .final-cta h2 {
+    max-width: 18ch;
+    font-size: clamp(2rem, 4vw, 3.15rem);
+  }
+
+  @media (max-width: 940px) {
     .hero {
       grid-template-columns: 1fr;
     }
 
-    h1 {
-      font-size: 4rem;
+    .hero__copy {
+      max-width: 720px;
+    }
+
+    .games__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .parent-note {
+      grid-template-columns: auto 1fr;
+    }
+
+    .parent-note > a {
+      grid-column: 2;
     }
   }
 
   @media (max-width: 700px) {
     .hero {
       width: 100%;
-      padding-top: 28px;
-    }
-
-    .hero :global(.bateau-game) {
-      width: 100%;
-      height: clamp(560px, 82dvh, 720px);
-      min-height: 0;
+      gap: 38px;
+      padding-top: 34px;
     }
 
     .hero__copy {
@@ -189,12 +498,50 @@ import { sitePath } from "../utils/paths";
     }
 
     h1 {
-      font-size: 3.25rem;
+      font-size: clamp(3rem, 14vw, 4.2rem);
     }
 
-    .games__grid,
-    .resources__grid {
+    .section-heading--split {
       grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .parent-note {
+      grid-template-columns: 1fr;
+      justify-items: start;
+      padding: 24px;
+    }
+
+    .parent-note > a {
+      grid-column: 1;
+      white-space: normal;
+    }
+
+    .final-cta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .hero__actions,
+    .hero__actions .button,
+    .final-cta .button {
+      width: 100%;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button,
+    .resources__grid a {
+      transition: none;
+    }
+
+    .button:hover,
+    .button:active,
+    .resources__grid a:hover {
+      transform: none;
     }
   }
 </style>

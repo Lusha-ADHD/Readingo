@@ -36,6 +36,17 @@ const canonicalUrl = canonicalPath
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <link rel="icon" href={sitePath("/favicon.svg")} type="image/svg+xml" />
+    <link
+      rel="preload"
+      href={sitePath("/assets/fonts/nunito-latin.ttf")}
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+    <style
+      is:inline
+      set:html={`@font-face{font-family:Nunito;src:url("${sitePath("/assets/fonts/nunito-latin.ttf")}") format("truetype");font-style:normal;font-weight:200 1000;font-display:swap;}`}
+    ></style>
     <title>{title}</title>
     <slot name="head" />
   </head>
@@ -46,20 +57,27 @@ const canonicalUrl = canonicalPath
           <span class="brand__mark" aria-hidden="true">
             <span class="brand__sail"></span>
           </span>
-          <span>Readingo</span>
+          <span class="brand__name">Readingo</span>
         </a>
         <nav class="main-nav" aria-label="Navigation principale">
-          <a href={sitePath("/jeux/bateau/")}>Jeux</a>
-          <a href={sitePath("/apprendre-les-syllabes/")}>Parcours</a>
-          <a href={sitePath("/apprendre-a-lire/")}>Ressources</a>
+          <a href={sitePath("/#jeux")}>Jeux</a>
+          <a class="main-nav__link--secondary" href={sitePath("/#parents")}>Pour les parents</a>
+          <a class="main-nav__link--secondary" href={sitePath("/apprendre-a-lire/")}>Conseils</a>
+          <a class="main-nav__cta" href={sitePath("/#jeux")}>Jouer</a>
         </nav>
       </div>
     </header>
     <slot />
     <footer class="site-footer">
       <div class="site-footer__inner page-shell">
-        <strong>Readingo</strong>
-        <a href={sitePath("/apprendre-a-lire/")}>Ressources pour apprendre à lire</a>
+        <div class="site-footer__brand">
+          <strong>Readingo</strong>
+          <span>Apprendre à lire devient une aventure.</span>
+        </div>
+        <nav class="site-footer__nav" aria-label="Navigation de pied de page">
+          <a href={sitePath("/#jeux")}>Jeux</a>
+          <a href={sitePath("/apprendre-a-lire/")}>Conseils pour les parents</a>
+        </nav>
       </div>
     </footer>
   </body>

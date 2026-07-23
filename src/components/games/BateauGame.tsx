@@ -5,6 +5,7 @@ import lessonEntries from "../../content/fr/lessons.json";
 import voiceLinesData from "../../content/fr/voice-lines.json";
 import words from "../../content/fr/words.json";
 import { sitePath } from "../../utils/paths";
+import { rememberLastGame, shouldResumeFromUrl } from "../home/onboardingState";
 import { AudioButton } from "../ui/AudioButton";
 import { SyllableSlot } from "../ui/SyllableSlot";
 import { GameButton } from "../ui/GameButton";
@@ -309,6 +310,17 @@ export function BateauGame() {
   const tiles = useMemo(() => createBateauTiles(challenge), [challenge]);
   const completedCount = phase === "done" ? sessionWords.length : wordIndex;
   const displayedTotalTreasures = progress.totalTreasures + (phase === "done" || phase === "map" ? 0 : treasures);
+
+  useEffect(() => {
+    rememberLastGame(window.localStorage, "bateau");
+
+    if (
+      shouldResumeFromUrl(window.location.search) &&
+      (progress.sessions > 0 || progress.unlockedLevel > 1 || progress.completedLevels.length > 0)
+    ) {
+      setPhase("map");
+    }
+  }, []);
 
   useEffect(() => {
     const isLocalHost = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);

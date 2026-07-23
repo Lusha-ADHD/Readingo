@@ -145,6 +145,16 @@ Le GDD de chaque jeu définit l’unité de score, son mode de calcul et son eff
 
 Les spécifications visuelles détaillées vivent dans [Direction artistique et design system](./design-direction.md).
 
+### Dimensions du cadre de jeu
+
+L’onboarding de la page d’accueil et tous les jeux utilisent le même contrat de dimensions afin que le passage de l’un à l’autre ne provoque aucun réajustement vertical :
+
+- hauteur sur écran large : `--play-frame-height` ;
+- hauteur sur mobile : `--play-frame-mobile-height`, soit la hauteur du viewport dynamique moins l’en-tête ;
+- largeur maximale de référence : `--play-frame-max-width`.
+
+Ces constantes sont définies une seule fois dans `src/styles/global.css`. Un nouveau jeu doit les réutiliser et ne doit pas introduire de hauteur ou de largeur maximale codée en dur pour son cadre principal. Le contenu interne s’adapte au cadre commun ; il ne redimensionne pas celui-ci.
+
 Conventions fonctionnelles :
 
 - bouton principal unique par panneau ;

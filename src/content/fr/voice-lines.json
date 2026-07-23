@@ -33,6 +33,75 @@
         "text": "Chaque bonne réponse fera briller une étoile et nous montrera la route. En avant pour notre grand voyage !",
         "audio": "/assets/audio/fr/dialogue/letters-intro-03.mp3"
       }
+    ],
+    "homeOnboarding": [
+      {
+        "id": "home-welcome",
+        "text": "Bonjour moussaillon ! Je m'appelle Pana et je suis la capitaine de ce bateau. Partons ensemble à l'aventure sur ce vaste océan pour jouer avec les mots !",
+        "audio": "/assets/audio/fr/dialogue/home-welcome.mp3"
+      },
+      {
+        "id": "home-age",
+        "text": "Pour commencer, quel âge as-tu ?",
+        "audio": "/assets/audio/fr/dialogue/home-age.mp3"
+      },
+      {
+        "id": "home-skill",
+        "text": "Dis-moi maintenant où tu en es avec les lettres et les syllabes.",
+        "audio": "/assets/audio/fr/dialogue/home-skill.mp3"
+      },
+      {
+        "id": "home-result-letters",
+        "text": "Je te conseille l'Observatoire des lettres. Tu vas apprendre à reconnaître les lettres et leurs sons.",
+        "audio": "/assets/audio/fr/dialogue/home-result-letters.mp3"
+      },
+      {
+        "id": "home-result-bateau",
+        "text": "Je te conseille l'Archipel des mots. Tu vas assembler des syllabes pour faire avancer ton bateau.",
+        "audio": "/assets/audio/fr/dialogue/home-result-bateau.mp3"
+      },
+      {
+        "id": "home-return",
+        "text": "Content de te revoir ! Veux-tu reprendre ton aventure ?",
+        "audio": "/assets/audio/fr/dialogue/home-return.mp3"
+      }
+    ],
+    "homeAnswers": [
+      {
+        "id": "home-answer-age-5",
+        "text": "5 ans",
+        "audio": "/assets/audio/fr/dialogue/home-answer-age-5.mp3"
+      },
+      {
+        "id": "home-answer-age-6",
+        "text": "6 ans",
+        "audio": "/assets/audio/fr/dialogue/home-answer-age-6.mp3"
+      },
+      {
+        "id": "home-answer-age-7",
+        "text": "7 ans",
+        "audio": "/assets/audio/fr/dialogue/home-answer-age-7.mp3"
+      },
+      {
+        "id": "home-answer-age-other",
+        "text": "J'ai un autre âge",
+        "audio": "/assets/audio/fr/dialogue/home-answer-age-other.mp3"
+      },
+      {
+        "id": "home-answer-discovering-letters",
+        "text": "Je découvre les lettres",
+        "audio": "/assets/audio/fr/dialogue/home-answer-discovering-letters.mp3"
+      },
+      {
+        "id": "home-answer-knows-letters",
+        "text": "Je connais déjà beaucoup de lettres",
+        "audio": "/assets/audio/fr/dialogue/home-answer-knows-letters.mp3"
+      },
+      {
+        "id": "home-answer-reads-syllables",
+        "text": "Je commence à lire des syllabes",
+        "audio": "/assets/audio/fr/dialogue/home-answer-reads-syllables.mp3"
+      }
     ]
   },
   "feedback": {

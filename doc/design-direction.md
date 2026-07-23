@@ -193,6 +193,19 @@ L’image et une tuile de syllabe ne doivent pas définir deux variantes incompa
 - marges internes généreuses mais compressibles sur petit écran ;
 - une seule action principale.
 
+#### Compacité obligatoire
+
+Un panneau ne reçoit jamais une grande hauteur fixe pour équilibrer une composition. Sa hauteur
+vient de son contenu, avec seulement les marges nécessaires à la lisibilité et aux zones tactiles.
+Le décor et les personnages doivent rester visibles autour de l’interface.
+
+- séparer une bulle de dialogue du panneau de réponses ;
+- ancrer les réponses en bas de la scène sans leur faire occuper tout l’espace disponible ;
+- préférer `height: auto`, `fit-content` et une largeur maximale responsive ;
+- réserver une hauteur fixe aux seules grilles dont la stabilité évite un déplacement gênant ;
+- vérifier chaque état avec son contenu le plus long à 320 px avant d’ajouter de l’espace vide ;
+- ne jamais masquer durablement un personnage ou un élément narratif pour remplir un panneau.
+
 ### HUD et progression
 
 Le HUD montre seulement les informations utiles pendant l’action :

@@ -8,7 +8,7 @@ type ActiveVoice = {
   complete: (result: VoicePlaybackResult) => void;
 };
 
-const VOICE_ASSET_VERSION = "2026-07-22-8";
+const VOICE_ASSET_VERSION = "2026-07-23-1";
 
 export function useVoiceAudio() {
   const activeVoiceRef = useRef<ActiveVoice | null>(null);

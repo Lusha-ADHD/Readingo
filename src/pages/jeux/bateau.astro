@@ -51,13 +51,12 @@ import { BateauGame } from "@components/games/BateauGame";
   }
 
   .game-page__frame {
-    max-width: 880px;
+    max-width: var(--play-frame-max-width);
   }
 
   @media (max-width: 700px) {
     .game-page {
-      height: calc(100vh - 65px);
-      height: calc(100dvh - 65px);
+      height: var(--play-frame-mobile-height);
       padding: 0;
     }
 
