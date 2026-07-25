@@ -47,7 +47,7 @@ test.describe("Le Sentier des mots", () => {
   });
 
   for (const viewport of viewports) {
-    test(`la scène démarre en haut du cadre à ${viewport.width}x${viewport.height}`, async ({
+    test(`la scène couvre tout le cadre à ${viewport.width}x${viewport.height}`, async ({
       page,
     }) => {
       await page.setViewportSize(viewport);
@@ -71,8 +71,10 @@ test.describe("Le Sentier des mots", () => {
       expect(scene.y).toBeLessThanOrEqual(game.y + 5);
       expect(hud.y).toBeGreaterThanOrEqual(scene.y - 1);
       expect(hud.y + hud.height).toBeLessThanOrEqual(scene.y + scene.height + 1);
-      expect(scene.y + scene.height).toBeLessThanOrEqual(controls.y + 1);
-      expect(scene.height).toBeGreaterThanOrEqual(viewport.width <= 700 ? 170 : 220);
+      expect(scene.x).toBeLessThanOrEqual(game.x + 5);
+      expect(scene.x + scene.width).toBeGreaterThanOrEqual(game.x + game.width - 5);
+      expect(scene.y + scene.height).toBeGreaterThanOrEqual(game.y + game.height - 5);
+      expect(overlaps(scene, controls)).toBe(true);
       expect(controls.y + controls.height).toBeLessThanOrEqual(game.y + game.height + 1);
 
       const horizontalOverflow = await page.evaluate(
@@ -106,20 +108,22 @@ test.describe("Le Sentier des mots", () => {
     });
   }
 
-  test("cinq réponses utilisent deux rangées sans couvrir la scène", async ({ page }) => {
+  test("cinq réponses utilisent deux rangées au-dessus de la scène", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await page.goto("/jeux/mots/?test=1&choices=5");
     await expect(page.getByTestId("sentier-choice")).toHaveCount(5);
     await expectBackdrop(page, 5);
 
+    const game = await page.getByTestId("sentier-game").boundingBox();
     const scene = await page.getByTestId("sentier-scene").boundingBox();
     const choices = await page.getByTestId("sentier-choices").boundingBox();
+    expect(game).not.toBeNull();
     expect(scene).not.toBeNull();
     expect(choices).not.toBeNull();
 
-    if (scene && choices) {
-      expect(scene.y + scene.height).toBeLessThanOrEqual(choices.y);
-      expect(scene.height).toBeGreaterThanOrEqual(170);
+    if (game && scene && choices) {
+      expect(scene.y + scene.height).toBeGreaterThanOrEqual(game.y + game.height - 5);
+      expect(overlaps(scene, choices)).toBe(true);
     }
   });
 
