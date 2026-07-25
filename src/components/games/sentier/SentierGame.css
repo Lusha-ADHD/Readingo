@@ -146,6 +146,57 @@
   transition: opacity 300ms ease;
 }
 
+.jungle-scene--light-0 {
+  --sentier-ray-left: 14%;
+  --sentier-ray-right: 15%;
+}
+
+.jungle-scene--light-1 {
+  --sentier-ray-left: 28%;
+  --sentier-ray-right: 28%;
+}
+
+.jungle-scene--light-2 {
+  --sentier-ray-left: 7%;
+  --sentier-ray-right: 36%;
+}
+
+.jungle-scene--light-3 {
+  --sentier-ray-left: 38%;
+  --sentier-ray-right: 7%;
+}
+
+.jungle-scene__light::before,
+.jungle-scene__light::after {
+  position: absolute;
+  top: -14%;
+  width: 22%;
+  height: 82%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 247, 194, 0.46),
+    rgba(255, 235, 155, 0.16) 52%,
+    transparent 94%
+  );
+  clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%);
+  content: "";
+  filter: blur(3px);
+  opacity: 0.68;
+  pointer-events: none;
+  animation: sentier-light-breathe 8s ease-in-out infinite alternate;
+}
+
+.jungle-scene__light::before {
+  left: var(--sentier-ray-left);
+  transform: rotate(-7deg);
+}
+
+.jungle-scene__light::after {
+  right: var(--sentier-ray-right);
+  transform: rotate(9deg);
+  animation-delay: -4s;
+}
+
 .jungle-scene__canopy {
   position: absolute;
   z-index: 5;
@@ -213,6 +264,127 @@
   opacity: 0.22;
   pointer-events: none;
   transition: opacity 300ms ease;
+}
+
+.jungle-scene__particles {
+  position: absolute;
+  z-index: 9;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.jungle-scene__particle {
+  --particle-drift: 8px;
+  position: absolute;
+  width: clamp(3px, 0.46vw, 6px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff7a8;
+  box-shadow:
+    0 0 6px 2px rgba(255, 248, 180, 0.82),
+    0 0 13px 5px rgba(255, 224, 99, 0.34);
+  opacity: 0;
+  animation: sentier-ambient-particle 7.2s ease-in-out infinite;
+}
+
+.jungle-scene__particle:nth-child(1) {
+  top: 29%;
+  left: 13%;
+  animation-delay: -1.2s;
+  animation-duration: 6.8s;
+}
+
+.jungle-scene__particle:nth-child(2) {
+  --particle-drift: -7px;
+  top: 43%;
+  left: 26%;
+  animation-delay: -5.1s;
+  animation-duration: 8.1s;
+}
+
+.jungle-scene__particle:nth-child(3) {
+  top: 25%;
+  left: 41%;
+  animation-delay: -3.7s;
+  animation-duration: 7.6s;
+}
+
+.jungle-scene__particle:nth-child(4) {
+  --particle-drift: -5px;
+  top: 38%;
+  left: 55%;
+  animation-delay: -6.4s;
+  animation-duration: 8.8s;
+}
+
+.jungle-scene__particle:nth-child(5) {
+  top: 23%;
+  left: 69%;
+  animation-delay: -2.5s;
+  animation-duration: 7.9s;
+}
+
+.jungle-scene__particle:nth-child(6) {
+  --particle-drift: -9px;
+  top: 45%;
+  left: 83%;
+  animation-delay: -4.8s;
+  animation-duration: 9.2s;
+}
+
+.jungle-scene__particle:nth-child(7) {
+  top: 56%;
+  left: 34%;
+  animation-delay: -7.1s;
+  animation-duration: 8.5s;
+}
+
+.jungle-scene__particle:nth-child(8) {
+  --particle-drift: -6px;
+  top: 57%;
+  left: 74%;
+  animation-delay: -0.8s;
+  animation-duration: 7.3s;
+}
+
+.jungle-scene__eyes {
+  position: absolute;
+  z-index: 10;
+  top: 17%;
+  right: 50%;
+  width: clamp(28px, 4.2%, 40px);
+  height: 12px;
+  opacity: 0;
+  filter:
+    drop-shadow(0 0 4px rgba(14, 119, 137, 0.95))
+    drop-shadow(0 0 9px rgba(67, 230, 214, 0.76));
+  pointer-events: none;
+  transform-origin: center;
+  animation: sentier-jungle-eyes 9s ease-in-out infinite;
+}
+
+.jungle-scene__eyes::before,
+.jungle-scene__eyes::after {
+  position: absolute;
+  top: 2px;
+  width: 9px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ee8e6;
+  content: "";
+}
+
+.jungle-scene__eyes::before {
+  left: 2px;
+}
+
+.jungle-scene__eyes::after {
+  right: 2px;
+}
+
+.jungle-scene--destination .jungle-scene__particles {
+  display: none;
 }
 
 .jungle-scene--lost-1 .jungle-scene__world {
@@ -1030,6 +1202,62 @@
   }
 }
 
+@keyframes sentier-light-breathe {
+  from {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0.88;
+  }
+}
+
+@keyframes sentier-ambient-particle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 9px) scale(0.55);
+  }
+
+  28% {
+    opacity: 0.25;
+  }
+
+  55% {
+    opacity: 0.96;
+    transform: translate(var(--particle-drift), -11px) scale(1.12);
+  }
+
+  78% {
+    opacity: 0.18;
+  }
+}
+
+@keyframes sentier-jungle-eyes {
+  0%,
+  62%,
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+
+  67%,
+  86% {
+    opacity: 0.92;
+    transform: scaleY(1);
+  }
+
+  75% {
+    opacity: 0.12;
+    transform: scaleY(0.12);
+  }
+
+  77% {
+    opacity: 0.92;
+    transform: scaleY(1);
+  }
+}
+
 @keyframes sentier-chest-open {
   from {
     opacity: 0;
@@ -1290,6 +1518,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .jungle-scene__light::before,
+  .jungle-scene__light::after {
+    animation: none;
+    opacity: 0.68;
+  }
+
+  .jungle-scene__particles,
+  .jungle-scene__eyes {
+    display: none;
+  }
+
   .jungle-scene--travelling:not(.jungle-scene--uturn) .jungle-scene__world {
     animation: sentier-fade 150ms ease both;
   }

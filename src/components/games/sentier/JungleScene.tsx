@@ -125,8 +125,11 @@ export function JungleScene({
         travelling ? `jungle-scene--travelling jungle-scene--${direction}` : ""
       } ${destinationReached ? "jungle-scene--destination" : ""} ${
         phase === "destination-travelling" ? "jungle-scene--destination-travelling" : ""
+      } ${destinationReached ? "" : `jungle-scene--paths-${pathCount}`} jungle-scene--light-${
+        sceneVersion % 4
       }`}
       data-testid="sentier-scene"
+      data-light-variant={sceneVersion % 4}
       onClick={travelling ? onSkipTravel : undefined}
       onKeyDown={
         travelling
@@ -189,6 +192,14 @@ export function JungleScene({
         <img className="jungle-scene__vines jungle-scene__vines--a" src={ASSETS.vinesA} alt="" />
         <img className="jungle-scene__vines jungle-scene__vines--b" src={ASSETS.vinesB} alt="" />
         <span className="jungle-scene__mist" />
+        <span className="jungle-scene__particles" aria-hidden="true">
+          {Array.from({ length: 8 }, (_, index) => (
+            <span className="jungle-scene__particle" key={index} />
+          ))}
+        </span>
+        {pathCount === 0 && !destinationReached ? (
+          <span className="jungle-scene__eyes" data-testid="sentier-jungle-eyes" aria-hidden="true" />
+        ) : null}
       </span>
 
       {phase === "reward" && rewardGems > 0 ? (

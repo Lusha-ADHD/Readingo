@@ -146,6 +146,55 @@ test.describe("Le Sentier des mots", () => {
     );
   });
 
+  test("les particules restent décoratives et les yeux apparaissent seulement dans l’impasse", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/jeux/mots/?test=1&errors=1");
+    await expect(page.locator(".jungle-scene__particle")).toHaveCount(8);
+    await expect(page.getByTestId("sentier-scene")).toHaveClass(/jungle-scene--paths-2/);
+    await expect(page.getByTestId("sentier-jungle-eyes")).toHaveCount(0);
+    await expect
+      .poll(() =>
+        page
+          .locator(".jungle-scene__particle")
+          .first()
+          .evaluate((element) => getComputedStyle(element).animationName),
+      )
+      .toBe("sentier-ambient-particle");
+    await expect
+      .poll(() =>
+        page
+          .locator(".jungle-scene__light")
+          .evaluate((element) => getComputedStyle(element, "::before").animationName),
+      )
+      .toBe("sentier-light-breathe");
+
+    await page.goto("/jeux/mots/?test=1&state=uturn");
+    await expect(page.getByTestId("sentier-scene")).toHaveClass(/jungle-scene--paths-0/);
+    await expect(page.getByTestId("sentier-jungle-eyes")).toHaveCount(1);
+    await expect
+      .poll(() =>
+        page
+          .getByTestId("sentier-jungle-eyes")
+          .evaluate((element) => getComputedStyle(element).animationName),
+      )
+      .toBe("sentier-jungle-eyes");
+
+    await page.goto("/jeux/mots/?test=1&state=treasure");
+    await expect(page.getByTestId("sentier-jungle-eyes")).toHaveCount(0);
+  });
+
+  test("les rayons changent de position avec le nouveau décor", async ({ page }) => {
+    await page.goto("/jeux/mots/?test=1");
+    await expect(page.getByTestId("sentier-scene")).toHaveAttribute("data-light-variant", "0");
+
+    await page.getByRole("button", { name: "melon", exact: true }).click();
+    await expect(page.getByTestId("sentier-scene")).toHaveAttribute("data-light-variant", "1", {
+      timeout: 3_000,
+    });
+  });
+
   test("le demi-tour conserve un unique bouton visible", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/jeux/mots/?test=1&state=uturn");
