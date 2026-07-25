@@ -75,7 +75,7 @@ const wordById = new Map((wordsData as WordReference[]).map((word) => [word.id, 
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.sentierIntro;
 const feedback = voiceLines.feedback;
-const BACKDROP_PATH = sitePath("/assets/world/jungle/jungle-backdrop.png");
+const BACKDROP_PATH = sitePath("/assets/world/jungle/jungle-crossroads-5-test.webp");
 const GEM_PATH = sitePath("/assets/world/jungle/gem.png");
 const TRAVEL_DURATION = 660;
 const DESTINATION_DURATION = TRAVEL_DURATION;
@@ -758,7 +758,6 @@ export function SentierGame() {
     return (
       <section className="sentier-game sentier-game--opening" data-testid="sentier-game">
         <img className="sentier-opening__backdrop" src={BACKDROP_PATH} alt="" />
-        <div className="sentier-opening__shade" />
         <GameIntroOverlay
           title="Le Sentier des mots"
           subtitle="Lis les mots et guide Pana jusqu’au trésor."
@@ -783,7 +782,6 @@ export function SentierGame() {
     return (
       <section className="sentier-game sentier-game--opening" data-testid="sentier-game">
         <img className="sentier-opening__backdrop" src={BACKDROP_PATH} alt="" />
-        <div className="sentier-opening__shade" />
         <GameDialogueOverlay text={line.text} onSkip={skipIntro} />
       </section>
     );
@@ -844,6 +842,7 @@ export function SentierGame() {
         choiceCount={state.choices.length}
         destinationReached={state.destinationReached}
         lostness={state.destinationReached ? 0 : state.errors}
+        mirrorBackdrop={state.questionIndex % 2 === 1}
         onDigTreasure={handleDigTreasure}
         onOpenTreasure={handleOpenTreasure}
         onRewardMound={handleRewardMound}

@@ -8,6 +8,7 @@ type Props = {
   phase: SentierPhase;
   selectedDirection: SentierDirection | null;
   lostness: number;
+  mirrorBackdrop: boolean;
   rewardGems: number;
   showSinglePath: boolean;
   preloadTreasureAssets: boolean;
@@ -71,6 +72,7 @@ export function JungleScene({
   phase,
   selectedDirection,
   lostness,
+  mirrorBackdrop,
   rewardGems,
   showSinglePath,
   preloadTreasureAssets,
@@ -142,7 +144,9 @@ export function JungleScene({
     >
       {phase === "destination-travelling" ? (
         <img
-          className="jungle-scene__destination-previous"
+          className={`jungle-scene__destination-previous ${
+            mirrorBackdrop ? "jungle-scene__backdrop--mirrored" : ""
+          }`}
           src={ASSETS.backdrops[pathCount]}
           alt=""
           draggable={false}
@@ -151,7 +155,9 @@ export function JungleScene({
 
       <span className="jungle-scene__world" key={`world-${sceneVersion}`}>
         <img
-          className="jungle-scene__backdrop"
+          className={`jungle-scene__backdrop ${
+            !destinationReached && mirrorBackdrop ? "jungle-scene__backdrop--mirrored" : ""
+          }`}
           src={backdrop}
           alt=""
           data-path-count={destinationReached ? undefined : pathCount}

@@ -3,7 +3,7 @@ import type { HomeGameId } from "./onboardingState";
 
 const BOAT_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_PATH = sitePath("/assets/world/IslandWithChest.png");
-const JUNGLE_PATH = sitePath("/assets/world/jungle/jungle-backdrop.png");
+const JUNGLE_PATH = sitePath("/assets/world/jungle/jungle-crossroads-5-test.webp");
 const FLOATING_READING_TOKENS = {
   mixed: [
     { text: "A", kind: "letter" },

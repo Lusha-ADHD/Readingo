@@ -100,17 +100,13 @@ const resolvedTheme =
       <>
         <img
           class="game-card__jungle-backdrop"
-          src={sitePath("/assets/world/jungle/jungle-backdrop.png")}
+          src={sitePath("/assets/world/jungle/jungle-crossroads-5-test.webp")}
           alt=""
           loading="lazy"
-          width="1672"
-          height="941"
+          width="1678"
+          height="937"
         />
         <span class="game-card__forest-light"></span>
-        <span class="game-card__tree game-card__tree--one"></span>
-        <span class="game-card__tree game-card__tree--two"></span>
-        <span class="game-card__tree game-card__tree--three"></span>
-        <span class="game-card__forest-path"></span>
         <span class="game-card__firefly game-card__firefly--one"></span>
         <span class="game-card__firefly game-card__firefly--two"></span>
         <span class="game-card__firefly game-card__firefly--three"></span>
@@ -418,70 +414,6 @@ const resolvedTheme =
     background: linear-gradient(180deg, rgba(255, 241, 156, 0.46), transparent);
     clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%);
     transform: rotate(9deg);
-  }
-
-  .game-card__tree {
-    position: absolute;
-    z-index: 3;
-    bottom: -30px;
-    width: 46px;
-    height: 152px;
-    border-radius: 48% 48% 12px 12px;
-    background: #173f37;
-    box-shadow: inset -10px 0 0 rgba(8, 33, 45, 0.18);
-  }
-
-  .game-card__tree::before,
-  .game-card__tree::after {
-    position: absolute;
-    border-radius: 50%;
-    background: #2e7850;
-    content: "";
-  }
-
-  .game-card__tree::before {
-    top: -36px;
-    left: -31px;
-    width: 106px;
-    height: 90px;
-  }
-
-  .game-card__tree::after {
-    top: -5px;
-    left: -46px;
-    width: 138px;
-    height: 74px;
-  }
-
-  .game-card__tree--one {
-    left: 8px;
-  }
-
-  .game-card__tree--two {
-    right: 9px;
-    height: 176px;
-    transform: scale(1.1);
-  }
-
-  .game-card__tree--three {
-    z-index: 1;
-    right: 36%;
-    height: 128px;
-    opacity: 0.58;
-    transform: scale(0.76);
-  }
-
-  .game-card__forest-path {
-    position: absolute;
-    z-index: 2;
-    right: 28%;
-    bottom: -42px;
-    width: 115px;
-    height: 160px;
-    border-radius: 50%;
-    background: #d5b56c;
-    clip-path: polygon(42% 0, 61% 0, 91% 100%, 5% 100%);
-    transform: rotate(-7deg);
   }
 
   .game-card__firefly {

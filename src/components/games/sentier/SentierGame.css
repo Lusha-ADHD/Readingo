@@ -131,6 +131,10 @@
   object-position: center 55%;
 }
 
+.jungle-scene__backdrop--mirrored {
+  transform: scaleX(-1);
+}
+
 .jungle-scene__light {
   position: absolute;
   z-index: 2;
@@ -860,8 +864,7 @@
   place-items: center;
 }
 
-.sentier-opening__backdrop,
-.sentier-opening__shade {
+.sentier-opening__backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -871,13 +874,6 @@
 .sentier-opening__backdrop {
   object-fit: cover;
   object-position: center;
-}
-
-.sentier-opening__shade {
-  background:
-    radial-gradient(circle at 50% 42%, rgba(255, 221, 111, 0.12), transparent 34%),
-    linear-gradient(180deg, rgba(6, 38, 32, 0.08), rgba(6, 37, 31, 0.38));
-  pointer-events: none;
 }
 
 .sentier-game__test {

@@ -123,6 +123,25 @@ test.describe("Le Sentier des mots", () => {
     }
   });
 
+  test("un carrefour sur deux est retourné sans inverser les ruines", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+
+    await page.goto("/jeux/mots/?test=1&question=0");
+    await expect(page.getByTestId("sentier-backdrop")).not.toHaveClass(
+      /jungle-scene__backdrop--mirrored/,
+    );
+
+    await page.goto("/jeux/mots/?test=1&question=1");
+    await expect(page.getByTestId("sentier-backdrop")).toHaveClass(
+      /jungle-scene__backdrop--mirrored/,
+    );
+
+    await page.goto("/jeux/mots/?test=1&state=treasure");
+    await expect(page.getByTestId("sentier-backdrop")).not.toHaveClass(
+      /jungle-scene__backdrop--mirrored/,
+    );
+  });
+
   test("le demi-tour conserve un unique bouton visible", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/jeux/mots/?test=1&state=uturn");
