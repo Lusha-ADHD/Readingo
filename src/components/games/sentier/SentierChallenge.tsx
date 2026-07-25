@@ -20,28 +20,48 @@ function DirectionIcon({ direction }: { direction: SentierDirection }) {
   if (direction === "uturn") {
     return (
       <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M25 25v-8.5a8 8 0 0 0-8-8H8" />
-        <path d="m12 4.5-5 4 5 4" />
+        <path d="M24 28V16a8 8 0 0 0-16 0v10" />
+        <path d="m3 21 5 5 5-5" />
       </svg>
     );
   }
 
-  const rotations: Record<Exclude<SentierDirection, "uturn">, number> = {
-    "far-left": -62,
-    left: -42,
-    forward: 0,
-    right: 42,
-    "far-right": 62,
+  const paths: Record<Exclude<SentierDirection, "uturn">, React.ReactNode> = {
+    "far-left": (
+      <>
+        <path d="M24 28V16H7" />
+        <path d="m12 11-5 5 5 5" />
+      </>
+    ),
+    left: (
+      <>
+        <path d="M23 28v-6L9 8" />
+        <path d="M9 16V8h8" />
+      </>
+    ),
+    forward: (
+      <>
+        <path d="M16 28V5" />
+        <path d="m8 13 8-8 8 8" />
+      </>
+    ),
+    right: (
+      <>
+        <path d="M9 28v-6L23 8" />
+        <path d="M15 8h8v8" />
+      </>
+    ),
+    "far-right": (
+      <>
+        <path d="M8 28V16h17" />
+        <path d="m20 11 5 5-5 5" />
+      </>
+    ),
   };
 
   return (
-    <svg
-      viewBox="0 0 32 32"
-      style={{ transform: `rotate(${rotations[direction]}deg)` }}
-      aria-hidden="true"
-    >
-      <path d="M16 27V6" />
-      <path d="m8.5 13.5 7.5-8 7.5 8" />
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      {paths[direction]}
     </svg>
   );
 }

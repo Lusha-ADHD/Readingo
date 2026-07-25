@@ -1,18 +1,35 @@
+import { useEffect } from "react";
 import { sitePath } from "../../../utils/paths";
-import type { SentierChoice, SentierDirection, SentierPhase } from "./sentierState";
+import type { SentierDirection, SentierPhase } from "./sentierState";
 
 type Props = {
-  choices: SentierChoice[];
+  choiceCount: number;
+  destinationReached: boolean;
   phase: SentierPhase;
   selectedDirection: SentierDirection | null;
   lostness: number;
   rewardGems: number;
+  showSinglePath: boolean;
+  preloadTreasureAssets: boolean;
   sceneVersion: number;
+  onDigTreasure: (source: HTMLElement) => void;
+  onOpenTreasure: (source: HTMLElement) => void;
+  onRewardMound: (source: HTMLElement) => void;
   onSkipTravel: () => void;
 };
 
+type BackdropPathCount = 0 | 1 | 2 | 3 | 4 | 5;
+
 const ASSETS = {
-  backdrop: sitePath("/assets/world/jungle/jungle-backdrop.png"),
+  backdrops: {
+    0: sitePath("/assets/world/jungle/jungle-crossroads-0-test.webp"),
+    1: sitePath("/assets/world/jungle/jungle-crossroads-1-test.webp"),
+    2: sitePath("/assets/world/jungle/jungle-crossroads-2-test.webp"),
+    3: sitePath("/assets/world/jungle/jungle-crossroads-3-test.webp"),
+    4: sitePath("/assets/world/jungle/jungle-crossroads-4-test.webp"),
+    5: sitePath("/assets/world/jungle/jungle-crossroads-5-test.webp"),
+  } satisfies Record<BackdropPathCount, string>,
+  destination: sitePath("/assets/world/jungle/jungle-destination-ruins.webp"),
   canopy: sitePath("/assets/world/jungle/jungle-canopy.png"),
   foliageLeft: sitePath("/assets/world/jungle/foliage-left.png"),
   foliageRight: sitePath("/assets/world/jungle/foliage-right.png"),
@@ -20,71 +37,131 @@ const ASSETS = {
   vinesB: sitePath("/assets/world/jungle/vines-b.png"),
   rockFern: sitePath("/assets/world/jungle/rock-fern.png"),
   gem: sitePath("/assets/world/jungle/gem.png"),
+  mound: sitePath("/assets/world/jungle/dirt-mound.webp"),
+  chestBuried: sitePath("/assets/world/jungle/treasure-chest-buried.webp"),
+  chestOpen: sitePath("/assets/world/jungle/treasure-chest-open.webp"),
 };
 
-const ANCHORS: Record<SentierDirection, number> = {
-  "far-left": 7,
-  left: 22,
-  forward: 50,
-  right: 78,
-  "far-right": 93,
-  uturn: 50,
+const NEXT_BACKDROP_COUNT: Partial<Record<BackdropPathCount, BackdropPathCount>> = {
+  5: 4,
+  4: 3,
+  3: 2,
+  2: 0,
 };
-
-function pathFor(direction: SentierDirection) {
-  const x = ANCHORS[direction];
-  const control = 50 + (x - 50) * 0.55;
-  return `M 50 108 C 50 82, ${control} 48, ${x} 17`;
-}
 
 function isTravelling(phase: SentierPhase) {
   return phase === "travelling" || phase === "uturn-travelling";
 }
 
+function backdropPathCount(choiceCount: number): BackdropPathCount {
+  if (choiceCount === 1) {
+    return 0;
+  }
+
+  if (choiceCount === 2 || choiceCount === 3 || choiceCount === 4 || choiceCount === 5) {
+    return choiceCount;
+  }
+
+  return 5;
+}
+
 export function JungleScene({
-  choices,
+  choiceCount,
+  destinationReached,
   phase,
   selectedDirection,
   lostness,
   rewardGems,
+  showSinglePath,
+  preloadTreasureAssets,
   sceneVersion,
+  onDigTreasure,
+  onOpenTreasure,
+  onRewardMound,
   onSkipTravel,
 }: Props) {
   const travelling = isTravelling(phase);
   const direction = selectedDirection ?? "forward";
+  const pathCount = showSinglePath ? 1 : backdropPathCount(choiceCount);
+  const backdrop = destinationReached ? ASSETS.destination : ASSETS.backdrops[pathCount];
+
+  useEffect(() => {
+    if (destinationReached) {
+      return;
+    }
+
+    const nextPathCount = NEXT_BACKDROP_COUNT[pathCount];
+
+    if (nextPathCount === undefined) {
+      return;
+    }
+
+    const image = new Image();
+    image.src = ASSETS.backdrops[nextPathCount];
+  }, [destinationReached, pathCount]);
+
+  useEffect(() => {
+    if (!preloadTreasureAssets) {
+      return;
+    }
+
+    for (const source of [
+      ASSETS.backdrops[1],
+      ASSETS.destination,
+      ASSETS.mound,
+      ASSETS.chestBuried,
+      ASSETS.chestOpen,
+    ]) {
+      const image = new Image();
+      image.src = source;
+    }
+  }, [preloadTreasureAssets]);
 
   return (
-    <button
+    <div
       className={`jungle-scene jungle-scene--lost-${Math.min(2, lostness)} ${
         travelling ? `jungle-scene--travelling jungle-scene--${direction}` : ""
+      } ${destinationReached ? "jungle-scene--destination" : ""} ${
+        phase === "destination-travelling" ? "jungle-scene--destination-travelling" : ""
       }`}
       data-testid="sentier-scene"
       onClick={travelling ? onSkipTravel : undefined}
-      type="button"
-      aria-label={travelling ? "Terminer le déplacement" : "Carrefour dans la jungle"}
-      tabIndex={travelling ? 0 : -1}
+      onKeyDown={
+        travelling
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onSkipTravel();
+              }
+            }
+          : undefined
+      }
+      role={travelling ? "button" : undefined}
+      aria-label={travelling ? "Terminer le déplacement" : undefined}
+      tabIndex={travelling ? 0 : undefined}
     >
+      {phase === "destination-travelling" ? (
+        <img
+          className="jungle-scene__destination-previous"
+          src={ASSETS.backdrops[pathCount]}
+          alt=""
+          draggable={false}
+        />
+      ) : null}
+
       <span className="jungle-scene__world" key={`world-${sceneVersion}`}>
-        <img className="jungle-scene__backdrop" src={ASSETS.backdrop} alt="" draggable={false} />
+        <img
+          className="jungle-scene__backdrop"
+          src={backdrop}
+          alt=""
+          data-path-count={destinationReached ? undefined : pathCount}
+          data-scene={destinationReached ? "destination" : "crossroads"}
+          data-testid="sentier-backdrop"
+          draggable={false}
+          fetchPriority="high"
+        />
         <span className="jungle-scene__light" />
         <img className="jungle-scene__canopy" src={ASSETS.canopy} alt="" draggable={false} />
-        <svg
-          className="jungle-scene__paths"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          {choices.map((choice) => (
-            <path
-              className={`jungle-scene__path ${
-                choice.direction === selectedDirection ? "jungle-scene__path--selected" : ""
-              }`}
-              d={pathFor(choice.direction)}
-              key={`${choice.word}-${choice.direction}`}
-              vectorEffect="non-scaling-stroke"
-            />
-          ))}
-        </svg>
         <img
           className="jungle-scene__rock-fern"
           src={ASSETS.rockFern}
@@ -109,17 +186,77 @@ export function JungleScene({
       </span>
 
       {phase === "reward" && rewardGems > 0 ? (
-        <span className="jungle-scene__rewards" aria-hidden="true">
+        <button
+          className={`jungle-scene__reward-mound jungle-scene__reward-mound--${rewardGems}`}
+          data-testid="sentier-reward-mound"
+          onClick={(event) => {
+            event.stopPropagation();
+            onRewardMound(event.currentTarget);
+          }}
+          type="button"
+          aria-label={`Ramasser ${rewardGems} gemme${rewardGems > 1 ? "s" : ""}`}
+        >
           {Array.from({ length: rewardGems }, (_, index) => (
             <img
-              className={`jungle-scene__gem jungle-scene__gem--${index + 1}`}
+              className={`jungle-scene__hidden-gem jungle-scene__hidden-gem--${index + 1}`}
               src={ASSETS.gem}
               alt=""
               key={index}
+              draggable={false}
             />
           ))}
-        </span>
+          <img className="jungle-scene__mound" src={ASSETS.mound} alt="" draggable={false} />
+          <span className="jungle-scene__sparkle" aria-hidden="true" />
+        </button>
       ) : null}
-    </button>
+
+      {phase === "destination-travelling" || phase === "treasure-buried" ? (
+        <button
+          className="jungle-scene__treasure jungle-scene__treasure--buried"
+          data-testid="sentier-treasure-mound"
+          onClick={(event) => onDigTreasure(event.currentTarget)}
+          type="button"
+          disabled={phase === "destination-travelling"}
+          aria-label="Creuser la motte de terre brillante"
+        >
+          <img
+            className="jungle-scene__chest-peek"
+            src={ASSETS.chestBuried}
+            alt=""
+            draggable={false}
+          />
+          <img
+            className="jungle-scene__treasure-mound"
+            src={ASSETS.mound}
+            alt=""
+            draggable={false}
+          />
+          <span className="jungle-scene__sparkle" aria-hidden="true" />
+        </button>
+      ) : null}
+
+      {phase === "treasure-revealed" ? (
+        <button
+          className="jungle-scene__treasure jungle-scene__treasure--revealed"
+          data-testid="sentier-buried-chest"
+          onClick={(event) => onOpenTreasure(event.currentTarget)}
+          type="button"
+          aria-label="Ouvrir le coffre au trésor"
+        >
+          <img src={ASSETS.chestBuried} alt="" draggable={false} />
+          <span className="jungle-scene__sparkle" aria-hidden="true" />
+        </button>
+      ) : null}
+
+      {phase === "treasure-collecting" || (phase === "result" && destinationReached) ? (
+        <img
+          className="jungle-scene__open-chest"
+          data-testid="sentier-open-chest"
+          src={ASSETS.chestOpen}
+          alt="Coffre au trésor ouvert"
+          draggable={false}
+        />
+      ) : null}
+    </div>
   );
 }

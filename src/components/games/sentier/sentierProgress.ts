@@ -50,7 +50,7 @@ function normalizeProgress(
         const level = Number(key);
         return Number.isInteger(level) && level >= 1 && level <= totalLevels;
       })
-      .map(([key, score]) => [key, Math.max(0, Math.min(16, Math.round(Number(score) || 0)))]),
+      .map(([key, score]) => [key, Math.max(0, Math.min(24, Math.round(Number(score) || 0)))]),
   );
 
   return {

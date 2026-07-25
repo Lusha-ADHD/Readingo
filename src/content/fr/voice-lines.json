@@ -148,6 +148,10 @@
       "text": "Je crois qu’il faut faire demi-tour !",
       "audio": "/assets/audio/fr/feedback/sentier-demi-tour.mp3"
     },
+    "sentierRecovered": {
+      "text": "C’est bon, on a retrouvé notre chemin !",
+      "audio": "/assets/audio/fr/feedback/sentier-chemin-retrouve.mp3"
+    },
     "sentierCorrect2": {
       "text": "Oui ! Nous sommes sur le bon chemin !",
       "audio": "/assets/audio/fr/feedback/sentier-bon-chemin-2.mp3"
@@ -160,8 +164,20 @@
       "text": "Continuons, le trésor n’est peut-être plus très loin.",
       "audio": "/assets/audio/fr/feedback/sentier-bon-chemin-0.mp3"
     },
+    "sentierTreasureHint": {
+      "text": "Le trésor est tout près… Regarde cette motte qui brille !",
+      "audio": "/assets/audio/fr/feedback/sentier-tresor-indice.mp3"
+    },
+    "sentierTreasureChest": {
+      "text": "Un coffre ! Ouvre-le !",
+      "audio": "/assets/audio/fr/feedback/sentier-tresor-coffre.mp3"
+    },
+    "sentierTreasureOpened": {
+      "text": "Le trésor ! Regarde toutes ces gemmes !",
+      "audio": "/assets/audio/fr/feedback/sentier-tresor-ouvert.mp3"
+    },
     "sentierComplete": {
-      "text": "Bravo ! Nous avons traversé la lisière de la jungle !",
+      "text": "Bravo ! Nous avons trouvé le trésor !",
       "audio": "/assets/audio/fr/feedback/sentier-niveau-termine.mp3"
     }
   }

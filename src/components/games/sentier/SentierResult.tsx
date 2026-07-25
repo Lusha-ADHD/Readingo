@@ -8,7 +8,6 @@ type Props = {
   level: number;
   title: string;
   gems: number;
-  maxGems: number;
   bestScore: number;
   onReplay: () => void;
 };
@@ -17,7 +16,6 @@ export function SentierResult({
   level,
   title,
   gems,
-  maxGems,
   bestScore,
   onReplay,
 }: Props) {
@@ -28,9 +26,9 @@ export function SentierResult({
         <p>
           Niveau {level} · {title}
         </p>
-        <h2>Étape terminée !</h2>
+        <h2>Trésor découvert !</h2>
         <strong>
-          <img src={GEM_PATH} alt="" /> {gems} gemmes sur {maxGems}
+          <img src={GEM_PATH} alt="" /> {gems} gemmes collectées
         </strong>
         {bestScore > 0 ? (
           <span>Meilleur score : {Math.max(bestScore, gems)}</span>
