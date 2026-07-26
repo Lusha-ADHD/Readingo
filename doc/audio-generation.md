@@ -152,8 +152,15 @@ Cette version ajoute un paramètre à l’URL. Elle n’a pas besoin de changer 
 - Un son de réussite est court et chaleureux.
 - Un son d’erreur est doux et non punitif.
 - Une boucle de mouvement démarre et s’arrête avec l’animation correspondante.
+- Les boucles d’ambiance et de mouvement sont livrées en MP3 à `128 kb/s` afin
+  de limiter leur poids sans dégrader sensiblement leur rendu.
 - Les effets sont hébergés localement avec leur licence et leur provenance documentées.
 - Un même effet peut être mutualisé s’il conserve la même signification dans plusieurs jeux.
+- Pixabay est la source unique des ambiances et bruitages non linguistiques. Cette
+  règle évite de multiplier les licences et permet de regrouper les crédits sous
+  la [licence de contenu Pixabay](https://pixabay.com/service/license-summary/).
+- Chaque asset conserve malgré tout le lien de sa page Pixabay dans l’inventaire
+  ci-dessous afin de retrouver son auteur et sa provenance exacte.
 
 ### Inventaire actuel de Bateau
 
@@ -184,11 +191,15 @@ L’ambiance nocturne démarre après l’action « Commencer » afin de respect
 
 | Usage | Fichier | Provenance |
 | --- | --- | --- |
-| Ambiance de jungle | `public/assets/audio/sfx/jungle-loop.mp3` | variante locale provisoire de l’ambiance nocturne ; source cible : [Jungle Nature](https://pixabay.com/sound-effects/nature-jungle-nature-229896/) |
-| Déplacement | `public/assets/audio/sfx/jungle-step.mp3` | variante locale provisoire du mouvement du bateau ; source cible : [Footstep Rustling](https://pixabay.com/sound-effects/nature-footstep-rustling-499643/) |
+| Ambiance de jungle | `public/assets/audio/sfx/jungle-loop.mp3` | [Jungle And Forest Ambient Atmospheric Effect](https://pixabay.com/sound-effects/nature-jungle-and-forest-ambient-atmospheric-effect-433243/), vishiv, licence de contenu Pixabay |
+| Déplacement | `public/assets/audio/sfx/jungle-step.mp3` | [walking on leaves](https://pixabay.com/sound-effects/nature-walking-on-leaves-268455/), FreeSoundsxx, licence de contenu Pixabay |
 | Collecte d’une gemme | `public/assets/audio/sfx/gem-collect.mp3` | variante locale provisoire de l’effet scintillant ; source cible : [Soft Treble Fast Collect](https://pixabay.com/sound-effects/soft-treble-fast-collect-fade-out-ending-sound-effect-416828/) |
+| Fouille des gemmes et du trésor | `public/assets/audio/sfx/digging.mp3` | [shovel digging](https://pixabay.com/sound-effects/film-special-effects-shovel-digging-356918/), OxidVideos, licence de contenu Pixabay |
 
-Ces variantes permettent de tester immédiatement le mixage et les timings sans dépendre d’un téléchargement externe. Elles doivent être remplacées par les trois sources cibles avant publication. L’ambiance démarre après « Entrer dans la jungle », baisse pendant la voix de Pana et reste silencieuse si l’autoplay est refusé.
+La collecte utilise encore une variante locale provisoire qui devra être
+remplacée par sa source Pixabay cible avant publication. L’ambiance démarre
+après « Entrer dans la jungle », baisse pendant la voix de Pana et reste
+silencieuse si l’autoplay est refusé.
 
 ## Variations par jeu
 

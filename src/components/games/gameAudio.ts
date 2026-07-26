@@ -1,53 +1,25 @@
 import { useCallback, useEffect, useRef } from "react";
 import { sitePath } from "../../utils/paths";
 
-type LoopName = "sea" | "wind" | "boat" | "night" | "jungle";
-type EffectName =
-  | "select"
-  | "place"
-  | "star"
-  | "chest"
-  | "levelComplete"
-  | "jungleStep"
-  | "gem";
+const EFFECT_LOAD_MAX_WAIT = 10_000;
 
-const LOOP_PATHS: Record<LoopName, string> = {
-  sea: sitePath("/assets/audio/sfx/sea-loop.mp3"),
-  wind: sitePath("/assets/audio/sfx/wind-loop.mp3"),
-  boat: sitePath("/assets/audio/sfx/boat-loop.mp3"),
-  night: sitePath("/assets/audio/sfx/night-loop.mp3"),
-  jungle: sitePath("/assets/audio/sfx/jungle-loop.mp3"),
+export type AudioLoopConfig = {
+  source: string;
+  volume: number;
 };
 
-const EFFECT_PATHS: Record<EffectName, string> = {
-  select: sitePath("/assets/audio/sfx/syllable-select.mp3"),
-  place: sitePath("/assets/audio/sfx/syllable-drop.mp3"),
-  star: sitePath("/assets/audio/sfx/star-shine.mp3"),
-  chest: sitePath("/assets/audio/sfx/chest-collect.mp3"),
-  levelComplete: sitePath("/assets/audio/sfx/level-complete.mp3"),
-  jungleStep: sitePath("/assets/audio/sfx/jungle-step.mp3"),
-  gem: sitePath("/assets/audio/sfx/gem-collect.mp3"),
+export type AudioEffectConfig = AudioLoopConfig & {
+  maxPlaybackMs: number;
 };
 
-const EFFECT_VOLUMES: Record<EffectName, number> = {
-  select: 0.28,
-  place: 0.34,
-  star: 0.24,
-  chest: 0.48,
-  levelComplete: 0.52,
-  jungleStep: 0.26,
-  gem: 0.34,
+type LoopPlaybackOptions = {
+  playbackRate?: number;
+  volume?: number;
 };
 
-const EFFECT_MAX_WAIT: Record<EffectName, number> = {
-  select: 500,
-  place: 350,
-  star: 900,
-  chest: 1500,
-  levelComplete: 3200,
-  jungleStep: 850,
-  gem: 950,
-};
+export function sfxPath(filename: string) {
+  return sitePath(`/assets/audio/sfx/${filename}`);
+}
 
 function createAudio(source: string, loop = false) {
   const audio = new Audio(source);
@@ -56,168 +28,186 @@ function createAudio(source: string, loop = false) {
   return audio;
 }
 
-export function useGameAudio() {
+function playOptional(audio: HTMLAudioElement | undefined) {
+  if (audio) {
+    void audio.play().catch(() => undefined);
+  }
+}
+
+function playEffectAudio(
+  source: HTMLAudioElement,
+  config: AudioEffectConfig,
+  activeEffects: Set<HTMLAudioElement>,
+  maxPlaybackMs?: number,
+) {
+  const audio = source.cloneNode(true) as HTMLAudioElement;
+  audio.volume = config.volume;
+  activeEffects.add(audio);
+
+  return new Promise<void>((resolve) => {
+    let completed = false;
+    let playbackTimeoutId: number | undefined;
+    const loadTimeoutId = window.setTimeout(stop, EFFECT_LOAD_MAX_WAIT);
+
+    function complete() {
+      if (completed) {
+        return;
+      }
+
+      completed = true;
+      window.clearTimeout(loadTimeoutId);
+
+      if (playbackTimeoutId !== undefined) {
+        window.clearTimeout(playbackTimeoutId);
+      }
+
+      audio.onended = null;
+      audio.onerror = null;
+      activeEffects.delete(audio);
+      resolve();
+    }
+
+    function stop() {
+      audio.pause();
+      complete();
+    }
+
+    function startPlaybackTimeout() {
+      if (completed) {
+        return;
+      }
+
+      window.clearTimeout(loadTimeoutId);
+      playbackTimeoutId = window.setTimeout(
+        stop,
+        maxPlaybackMs ?? config.maxPlaybackMs,
+      );
+    }
+
+    audio.onended = complete;
+    audio.onerror = complete;
+    void audio.play().then(startPlaybackTimeout).catch(complete);
+  });
+}
+
+export function useAudioEngine<
+  const Loops extends Record<string, AudioLoopConfig>,
+  const Effects extends Record<string, AudioEffectConfig>,
+>(loopConfig: Loops, effectConfig: Effects) {
+  type LoopName = keyof Loops & string;
+  type EffectName = keyof Effects & string;
+
   const enabledRef = useRef(false);
   const loopsRef = useRef<Partial<Record<LoopName, HTMLAudioElement>>>({});
-  const effectSourcesRef = useRef<Partial<Record<EffectName, HTMLAudioElement>>>({});
+  const effectSourcesRef = useRef<
+    Partial<Record<EffectName, HTMLAudioElement>>
+  >({});
   const activeEffectsRef = useRef(new Set<HTMLAudioElement>());
 
-  const getLoop = useCallback((name: LoopName) => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
+  const getLoop = useCallback(
+    (name: LoopName) => {
+      if (typeof window === "undefined") {
+        return undefined;
+      }
 
-    loopsRef.current[name] ??= createAudio(LOOP_PATHS[name], true);
-    return loopsRef.current[name];
+      loopsRef.current[name] ??= createAudio(loopConfig[name].source, true);
+      return loopsRef.current[name];
+    },
+    [loopConfig],
+  );
+
+  const getEffectSource = useCallback(
+    (name: EffectName) => {
+      if (typeof window === "undefined") {
+        return undefined;
+      }
+
+      effectSourcesRef.current[name] ??= createAudio(effectConfig[name].source);
+      return effectSourcesRef.current[name];
+    },
+    [effectConfig],
+  );
+
+  const enableAudio = useCallback(() => {
+    enabledRef.current = true;
   }, []);
 
-  const getEffectSource = useCallback((name: EffectName) => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
+  const isAudioEnabled = useCallback(() => enabledRef.current, []);
 
-    effectSourcesRef.current[name] ??= createAudio(EFFECT_PATHS[name]);
-    return effectSourcesRef.current[name];
+  const playLoop = useCallback(
+    (name: LoopName, options: LoopPlaybackOptions = {}) => {
+      enabledRef.current = true;
+      const audio = getLoop(name);
+
+      if (!audio) {
+        return;
+      }
+
+      audio.volume = options.volume ?? loopConfig[name].volume;
+
+      if (options.playbackRate !== undefined) {
+        audio.playbackRate = options.playbackRate;
+      }
+
+      playOptional(audio);
+    },
+    [getLoop, loopConfig],
+  );
+
+  const pauseLoop = useCallback(
+    (name: LoopName, rewind = false) => {
+      const audio = loopsRef.current[name];
+
+      if (!audio) {
+        return;
+      }
+
+      audio.pause();
+
+      if (rewind) {
+        audio.currentTime = 0;
+      }
+    },
+    [],
+  );
+
+  const setLoopVolume = useCallback((name: LoopName, volume: number) => {
+    const audio = loopsRef.current[name];
+
+    if (audio) {
+      audio.volume = volume;
+    }
   }, []);
+
+  const preloadEffect = useCallback(
+    (name: EffectName) => {
+      const audio = getEffectSource(name);
+
+      if (audio?.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+        audio.load();
+      }
+    },
+    [getEffectSource],
+  );
 
   const playEffect = useCallback(
     (name: EffectName, maxPlaybackMs?: number) => {
-      if (!enabledRef.current || typeof window === "undefined") {
-        return Promise.resolve();
-      }
-
       const source = getEffectSource(name);
 
       if (!source) {
         return Promise.resolve();
       }
 
-      const audio = source.cloneNode(true) as HTMLAudioElement;
-      audio.volume = EFFECT_VOLUMES[name];
-      activeEffectsRef.current.add(audio);
+      enabledRef.current = true;
 
-      return new Promise<void>((resolve) => {
-        let completed = false;
-        const timeoutId = window.setTimeout(() => {
-          audio.pause();
-          complete();
-        }, maxPlaybackMs ?? EFFECT_MAX_WAIT[name]);
-
-        function complete() {
-          if (completed) {
-            return;
-          }
-
-          completed = true;
-          window.clearTimeout(timeoutId);
-          audio.onended = null;
-          audio.onerror = null;
-          activeEffectsRef.current.delete(audio);
-          resolve();
-        }
-
-        audio.onended = complete;
-        audio.onerror = complete;
-        void audio.play().catch(complete);
-      });
+      return playEffectAudio(
+        source,
+        effectConfig[name],
+        activeEffectsRef.current,
+        maxPlaybackMs,
+      );
     },
-    [getEffectSource],
-  );
-
-  const startAmbience = useCallback(() => {
-    enabledRef.current = true;
-    const sea = getLoop("sea");
-
-    if (!sea) {
-      return;
-    }
-
-    sea.volume = 0.15;
-    void sea.play().catch(() => undefined);
-  }, [getLoop]);
-
-  const enableEffects = useCallback(() => {
-    enabledRef.current = true;
-  }, []);
-
-  const startNightAmbience = useCallback(() => {
-    enabledRef.current = true;
-    const night = getLoop("night");
-
-    if (!night) {
-      return;
-    }
-
-    night.volume = 0.165;
-    void night.play().catch(() => undefined);
-  }, [getLoop]);
-
-  const startJungleAmbience = useCallback(() => {
-    enabledRef.current = true;
-    const jungle = getLoop("jungle");
-
-    if (!jungle) {
-      return;
-    }
-
-    jungle.volume = 0.13;
-    void jungle.play().catch(() => undefined);
-  }, [getLoop]);
-
-  const setJungleDucked = useCallback((ducked: boolean) => {
-    const jungle = loopsRef.current.jungle;
-
-    if (jungle) {
-      jungle.volume = ducked ? 0.055 : 0.13;
-    }
-  }, []);
-
-  const setTravelAudio = useCallback(
-    (active: boolean, wind: 1 | 2 | 3, paused: boolean) => {
-      if (!enabledRef.current) {
-        return;
-      }
-
-      if (!active) {
-        const windAudio = loopsRef.current.wind;
-        const boatAudio = loopsRef.current.boat;
-        windAudio?.pause();
-        boatAudio?.pause();
-
-        if (windAudio) {
-          windAudio.currentTime = 0;
-        }
-
-        if (boatAudio) {
-          boatAudio.currentTime = 0;
-        }
-
-        return;
-      }
-
-      const windAudio = getLoop("wind");
-      const boatAudio = getLoop("boat");
-
-      if (!windAudio || !boatAudio) {
-        return;
-      }
-
-      windAudio.playbackRate = 0.88 + wind * 0.08;
-      boatAudio.playbackRate = 0.94 + wind * 0.04;
-
-      if (paused) {
-        boatAudio.pause();
-        windAudio.volume = 0.2 + wind * 0.1;
-        void windAudio.play().catch(() => undefined);
-        return;
-      }
-
-      windAudio.volume = 0.4 + wind * 0.2;
-      boatAudio.volume = 0.2;
-      void windAudio.play().catch(() => undefined);
-      void boatAudio.play().catch(() => undefined);
-    },
-    [getLoop],
+    [effectConfig, getEffectSource],
   );
 
   useEffect(
@@ -236,12 +226,12 @@ export function useGameAudio() {
   );
 
   return {
-    enableEffects,
+    enableAudio,
+    isAudioEnabled,
+    pauseLoop,
+    preloadEffect,
     playEffect,
-    setJungleDucked,
-    setTravelAudio,
-    startAmbience,
-    startJungleAmbience,
-    startNightAmbience,
+    playLoop,
+    setLoopVolume,
   };
 }

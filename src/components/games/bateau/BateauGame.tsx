@@ -34,7 +34,7 @@ import {
 import type { BateauProgress } from "./bateauProgress";
 import { createBateauTiles } from "./bateauTiles";
 import type { BateauTile } from "./bateauTiles";
-import { useGameAudio } from "../gameAudio";
+import { useBateauAudio } from "./bateauAudio";
 import { useVoiceAudio } from "../useVoiceAudio";
 import type { VoicePlaybackResult } from "../useVoiceAudio";
 import "./BateauGame.css";
@@ -166,7 +166,7 @@ export function BateauGame() {
   const chestBurstIdRef = useRef(0);
   const savedSessionRef = useRef(false);
   const directTestStartedRef = useRef(false);
-  const { playEffect, setTravelAudio, startAmbience } = useGameAudio();
+  const { playEffect, setTravelAudio, startAmbience } = useBateauAudio();
   const { cancelVoice, playVoice } = useVoiceAudio();
 
   const challenge = sessionWords[wordIndex];
@@ -316,6 +316,7 @@ export function BateauGame() {
     }
 
     cancelVoice();
+    startAmbience();
     savedSessionRef.current = false;
     setSelectedLevel(level);
     setSessionWords(shuffleSessionWords(wordsForLevel(level)));

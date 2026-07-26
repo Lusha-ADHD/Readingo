@@ -102,10 +102,46 @@ import { sitePath } from "../utils/paths";
 
     <section class="final-cta page-shell" aria-labelledby="final-cta-title">
       <div>
-        <p>Prêt pour la première aventure&nbsp;?</p>
-        <h2 id="final-cta-title">Quelques minutes suffisent pour commencer.</h2>
+        <p>Pour prolonger les premiers apprentissages</p>
+        <h2 id="final-cta-title">
+          Quelques minutes de jeu pour travailler les lettres, les syllabes ou les premiers mots.
+        </h2>
       </div>
       <a class="button button--primary" href="#jeux">Choisir un jeu</a>
+    </section>
+
+    <section class="lusha-promo page-shell" aria-labelledby="lusha-promo-title">
+      <div class="lusha-promo__visual">
+        <img
+          src={sitePath("/assets/promotions/lusha-app-icon.png")}
+          alt="Icône de l’application Lusha"
+          width="1024"
+          height="1024"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="lusha-promo__content">
+        <p>À découvrir pour les parents</p>
+        <h2 id="lusha-promo-title">Des routines plus sereines, une aventure à la fois</h2>
+        <span>
+          Lusha est un jeu mobile pensé pour les enfants de 6 à 12 ans avec TDAH. Il transforme
+          les routines, la gestion des émotions et les habiletés sociales en expériences
+          progressives et motivantes.
+        </span>
+        <ul aria-label="Les points forts de Lusha">
+          <li>Routines motivantes</li>
+          <li>Émotions et habiletés sociales</li>
+        </ul>
+      </div>
+
+      <a
+        class="lusha-promo__cta"
+        href="https://lusha.care/?utm_source=readingo"
+        rel="external"
+      >
+        Découvrir Lusha <span aria-hidden="true">↗</span>
+      </a>
     </section>
   </main>
 
@@ -409,35 +445,187 @@ import { sitePath } from "../utils/paths";
     font-size: 1.2rem;
   }
 
+  .lusha-promo {
+    position: relative;
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(24px, 4vw, 44px);
+    overflow: hidden;
+    margin-top: 38px;
+    padding: clamp(24px, 4vw, 38px);
+    border: 4px solid var(--color-border);
+    border-radius: 32px;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(69, 214, 208, 0.28), transparent 17rem),
+      linear-gradient(135deg, #082a49, #13596a);
+    box-shadow: var(--shadow-raised);
+    color: #ffffff;
+  }
+
+  .lusha-promo::after {
+    position: absolute;
+    right: -75px;
+    bottom: -95px;
+    width: 230px;
+    height: 230px;
+    border: 34px solid rgba(255, 196, 47, 0.12);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+  }
+
+  .lusha-promo__visual {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    aspect-ratio: 1;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    border-radius: 26px;
+    box-shadow: 0 9px 0 rgba(1, 16, 31, 0.28);
+  }
+
+  .lusha-promo__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lusha-promo__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 10px;
+  }
+
+  .lusha-promo__content > p {
+    color: #bafff5;
+    font-size: 0.85rem;
+    font-weight: 950;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  .lusha-promo__content h2 {
+    max-width: 18ch;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    line-height: 1.02;
+  }
+
+  .lusha-promo__content > span {
+    max-width: 42rem;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+
+  .lusha-promo__content ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lusha-promo__content li {
+    padding: 7px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.86rem;
+    font-weight: 850;
+  }
+
+  .lusha-promo__cta {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding-inline: 22px;
+    border: 3px solid var(--color-border);
+    border-radius: 18px;
+    background: linear-gradient(180deg, var(--color-gold), var(--color-orange));
+    box-shadow: 0 7px 0 rgba(1, 16, 31, 0.36);
+    color: var(--color-text);
+    font-weight: 950;
+    white-space: nowrap;
+    transition:
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .lusha-promo__cta:hover {
+    box-shadow: 0 10px 0 rgba(1, 16, 31, 0.38);
+    transform: translateY(-3px);
+  }
+
+  .lusha-promo__cta:active {
+    box-shadow: 0 3px 0 rgba(1, 16, 31, 0.34);
+    transform: translateY(4px);
+  }
+
   .final-cta {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 28px;
+    overflow: hidden;
     margin-top: 38px;
     padding: clamp(28px, 5vw, 48px);
     border: 4px solid var(--color-border);
     border-radius: 32px;
     background:
-      radial-gradient(circle at 92% 20%, rgba(255, 224, 110, 0.5), transparent 12rem),
-      linear-gradient(135deg, #6b51d7, #2f82d6);
+      radial-gradient(circle at 8% 0%, rgba(255, 255, 255, 0.64), transparent 13rem),
+      radial-gradient(circle at 90% 12%, rgba(20, 197, 193, 0.38), transparent 13rem),
+      linear-gradient(135deg, #ffe46f, #ffad3f);
     box-shadow: var(--shadow-raised);
-    color: #ffffff;
+    color: var(--color-text);
+  }
+
+  .final-cta::after {
+    position: absolute;
+    right: 18%;
+    bottom: -64px;
+    width: 138px;
+    height: 138px;
+    border: 24px solid rgba(127, 75, 242, 0.14);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
   }
 
   .final-cta > div {
+    position: relative;
+    z-index: 1;
     display: grid;
-    gap: 8px;
+    gap: 12px;
   }
 
   .final-cta p {
-    color: #fff2ad;
+    color: var(--color-blue-dark);
+    font-size: 0.88rem;
     font-weight: 950;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
   }
 
   .final-cta h2 {
-    max-width: 18ch;
+    max-width: 23ch;
     font-size: clamp(2rem, 4vw, 3.15rem);
+  }
+
+  .final-cta .button--primary {
+    position: relative;
+    z-index: 1;
+    background: #fffaf0;
+    color: var(--color-blue-dark);
+    box-shadow: 0 7px 0 rgba(8, 33, 74, 0.22);
   }
 
   @media (max-width: 940px) {
@@ -459,6 +647,15 @@ import { sitePath } from "../utils/paths";
 
     .parent-note > a {
       grid-column: 2;
+    }
+
+    .lusha-promo {
+      grid-template-columns: 180px minmax(0, 1fr);
+    }
+
+    .lusha-promo__cta {
+      grid-column: 2;
+      justify-self: start;
     }
   }
 
@@ -494,6 +691,26 @@ import { sitePath } from "../utils/paths";
       white-space: normal;
     }
 
+    .lusha-promo {
+      grid-template-columns: 1fr;
+      gap: 22px;
+      border-radius: 26px;
+    }
+
+    .lusha-promo__visual {
+      width: 132px;
+      border-radius: 21px;
+    }
+
+    .lusha-promo__content h2 {
+      font-size: clamp(1.65rem, 7vw, 2.35rem);
+    }
+
+    .lusha-promo__cta {
+      width: 100%;
+      grid-column: 1;
+    }
+
     .final-cta {
       align-items: flex-start;
       flex-direction: column;
@@ -511,13 +728,16 @@ import { sitePath } from "../utils/paths";
 
   @media (prefers-reduced-motion: reduce) {
     .button,
-    .resources__grid a {
+    .resources__grid a,
+    .lusha-promo__cta {
       transition: none;
     }
 
     .button:hover,
     .button:active,
-    .resources__grid a:hover {
+    .resources__grid a:hover,
+    .lusha-promo__cta:hover,
+    .lusha-promo__cta:active {
       transform: none;
     }
   }

@@ -21,7 +21,7 @@ import { JungleScene } from "./JungleScene";
 import { SentierChallenge } from "./SentierChallenge";
 import { SentierResult } from "./SentierResult";
 import { SentierTreasurePrompt } from "./SentierTreasurePrompt";
-import { useGameAudio } from "../gameAudio";
+import { useSentierAudio } from "./sentierAudio";
 import {
   createInitialSentierState,
   rewardForErrors,
@@ -72,6 +72,12 @@ const lessons = (sentierLessonsData as SentierLesson[])
   .sort((left, right) => left.level - right.level);
 const lesson = lessons[0];
 const wordById = new Map((wordsData as WordReference[]).map((word) => [word.id, word]));
+const wordByDisplayText = new Map(
+  (wordsData as WordReference[]).map((word) => [
+    word.displayWord.toLocaleLowerCase("fr"),
+    word,
+  ]),
+);
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.sentierIntro;
 const feedback = voiceLines.feedback;
@@ -139,9 +145,10 @@ export function SentierGame() {
   const {
     enableEffects,
     playEffect,
+    playMovement,
     setJungleDucked,
     startJungleAmbience,
-  } = useGameAudio();
+  } = useSentierAudio();
 
   const question = lesson.questions[state.questionIndex];
   const target = wordById.get(question?.targetWordId ?? "") ?? wordById.values().next().value;
@@ -317,7 +324,7 @@ export function SentierGame() {
     async (token: number) => {
       dispatch({ type: "START_DESTINATION" });
       setSceneVersion((version) => version + 1);
-      void playEffect("jungleStep");
+      void playMovement();
       await delay(DESTINATION_DURATION);
 
       if (runTokenRef.current !== token) {
@@ -328,7 +335,7 @@ export function SentierGame() {
       void playEffect("star");
       void playLine(feedback.sentierTreasureHint);
     },
-    [playEffect, playLine],
+    [playEffect, playLine, playMovement],
   );
 
   const handleChoice = useCallback(
@@ -340,8 +347,15 @@ export function SentierGame() {
       const token = runTokenRef.current + 1;
       runTokenRef.current = token;
       dispatch({ type: "SELECT", word });
-      void playEffect("jungleStep");
-      await travel();
+      void playMovement();
+      startJungleAmbience();
+      const chosenWord = wordByDisplayText.get(word.toLocaleLowerCase("fr"));
+      await Promise.all([
+        travel(),
+        chosenWord
+          ? playTarget(chosenWord)
+          : speakFrench(word),
+      ]);
 
       if (runTokenRef.current !== token) {
         return;
@@ -394,14 +408,15 @@ export function SentierGame() {
       }
     },
     [
-      playEffect,
       playLine,
+      playMovement,
       playTarget,
       prepareRewardQuestion,
       state.errors,
       state.phase,
       state.questionIndex,
       state.remainingWords,
+      startJungleAmbience,
       startDestination,
       target,
       targetWord,
@@ -421,7 +436,7 @@ export function SentierGame() {
       dispatch({ type: "START_REWARD_COLLECTION" });
       const [collected] = await Promise.all([
         collectGemBatch(rewardCount, source, token),
-        playEffect("star"),
+        playEffect("dig", 850),
       ]);
 
       if (!collected || runTokenRef.current !== token) {
@@ -462,7 +477,7 @@ export function SentierGame() {
     const token = runTokenRef.current + 1;
     runTokenRef.current = token;
     dispatch({ type: "START_UTURN" });
-    void playEffect("jungleStep");
+    void playMovement();
     await travel();
 
     if (runTokenRef.current !== token) {
@@ -504,8 +519,8 @@ export function SentierGame() {
     }
   }, [
     cancelVoice,
-    playEffect,
     playLine,
+    playMovement,
     playTarget,
     state.phase,
     state.questionIndex,
@@ -521,7 +536,7 @@ export function SentierGame() {
 
       runTokenRef.current += 1;
       dispatch({ type: "DIG_TREASURE" });
-      void playEffect("star");
+      void playEffect("dig");
       void playLine(feedback.sentierTreasureChest);
       source.blur();
     },
@@ -593,13 +608,15 @@ export function SentierGame() {
     runTokenRef.current += 1;
     cancelVoice();
     window.speechSynthesis?.cancel();
+    startJungleAmbience();
     void presentQuestion(0);
-  }, [cancelVoice, presentQuestion]);
+  }, [cancelVoice, presentQuestion, startJungleAmbience]);
 
   const replay = useCallback(() => {
     runTokenRef.current += 1;
+    startJungleAmbience();
     void presentQuestion(0);
-  }, [presentQuestion]);
+  }, [presentQuestion, startJungleAmbience]);
 
   useEffect(() => {
     setProgress(readSentierProgress(window.localStorage, lessons.length));

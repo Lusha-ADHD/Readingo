@@ -209,7 +209,12 @@ for (const asset of [
   await assertAsset(`/assets/world/jungle/${asset}`, `Sentier ${asset}`);
 }
 
-for (const asset of ["jungle-loop.mp3", "jungle-step.mp3", "gem-collect.mp3"]) {
+for (const asset of [
+  "jungle-loop.mp3",
+  "jungle-step.mp3",
+  "gem-collect.mp3",
+  "digging.mp3",
+]) {
   await assertAsset(`/assets/audio/sfx/${asset}`, `Sentier ${asset}`);
 }
 

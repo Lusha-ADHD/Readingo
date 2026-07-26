@@ -29,7 +29,7 @@ import {
   saveLettersProgress,
 } from "./lettersProgress";
 import type { LettersProgress } from "./lettersProgress";
-import { useGameAudio } from "../gameAudio";
+import { useLettersAudio } from "./lettersAudio";
 import { useVoiceAudio } from "../useVoiceAudio";
 import "./LettersGame.css";
 
@@ -96,7 +96,7 @@ export function LettersGame() {
   const actionTokenRef = useRef(0);
   const dialogRunRef = useRef(0);
   const { cancelVoice, playVoice } = useVoiceAudio();
-  const { enableEffects, playEffect, startNightAmbience } = useGameAudio();
+  const { enableEffects, playEffect, startNightAmbience } = useLettersAudio();
 
   const question = lesson?.questions[questionIndex];
   const targetLetter = question ? letterById.get(question.targetLetterId) : undefined;
@@ -181,6 +181,7 @@ export function LettersGame() {
 
       const token = actionTokenRef.current + 1;
       actionTokenRef.current = token;
+      startNightAmbience();
       setSelectedLetterId(letterId);
 
       if (letterId !== targetLetter.id) {
@@ -238,6 +239,7 @@ export function LettersGame() {
       playPrompt,
       question,
       questionIndex,
+      startNightAmbience,
       targetLetter,
     ],
   );

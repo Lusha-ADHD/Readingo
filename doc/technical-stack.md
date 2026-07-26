@@ -145,8 +145,11 @@ src/
   components/
     games/
       bateau/
+        bateauAudio.ts
       letters/
+        lettersAudio.ts
       sentier/
+        sentierAudio.ts
       gameAudio.ts
       useVoiceAudio.ts
     ui/
@@ -179,11 +182,17 @@ La structure peut évoluer, mais un nouveau jeu doit conserver la séparation en
 Chaque jeu possède un dossier et un `index.ts` servant de point d’entrée stable
 à sa page Astro. À l’intérieur :
 
-- `*Game.tsx` orchestre les phases, l’audio et la sauvegarde ;
+- `*Game.tsx` orchestre les phases et la sauvegarde ;
+- `*Audio.ts` déclare les sons, leurs volumes et le mixage propres au jeu ;
 - `*Scene.tsx` possède le décor et ses animations ;
 - `*Challenge.tsx` possède l’exercice quand celui-ci justifie un composant ;
 - `*Result.tsx` possède le résultat lorsqu’il n’est pas trivial ;
 - `*Progress.ts` et `*State.ts` restent des modules métier testables.
+
+Le module partagé `gameAudio.ts` reste indépendant des jeux : il fournit le
+cache, la lecture, les boucles, les délais maximaux et le nettoyage. Les hooks
+audio propres à chaque jeu composent ces helpers et exposent seulement les
+actions utiles à leur `*Game.tsx`.
 
 Cette convention n’impose pas les mêmes écrans aux jeux. Les futures cartes de
 Lettres et du Sentier seront propres à leur univers, tout en lisant une
@@ -208,6 +217,18 @@ npm run build
 `npm run build` exécute la validation du contenu, la vérification Astro et la production statique.
 
 Les tests unitaires actuels couvrent notamment la progression et la migration de Bateau. Chaque nouveau jeu doit tester au minimum sa progression sauvegardée et ses règles de déblocage.
+
+La validation doit rester proportionnée au changement :
+
+- une modification mineure et localisée exécute uniquement le contrôle ou le
+  fichier de test directement concerné ;
+- un changement d’asset audio peut se limiter à `npm run content:check`, à une
+  vérification du format du fichier et à un essai manuel dans le jeu concerné ;
+- la suite complète `npm test`, tous les projets Playwright et le build complet
+  sont réservés aux changements transverses, aux refactorings, à la préparation
+  d’une livraison ou à un doute sur les effets de bord ;
+- il ne faut pas relancer toute la suite par défaut après chaque ajustement
+  mineur, car son coût ralentit inutilement l’itération.
 
 ## Déploiement
 
