@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Readingo</title>
+  <desc id="desc">Un R dont la jambe jaune évoque un chemin qui avance.</desc>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="16" fill="#1167d8" stroke="#08214a" stroke-width="3"/>
+  <path
+    d="M19 49V16h14.5c8 0 13 4.3 13 11.5S41.5 39 33.5 39H20"
+    fill="none"
+    stroke="#fffaf0"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="8"
+  />
+  <path
+    d="m33.5 39 14 12"
+    fill="none"
+    stroke="#ffc42f"
+    stroke-linecap="round"
+    stroke-width="8"
+  />
+</svg>

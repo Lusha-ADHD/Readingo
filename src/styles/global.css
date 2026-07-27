@@ -119,29 +119,21 @@ svg {
   align-items: center;
   gap: 12px;
   font-size: clamp(1.45rem, 3vw, 2rem);
-  font-weight: 900;
-  letter-spacing: 0;
+  font-weight: 950;
+  letter-spacing: -0.035em;
   white-space: nowrap;
 }
 
 .brand__mark {
-  display: grid;
+  display: block;
+  flex: 0 0 auto;
   width: 48px;
   height: 48px;
-  place-items: center;
-  border: 3px solid var(--color-border);
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--color-blue), var(--color-teal));
-  box-shadow: 0 5px 0 rgba(8, 33, 74, 0.18);
 }
 
-.brand__sail {
-  width: 25px;
-  height: 28px;
-  border-radius: 4px 16px 5px 4px;
-  background: #ffffff;
-  box-shadow: 8px 7px 0 #ffc42f;
-  transform: skewY(-7deg);
+.brand__mark img {
+  width: 100%;
+  height: 100%;
 }
 
 .main-nav {

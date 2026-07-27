@@ -19,6 +19,8 @@ export type GameDefinition = {
   pageDescription: string;
   seoTitle: string;
   seoDescription: string;
+  socialImage: string;
+  socialImageAlt: string;
   cta: string;
   icon: string;
   meta: string;
