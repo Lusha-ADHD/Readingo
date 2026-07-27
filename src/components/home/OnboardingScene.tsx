@@ -2,7 +2,8 @@ import { sitePath } from "../../utils/paths";
 import type { HomeGameId } from "./onboardingState";
 
 const BOAT_PATH = sitePath("/assets/world/boat.png");
-const ISLAND_PATH = sitePath("/assets/world/IslandWithChest.png");
+const ISLAND_PATH = sitePath("/assets/world/IslandWithoutChest.png");
+const CHEST_PATH = sitePath("/assets/world/Chest.png");
 const JUNGLE_PATH = sitePath("/assets/world/jungle/jungle-crossroads-5-test.webp");
 const FLOATING_READING_TOKENS = {
   mixed: [
@@ -112,12 +113,20 @@ export function OnboardingScene({ theme, showReadingCurrent }: Props) {
       ) : null}
 
       {theme === "syllabes" ? (
-        <img
-          className="home-onboarding__island"
-          src={ISLAND_PATH}
-          alt=""
-          draggable={false}
-        />
+        <>
+          <img
+            className="home-onboarding__island"
+            src={ISLAND_PATH}
+            alt=""
+            draggable={false}
+          />
+          <img
+            className="home-onboarding__chest"
+            src={CHEST_PATH}
+            alt=""
+            draggable={false}
+          />
+        </>
       ) : null}
       {theme === "sentier" ? (
         <img

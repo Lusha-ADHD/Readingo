@@ -73,7 +73,8 @@ export function LevelMap({
   const nodeRefs = useRef(new Map<number, HTMLButtonElement>());
   const targetPoint = newlyUnlockedLevel === levels.length + 1 ? FINAL_POINT : LEVEL_POINTS[(newlyUnlockedLevel ?? progress.unlockedLevel) - 1];
   const previousPoint = newlyUnlockedLevel && newlyUnlockedLevel > 1 ? LEVEL_POINTS[Math.min(newlyUnlockedLevel - 2, levels.length - 1)] : targetPoint;
-  const frontierPoint = progress.completedLevels.includes(levels.length) ? FINAL_POINT : LEVEL_POINTS[progress.unlockedLevel - 1];
+  const finalCompleted = progress.completedLevels.includes(levels.length);
+  const frontierPoint = finalCompleted ? FINAL_POINT : LEVEL_POINTS[progress.unlockedLevel - 1];
   const boatPoint = newlyUnlockedLevel ? targetPoint : frontierPoint;
 
   const segments = useMemo(
@@ -202,19 +203,24 @@ export function LevelMap({
                 }
               >
                 <span className="level-map__island-wrap">
-                  {firstCompletion ? (
-                    <>
-                      <img className="level-map__island level-map__island--before" src={sitePath("/assets/world/IslandWithoutChest.png")} alt="" draggable={false} />
-                      <img className="level-map__island level-map__island--after" src={sitePath("/assets/world/IslandWithChest.png")} alt="" draggable={false} />
-                    </>
-                  ) : (
+                  <img
+                    className="level-map__island"
+                    src={sitePath("/assets/world/IslandWithoutChest.png")}
+                    alt=""
+                    draggable={false}
+                  />
+                  {!completed || firstCompletion ? (
                     <img
-                      className="level-map__island"
-                      src={sitePath(completed ? "/assets/world/IslandWithChest.png" : "/assets/world/IslandWithoutChest.png")}
+                      className={`level-map__island-chest ${
+                        firstCompletion
+                          ? "level-map__island-chest--collecting"
+                          : ""
+                      }`}
+                      src={sitePath("/assets/world/Chest.png")}
                       alt=""
                       draggable={false}
                     />
-                  )}
+                  ) : null}
                   <strong className="level-map__number">{completed ? "✓" : unlocked ? level.level : "▰"}</strong>
                 </span>
                 <span className="level-map__label">
@@ -227,12 +233,31 @@ export function LevelMap({
           })}
 
           <div
-            className={`level-map__final ${progress.completedLevels.includes(levels.length) ? "level-map__final--complete" : ""} ${newlyUnlockedLevel === levels.length + 1 ? "level-map__final--new" : ""}`}
+            className={`level-map__final ${finalCompleted ? "level-map__final--complete" : ""} ${newlyUnlockedLevel === levels.length + 1 ? "level-map__final--new" : ""}`}
             style={{ left: `${FINAL_POINT.x}%`, top: `${FINAL_POINT.y}px` }}
-            aria-label={progress.completedLevels.includes(levels.length) ? "Trésor final atteint" : "Trésor final verrouillé"}
+            aria-label={finalCompleted ? "Trésor final atteint" : "Trésor final verrouillé"}
           >
-            <img src={sitePath("/assets/world/IslandWithChest.png")} alt="" draggable={false} />
-            <strong>{progress.completedLevels.includes(levels.length) ? "Archipel terminé !" : "Trésor final"}</strong>
+            <span className="level-map__final-island">
+              <img
+                className="level-map__final-island-asset"
+                src={sitePath("/assets/world/IslandWithoutChest.png")}
+                alt=""
+                draggable={false}
+              />
+              {!finalCompleted || newlyUnlockedLevel === levels.length + 1 ? (
+                <img
+                  className={`level-map__final-chest ${
+                    finalCompleted
+                      ? "level-map__final-chest--collecting"
+                      : ""
+                  }`}
+                  src={sitePath("/assets/world/Chest.png")}
+                  alt=""
+                  draggable={false}
+                />
+              ) : null}
+            </span>
+            <strong>{finalCompleted ? "Archipel terminé !" : "Trésor final"}</strong>
           </div>
 
           <div

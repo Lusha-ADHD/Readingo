@@ -28,6 +28,8 @@ const HORIZON_HEIGHT = 158;
 const CELL_COLORS = ["#0c70b8", "#126fb5", "#1979ba", "#0b67ae", "#207fbe", "#0a61aa"];
 const IDLE_FLOW_SPEED = 7;
 const VISIBLE_WATER_PERSPECTIVE_SCALE = 0.58;
+const BOAT_WATERLINE_Y = 258;
+const BOAT_WATER_HALF_WIDTH = 101;
 
 function mix(from: number, to: number, amount: number) {
   return from + (to - from) * amount;
@@ -302,8 +304,96 @@ function drawOcean(context: CanvasRenderingContext2D, scene: OceanScene, flow: n
   context.globalAlpha = 1;
 }
 
+function buildBoatWaterline(scene: OceanScene, flow: number, time: number, energy: number) {
+  const centerX = scene.width / 2;
+  const halfWidth = Math.min(BOAT_WATER_HALF_WIDTH, scene.width * 0.38);
+  const waterlineY = Math.min(BOAT_WATERLINE_Y, scene.height - 52);
+  const left = centerX - halfWidth;
+  const right = centerX + halfWidth;
+  const points: Array<{ x: number; y: number }> = [];
+
+  for (let x = left; x <= right; x += 8) {
+    const primaryWave = Math.sin(x * 0.052 - time * 1.75 + flow * 0.012) * 1.8;
+    const secondaryWave = Math.sin(x * 0.091 + time * 1.12) * 0.7;
+    const sailingWave = Math.sin(x * 0.038 - time * 2.2) * energy * 0.32;
+    points.push({ x, y: waterlineY + primaryWave + secondaryWave + sailingWave });
+  }
+
+  points.push({
+    x: right,
+    y:
+      waterlineY +
+      Math.sin(right * 0.052 - time * 1.75 + flow * 0.012) * 1.8 +
+      Math.sin(right * 0.091 + time * 1.12) * 0.7 +
+      Math.sin(right * 0.038 - time * 2.2) * energy * 0.32,
+  });
+
+  return points;
+}
+
+function traceOpenLine(context: CanvasRenderingContext2D, points: Array<{ x: number; y: number }>) {
+  context.beginPath();
+  points.forEach((point, index) => {
+    if (index === 0) {
+      context.moveTo(point.x, point.y);
+    } else {
+      context.lineTo(point.x, point.y);
+    }
+  });
+}
+
+function drawBoatForegroundWater(
+  context: CanvasRenderingContext2D,
+  scene: OceanScene,
+  flow: number,
+  time: number,
+  energy: number,
+) {
+  context.clearRect(0, 0, scene.width, scene.height);
+
+  const waterline = buildBoatWaterline(scene, flow, time, energy);
+  const firstPoint = waterline[0];
+  const lastPoint = waterline[waterline.length - 1];
+
+  context.save();
+  traceOpenLine(context, waterline);
+  context.lineTo(lastPoint.x, scene.height + 1);
+  context.lineTo(firstPoint.x, scene.height + 1);
+  context.closePath();
+  context.clip();
+  drawOcean(context, scene, flow, time, energy);
+  context.restore();
+
+  const outerWakeGradient = context.createLinearGradient(firstPoint.x, 0, lastPoint.x, 0);
+  outerWakeGradient.addColorStop(0, "rgba(105, 198, 232, 0)");
+  outerWakeGradient.addColorStop(0.2, "rgba(105, 198, 232, 0.58)");
+  outerWakeGradient.addColorStop(0.8, "rgba(105, 198, 232, 0.58)");
+  outerWakeGradient.addColorStop(1, "rgba(105, 198, 232, 0)");
+
+  const innerWakeGradient = context.createLinearGradient(firstPoint.x, 0, lastPoint.x, 0);
+  innerWakeGradient.addColorStop(0, "rgba(228, 250, 255, 0)");
+  innerWakeGradient.addColorStop(0.2, "rgba(228, 250, 255, 0.72)");
+  innerWakeGradient.addColorStop(0.5, "rgba(245, 253, 255, 0.88)");
+  innerWakeGradient.addColorStop(0.8, "rgba(228, 250, 255, 0.72)");
+  innerWakeGradient.addColorStop(1, "rgba(228, 250, 255, 0)");
+
+  traceOpenLine(context, waterline);
+  context.strokeStyle = outerWakeGradient;
+  context.lineWidth = 5.5 + energy * 0.35;
+  context.lineCap = "round";
+  context.lineJoin = "round";
+  context.stroke();
+
+  traceOpenLine(context, waterline);
+  context.strokeStyle = innerWakeGradient;
+  context.lineWidth = 2.2;
+  context.stroke();
+  context.globalAlpha = 1;
+}
+
 export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const foregroundCanvasRef = useRef<HTMLCanvasElement>(null);
   const motionRef = useRef({ paused, sailing, sailingDuration, wind });
 
   useEffect(() => {
@@ -312,15 +402,17 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const foregroundCanvas = foregroundCanvasRef.current;
     const host = canvas?.parentElement;
 
-    if (!canvas || !host) {
+    if (!canvas || !foregroundCanvas || !host) {
       return;
     }
 
     const context = canvas.getContext("2d", { alpha: true });
+    const foregroundContext = foregroundCanvas.getContext("2d", { alpha: true });
 
-    if (!context) {
+    if (!context || !foregroundContext) {
       return;
     }
 
@@ -343,8 +435,15 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      foregroundCanvas.width = Math.round(width * pixelRatio);
+      foregroundCanvas.height = Math.round(height * pixelRatio);
+      foregroundCanvas.style.width = `${width}px`;
+      foregroundCanvas.style.height = `${height}px`;
+      foregroundContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       scene = createOceanScene(width, height);
-      drawOcean(context, scene, flow, performance.now() / 1000, currentEnergy);
+      const time = performance.now() / 1000;
+      drawOcean(context, scene, flow, time, currentEnergy);
+      drawBoatForegroundWater(foregroundContext, scene, flow, time, currentEnergy);
     };
 
     const render = (timestamp: number) => {
@@ -371,6 +470,7 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
       const frameInterval = reducedMotion.matches ? 250 : 1000 / 40;
       if (!document.hidden && timestamp - lastDrawTime >= frameInterval) {
         drawOcean(context, scene, flow, timestamp / 1000, currentEnergy);
+        drawBoatForegroundWater(foregroundContext, scene, flow, timestamp / 1000, currentEnergy);
         lastDrawTime = timestamp;
       }
 
@@ -388,5 +488,14 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
     };
   }, []);
 
-  return <canvas className="syllabes-game__ocean" ref={canvasRef} aria-hidden="true" />;
+  return (
+    <>
+      <canvas className="syllabes-game__ocean" ref={canvasRef} aria-hidden="true" />
+      <canvas
+        className="syllabes-game__ocean-foreground"
+        ref={foregroundCanvasRef}
+        aria-hidden="true"
+      />
+    </>
+  );
 }

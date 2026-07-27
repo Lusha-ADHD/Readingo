@@ -179,18 +179,19 @@
   pointer-events: none;
 }
 
-.level-map__island--before,
-.level-map__island--after {
+.level-map__island-chest {
   position: absolute;
-  inset: 0;
+  z-index: 2;
+  right: 8px;
+  bottom: 5px;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  pointer-events: none;
 }
 
-.level-map__node--just-completed .level-map__island--before {
-  animation: level-island-before 240ms ease-out both;
-}
-
-.level-map__node--just-completed .level-map__island--after {
-  animation: level-island-after 240ms ease-out both;
+.level-map__island-chest--collecting {
+  animation: level-chest-collect 560ms 120ms ease-in both;
 }
 
 .level-map__node--just-completed .level-map__number,
@@ -350,10 +351,31 @@
   opacity: 0.58;
 }
 
-.level-map__final img {
+.level-map__final-island {
+  display: grid;
+  position: relative;
+  width: 190px;
+  height: 150px;
+  place-items: center;
+}
+
+.level-map__final-island-asset {
   width: 190px;
   height: 150px;
   object-fit: contain;
+}
+
+.level-map__final-chest {
+  position: absolute;
+  right: 14px;
+  bottom: 15px;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.level-map__final-chest--collecting {
+  animation: level-chest-collect 560ms 620ms ease-in both;
 }
 
 .level-map__final strong {
@@ -416,14 +438,10 @@
   to { opacity: 1; transform: scale(1); filter: none; }
 }
 
-@keyframes level-island-before {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes level-island-after {
-  from { opacity: 0; transform: scale(0.94); }
-  to { opacity: 1; transform: scale(1); }
+@keyframes level-chest-collect {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  35% { opacity: 1; transform: translateY(-7px) scale(1.14); }
+  100% { opacity: 0; transform: translateY(-24px) scale(0.72); }
 }
 
 @keyframes level-score-pop {
@@ -505,6 +523,13 @@
     height: 90px;
   }
 
+  .level-map__island-chest {
+    right: 6px;
+    bottom: 4px;
+    width: 46px;
+    height: 46px;
+  }
+
   .level-map__label {
     min-width: 124px;
     margin-top: 3px;
@@ -540,9 +565,17 @@
     width: 174px;
   }
 
-  .level-map__final img {
+  .level-map__final-island,
+  .level-map__final-island-asset {
     width: 160px;
     height: 130px;
+  }
+
+  .level-map__final-chest {
+    right: 12px;
+    bottom: 13px;
+    width: 62px;
+    height: 62px;
   }
 }
 
@@ -553,8 +586,8 @@
   .level-map__transit--unlocking,
   .level-map__node--new .level-map__island-wrap,
   .level-map__final--new,
-  .level-map__node--just-completed .level-map__island--before,
-  .level-map__node--just-completed .level-map__island--after,
+  .level-map__island-chest--collecting,
+  .level-map__final-chest--collecting,
   .level-map__node--just-completed .level-map__number,
   .level-map__node--just-completed .level-map__label small,
   .level-map__node--replayed .level-map__island,
@@ -568,5 +601,10 @@
 
   .level-map {
     transition: opacity 150ms ease;
+  }
+
+  .level-map__island-chest--collecting,
+  .level-map__final-chest--collecting {
+    opacity: 0;
   }
 }

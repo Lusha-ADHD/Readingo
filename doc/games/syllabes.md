@@ -172,10 +172,11 @@ Le vent récompense la fluidité sans afficher de chronomètre.
 
 Les seuils sont calculés mot par mot. Ils modifient la longueur du voyage, jamais la possibilité de terminer le niveau.
 
-Les petites îles alternent visuellement entre banc de sable, rochers et palmiers. Une île de trajet sur deux contient un coffre. Lorsqu’un coffre est atteint :
+Les petites îles alternent visuellement entre banc de sable, rochers et palmiers. Une île de trajet sur deux contient un coffre ouvert rempli de grandes gemmes colorées. Lorsqu’un coffre est atteint :
 
 - le bateau marque une courte pause ;
-- le coffre est collecté ;
+- le sprite autonome du coffre disparaît de l’île ;
+- l’animation de collecte reprend ce même sprite près du bateau ;
 - le compteur du niveau augmente ;
 - le total de l’aventure est prévisualisé dans le HUD.
 
@@ -217,11 +218,11 @@ Les positions sont exprimées relativement au parcours afin de conserver la traj
 
 | État | Représentation | Action |
 | --- | --- | --- |
-| Terminé | île avec coffre, coche et meilleur score | rejouer |
-| Frontière | couleurs pleines, halo doré et bateau proche | démarrer ou continuer |
-| Débloqué | couleurs pleines, sans halo | jouer ou rejouer |
-| Verrouillé | saturation et opacité réduites, cadenas | aucune |
-| Trésor final | grande île avec coffre | conclusion après le niveau 6 |
+| Terminé | île sans coffre, coche et meilleur score | rejouer |
+| Frontière | île et coffre séparé, couleurs pleines, halo doré et bateau proche | démarrer ou continuer |
+| Débloqué | île et coffre séparé, couleurs pleines, sans halo | jouer ou rejouer |
+| Verrouillé | île et coffre séparé, saturation et opacité réduites, cadenas | aucune |
+| Trésor final | grande île et coffre séparé ; le coffre disparaît à la conclusion | conclusion après le niveau 6 |
 
 Le panneau de texte d’un niveau et son île constituent un seul bouton visuel. Ils ne doivent pas se recouvrir au point de masquer le titre ou l’action. Les grandes îles restent assez compactes pour ne pas cacher les petites îles de trajet.
 
@@ -364,7 +365,6 @@ Assets partagés ou propres au territoire maritime :
 - `public/assets/characters/pana.png` ;
 - `public/assets/world/boat.png` ;
 - `public/assets/world/IslandWithoutChest.png` ;
-- `public/assets/world/IslandWithChest.png` ;
 - `public/assets/world/Chest.png` ;
 - `public/assets/world/map-island-sandbar.png` ;
 - `public/assets/world/map-island-rocky.png` ;
@@ -373,7 +373,7 @@ Assets partagés ou propres au territoire maritime :
 
 La route, les coches, les cadenas et les halos sont produits en SVG ou CSS. Ils ne nécessitent pas de raster.
 
-La fabrication est décrite dans le [pipeline image commun](../image-generation.md). La recette visuelle actuelle de L’Archipel des mots est `readingo-pana-v1`.
+La fabrication est décrite dans le [pipeline image commun](../image-generation.md). Les objets de monde harmonisés avec les visuels Open Graph utilisent la recette `readingo-social-v2`.
 
 ## Contenu et validation automatique
 

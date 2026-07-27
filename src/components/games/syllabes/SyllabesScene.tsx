@@ -11,9 +11,6 @@ import {
 import type { SyllabesPhase, Journey } from "./syllabesJourney";
 
 const BOAT_ASSET_PATH = sitePath("/assets/world/boat.png");
-const ISLAND_WITH_CHEST_ASSET_PATH = sitePath(
-  "/assets/world/IslandWithChest.png",
-);
 const ISLAND_WITHOUT_CHEST_ASSET_PATH = sitePath(
   "/assets/world/IslandWithoutChest.png",
 );
@@ -34,6 +31,7 @@ type Props = {
   journey: Journey | null;
   islandStartIndex: number;
   chestBursts: number[];
+  collectedTreasureIslandIds: string[];
   onSailingMotionComplete: () => void;
 };
 
@@ -71,6 +69,7 @@ export function SyllabesScene({
   journey,
   islandStartIndex,
   chestBursts,
+  collectedTreasureIslandIds,
   onSailingMotionComplete,
 }: Props) {
   const sailingDuration = journey ? SAILING_DURATIONS[journey.wind] : 0;
@@ -169,14 +168,20 @@ export function SyllabesScene({
                 >
                   <img
                     className="syllabes-game__island-asset"
-                    src={
-                      island.hasTreasure
-                        ? ISLAND_WITH_CHEST_ASSET_PATH
-                        : ISLAND_WITHOUT_CHEST_ASSET_PATH
-                    }
+                    src={ISLAND_WITHOUT_CHEST_ASSET_PATH}
                     alt=""
                     draggable={false}
                   />
+                  {island.hasTreasure &&
+                  !collectedTreasureIslandIds.includes(island.id) ? (
+                    <img
+                      className="syllabes-game__island-chest"
+                      src={CHEST_ICON_ASSET_PATH}
+                      alt=""
+                      draggable={false}
+                      data-treasure-island={island.id}
+                    />
+                  ) : null}
                 </div>
               ))}
             </div>

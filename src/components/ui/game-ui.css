@@ -216,7 +216,6 @@
   width: 28px;
   height: 28px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 0 rgba(8, 33, 74, 0.22));
 }
 
 .syllable-tile {
@@ -367,7 +366,6 @@
   width: 32px;
   height: 32px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 0 rgba(8, 33, 74, 0.18));
 }
 
 @keyframes tile-shake {

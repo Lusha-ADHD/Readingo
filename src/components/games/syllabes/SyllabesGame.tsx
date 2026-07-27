@@ -157,6 +157,7 @@ export function SyllabesGame() {
   const [isCollectingChest, setIsCollectingChest] = useState(false);
   const [isSailingMotionActive, setIsSailingMotionActive] = useState(false);
   const [chestBursts, setChestBursts] = useState<number[]>([]);
+  const [collectedTreasureIslandIds, setCollectedTreasureIslandIds] = useState<string[]>([]);
   const [journey, setJourney] = useState<Journey | null>(null);
   const [progress, setProgress] = useState<SyllabesProgress>(() => getInitialProgress());
   const [newlyUnlockedLevel, setNewlyUnlockedLevel] = useState<number | null>(null);
@@ -328,6 +329,7 @@ export function SyllabesGame() {
     setIsCollectingChest(false);
     setIsSailingMotionActive(false);
     setChestBursts([]);
+    setCollectedTreasureIslandIds([]);
     setJourney(null);
     setNewlyUnlockedLevel(null);
     setLastCompletedLevel(null);
@@ -451,6 +453,9 @@ export function SyllabesGame() {
 
         setIsCollectingChest(true);
         setChestBursts((value) => [...value, burstId]);
+        setCollectedTreasureIslandIds((value) =>
+          value.includes(island.id) ? value : [...value, island.id],
+        );
         setTreasures((value) => value + 1);
         void playEffect("chest");
 
@@ -529,6 +534,7 @@ export function SyllabesGame() {
         journey={journey}
         islandStartIndex={islandStartIndex}
         chestBursts={chestBursts}
+        collectedTreasureIslandIds={collectedTreasureIslandIds}
         onSailingMotionComplete={() => setIsSailingMotionActive(false)}
       />
 

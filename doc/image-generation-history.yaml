@@ -292,7 +292,7 @@ entries:
 
   - id: 2026-07-22-map-island-sandbar-v1
     date: 2026-07-22
-    status: selected
+    status: superseded
     operation: generate
     recipe: readingo-pana-v1
     tool: *image_gen_tool
@@ -322,7 +322,7 @@ entries:
 
   - id: 2026-07-22-map-island-palms-v1
     date: 2026-07-22
-    status: selected
+    status: superseded
     operation: generate
     recipe: readingo-pana-v1
     tool: *image_gen_tool
@@ -353,7 +353,7 @@ entries:
 
   - id: 2026-07-22-map-island-rocky-v1
     date: 2026-07-22
-    status: selected
+    status: superseded
     operation: generate
     recipe: readingo-pana-v1
     tool: *image_gen_tool
@@ -1973,3 +1973,317 @@ entries:
       visual: passed
       transparent_corners: passed
       readable_at_sprite_size: passed
+
+  - id: 2026-07-27-island-main-social-style-v1
+    date: 2026-07-27
+    status: selected
+    operation: generate
+    recipe: readingo-social-v2
+    tool: &social_world_tool
+      provider: OpenAI
+      interface: Codex built-in image_gen
+      model: not_exposed
+      seed: not_exposed
+    inputs:
+      - index: 1
+        path: public/assets/world/IslandWithoutChest.png
+        role: previous_version_silhouette_reference
+      - index: 2
+        path: public/assets/social/readingo-syllabes.jpg
+        role: primary_environment_style_reference
+      - index: 3
+        path: public/assets/world/boat.png
+        role: approved_sprite_style_reference
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: large transparent island sprite for Readingo’s children’s syllables game and level map
+      Primary request: Create one small tropical treasure island without any treasure chest, harmonized with the approved Readingo Open Graph art and the new pirate boat.
+      Input images: Image 1 is the previous island and is a silhouette/function reference only: retain a broad compact island base and one dominant palm so it fits the same UI footprint. Image 2 is the authoritative environment style reference. Image 3 is the approved new sprite reference for faceting, palette and material finish.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for later removal; uniform color only, no sea, horizon, floor, gradient, texture, reflection or background shadow.
+      Subject: one complete compact tropical island seen from a slightly elevated three-quarter game-camera angle. A broad warm sandy base with a few chunky pale rocks, one gently curved palm tree, two or three small low tropical plants and restrained patches of soft grass. No chest and no built structures.
+      Style/medium: polished flat-shaded 3D-like children’s adventure-game sprite matching the OG island scenery; broad matte faceted color planes, soft rounded low-poly geometry, minimal surface detail, subtle restrained grain, clean readable silhouette.
+      Composition/framing: square canvas; island centered and fully visible with generous even padding; wider than tall overall; sturdy horizontal base; readable at 110–180 px. Keep important details away from the canvas edges.
+      Lighting/mood: warm friendly daylight, soft and calm, lighting painted into the object with no cast shadow outside it.
+      Color palette: pale golden sand, warm beige rocks, muted olive and forest greens, touches of honey brown. Do not use #ff00ff anywhere in the island.
+      Constraints: crisp closed outer edges; no cast shadow; no contact shadow; no water; no chest; no character; no boat; no text; no logo; no watermark. Child-friendly for ages 5–7.
+      Avoid: black outlines, thick white sticker outline, clipart look, glossy plastic, photorealism, excessive foliage, coconuts, tiny clutter, skulls, weapons, buildings, cropped parts.
+    generated_dimensions: [1254, 1254]
+    post_processing: &island_social_processing_494
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+      edge_contract: 1
+      resize: [494, 494]
+    outputs:
+      - path: public/assets/world/IslandWithoutChest.png
+        dimensions: [494, 494]
+        format: PNG-RGBA
+        role: selected_output
+    validation: &island_social_validation
+      visual: passed
+      transparent_corners: passed
+      readable_at_sprite_size: passed
+
+  - id: 2026-07-27-island-chest-social-style-v1
+    date: 2026-07-27
+    status: superseded
+    operation: edit
+    recipe: readingo-social-v2
+    tool: *social_world_tool
+    inputs:
+      - index: 1
+        path: public/assets/world/IslandWithoutChest.png
+        role: selected_island_edit_target
+      - index: 2
+        path: public/assets/social/readingo-syllabes.jpg
+        role: chest_and_style_reference
+    prompt: |-
+      Use case: precise-object-edit
+      Asset type: large transparent completed-island sprite for Readingo’s children’s syllables game and level map
+      Primary request: Add exactly one small closed treasure chest to the island in Image 1, placed on the open sand near the front-right side of the palm trunk. Change nothing else.
+      Input images: Image 1 is the edit target and must be preserved exactly in silhouette, framing, palm, rocks, plants, sand shape, proportions, colors and lighting. Image 2 is the authoritative Readingo style and chest-design reference; use its simple rounded wooden chest language but match the target island’s low-poly faceted rendering.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for later removal; uniform color only, no water, horizon, floor, gradient, texture, reflection or background shadow.
+      Subject addition: one compact child-friendly closed wooden treasure chest, warm honey-brown boards, rounded lid, broad muted-gold bands and a simple dark navy lock plate. The chest must be clearly readable at small size but remain secondary to the palm.
+      Style/medium: match Image 1 exactly: matte flat-shaded 3D-like children’s adventure-game sprite, broad faceted color planes, rounded low-poly geometry, minimal surface detail.
+      Composition/framing: preserve Image 1 pixel composition and complete island footprint; do not crop or rescale the island. Keep the chest fully within the sandy base.
+      Constraints: change only by adding the chest. Preserve all existing island elements unchanged. No open lid, no visible coins or jewels, no sparkle, no character, no boat, no text, no logo, no watermark. Do not use #ff00ff in the chest or island. No cast shadow outside the island.
+      Avoid: black outlines, white sticker outline, clipart, glossy plastic, photorealism, skulls, bones, weapons, excessive detail, extra props.
+    generated_dimensions: [1254, 1254]
+    post_processing: *island_social_processing_494
+    outputs:
+      - path: public/assets/world/IslandWithChest.png
+        dimensions: [494, 494]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *island_social_validation
+
+  - id: 2026-07-27-map-island-palms-social-style-v2
+    date: 2026-07-27
+    status: selected
+    operation: generate
+    recipe: readingo-social-v2
+    tool: *social_world_tool
+    inputs:
+      - index: 1
+        path: public/assets/world/map-island-palms.png
+        role: previous_version_silhouette_reference
+      - index: 2
+        path: public/assets/world/IslandWithoutChest.png
+        role: approved_island_set_reference
+      - index: 3
+        path: public/assets/social/readingo-syllabes.jpg
+        role: primary_environment_style_reference
+      - index: 4
+        path: public/assets/world/boat.png
+        role: approved_sprite_style_reference
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: small transparent transit-island sprite for Readingo’s children’s syllables-game map
+      Primary request: Create one tiny tropical palm islet harmonized with the approved Readingo OG art and new world sprites.
+      Input images: Image 1 is the previous palm-island silhouette/function reference only. Image 2 is the approved new large-island set reference. Image 3 is the authoritative environment style reference. Image 4 is the approved boat reference for faceting and palette.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal; uniform color only, no sea, horizon, floor, gradient, texture, reflection or background shadow.
+      Subject: one complete compact golden-sand islet with two simplified gently curved palm trees of different heights, two small warm rocks and very sparse low grass. No chest.
+      Style/medium: polished flat-shaded 3D-like children’s adventure-game sprite; broad matte faceted color planes, rounded low-poly geometry, minimal surface detail and restrained grain matching the references.
+      Composition/framing: square canvas, centered and fully visible with generous padding; clear slightly vertical silhouette; sturdy compact base; readable at 70–110 px.
+      Lighting/mood: warm friendly daylight painted into the object, no cast shadow outside it.
+      Color palette: pale gold sand, honey-brown trunks, muted olive and forest greens, warm beige rocks. Do not use #ff00ff anywhere in the islet.
+      Constraints: crisp closed edges; no cast shadow; no contact shadow; no water; no chest; no character; no boat; no text; no logo; no watermark.
+      Avoid: black outlines, thick white sticker outline, clipart, glossy plastic, photorealism, excessive leaves, coconuts, tiny clutter, skulls, buildings, cropped parts.
+    generated_dimensions: [1254, 1254]
+    post_processing: &island_social_processing_768
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+      edge_contract: 1
+      resize: [768, 768]
+    outputs:
+      - path: public/assets/world/map-island-palms.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *island_social_validation
+
+  - id: 2026-07-27-map-island-rocky-social-style-v2
+    date: 2026-07-27
+    status: selected
+    operation: generate
+    recipe: readingo-social-v2
+    tool: *social_world_tool
+    inputs:
+      - index: 1
+        path: public/assets/world/map-island-rocky.png
+        role: previous_version_silhouette_reference
+      - index: 2
+        path: public/assets/world/IslandWithoutChest.png
+        role: approved_island_set_reference
+      - index: 3
+        path: public/assets/social/readingo-syllabes.jpg
+        role: primary_environment_style_reference
+      - index: 4
+        path: public/assets/world/boat.png
+        role: approved_sprite_style_reference
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: small transparent transit-island sprite for Readingo’s children’s syllables-game map
+      Primary request: Create one tiny rocky tropical islet harmonized with the approved Readingo OG art and new world sprites.
+      Input images: Image 1 is the previous rocky-island silhouette/function reference only. Image 2 is the approved new large-island set reference. Image 3 is the authoritative environment style reference. Image 4 is the approved boat reference for faceting and material finish.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal; uniform color only, no sea, horizon, floor, gradient, texture, reflection or background shadow.
+      Subject: one complete compact low golden-sand islet dominated by a cluster of three or four chunky warm gray-beige rocks of different heights, plus one small muted teal-green broad-leaf plant. No palm and no chest.
+      Style/medium: polished flat-shaded 3D-like children’s adventure-game sprite; broad matte faceted planes, rounded low-poly geometry, minimal surface detail and restrained grain matching the references.
+      Composition/framing: square canvas, centered and fully visible with generous padding; compact triangular rock silhouette on a low wide base; readable at 70–110 px.
+      Lighting/mood: warm friendly daylight painted into the object, no cast shadow outside it.
+      Color palette: pale gold sand, warm gray, sandstone beige, muted teal and olive plant accents. Do not use #ff00ff anywhere in the islet.
+      Constraints: crisp closed edges; no cast shadow; no contact shadow; no water; no palm; no chest; no character; no boat; no text; no logo; no watermark.
+      Avoid: black outlines, thick white sticker outline, clipart, glossy plastic, photorealism, sharp menacing spikes, excessive detail, crystals, skulls, buildings, cropped parts.
+    generated_dimensions: [1254, 1254]
+    post_processing: *island_social_processing_768
+    outputs:
+      - path: public/assets/world/map-island-rocky.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *island_social_validation
+
+  - id: 2026-07-27-map-island-sandbar-social-style-v2
+    date: 2026-07-27
+    status: selected
+    operation: generate
+    recipe: readingo-social-v2
+    tool: *social_world_tool
+    inputs:
+      - index: 1
+        path: public/assets/world/map-island-sandbar.png
+        role: previous_version_silhouette_reference
+      - index: 2
+        path: public/assets/world/IslandWithoutChest.png
+        role: approved_island_set_reference
+      - index: 3
+        path: public/assets/social/readingo-syllabes.jpg
+        role: primary_environment_style_reference
+      - index: 4
+        path: public/assets/world/boat.png
+        role: approved_sprite_style_reference
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: small transparent transit-island sprite for Readingo’s children’s syllables-game map
+      Primary request: Create one tiny low sandbar island harmonized with the approved Readingo OG art and new world sprites.
+      Input images: Image 1 is the previous sandbar silhouette/function reference only. Image 2 is the approved new large-island set reference. Image 3 is the authoritative environment style reference. Image 4 is the approved boat reference for faceting and material finish.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal; uniform color only, no sea, horizon, floor, gradient, texture, reflection or background shadow.
+      Subject: one complete very low broad golden-sand bar, gently irregular and slightly raised, with three simple pale cream seashells of distinct shapes, one small coral-orange starfish and a few tiny rounded pebbles. No plant, palm, rock formation or chest.
+      Style/medium: polished flat-shaded 3D-like children’s adventure-game sprite; broad matte faceted planes, rounded low-poly geometry, minimal surface detail and restrained grain matching the references.
+      Composition/framing: square canvas, centered and fully visible with generous padding; unmistakably low wide silhouette; objects spaced clearly; readable at 70–110 px.
+      Lighting/mood: warm friendly daylight painted into the object, no cast shadow outside it.
+      Color palette: pale golden sand, cream shells, muted coral-orange starfish, warm beige pebbles. Do not use #ff00ff anywhere in the sandbar.
+      Constraints: crisp closed edges; no cast shadow; no contact shadow; no water; no vegetation; no chest; no character; no boat; no text; no logo; no watermark.
+      Avoid: black outlines, thick white sticker outline, clipart, glossy plastic, photorealism, excessive tiny detail, faces on objects, skulls, buildings, cropped parts.
+    generated_dimensions: [1254, 1254]
+    post_processing: *island_social_processing_768
+    outputs:
+      - path: public/assets/world/map-island-sandbar.png
+        dimensions: [768, 768]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *island_social_validation
+
+  - id: 2026-07-27-chest-social-style-v2
+    date: 2026-07-27
+    status: superseded
+    operation: generate
+    recipe: readingo-social-v2
+    tool: *social_world_tool
+    inputs:
+      - index: 1
+        path: public/assets/world/Chest.png
+        role: previous_version_silhouette_reference
+      - index: 2
+        path: public/assets/world/IslandWithoutChest.png
+        role: approved_island_style_reference
+      - index: 3
+        path: public/assets/social/readingo-syllabes.jpg
+        role: primary_environment_and_chest_reference
+      - index: 4
+        path: public/assets/world/boat.png
+        role: approved_sprite_style_reference
+    prompt: |-
+      Use case: stylized-concept
+      Asset type: standalone transparent treasure-chest sprite for Readingo’s children’s syllables game, displayed on islands and in collection feedback
+      Primary request: Create one clearly readable friendly pirate treasure chest, large enough to remain recognizable at 48–70 px, harmonized with the approved Readingo OG art and new world sprites.
+      Input images: Image 1 is the previous chest and is a silhouette/function reference only; keep a compact unmistakable treasure-chest shape but abandon its outlined clipart rendering and excess jewels. Image 2 is the approved island style reference. Image 3 is the authoritative environment and chest-design reference. Image 4 is the approved sprite reference for faceting, palette and finish.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for later removal; uniform color only, no island, sand, water, floor, gradient, texture, reflection or background shadow.
+      Subject: exactly one closed rounded wooden treasure chest in three-quarter front view. Chunky honey-brown wood body, warm coral-brown lid, broad muted-gold metal bands, simple dark navy keyhole plate and one restrained golden edge highlight. No visible treasure and no separate objects.
+      Style/medium: polished flat-shaded 3D-like children’s adventure-game sprite; broad matte faceted color planes, soft rounded low-poly geometry, minimal surface detail, subtle restrained grain, strong clean silhouette matching the new island and boat.
+      Composition/framing: square canvas, chest centered, completely visible and occupying most of the useful area with generous even padding; front and lid readable at small game size.
+      Lighting/mood: warm friendly daylight painted into the object, no cast shadow outside it.
+      Color palette: honey wood, coral brown, cream-gold metal and muted navy. Do not use #00ff00 anywhere in the chest.
+      Constraints: crisp closed outer edges; closed lid; no cast shadow; no contact shadow; no coins; no jewels; no sparkle; no character; no text; no logo; no watermark. Child-friendly for ages 5–7.
+      Avoid: black outlines, thick white sticker outline, clipart, glossy plastic, photorealism, skulls, bones, weapons, lock chains, excessive rivets, tiny clutter, cropped parts.
+    generated_dimensions: [1254, 1254]
+    post_processing:
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+      edge_contract: 1
+      resize: [512, 512]
+    outputs:
+      - path: public/assets/world/Chest.png
+        dimensions: [512, 512]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *island_social_validation
+
+  - id: 2026-07-27-open-chest-social-style-v3
+    date: 2026-07-27
+    status: selected
+    operation: edit
+    recipe: readingo-social-v2
+    tool: *social_world_tool
+    inputs:
+      - index: 1
+        path: public/assets/world/Chest.png
+        role: approved_closed_chest_edit_target
+      - index: 2
+        path: public/assets/world/jungle/treasure-chest-open.webp
+        role: open_chest_function_reference_only
+      - index: 3
+        path: public/assets/world/jungle/gem.png
+        role: gem_shape_and_color_reference_only
+      - index: 4
+        path: public/assets/world/IslandWithoutChest.png
+        role: approved_island_style_reference
+      - index: 5
+        path: public/assets/social/readingo-syllabes.jpg
+        role: primary_archipelago_style_reference
+    prompt: |-
+      Use case: precise-object-edit
+      Asset type: standalone transparent open treasure-chest sprite for Readingo’s children’s syllables game, displayed at 48–75 px on tropical islands
+      Primary request: Open the chest from Image 1 and fill it with a small number of large, clearly visible colorful gemstones, while preserving the chest’s approved Readingo Archipel style.
+      Input images: Image 1 is the edit target and authoritative chest style reference: preserve its honey wood, coral lid, muted-gold bands, navy lock plate, matte low-poly faceting and friendly proportions. Image 2 is only a functional reference for an unmistakably open lid and visible gem-filled interior; do not copy its outlined jungle art style, materials or level of detail. Image 3 is only a reference for simple faceted gem geometry and colors. Image 4 is the approved island sprite reference for scale and matte finish. Image 5 is the authoritative Archipel environment style reference.
+      Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for later removal; uniform color only, no island, sand, water, floor, gradient, texture, reflection or background shadow.
+      Subject: exactly one compact wooden treasure chest in three-quarter front view, lid clearly open about 100 degrees. Inside are five to seven large simplified faceted gems, visibly rising above the rim: turquoise, coral red and warm golden yellow. Keep the chest front and navy keyhole plate visible. The open lid must not make the silhouette excessively tall.
+      Style/medium: polished flat-shaded 3D-like children’s adventure-game sprite; broad matte faceted planes, soft rounded low-poly geometry, minimal surface detail, restrained texture and a strong uncluttered silhouette matching Image 1 and Image 4.
+      Composition/framing: square canvas; full chest centered, completely visible, occupying most of the useful area with even padding; gemstones and open state must remain readable at 48–75 px.
+      Lighting/mood: warm friendly daylight painted into the object, with no cast shadow or contact shadow outside it.
+      Color palette: honey wood, coral brown, cream-gold metal, muted navy, turquoise, coral-red and golden gems. Do not use #00ff00 anywhere in the chest or gems.
+      Constraints: change the chest only by opening the lid and adding gems. No coins, pearls, goblets, sparkle stars, rays or extra objects. No cast shadow, no floor, no text, no logo, no watermark. Child-friendly for ages 5–7.
+      Avoid: the Sentier’s dark outlines and glossy comic rendering, thick white sticker outline, clipart, photorealism, excessive jewelry, tiny gems, skulls, bones, weapons, cropped parts.
+    generated_dimensions: [1254, 1254]
+    post_processing:
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+      edge_contract: 1
+      resize: [512, 512]
+    outputs:
+      - path: public/assets/world/Chest.png
+        dimensions: [512, 512]
+        format: PNG-RGBA
+        role: selected_output
+    validation: *island_social_validation

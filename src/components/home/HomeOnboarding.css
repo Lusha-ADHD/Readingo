@@ -432,6 +432,15 @@
   animation: home-island-arrive 480ms ease-out both;
 }
 
+.home-onboarding__chest {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--scene-horizon) + 28px);
+  right: 22px;
+  width: 62px;
+  animation: home-island-arrive 520ms 80ms ease-out both;
+}
+
 .home-onboarding__jungle {
   position: absolute;
   z-index: 1;

@@ -91,6 +91,16 @@
   pointer-events: none;
 }
 
+.syllabes-game__ocean-foreground {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 .syllabes-game__world {
   position: relative;
   z-index: 1;
@@ -158,6 +168,9 @@
   left: var(--island-left-desktop);
   width: 176px;
   height: 126px;
+  --island-chest-right: 27%;
+  --island-chest-bottom: 6%;
+  --island-chest-width: 42%;
 }
 
 .syllabes-game__island-track {
@@ -184,10 +197,24 @@
   pointer-events: none;
 }
 
+.syllabes-game__island-chest {
+  position: absolute;
+  z-index: 2;
+  right: var(--island-chest-right);
+  bottom: var(--island-chest-bottom);
+  width: var(--island-chest-width);
+  height: auto;
+  pointer-events: none;
+  animation: island-chest-idle 1500ms ease-in-out infinite alternate;
+}
+
 .syllabes-game__island--small {
   top: 128px;
   width: 132px;
   height: 94px;
+  --island-chest-right: 4%;
+  --island-chest-bottom: -8%;
+  --island-chest-width: 54%;
 }
 
 .syllabes-game__island--large {
@@ -297,7 +324,6 @@
   width: 64px;
   height: 64px;
   object-fit: contain;
-  filter: drop-shadow(0 5px 0 rgba(8, 33, 74, 0.2));
 }
 
 .syllabes-game__collect-burst strong {
@@ -347,7 +373,7 @@
 .syllabes-game__sailing-panel {
   display: flex;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   min-height: 318px;
   align-items: flex-end;
   justify-content: center;
@@ -380,7 +406,7 @@
 .syllabes-game__panel {
   display: grid;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   grid-template-columns: minmax(190px, 0.72fr) 1fr;
   gap: 22px;
   margin: -26px 18px 18px;
@@ -635,6 +661,16 @@
   100% {
     opacity: 0;
     transform: translateY(-46px) scale(0.9) rotate(8deg);
+  }
+}
+
+@keyframes island-chest-idle {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-3px);
   }
 }
 
