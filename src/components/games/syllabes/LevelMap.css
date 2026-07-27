@@ -4,7 +4,7 @@
   inset: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  background: linear-gradient(180deg, rgba(77, 55, 164, 0.18), rgba(8, 71, 146, 0.14));
+  background: #168bc4;
   animation: level-map-reveal 260ms ease-out both;
 }
 
@@ -85,6 +85,8 @@
 }
 
 .level-map__scroller {
+  position: relative;
+  z-index: 1;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;

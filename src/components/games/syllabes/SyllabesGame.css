@@ -14,6 +14,10 @@
   user-select: none;
 }
 
+.syllabes-game--map {
+  background: #168bc4;
+}
+
 .syllabes-game *,
 .syllabes-game *::before,
 .syllabes-game *::after {

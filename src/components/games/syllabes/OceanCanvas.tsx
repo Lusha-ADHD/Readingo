@@ -5,6 +5,7 @@ type OceanCanvasProps = {
   sailing: boolean;
   sailingDuration: number;
   wind: 1 | 2 | 3;
+  view?: "horizon" | "top-down";
 };
 
 type OceanScene = {
@@ -14,6 +15,7 @@ type OceanScene = {
   rowCount: number;
   columnCount: number;
   cellSize: number;
+  view: "horizon" | "top-down";
 };
 
 type OceanPoint = {
@@ -66,7 +68,21 @@ function hash(row: number, column: number, salt = 0) {
   return ((value ^ (value >>> 16)) >>> 0) / 4294967296;
 }
 
-function createOceanScene(width: number, height: number): OceanScene {
+function createOceanScene(width: number, height: number, view: OceanScene["view"]): OceanScene {
+  if (view === "top-down") {
+    const cellSize = 148;
+
+    return {
+      width,
+      height,
+      horizon: 0,
+      rowCount: Math.max(12, Math.ceil(height / (cellSize * 0.48)) + 3),
+      columnCount: Math.max(24, Math.ceil(width / (cellSize * 0.78)) + 8),
+      cellSize,
+      view,
+    };
+  }
+
   const horizon = Math.min(HORIZON_HEIGHT, height * 0.34);
   const seaHeight = Math.max(1, height - horizon);
   const cellSize = 168;
@@ -78,6 +94,7 @@ function createOceanScene(width: number, height: number): OceanScene {
     rowCount: Math.max(11, Math.ceil(seaHeight / 92) + 3),
     columnCount: Math.max(24, Math.ceil(width / (cellSize * 0.21)) + 10),
     cellSize,
+    view,
   };
 }
 
@@ -91,6 +108,26 @@ function projectOceanPoint(
   energy: number,
 ): OceanPoint {
   const depth = row / (scene.rowCount - 1);
+
+  if (scene.view === "top-down") {
+    const scale = mix(0.82, 1.08, depth);
+    const jitterX = (hash(row, worldColumn, 1) - 0.5) * scene.cellSize * mix(0.3, 0.38, depth);
+    const jitterY = (hash(row, worldColumn, 2) - 0.5) * mix(14, 26, depth);
+    const wave =
+      Math.sin(time * (0.38 + depth * 0.16) + hash(row, worldColumn, 3) * Math.PI * 2) *
+      mix(1.2, 3.2, depth) *
+      (1 + energy * 0.08);
+    const centeredColumn = screenColumn - (scene.columnCount - 1) / 2;
+
+    return {
+      x: scene.width / 2 + (centeredColumn * scene.cellSize - flowRemainder + jitterX) * scale,
+      y: -scene.cellSize * 0.32 + depth * (scene.height + scene.cellSize * 0.64) + jitterY + wave,
+      depth,
+      row,
+      worldColumn,
+    };
+  }
+
   const perspective = Math.pow(depth, 1.48);
   const scale = mix(0.21, 1.18, Math.pow(depth, 0.88));
   const jitterX = (hash(row, worldColumn, 1) - 0.5) * scene.cellSize * mix(0.32, 0.46, depth);
@@ -261,11 +298,23 @@ function drawHorizon(context: CanvasRenderingContext2D, scene: OceanScene, time:
 function drawOcean(context: CanvasRenderingContext2D, scene: OceanScene, flow: number, time: number, energy: number) {
   context.clearRect(0, 0, scene.width, scene.height);
 
-  const gradient = context.createLinearGradient(0, scene.horizon, 0, scene.height);
-  gradient.addColorStop(0, "#48b4e4");
-  gradient.addColorStop(0.24, "#2c9bd7");
-  gradient.addColorStop(0.58, "#1176c2");
-  gradient.addColorStop(1, "#064e9e");
+  const gradient =
+    scene.view === "top-down"
+      ? context.createLinearGradient(0, 0, scene.width, scene.height)
+      : context.createLinearGradient(0, scene.horizon, 0, scene.height);
+
+  if (scene.view === "top-down") {
+    gradient.addColorStop(0, "#36a9d8");
+    gradient.addColorStop(0.38, "#218fca");
+    gradient.addColorStop(0.72, "#147bbd");
+    gradient.addColorStop(1, "#0b69b1");
+  } else {
+    gradient.addColorStop(0, "#48b4e4");
+    gradient.addColorStop(0.24, "#2c9bd7");
+    gradient.addColorStop(0.58, "#1176c2");
+    gradient.addColorStop(1, "#064e9e");
+  }
+
   context.fillStyle = gradient;
   context.fillRect(0, scene.horizon, scene.width, scene.height - scene.horizon);
 
@@ -300,7 +349,9 @@ function drawOcean(context: CanvasRenderingContext2D, scene: OceanScene, flow: n
 
   context.restore();
   context.globalAlpha = 1;
-  drawHorizon(context, scene, time, energy);
+  if (scene.view === "horizon") {
+    drawHorizon(context, scene, time, energy);
+  }
   context.globalAlpha = 1;
 }
 
@@ -391,7 +442,7 @@ function drawBoatForegroundWater(
   context.globalAlpha = 1;
 }
 
-export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCanvasProps) {
+export function OceanCanvas({ paused, sailing, sailingDuration, wind, view = "horizon" }: OceanCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const foregroundCanvasRef = useRef<HTMLCanvasElement>(null);
   const motionRef = useRef({ paused, sailing, sailingDuration, wind });
@@ -405,18 +456,18 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
     const foregroundCanvas = foregroundCanvasRef.current;
     const host = canvas?.parentElement;
 
-    if (!canvas || !foregroundCanvas || !host) {
+    if (!canvas || !host || (view === "horizon" && !foregroundCanvas)) {
       return;
     }
 
     const context = canvas.getContext("2d", { alpha: true });
-    const foregroundContext = foregroundCanvas.getContext("2d", { alpha: true });
+    const foregroundContext = foregroundCanvas?.getContext("2d", { alpha: true });
 
-    if (!context || !foregroundContext) {
+    if (!context || (view === "horizon" && !foregroundContext)) {
       return;
     }
 
-    let scene = createOceanScene(1, 1);
+    let scene = createOceanScene(1, 1, view);
     let animationFrame = 0;
     let flow = 0;
     let currentSpeed = 0;
@@ -435,15 +486,19 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      foregroundCanvas.width = Math.round(width * pixelRatio);
-      foregroundCanvas.height = Math.round(height * pixelRatio);
-      foregroundCanvas.style.width = `${width}px`;
-      foregroundCanvas.style.height = `${height}px`;
-      foregroundContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      scene = createOceanScene(width, height);
+      if (foregroundCanvas && foregroundContext) {
+        foregroundCanvas.width = Math.round(width * pixelRatio);
+        foregroundCanvas.height = Math.round(height * pixelRatio);
+        foregroundCanvas.style.width = `${width}px`;
+        foregroundCanvas.style.height = `${height}px`;
+        foregroundContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      }
+      scene = createOceanScene(width, height, view);
       const time = performance.now() / 1000;
       drawOcean(context, scene, flow, time, currentEnergy);
-      drawBoatForegroundWater(foregroundContext, scene, flow, time, currentEnergy);
+      if (foregroundContext) {
+        drawBoatForegroundWater(foregroundContext, scene, flow, time, currentEnergy);
+      }
     };
 
     const render = (timestamp: number) => {
@@ -470,7 +525,9 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
       const frameInterval = reducedMotion.matches ? 250 : 1000 / 40;
       if (!document.hidden && timestamp - lastDrawTime >= frameInterval) {
         drawOcean(context, scene, flow, timestamp / 1000, currentEnergy);
-        drawBoatForegroundWater(foregroundContext, scene, flow, timestamp / 1000, currentEnergy);
+        if (foregroundContext) {
+          drawBoatForegroundWater(foregroundContext, scene, flow, timestamp / 1000, currentEnergy);
+        }
         lastDrawTime = timestamp;
       }
 
@@ -486,16 +543,18 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
       resizeObserver.disconnect();
       window.cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [view]);
 
   return (
     <>
       <canvas className="syllabes-game__ocean" ref={canvasRef} aria-hidden="true" />
-      <canvas
-        className="syllabes-game__ocean-foreground"
-        ref={foregroundCanvasRef}
-        aria-hidden="true"
-      />
+      {view === "horizon" ? (
+        <canvas
+          className="syllabes-game__ocean-foreground"
+          ref={foregroundCanvasRef}
+          aria-hidden="true"
+        />
+      ) : null}
     </>
   );
 }

@@ -72,6 +72,10 @@ export function SyllabesScene({
   collectedTreasureIslandIds,
   onSailingMotionComplete,
 }: Props) {
+  if (phase === "map") {
+    return null;
+  }
+
   const sailingDuration = journey ? SAILING_DURATIONS[journey.wind] : 0;
   const visibleIslands =
     phase === "sailing" && journey

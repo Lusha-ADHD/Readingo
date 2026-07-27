@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import type { CSSProperties } from "react";
 import type { LessonBase } from "../../../content/types";
 import { sitePath } from "../../../utils/paths";
+import { OceanCanvas } from "./OceanCanvas";
 import type { SyllabesProgress } from "./syllabesProgress";
 import "./LevelMap.css";
 
@@ -123,6 +124,14 @@ export function LevelMap({
 
   return (
     <div className="level-map" aria-label="Carte des niveaux">
+      <OceanCanvas
+        paused={false}
+        sailing={false}
+        sailingDuration={0}
+        wind={1}
+        view="top-down"
+      />
+
       <header className="level-map__header">
         <img className="level-map__pana" src={sitePath("/assets/characters/pana.png")} alt="Pana" draggable={false} />
         <div>
