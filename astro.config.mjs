@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 
 const isDevelopmentServer = process.argv.includes("dev");
 
@@ -7,13 +8,10 @@ export default defineConfig({
   site: "https://readingo.lusha.care",
   base: "/",
   output: "static",
-  redirects: {
-    "/jeux/bateau": "/jeux/syllabes/",
-  },
   devToolbar: {
     enabled: false,
   },
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   vite: {
     // A production build can run while the local server stays open. Keeping
     // separate optimizer caches prevents React's production JSX runtime from

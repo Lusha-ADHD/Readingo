@@ -18,9 +18,10 @@ const {
   ogType = "website",
 } = Astro.props;
 
-const canonicalUrl = canonicalPath
-  ? new URL(sitePath(canonicalPath), Astro.site ?? Astro.url).toString()
-  : undefined;
+const canonicalUrl = new URL(
+  sitePath(canonicalPath ?? Astro.url.pathname),
+  Astro.site ?? Astro.url,
+).toString();
 
 ---
 
@@ -33,8 +34,8 @@ const canonicalUrl = canonicalPath
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
-    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:url" content={canonicalUrl} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href={sitePath("/favicon.svg")} type="image/svg+xml" />
     <link
       rel="preload"
