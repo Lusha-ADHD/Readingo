@@ -9,7 +9,8 @@ import { readStoredJson, writeStoredJson } from "../../utils/storage.ts";
 
 export const HOME_LAST_GAME_STORAGE_KEY = "readingo:last-game:v1";
 export const LETTERS_PROGRESS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.LETTERS].progressKeys[0];
-export const BATEAU_PROGRESS_STORAGE_KEYS = GAME_BY_ID[GAME_IDS.BATEAU].progressKeys;
+export const SYLLABLES_PROGRESS_STORAGE_KEY =
+  GAME_BY_ID[GAME_IDS.SYLLABLES].progressKeys[0];
 export const SENTIER_PROGRESS_STORAGE_KEY = GAME_BY_ID[GAME_IDS.SENTIER].progressKeys[0];
 
 export type HomeGameId = GameId;
@@ -59,7 +60,7 @@ export function recommendHomeGame(skill: SkillChoice, _age?: AgeChoice): HomeGam
     return GAME_IDS.LETTERS;
   }
 
-  return skill === "reads-words" ? GAME_IDS.SENTIER : GAME_IDS.BATEAU;
+  return skill === "reads-words" ? GAME_IDS.SENTIER : GAME_IDS.SYLLABLES;
 }
 
 export function readResumeState(storage: Storage | null): ResumeState {

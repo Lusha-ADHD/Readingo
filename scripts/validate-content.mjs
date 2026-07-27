@@ -41,8 +41,8 @@ async function assertAsset(publicPath, label) {
 assert(levels.length === 6, `6 niveaux attendus, ${levels.length} trouvés`);
 assert(duplicates(games.map((game) => game.id)).length === 0, "Identifiants de jeux dupliqués");
 assert(
-  ["letters", "bateau", "sentier"].every((id) => games.some((game) => game.id === id)),
-  "Le catalogue doit contenir letters, bateau et sentier",
+  ["letters", "syllabes", "sentier"].every((id) => games.some((game) => game.id === id)),
+  "Le catalogue doit contenir letters, syllabes et sentier",
 );
 
 for (const game of games) {
@@ -67,7 +67,7 @@ assert(referencedWordIds.length === words.length, "Tous les mots doivent apparte
 
 for (const [index, level] of levels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau ${level.id}`);
-  assert(level.gameIds?.includes("bateau"), `${level.id}: gameIds doit contenir bateau`);
+  assert(level.gameIds?.includes("syllabes"), `${level.id}: gameIds doit contenir syllabes`);
   assert(level.wordIds.length === 8, `${level.id}: 8 mots attendus`);
   const expectedSyllables = level.level <= 2 ? 2 : level.level <= 4 ? 3 : 4;
   const expectedDistractors = level.level <= 3 ? 2 : level.level <= 5 ? 3 : 4;
@@ -234,5 +234,5 @@ if (errors.length) {
 }
 
 process.stdout.write(
-  `Contenu valide : ${levels.length} niveaux Bateau, ${letterLevels.length} niveau Lettres, ${sentierLevels.length} niveau Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
+  `Contenu valide : ${levels.length} niveaux Syllabes, ${letterLevels.length} niveau Lettres, ${sentierLevels.length} niveau Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
 );

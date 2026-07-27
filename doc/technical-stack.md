@@ -35,7 +35,7 @@ import { GAME_BY_ID, GAME_IDS } from "../content/gameCatalog";
 import GamePageLayout from "../layouts/GamePageLayout.astro";
 import { BateauGame } from "../components/games/bateau";
 
-const game = GAME_BY_ID[GAME_IDS.BATEAU];
+const game = GAME_BY_ID[GAME_IDS.SYLLABLES];
 ---
 
 <GamePageLayout game={game}>
@@ -216,7 +216,7 @@ npm run build
 
 `npm run build` exécute la validation du contenu, la vérification Astro et la production statique.
 
-Les tests unitaires actuels couvrent notamment la progression et la migration de Bateau. Chaque nouveau jeu doit tester au minimum sa progression sauvegardée et ses règles de déblocage.
+Les tests unitaires actuels couvrent notamment la progression et la migration du jeu de syllabes. Chaque nouveau jeu doit tester au minimum sa progression sauvegardée et ses règles de déblocage.
 
 La validation doit rester proportionnée au changement :
 

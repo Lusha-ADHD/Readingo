@@ -2,7 +2,7 @@
 
 ## Rôle du document
 
-Ce document décrit le pipeline commun de production des images Readingo. La recette actuellement utilisée pour les illustrations pédagogiques et les objets du jeu Bateau se nomme `readingo-pana-v1`.
+Ce document décrit le pipeline commun de production des images Readingo. La recette actuellement utilisée pour les illustrations pédagogiques et les objets du jeu de syllabes se nomme `readingo-pana-v1`.
 
 Le pipeline commun définit :
 

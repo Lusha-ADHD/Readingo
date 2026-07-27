@@ -58,7 +58,7 @@ export function BateauChallenge({
 
       <div className="bateau-game__challenge">
         <div className="bateau-game__challenge-header">
-          <p className="bateau-game__eyebrow" id="bateau-title">
+          <p className="bateau-game__eyebrow" id="syllables-title">
             Compose le mot
           </p>
           {lastTreasuresFound > 0 ? (

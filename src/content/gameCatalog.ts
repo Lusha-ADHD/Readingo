@@ -2,12 +2,12 @@ import gameData from "./fr/games.json" with { type: "json" };
 
 export const GAME_IDS = {
   LETTERS: "letters",
-  BATEAU: "bateau",
+  SYLLABLES: "syllabes",
   SENTIER: "sentier",
 } as const;
 
 export type GameId = (typeof GAME_IDS)[keyof typeof GAME_IDS];
-export type GameTheme = "letters" | "bateau" | "forest";
+export type GameTheme = "letters" | "syllabes" | "forest";
 
 export type GameDefinition = {
   id: GameId;

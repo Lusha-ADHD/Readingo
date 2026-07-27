@@ -52,9 +52,8 @@ const WORD_SUCCESS_SOUND_MS = 600;
 const wordChallenges = words as WordEntry[];
 const wordById = new Map(wordChallenges.map((word) => [word.id, word]));
 const bateauLevels = (lessonEntries as BateauLevel[])
-  .filter((level) => level.gameIds.includes(GAME_IDS.BATEAU))
+  .filter((level) => level.gameIds.includes(GAME_IDS.SYLLABLES))
   .sort((left, right) => left.level - right.level);
-const firstLevelWordIds = bateauLevels[0]?.wordIds ?? [];
 const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry]));
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.intro;
@@ -79,7 +78,10 @@ function wordsForLevel(level: BateauLevel) {
 }
 
 function getInitialProgress(): BateauProgress {
-  return readBateauProgress(typeof window === "undefined" ? null : window.localStorage, firstLevelWordIds, bateauLevels.length);
+  return readBateauProgress(
+    typeof window === "undefined" ? null : window.localStorage,
+    bateauLevels.length,
+  );
 }
 
 function speak(text: string, options: { cancel?: boolean } = {}) {
@@ -175,7 +177,7 @@ export function BateauGame() {
   const displayedTotalTreasures = progress.totalTreasures + (phase === "done" || phase === "map" ? 0 : treasures);
 
   useEffect(() => {
-    rememberLastGame(window.localStorage, "bateau");
+    rememberLastGame(window.localStorage, "syllabes");
 
     if (
       shouldResumeFromUrl(window.location.search) &&
@@ -518,7 +520,7 @@ export function BateauGame() {
   return (
     <section
       className={`bateau-game bateau-game--${phase} ${isCollectingChest ? "bateau-game--collecting" : ""}`}
-      aria-label="Jeu Bateau"
+      aria-label="Jeu de syllabes"
     >
       <BateauScene
         phase={phase}

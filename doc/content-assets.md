@@ -10,7 +10,7 @@ Procédures associées :
 - [pipeline image](./image-generation.md) ;
 - [socle de game design](./game-design-system.md).
 
-Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [Bateau](./games/bateau.md) et de [Lettres](./games/lettres.md).
+Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [Syllabes](./games/syllabes.md) et de [Lettres](./games/lettres.md).
 
 ## Principe général
 

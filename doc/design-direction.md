@@ -7,7 +7,7 @@ Ce document définit le langage visuel commun à tous les jeux Readingo. Il déc
 Documents associés :
 
 - [socle de game design](./game-design-system.md) pour les règles fonctionnelles communes ;
-- [GDD de Bateau](./games/bateau.md) pour le thème de l’archipel ;
+- [GDD du jeu de syllabes](./games/syllabes.md) pour le thème de l’archipel ;
 - [pipeline image](./image-generation.md) pour la production des illustrations ;
 - [pipeline audio](./audio-generation.md) pour l’identité sonore.
 
@@ -70,7 +70,7 @@ Readingo se déroule dans un monde d’aventure guidé par Pana. Chaque jeu peut
 - récompense ;
 - bruitages d’environnement.
 
-Une variation thématique doit être décrite dans le GDD du jeu. L’archipel, le bateau, les îles et les coffres appartiennent ainsi au thème de [Bateau](./games/bateau.md), pas à tous les jeux Readingo.
+Une variation thématique doit être décrite dans le GDD du jeu. L’archipel, le bateau, les îles et les coffres appartiennent ainsi au thème du [jeu de syllabes](./games/syllabes.md), pas à tous les jeux Readingo.
 
 ## Palette
 

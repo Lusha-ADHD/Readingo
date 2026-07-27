@@ -5,8 +5,8 @@ test.describe("Structure des jeux après découpage", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
   });
 
-  test("Bateau affiche ensemble scène, HUD et défi", async ({ page }) => {
-    await page.goto("/jeux/bateau/?niveau=1", { waitUntil: "networkidle" });
+  test("Syllabes affiche ensemble scène, HUD et défi", async ({ page }) => {
+    await page.goto("/jeux/syllabes/?niveau=1", { waitUntil: "networkidle" });
 
     await expect(page.locator(".bateau-game--playing")).toBeVisible();
     await expect(page.locator(".bateau-game__world")).toBeVisible();

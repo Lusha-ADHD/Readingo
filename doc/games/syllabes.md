@@ -1,8 +1,8 @@
-# Jeu Bateau — Game Design Document
+# Jeu de syllabes — Game Design Document
 
 ## Statut et périmètre
 
-Ce document décrit le comportement actuel du jeu Bateau et constitue sa référence de game design. Il complète le [socle commun Readingo](../game-design-system.md) sans recopier toutes ses règles.
+Ce document décrit le comportement actuel du jeu de syllabes et constitue sa référence de game design. Il complète le [socle commun Readingo](../game-design-system.md) sans recopier toutes ses règles.
 
 Sources techniques de vérité :
 
@@ -19,7 +19,7 @@ Lorsqu’une valeur technique change, le code, les données, les validateurs et 
 
 ## Intention
 
-Bateau est un jeu de recomposition syllabique. L’enfant observe et écoute un mot, puis le reconstitue en choisissant ses syllabes dans le bon ordre.
+Le jeu de syllabes est un jeu de recomposition syllabique. L’enfant observe et écoute un mot, puis le reconstitue en choisissant ses syllabes dans le bon ordre.
 
 La réussite fait avancer un bateau dans un archipel. La progression pédagogique et la progression dans le décor sont ainsi confondues : chaque mot correctement composé produit immédiatement un voyage visible.
 
@@ -58,7 +58,7 @@ Un niveau débloqué reste disponible. Le meilleur résultat et le total de coff
 
 ## Univers et narration
 
-Bateau utilise le territoire maritime de l’univers Readingo :
+Le jeu de syllabes utilise le territoire maritime de l’univers Readingo :
 
 - Pana guide le joueur ;
 - le bateau relie les îles de l’archipel ;
@@ -311,7 +311,7 @@ Après le niveau 6, le dernier trajet rejoint l’île au grand trésor. Le coff
 
 ## Sauvegarde
 
-La clé actuelle est `readingo:bateau:v3`.
+La clé actuelle est `readingo:syllabes:v3`.
 
 La sauvegarde contient :
 
@@ -373,7 +373,7 @@ Assets partagés ou propres au territoire maritime :
 
 La route, les coches, les cadenas et les halos sont produits en SVG ou CSS. Ils ne nécessitent pas de raster.
 
-La fabrication est décrite dans le [pipeline image commun](../image-generation.md). La recette visuelle actuelle de Bateau est `readingo-pana-v1`.
+La fabrication est décrite dans le [pipeline image commun](../image-generation.md). La recette visuelle actuelle du jeu de syllabes est `readingo-pana-v1`.
 
 ## Contenu et validation automatique
 
@@ -417,7 +417,7 @@ Ce mode sert au contrôle de contenu et d’interface. Il ne doit jamais appara�
 
 ## Variations par rapport au socle commun
 
-Bateau spécialise le socle Readingo sur les points suivants :
+Le jeu de syllabes spécialise le socle Readingo sur les points suivants :
 
 - progression représentée par une carte verticale ;
 - score matérialisé par des coffres ;

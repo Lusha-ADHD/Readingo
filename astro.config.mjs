@@ -7,6 +7,9 @@ export default defineConfig({
   site: "https://readingo.lusha.care",
   base: "/",
   output: "static",
+  redirects: {
+    "/jeux/bateau": "/jeux/syllabes/",
+  },
   devToolbar: {
     enabled: false,
   },

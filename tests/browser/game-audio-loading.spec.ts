@@ -6,7 +6,7 @@ const games = [
     startupAudio: ["/assets/audio/sfx/night-loop.mp3"],
   },
   {
-    route: "/jeux/bateau/",
+    route: "/jeux/syllabes/",
     startupAudio: ["/assets/audio/sfx/sea-loop.mp3"],
   },
   {
@@ -43,7 +43,7 @@ test.describe("Chargement audio à la demande", () => {
     });
   }
 
-  test("les premiers bruitages Bateau sont chargés au clic", async ({
+  test("les premiers bruitages Syllabes sont chargés au clic", async ({
     page,
   }) => {
     const requestedAudio = new Set<string>();
@@ -55,7 +55,7 @@ test.describe("Chargement audio à la demande", () => {
       }
     });
 
-    await page.goto("/jeux/bateau/?niveau=1");
+    await page.goto("/jeux/syllabes/?niveau=1");
     await expect(page.locator(".bateau-game--playing")).toBeVisible();
     await page.locator(".syllable-tile").first().click();
     await expect

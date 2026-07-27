@@ -162,7 +162,7 @@ Cette version ajoute un paramètre à l’URL. Elle n’a pas besoin de changer 
 - Chaque asset conserve malgré tout le lien de sa page Pixabay dans l’inventaire
   ci-dessous afin de retrouver son auteur et sa provenance exacte.
 
-### Inventaire actuel de Bateau
+### Inventaire actuel du jeu de syllabes
 
 | Usage | Fichier | Source |
 | --- | --- | --- |
@@ -174,9 +174,9 @@ Cette version ajoute un paramètre à l’URL. Elle n’a pas besoin de changer 
 | Collecte d’un coffre | `public/assets/audio/sfx/chest-collect.mp3` | [Opening Bell](https://pixabay.com/sound-effects/film-special-effects-opening-bell-421471/) |
 | Réussite | `public/assets/audio/sfx/level-complete.mp3` | [Short Success Sound Glockenspiel Treasure Video Game](https://pixabay.com/sound-effects/film-special-effects-short-success-sound-glockenspiel-treasure-video-game-6346/) |
 
-Dans Bateau, la mer commence après « Commencer ». Le vent et le bateau sont synchronisés avec la traversée. Pendant une collecte, le bateau s’arrête et le vent reste plus discret.
+Dans le jeu de syllabes, la mer commence après « Commencer ». Le vent et le bateau sont synchronisés avec la traversée. Pendant une collecte, le bateau s’arrête et le vent reste plus discret.
 
-Les règles fonctionnelles complètes sont dans le [GDD de Bateau](./games/bateau.md).
+Les règles fonctionnelles complètes sont dans le [GDD du jeu de syllabes](./games/syllabes.md).
 
 ### Inventaire propre à Lettres
 

@@ -3,7 +3,6 @@ import test from "node:test";
 import {
   completeBateauLevel,
   createInitialProgress,
-  migrateLegacyProgress,
   readBateauProgress,
 } from "../src/components/games/bateau/bateauProgress.ts";
 import { createBateauTiles } from "../src/components/games/bateau/bateauTiles.ts";
@@ -15,19 +14,6 @@ test("la progression initiale ouvre seulement le niveau 1", () => {
   assert.equal(progress.unlockedLevel, 1);
   assert.deepEqual(progress.completedLevels, []);
   assert.equal(progress.totalTreasures, 0);
-});
-
-test("une ancienne partie terminée débloque le niveau 2", () => {
-  const progress = migrateLegacyProgress(
-    { bestTreasures: 7, sessions: 2, completedWords: firstLevelWords },
-    firstLevelWords,
-    6,
-  );
-
-  assert.equal(progress.unlockedLevel, 2);
-  assert.deepEqual(progress.completedLevels, [1]);
-  assert.equal(progress.totalTreasures, 7);
-  assert.equal(progress.bestTreasuresByLevel["1"], 7);
 });
 
 test("terminer le niveau frontière débloque exactement le suivant", () => {
@@ -58,7 +44,7 @@ test("une sauvegarde corrompue revient à la progression initiale", () => {
     getItem: () => "{not-json",
     setItem: () => undefined,
   } as unknown as Storage;
-  assert.deepEqual(readBateauProgress(storage, firstLevelWords, 6), createInitialProgress());
+  assert.deepEqual(readBateauProgress(storage, 6), createInitialProgress());
 });
 
 test("les deux tuiles po d’hippopotame restent sélectionnables séparément", () => {

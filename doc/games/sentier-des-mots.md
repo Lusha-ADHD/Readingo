@@ -97,7 +97,7 @@ Le ton demeure aventureux mais rassurant. Les zones où Pana s’égare peuvent 
 
 ### Introduction
 
-L’entrée doit reprendre la structure commune aux jeux Bateau et Lettres :
+L’entrée doit reprendre la structure commune au jeu de syllabes et au jeu Lettres :
 
 1. écran de départ centré avec le titre, l’accroche, Pana et une action « Commencer » ;
 2. trois dialogues courts affichés et prononcés ;
@@ -349,7 +349,7 @@ Le degré d’égarement doit être montré par la scène, pas par une jauge né
 
 La partie supérieure et centrale conserve la vue rapprochée du carrefour et suffisamment d’espace pour percevoir le mouvement de caméra.
 
-Le panneau de réponse est ancré en bas du cadre, comme dans Bateau et Lettres. Il contient :
+Le panneau de réponse est ancré en bas du cadre, comme dans les jeux Syllabes et Lettres. Il contient :
 
 - Pana et la consigne ou le feedback courant ;
 - l’illustration cible ;

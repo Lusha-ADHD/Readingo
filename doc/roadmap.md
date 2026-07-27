@@ -65,7 +65,7 @@ Definition of Done :
 - le rendu mobile ne deborde pas ;
 - le style ne ressemble pas a une interface generique.
 
-## Phase 3 - Mini-Jeu Bateau
+## Phase 3 - Mini-jeu de syllabes
 
 Objectif : livrer le premier jeu complet.
 

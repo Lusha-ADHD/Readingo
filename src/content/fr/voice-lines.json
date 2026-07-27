@@ -73,9 +73,9 @@
         "audio": "/assets/audio/fr/dialogue/home-result-letters.mp3"
       },
       {
-        "id": "home-result-bateau",
+        "id": "home-result-syllabes",
         "text": "Je te conseille l'Archipel des mots. Tu vas assembler des syllabes pour faire avancer ton bateau.",
-        "audio": "/assets/audio/fr/dialogue/home-result-bateau.mp3"
+        "audio": "/assets/audio/fr/dialogue/home-result-syllabes.mp3"
       },
       {
         "id": "home-result-sentier",

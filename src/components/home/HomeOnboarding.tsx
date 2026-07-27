@@ -89,7 +89,7 @@ export function HomeOnboarding() {
               ? "home-result-letters"
               : recommendedGame === "sentier"
                 ? "home-result-sentier"
-                : "home-result-bateau"
+                : "home-result-syllabes"
             : null;
   const currentLine = currentVoiceId ? voiceLineById.get(currentVoiceId) : undefined;
   const sceneTheme: "mixed" | HomeGameId =
@@ -156,7 +156,7 @@ export function HomeOnboarding() {
         ? "home-result-letters"
         : game === "sentier"
           ? "home-result-sentier"
-          : "home-result-bateau",
+          : "home-result-syllabes",
     );
   }
 

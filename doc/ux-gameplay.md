@@ -122,11 +122,11 @@ Cette séquence est une orientation de collection. Chaque jeu précise son péri
 
 ## Jeux documentés
 
-### Bateau
+### Jeu de syllabes
 
-Bateau fait recomposer des mots à partir de syllabes et transforme chaque réussite en traversée maritime.
+Le jeu de syllabes fait recomposer des mots à partir de syllabes et transforme chaque réussite en traversée maritime.
 
-Sa boucle, ses six niveaux, sa carte, son scoring, sa sauvegarde et son mode de test sont décrits dans le [Game Design Document de Bateau](./games/bateau.md).
+Sa boucle, ses six niveaux, sa carte, son scoring, sa sauvegarde et son mode de test sont décrits dans le [Game Design Document du jeu de syllabes](./games/syllabes.md).
 
 ### Lettres
 

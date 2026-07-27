@@ -29,7 +29,7 @@ const FLOATING_READING_TOKENS = {
     { text: "MER", kind: "word" },
     { text: "ÉTOILE", kind: "word" },
   ],
-  bateau: [
+  syllabes: [
     { text: "B", kind: "letter" },
     { text: "T", kind: "letter" },
     { text: "BA", kind: "syllable" },
@@ -111,7 +111,7 @@ export function OnboardingScene({ theme, showReadingCurrent }: Props) {
         </span>
       ) : null}
 
-      {theme === "bateau" ? (
+      {theme === "syllabes" ? (
         <img
           className="home-onboarding__island"
           src={ISLAND_PATH}

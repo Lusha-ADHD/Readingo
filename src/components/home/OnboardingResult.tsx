@@ -13,9 +13,9 @@ export function OnboardingResult({
 }: Props) {
   const alternativeGame =
     recommendedGame === "letters"
-      ? "bateau"
+      ? "syllabes"
       : recommendedGame === "sentier"
-        ? "bateau"
+        ? "syllabes"
         : "letters";
 
   return (

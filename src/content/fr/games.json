@@ -17,20 +17,20 @@
     "skills": ["lettres", "sons"]
   },
   {
-    "id": "bateau",
-    "route": "/jeux/bateau/",
+    "id": "syllabes",
+    "route": "/jeux/syllabes/",
     "title": "L’Archipel des mots",
     "shortTitle": "l’Archipel",
     "description": "Aide Pana à former des mots en assemblant les bonnes syllabes.",
     "eyebrow": "Maîtriser les syllabes",
     "pageDescription": "Aide Pana la pirate à trouver des trésors en composant des mots",
-    "seoTitle": "Jeu Bateau - Composer des mots avec des syllabes",
+    "seoTitle": "Jeu de syllabes - Composer des mots | Readingo",
     "seoDescription": "Un mini-jeu Readingo pour apprendre à construire des mots simples à partir de syllabes.",
     "cta": "Prendre la mer",
     "icon": "BA",
     "meta": "Syllabes · 5–10 min",
-    "theme": "bateau",
-    "progressKeys": ["readingo:bateau:v3", "readingo:bateau:v2"],
+    "theme": "syllabes",
+    "progressKeys": ["readingo:syllabes:v3"],
     "skills": ["syllabes", "mots"]
   },
   {

@@ -194,11 +194,11 @@ Le sélecteur local permet aussi d’ouvrir Q1 à Q8 et le résultat. Une sessio
 ## Responsive et mouvement
 
 - La grille de trois cartes conserve des zones tactiles confortables à partir de 320 px.
-- La bulle de Pana et le panneau de réponse gardent leur hauteur intrinsèque et sont ancrés ensemble au bas de la scène, comme le panneau de Bateau.
+- La bulle de Pana et le panneau de réponse gardent leur hauteur intrinsèque et sont ancrés ensemble au bas de la scène, comme le panneau du jeu de syllabes.
 - La constellation occupe la zone de décor libre au-dessus et ne passe pas derrière les panneaux.
 - Les contenus décoratifs se réduisent avant les contrôles lorsque la hauteur est faible.
 - Les cartes et boutons audio sont de vrais boutons.
-- Les boutons audio de l’image et des lettres reprennent les dimensions de Bateau et se superposent au coin supérieur droit sans décentrer le contenu.
+- Les boutons audio de l’image et des lettres reprennent les dimensions du jeu de syllabes et se superposent au coin supérieur droit sans décentrer le contenu.
 - Les libellés audio sont accessibles.
 - Le feedback n’est jamais transmis uniquement par la couleur.
 - `prefers-reduced-motion` supprime le vol de la lettre, le rebond des étoiles et les animations continues du ciel.

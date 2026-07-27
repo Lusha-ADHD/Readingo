@@ -10,7 +10,7 @@ type Props = {
   cta?: string;
   status?: string;
   progressKey?: string;
-  theme?: "letters" | "bateau" | "forest";
+  theme?: "letters" | "syllabes" | "forest";
   variant?: "blue" | "green" | "gold" | "purple";
 };
 
@@ -30,7 +30,7 @@ const Tag = href ? "a" : "article";
 const resolvedTheme =
   theme ??
   (variant === "green" || variant === "gold"
-    ? "bateau"
+    ? "syllabes"
     : variant === "purple"
       ? "forest"
       : "letters");
@@ -61,7 +61,7 @@ const resolvedTheme =
       </>
     )}
 
-    {resolvedTheme === "bateau" && (
+    {resolvedTheme === "syllabes" && (
       <>
         <span class="game-card__sun"></span>
         <span class="game-card__ocean game-card__ocean--back"></span>
@@ -270,7 +270,7 @@ const resolvedTheme =
     transform: translateY(-50%);
   }
 
-  .game-card--bateau .game-card__visual {
+  .game-card--syllabes .game-card__visual {
     background: linear-gradient(180deg, #9a73dc 0 42%, #33b6df 42.5%, #0763ad 100%);
   }
 
@@ -385,7 +385,7 @@ const resolvedTheme =
     animation-delay: -2.5s;
   }
 
-  .game-card--bateau .game-card__icon {
+  .game-card--syllabes .game-card__icon {
     transform: translate(-20px, -7px) rotate(4deg);
   }
 
@@ -543,7 +543,7 @@ const resolvedTheme =
     transform: translateY(-4px) rotate(2deg) scale(1.04);
   }
 
-  .game-card--interactive.game-card--bateau:hover .game-card__icon {
+  .game-card--interactive.game-card--syllabes:hover .game-card__icon {
     transform: translate(-20px, -11px) rotate(2deg) scale(1.04);
   }
 

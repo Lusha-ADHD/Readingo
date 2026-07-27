@@ -22,7 +22,7 @@ Ordre de lecture :
 | Principes communs à tous les jeux | [Socle de game design](./doc/game-design-system.md) |
 | Direction artistique et composants UI | [Direction artistique et design UI](./doc/design-direction.md) |
 | Parcours utilisateur et principes UX | [Expérience utilisateur et gameplay](./doc/ux-gameplay.md) |
-| Game design du jeu Bateau | [Jeu Bateau — Game Design Document](./doc/games/bateau.md) |
+| Game design du jeu de syllabes | [Jeu de syllabes — Game Design Document](./doc/games/syllabes.md) |
 | Prototype du jeu Lettres | [Jeu Lettres — Game Design Document](./doc/games/lettres.md) |
 | Modèle de contenu pédagogique | [Contenu pédagogique et assets](./doc/content-assets.md) |
 | Génération et intégration des voix | [Pipeline audio](./doc/audio-generation.md) |

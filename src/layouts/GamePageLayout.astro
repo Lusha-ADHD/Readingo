@@ -13,6 +13,7 @@ const { game } = Astro.props;
   bodyClass="game-layout"
   title={game.seoTitle}
   description={game.seoDescription}
+  canonicalPath={game.route}
 >
   <main class="game-page">
     <div class="game-page__header page-shell">

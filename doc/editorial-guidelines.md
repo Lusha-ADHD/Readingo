@@ -76,8 +76,8 @@ Avant chaque appel vers un jeu :
 Utiliser le jeu qui correspond réellement au sujet :
 
 - **Lettres**, `/jeux/lettres/`, pour reconnaître les lettres, leurs formes, leur nom ou leur son ;
-- **L’Archipel des mots**, `/jeux/bateau/`, pour écouter et manipuler les syllabes ;
-- **Mots**, `/jeux/syllabes/`, pour assembler des syllabes et construire de premiers mots.
+- **L’Archipel des mots**, `/jeux/syllabes/`, pour écouter et manipuler les syllabes ;
+- **Le Sentier des mots**, `/jeux/mots/`, pour reconnaître et lire de premiers mots.
 
 Les sessions numériques conseillées restent courtes, généralement de 5 à 10 minutes. Avec les plus jeunes, le parent accompagne le jeu et échange avec l’enfant.
 
@@ -114,4 +114,3 @@ Avant de publier un nouveau guide :
 - tester les liens internes, les ancres du sommaire et les appels vers les jeux ;
 - vérifier la hiérarchie des titres et la lisibilité sur mobile ;
 - lancer la compilation Astro.
-

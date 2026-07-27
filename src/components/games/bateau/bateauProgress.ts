@@ -1,8 +1,8 @@
 import { GAME_BY_ID, GAME_IDS } from "../../../content/gameCatalog.ts";
 import { readStoredJson, writeStoredJson } from "../../../utils/storage.ts";
 
-export const [BATEAU_STORAGE_KEY, LEGACY_BATEAU_STORAGE_KEY] =
-  GAME_BY_ID[GAME_IDS.BATEAU].progressKeys;
+export const SYLLABLES_STORAGE_KEY =
+  GAME_BY_ID[GAME_IDS.SYLLABLES].progressKeys[0];
 
 export type BateauProgress = {
   version: 3;
@@ -12,12 +12,6 @@ export type BateauProgress = {
   bestTreasuresByLevel: Record<string, number>;
   completedWords: string[];
   sessions: number;
-};
-
-type LegacyProgress = {
-  bestTreasures?: number;
-  sessions?: number;
-  completedWords?: string[];
 };
 
 export function createInitialProgress(): BateauProgress {
@@ -50,36 +44,17 @@ function normalizeProgress(value: Partial<BateauProgress>, totalLevels: number):
   };
 }
 
-export function migrateLegacyProgress(legacy: LegacyProgress, firstLevelWordIds: string[], totalLevels: number): BateauProgress {
-  const completedWords = Array.isArray(legacy.completedWords) ? Array.from(new Set(legacy.completedWords)) : [];
-  const completedFirstLevel = firstLevelWordIds.every((id) => completedWords.includes(id));
-  const bestTreasures = Math.max(0, Number(legacy.bestTreasures) || 0);
-
-  return normalizeProgress(
-    {
-      version: 3,
-      unlockedLevel: completedFirstLevel ? Math.min(2, totalLevels) : 1,
-      completedLevels: completedFirstLevel ? [1] : [],
-      totalTreasures: bestTreasures,
-      bestTreasuresByLevel: completedFirstLevel ? { "1": bestTreasures } : {},
-      completedWords,
-      sessions: Math.max(0, Number(legacy.sessions) || 0),
-    },
-    totalLevels,
+export function readBateauProgress(
+  storage: Storage | null,
+  totalLevels: number,
+): BateauProgress {
+  const saved = readStoredJson<Partial<BateauProgress>>(
+    storage,
+    SYLLABLES_STORAGE_KEY,
   );
-}
-
-export function readBateauProgress(storage: Storage | null, firstLevelWordIds: string[], totalLevels: number): BateauProgress {
-  const saved = readStoredJson<Partial<BateauProgress>>(storage, BATEAU_STORAGE_KEY);
 
   if (saved !== null) {
     return normalizeProgress(saved, totalLevels);
-  }
-
-  const legacy = readStoredJson<LegacyProgress>(storage, LEGACY_BATEAU_STORAGE_KEY);
-
-  if (legacy !== null) {
-    return migrateLegacyProgress(legacy, firstLevelWordIds, totalLevels);
   }
 
   return createInitialProgress();
@@ -114,5 +89,5 @@ export function completeBateauLevel(
 }
 
 export function saveBateauProgress(storage: Storage | null, progress: BateauProgress) {
-  writeStoredJson(storage, BATEAU_STORAGE_KEY, progress);
+  writeStoredJson(storage, SYLLABLES_STORAGE_KEY, progress);
 }
