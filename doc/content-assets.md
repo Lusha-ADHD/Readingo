@@ -10,7 +10,7 @@ Procédures associées :
 - [pipeline image](./image-generation.md) ;
 - [socle de game design](./game-design-system.md).
 
-Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [Syllabes](./games/syllabes.md) et de [Lettres](./games/lettres.md).
+Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [L’Archipel des mots](./games/syllabes.md) et de [L’Observatoire des lettres](./games/lettres.md).
 
 ## Principe général
 
@@ -135,7 +135,7 @@ Contient les dialogues et feedbacks localisés. Une entrée possède un texte et
 
 `letters.json` associe le nom, les graphies, le son travaillé, le mot-indice et les clips d’une lettre. `letter-lessons.json` ordonne les questions et définit les choix proposés.
 
-Le mot-indice référence `words.json` : son illustration et son audio ne sont pas dupliqués. Les contraintes du premier niveau sont détaillées dans le [GDD de Lettres](./games/lettres.md).
+Le mot-indice référence `words.json` : son illustration et son audio ne sont pas dupliqués. Les contraintes du premier niveau sont détaillées dans le [GDD de L’Observatoire des lettres](./games/lettres.md).
 
 ## Validation pédagogique
 

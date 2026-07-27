@@ -7,8 +7,8 @@ import {
   buildSceneIslands,
   getWindLabel,
   SAILING_DURATIONS,
-} from "./bateauJourney";
-import type { BateauPhase, Journey } from "./bateauJourney";
+} from "./syllabesJourney";
+import type { SyllabesPhase, Journey } from "./syllabesJourney";
 
 const BOAT_ASSET_PATH = sitePath("/assets/world/boat.png");
 const ISLAND_WITH_CHEST_ASSET_PATH = sitePath(
@@ -28,7 +28,7 @@ const SCENE_CLOUDS = Array.from({ length: 18 }, (_, index) => ({
 }));
 
 type Props = {
-  phase: BateauPhase;
+  phase: SyllabesPhase;
   collectingChest: boolean;
   sailingMotionActive: boolean;
   journey: Journey | null;
@@ -42,12 +42,12 @@ function BoatAsset() {
 
   return (
     <div
-      className={`bateau-game__boat ${
-        assetFailed ? "bateau-game__boat--asset-failed" : ""
+      className={`syllabes-game__boat ${
+        assetFailed ? "syllabes-game__boat--asset-failed" : ""
       }`}
     >
       <img
-        className="bateau-game__boat-asset"
+        className="syllabes-game__boat-asset"
         src={BOAT_ASSET_PATH}
         alt=""
         draggable={false}
@@ -57,14 +57,14 @@ function BoatAsset() {
           setAssetFailed(true);
         }}
       />
-      <div className="bateau-game__boat-fallback" aria-hidden="true">
-        <div className="bateau-game__sail" />
+      <div className="syllabes-game__boat-fallback" aria-hidden="true">
+        <div className="syllabes-game__sail" />
       </div>
     </div>
   );
 }
 
-export function BateauScene({
+export function SyllabesScene({
   phase,
   collectingChest,
   sailingMotionActive,
@@ -93,10 +93,10 @@ export function BateauScene({
         wind={journey?.wind ?? 1}
       />
 
-      <div className="bateau-game__world" aria-hidden="true">
+      <div className="syllabes-game__world" aria-hidden="true">
         <div
-          className={`bateau-game__cloud-track ${
-            phase === "sailing" ? "bateau-game__cloud-track--sailing" : ""
+          className={`syllabes-game__cloud-track ${
+            phase === "sailing" ? "syllabes-game__cloud-track--sailing" : ""
           }`}
           style={
             {
@@ -108,7 +108,7 @@ export function BateauScene({
         >
           {SCENE_CLOUDS.map((cloud) => (
             <span
-              className="bateau-game__cloud"
+              className="syllabes-game__cloud"
               key={cloud.id}
               style={
                 {
@@ -126,9 +126,9 @@ export function BateauScene({
         {phase !== "map" ? (
           <>
             <div
-              className={`bateau-game__island-track ${
+              className={`syllabes-game__island-track ${
                 phase === "sailing"
-                  ? "bateau-game__island-track--sailing"
+                  ? "syllabes-game__island-track--sailing"
                   : ""
               }`}
               onAnimationEnd={(event) => {
@@ -151,10 +151,10 @@ export function BateauScene({
               {visibleIslands.map((island, index) => (
                 <div
                   className={[
-                    "bateau-game__island",
-                    `bateau-game__island--${island.size}`,
+                    "syllabes-game__island",
+                    `syllabes-game__island--${island.size}`,
                     island.hasTreasure
-                      ? "bateau-game__island--treasure"
+                      ? "syllabes-game__island--treasure"
                       : "",
                   ]
                     .filter(Boolean)
@@ -168,7 +168,7 @@ export function BateauScene({
                   }
                 >
                   <img
-                    className="bateau-game__island-asset"
+                    className="syllabes-game__island-asset"
                     src={
                       island.hasTreasure
                         ? ISLAND_WITH_CHEST_ASSET_PATH
@@ -186,7 +186,7 @@ export function BateauScene({
                   { length: 6 + (journey?.wind ?? 1) * 3 },
                   (_, index) => (
                     <span
-                      className="bateau-game__wind"
+                      className="syllabes-game__wind"
                       key={`wind-${index}`}
                       style={
                         {
@@ -206,9 +206,9 @@ export function BateauScene({
             <BoatAsset />
 
             {chestBursts.map((burstId) => (
-              <div className="bateau-game__collect-burst" key={burstId}>
-                <span className="bateau-game__collect-spark bateau-game__collect-spark--one" />
-                <span className="bateau-game__collect-spark bateau-game__collect-spark--two" />
+              <div className="syllabes-game__collect-burst" key={burstId}>
+                <span className="syllabes-game__collect-spark syllabes-game__collect-spark--one" />
+                <span className="syllabes-game__collect-spark syllabes-game__collect-spark--two" />
                 <img src={CHEST_ICON_ASSET_PATH} alt="" draggable={false} />
                 <strong>+1</strong>
               </div>
@@ -218,8 +218,8 @@ export function BateauScene({
       </div>
 
       {phase === "sailing" && journey ? (
-        <div className="bateau-game__sailing-panel">
-          <div className="bateau-game__sailing-status" aria-live="polite">
+        <div className="syllabes-game__sailing-panel">
+          <div className="syllabes-game__sailing-status" aria-live="polite">
             <PanaMascot compact />
             <div>
               <strong>{getWindLabel(journey.wind)}</strong>

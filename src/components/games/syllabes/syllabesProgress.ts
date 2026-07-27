@@ -4,7 +4,7 @@ import { readStoredJson, writeStoredJson } from "../../../utils/storage.ts";
 export const SYLLABLES_STORAGE_KEY =
   GAME_BY_ID[GAME_IDS.SYLLABLES].progressKeys[0];
 
-export type BateauProgress = {
+export type SyllabesProgress = {
   version: 3;
   unlockedLevel: number;
   completedLevels: number[];
@@ -14,7 +14,7 @@ export type BateauProgress = {
   sessions: number;
 };
 
-export function createInitialProgress(): BateauProgress {
+export function createInitialProgress(): SyllabesProgress {
   return {
     version: 3,
     unlockedLevel: 1,
@@ -26,7 +26,7 @@ export function createInitialProgress(): BateauProgress {
   };
 }
 
-function normalizeProgress(value: Partial<BateauProgress>, totalLevels: number): BateauProgress {
+function normalizeProgress(value: Partial<SyllabesProgress>, totalLevels: number): SyllabesProgress {
   const initial = createInitialProgress();
   const completedLevels = Array.from(
     new Set((Array.isArray(value.completedLevels) ? value.completedLevels : []).filter((level) => Number.isInteger(level) && level >= 1 && level <= totalLevels)),
@@ -44,11 +44,11 @@ function normalizeProgress(value: Partial<BateauProgress>, totalLevels: number):
   };
 }
 
-export function readBateauProgress(
+export function readSyllabesProgress(
   storage: Storage | null,
   totalLevels: number,
-): BateauProgress {
-  const saved = readStoredJson<Partial<BateauProgress>>(
+): SyllabesProgress {
+  const saved = readStoredJson<Partial<SyllabesProgress>>(
     storage,
     SYLLABLES_STORAGE_KEY,
   );
@@ -60,13 +60,13 @@ export function readBateauProgress(
   return createInitialProgress();
 }
 
-export function completeBateauLevel(
-  progress: BateauProgress,
+export function completeSyllabesLevel(
+  progress: SyllabesProgress,
   level: number,
   treasures: number,
   completedWordIds: string[],
   totalLevels: number,
-): BateauProgress {
+): SyllabesProgress {
   const safeTreasures = Math.max(0, Math.round(treasures));
   const isFirstCompletion = !progress.completedLevels.includes(level);
   const canUnlockNext = isFirstCompletion && level === progress.unlockedLevel && level < totalLevels;
@@ -88,6 +88,6 @@ export function completeBateauLevel(
   );
 }
 
-export function saveBateauProgress(storage: Storage | null, progress: BateauProgress) {
+export function saveSyllabesProgress(storage: Storage | null, progress: SyllabesProgress) {
   writeStoredJson(storage, SYLLABLES_STORAGE_KEY, progress);
 }

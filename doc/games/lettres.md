@@ -1,8 +1,8 @@
-# Jeu Lettres — Game Design Document
+# L’Observatoire des lettres — Game Design Document
 
 ## Statut et périmètre
 
-Lettres est un vertical slice jouable destiné à valider une mécanique pédagogique et une direction thématique. Le décor de constellation est volontairement produit en CSS et SVG afin de pouvoir être remplacé sans modifier la boucle du jeu.
+**L’Observatoire des lettres** est un vertical slice jouable destiné à valider une mécanique pédagogique et une direction thématique. Le décor de navigation nocturne est volontairement produit en CSS et SVG afin de pouvoir être remplacé sans modifier la boucle du jeu.
 
 Le contenu précis et la courbe de difficulté des futurs niveaux ne sont pas encore validés. Le premier niveau contient huit questions provisoires qui servent à tester la mécanique, l’audio, l’interface et le rythme.
 
@@ -126,17 +126,17 @@ Ajouter de la difficulté ne doit pas réduire les zones tactiles ni introduire 
 
 ## Univers et thème
 
-Le prototype se déroule dans « L’Observatoire des lettres » :
+Dans **L’Observatoire des lettres**, le mot « observatoire » désigne l’action d’observer le ciel, pas un lieu ni un bâtiment. Pana navigue de nuit à bord de son bateau et utilise une lunette astronomique pour retrouver sa route grâce aux étoiles.
 
 - les bonnes réponses deviennent des étoiles ;
 - huit étoiles forment une constellation imaginaire ;
 - chaque nouvelle étoile produit un rebond élastique bref lorsqu’elle s’allume ;
 - le segment reliant deux étoiles s’illumine dès que les deux extrémités sont actives ;
 - une étoile filante traverse occasionnellement le ciel et des nuages nocturnes défilent lentement ;
-- une petite planète annelée complète le décor sans concurrencer la constellation ;
+- la mer nocturne reste visible sous le ciel sans concurrencer la constellation ;
 - les couleurs nocturnes restent reliées à la palette Readingo.
 
-Le thème est isolé dans `ConstellationScene`. Le moteur de questions, la validation, l’audio et la sauvegarde ne dépendent pas d’un modèle de constellation. Aucun asset raster définitif n’est produit tant que cette direction n’est pas confirmée.
+Le prototype jouable actuel conserve uniquement le ciel et la constellation comme décor. Le bateau et la lunette appartiennent au contexte narratif, mais ne doivent pas être improvisés en SVG ou en CSS. Leur intégration visuelle attendra des assets dédiés et validés. Le thème est isolé dans `ConstellationScene`. Le moteur de questions, la validation, l’audio et la sauvegarde ne dépendent pas d’un modèle de constellation. Aucun bâtiment d’observatoire, dôme ou décor terrestre ne doit apparaître dans les futurs assets de ce jeu.
 
 ## Audio
 
@@ -194,11 +194,11 @@ Le sélecteur local permet aussi d’ouvrir Q1 à Q8 et le résultat. Une sessio
 ## Responsive et mouvement
 
 - La grille de trois cartes conserve des zones tactiles confortables à partir de 320 px.
-- La bulle de Pana et le panneau de réponse gardent leur hauteur intrinsèque et sont ancrés ensemble au bas de la scène, comme le panneau du jeu de syllabes.
+- La bulle de Pana et le panneau de réponse gardent leur hauteur intrinsèque et sont ancrés ensemble au bas de la scène, comme le panneau de L’Archipel des mots.
 - La constellation occupe la zone de décor libre au-dessus et ne passe pas derrière les panneaux.
 - Les contenus décoratifs se réduisent avant les contrôles lorsque la hauteur est faible.
 - Les cartes et boutons audio sont de vrais boutons.
-- Les boutons audio de l’image et des lettres reprennent les dimensions du jeu de syllabes et se superposent au coin supérieur droit sans décentrer le contenu.
+- Les boutons audio de l’image et des lettres reprennent les dimensions de L’Archipel des mots et se superposent au coin supérieur droit sans décentrer le contenu.
 - Les libellés audio sont accessibles.
 - Le feedback n’est jamais transmis uniquement par la couleur.
 - `prefers-reduced-motion` supprime le vol de la lettre, le rebond des étoiles et les animations continues du ciel.

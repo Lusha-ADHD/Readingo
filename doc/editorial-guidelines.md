@@ -75,7 +75,7 @@ Avant chaque appel vers un jeu :
 
 Utiliser le jeu qui correspond réellement au sujet :
 
-- **Lettres**, `/jeux/lettres/`, pour reconnaître les lettres, leurs formes, leur nom ou leur son ;
+- **L’Observatoire des lettres**, `/jeux/lettres/`, pour reconnaître les lettres, leurs formes, leur nom ou leur son ;
 - **L’Archipel des mots**, `/jeux/syllabes/`, pour écouter et manipuler les syllabes ;
 - **Le Sentier des mots**, `/jeux/mots/`, pour reconnaître et lire de premiers mots.
 

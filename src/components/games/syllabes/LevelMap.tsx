@@ -2,10 +2,10 @@ import { useEffect, useMemo, useRef } from "react";
 import type { CSSProperties } from "react";
 import type { LessonBase } from "../../../content/types";
 import { sitePath } from "../../../utils/paths";
-import type { BateauProgress } from "./bateauProgress";
+import type { SyllabesProgress } from "./syllabesProgress";
 import "./LevelMap.css";
 
-export type BateauLevel = LessonBase & {
+export type SyllabesLevel = LessonBase & {
   difficultyTier: number;
   wordIds: string[];
 };
@@ -13,11 +13,11 @@ export type BateauLevel = LessonBase & {
 type MapPoint = { x: number; y: number };
 
 type LevelMapProps = {
-  levels: BateauLevel[];
-  progress: BateauProgress;
+  levels: SyllabesLevel[];
+  progress: SyllabesProgress;
   newlyUnlockedLevel: number | null;
   recentlyCompletedLevel: number | null;
-  onSelectLevel: (level: BateauLevel) => void;
+  onSelectLevel: (level: SyllabesLevel) => void;
   onClose?: () => void;
   onUnlockAnimationComplete: () => void;
 };
@@ -48,7 +48,7 @@ function interpolatePoint(from: MapPoint, to: MapPoint, ratio: number, direction
   };
 }
 
-function getSegmentState(index: number, progress: BateauProgress) {
+function getSegmentState(index: number, progress: SyllabesProgress) {
   if (progress.completedLevels.includes(index + 1)) {
     return "complete";
   }
@@ -126,7 +126,7 @@ export function LevelMap({
         <img className="level-map__pana" src={sitePath("/assets/characters/pana.png")} alt="Pana" draggable={false} />
         <div>
           <span>Le parcours de Pana</span>
-          <h2>L’Archipel</h2>
+          <h2>L’Archipel des mots</h2>
         </div>
         <div className="level-map__total" aria-label={`${progress.totalTreasures} coffres collectés au total`}>
           <img src={sitePath("/assets/world/Chest.png")} alt="" draggable={false} />

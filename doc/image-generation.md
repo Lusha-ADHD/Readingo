@@ -2,7 +2,7 @@
 
 ## Rôle du document
 
-Ce document décrit le pipeline commun de production des images Readingo. La recette actuellement utilisée pour les illustrations pédagogiques et les objets du jeu de syllabes se nomme `readingo-pana-v1`.
+Ce document décrit le pipeline commun de production des images Readingo. La recette actuellement utilisée pour les illustrations pédagogiques et les objets de L’Archipel des mots se nomme `readingo-pana-v1`.
 
 Le pipeline commun définit :
 
@@ -228,7 +228,9 @@ Les sorties sont stockées dans `public/assets/world/jungle/`. Les chemins, flè
 6. Renseigner `"image": "/assets/images/fr/words/<id>.png"` dans le mot.
 7. Lancer `npm run content:check`, puis `npm run build`.
 
-`BateauGame` lit directement le champ `image`. Aucun atlas ni mapping d'image supplementaire n'est necessaire.
+`SyllabesGame` lit directement le champ `image`. Aucun atlas ni mapping d'image supplementaire n'est necessaire.
+
+Pour les assets de **L’Observatoire des lettres**, montrer Pana à bord de son bateau sous un ciel nocturne, avec une lunette astronomique et une route dessinée par les étoiles. Ne jamais ajouter de bâtiment, de dôme ou de salle d’observatoire : « observatoire » décrit ici l’action d’observer le ciel.
 
 ## Intégration d’un asset propre à un jeu
 

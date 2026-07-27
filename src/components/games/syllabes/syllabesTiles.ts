@@ -1,4 +1,4 @@
-export type BateauTile = {
+export type SyllabesTile = {
   id: string;
   text: string;
 };
@@ -9,7 +9,7 @@ type TileChallenge = {
   distractors: string[];
 };
 
-export function createBateauTiles(challenge: TileChallenge): BateauTile[] {
+export function createSyllabesTiles(challenge: TileChallenge): SyllabesTile[] {
   return [...challenge.syllables, ...challenge.distractors]
     .map((text, index) => ({ id: `${challenge.id}-${text}-${index}`, text }))
     .sort((left, right) => {

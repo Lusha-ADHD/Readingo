@@ -16,30 +16,30 @@ import {
   GameIntroOverlay,
 } from "../../ui/GameIntroOverlay";
 import { ProgressBar } from "../../ui/ProgressBar";
-import { BateauChallenge } from "./BateauChallenge";
-import { BateauResult } from "./BateauResult";
-import { BateauScene } from "./BateauScene";
+import { SyllabesChallenge } from "./SyllabesChallenge";
+import { SyllabesResult } from "./SyllabesResult";
+import { SyllabesScene } from "./SyllabesScene";
 import { LevelMap } from "./LevelMap";
-import type { BateauLevel } from "./LevelMap";
+import type { SyllabesLevel } from "./LevelMap";
 import {
   buildJourney,
   SAILING_DURATIONS,
-} from "./bateauJourney";
-import type { BateauPhase, Journey } from "./bateauJourney";
+} from "./syllabesJourney";
+import type { SyllabesPhase, Journey } from "./syllabesJourney";
 import {
-  completeBateauLevel,
-  readBateauProgress,
-  saveBateauProgress,
-} from "./bateauProgress";
-import type { BateauProgress } from "./bateauProgress";
-import { createBateauTiles } from "./bateauTiles";
-import type { BateauTile } from "./bateauTiles";
-import { useBateauAudio } from "./bateauAudio";
+  completeSyllabesLevel,
+  readSyllabesProgress,
+  saveSyllabesProgress,
+} from "./syllabesProgress";
+import type { SyllabesProgress } from "./syllabesProgress";
+import { createSyllabesTiles } from "./syllabesTiles";
+import type { SyllabesTile } from "./syllabesTiles";
+import { useSyllabesAudio } from "./syllabesAudio";
 import { useVoiceAudio } from "../useVoiceAudio";
 import type { VoicePlaybackResult } from "../useVoiceAudio";
-import "./BateauGame.css";
+import "./SyllabesGame.css";
 
-type Tile = BateauTile;
+type Tile = SyllabesTile;
 
 type VoiceLines = {
   dialogue: { intro: VoiceLine[] };
@@ -51,7 +51,7 @@ const CHEST_COLLECT_SEGMENT_RATIO = 0.58;
 const WORD_SUCCESS_SOUND_MS = 600;
 const wordChallenges = words as WordEntry[];
 const wordById = new Map(wordChallenges.map((word) => [word.id, word]));
-const bateauLevels = (lessonEntries as BateauLevel[])
+const syllabesLevels = (lessonEntries as SyllabesLevel[])
   .filter((level) => level.gameIds.includes(GAME_IDS.SYLLABLES))
   .sort((left, right) => left.level - right.level);
 const syllableByText = new Map((syllableEntries as SyllableEntry[]).map((entry) => [entry.text, entry]));
@@ -73,14 +73,14 @@ function shuffleSessionWords(previousOrder: WordEntry[]) {
   return shuffled;
 }
 
-function wordsForLevel(level: BateauLevel) {
+function wordsForLevel(level: SyllabesLevel) {
   return level.wordIds.map((id) => wordById.get(id)).filter((word): word is WordEntry => Boolean(word));
 }
 
-function getInitialProgress(): BateauProgress {
-  return readBateauProgress(
+function getInitialProgress(): SyllabesProgress {
+  return readSyllabesProgress(
     typeof window === "undefined" ? null : window.localStorage,
-    bateauLevels.length,
+    syllabesLevels.length,
   );
 }
 
@@ -140,11 +140,11 @@ function calculateWind(startedAt: number, mistakes: number): 1 | 2 | 3 {
   return 1;
 }
 
-export function BateauGame() {
-  const [phase, setPhase] = useState<BateauPhase>("intro");
+export function SyllabesGame() {
+  const [phase, setPhase] = useState<SyllabesPhase>("intro");
   const [dialogLineIndex, setDialogLineIndex] = useState(0);
-  const [selectedLevel, setSelectedLevel] = useState<BateauLevel>(() => bateauLevels[0]);
-  const [sessionWords, setSessionWords] = useState<WordEntry[]>(() => wordsForLevel(bateauLevels[0]));
+  const [selectedLevel, setSelectedLevel] = useState<SyllabesLevel>(() => syllabesLevels[0]);
+  const [sessionWords, setSessionWords] = useState<WordEntry[]>(() => wordsForLevel(syllabesLevels[0]));
   const [wordIndex, setWordIndex] = useState(0);
   const [placed, setPlaced] = useState<Array<Tile | null>>([]);
   const [usedTileIds, setUsedTileIds] = useState<string[]>([]);
@@ -158,7 +158,7 @@ export function BateauGame() {
   const [isSailingMotionActive, setIsSailingMotionActive] = useState(false);
   const [chestBursts, setChestBursts] = useState<number[]>([]);
   const [journey, setJourney] = useState<Journey | null>(null);
-  const [progress, setProgress] = useState<BateauProgress>(() => getInitialProgress());
+  const [progress, setProgress] = useState<SyllabesProgress>(() => getInitialProgress());
   const [newlyUnlockedLevel, setNewlyUnlockedLevel] = useState<number | null>(null);
   const [lastCompletedLevel, setLastCompletedLevel] = useState<number | null>(null);
   const [isResultLeaving, setIsResultLeaving] = useState(false);
@@ -168,11 +168,11 @@ export function BateauGame() {
   const chestBurstIdRef = useRef(0);
   const savedSessionRef = useRef(false);
   const directTestStartedRef = useRef(false);
-  const { playEffect, setTravelAudio, startAmbience } = useBateauAudio();
+  const { playEffect, setTravelAudio, startAmbience } = useSyllabesAudio();
   const { cancelVoice, playVoice } = useVoiceAudio();
 
   const challenge = sessionWords[wordIndex];
-  const tiles = useMemo(() => createBateauTiles(challenge), [challenge]);
+  const tiles = useMemo(() => createSyllabesTiles(challenge), [challenge]);
   const completedCount = phase === "done" ? sessionWords.length : wordIndex;
   const displayedTotalTreasures = progress.totalTreasures + (phase === "done" || phase === "map" ? 0 : treasures);
 
@@ -201,7 +201,7 @@ export function BateauGame() {
     }
 
     const requestedLevel = Number.parseInt(new URLSearchParams(window.location.search).get("niveau") ?? "", 10);
-    const level = bateauLevels.find((candidate) => candidate.level === requestedLevel);
+    const level = syllabesLevels.find((candidate) => candidate.level === requestedLevel);
 
     if (level) {
       directTestStartedRef.current = true;
@@ -228,7 +228,7 @@ export function BateauGame() {
   }, [isCollectingChest, isSailingMotionActive, journey?.wind, newlyUnlockedLevel, phase, setTravelAudio]);
 
   useEffect(() => {
-    if (phase !== "map" || newlyUnlockedLevel !== bateauLevels.length + 1) {
+    if (phase !== "map" || newlyUnlockedLevel !== syllabesLevels.length + 1) {
       return;
     }
 
@@ -312,7 +312,7 @@ export function BateauGame() {
     setPhase("map");
   }
 
-  function startLevel(level: BateauLevel, testMode = false) {
+  function startLevel(level: SyllabesLevel, testMode = false) {
     if (!testMode && level.level > progress.unlockedLevel) {
       return;
     }
@@ -357,20 +357,20 @@ export function BateauGame() {
 
     const isFirstFrontierCompletion =
       selectedLevel.level === progress.unlockedLevel && !progress.completedLevels.includes(selectedLevel.level);
-    const nextProgress = completeBateauLevel(
+    const nextProgress = completeSyllabesLevel(
       progress,
       selectedLevel.level,
       treasures,
       sessionWords.map((item) => item.id),
-      bateauLevels.length,
+      syllabesLevels.length,
     );
 
     setProgress(nextProgress);
-    saveBateauProgress(typeof window === "undefined" ? null : window.localStorage, nextProgress);
+    saveSyllabesProgress(typeof window === "undefined" ? null : window.localStorage, nextProgress);
     setLastCompletedLevel(selectedLevel.level);
 
     if (isFirstFrontierCompletion) {
-      setNewlyUnlockedLevel(selectedLevel.level < bateauLevels.length ? selectedLevel.level + 1 : bateauLevels.length + 1);
+      setNewlyUnlockedLevel(selectedLevel.level < syllabesLevels.length ? selectedLevel.level + 1 : syllabesLevels.length + 1);
     }
   }
 
@@ -519,10 +519,10 @@ export function BateauGame() {
 
   return (
     <section
-      className={`bateau-game bateau-game--${phase} ${isCollectingChest ? "bateau-game--collecting" : ""}`}
-      aria-label="Jeu de syllabes"
+      className={`syllabes-game syllabes-game--${phase} ${isCollectingChest ? "syllabes-game--collecting" : ""}`}
+      aria-label="L’Archipel des mots"
     >
-      <BateauScene
+      <SyllabesScene
         phase={phase}
         collectingChest={isCollectingChest}
         sailingMotionActive={isSailingMotionActive}
@@ -533,10 +533,10 @@ export function BateauGame() {
       />
 
       {testToolsEnabled ? (
-        <details className="bateau-game__test-tools">
+        <details className="syllabes-game__test-tools">
           <summary>🧪 {isTestMode ? `Test N${selectedLevel.level}` : "Tester"}</summary>
           <div>
-            {bateauLevels.map((level) => (
+            {syllabesLevels.map((level) => (
               <button key={level.id} onClick={() => startLevel(level, true)} type="button">
                 N{level.level}
               </button>
@@ -548,7 +548,7 @@ export function BateauGame() {
 
       {phase === "map" ? (
         <LevelMap
-          levels={bateauLevels}
+          levels={syllabesLevels}
           progress={progress}
           newlyUnlockedLevel={newlyUnlockedLevel}
           recentlyCompletedLevel={lastCompletedLevel}
@@ -559,13 +559,13 @@ export function BateauGame() {
       ) : null}
 
       {showHud ? (
-        <div className="bateau-game__hud">
+        <div className="syllabes-game__hud">
           <ProgressBar
             current={completedCount}
             total={sessionWords.length}
             score={treasures}
             level={selectedLevel.level}
-            levelTotal={bateauLevels.length}
+            levelTotal={syllabesLevels.length}
             totalTreasures={displayedTotalTreasures}
           />
         </div>
@@ -586,7 +586,7 @@ export function BateauGame() {
       ) : null}
 
       {showGamePanel ? (
-        <BateauChallenge
+        <SyllabesChallenge
           key={challenge.id}
           challenge={challenge}
           tiles={tiles}
@@ -608,9 +608,9 @@ export function BateauGame() {
       ) : null}
 
       {phase === "done" ? (
-        <BateauResult
+        <SyllabesResult
           level={selectedLevel.level}
-          levelCount={bateauLevels.length}
+          levelCount={syllabesLevels.length}
           wordCount={sessionWords.length}
           treasures={treasures}
           leaving={isResultLeaving}

@@ -97,7 +97,7 @@ Le ton demeure aventureux mais rassurant. Les zones où Pana s’égare peuvent 
 
 ### Introduction
 
-L’entrée doit reprendre la structure commune au jeu de syllabes et au jeu Lettres :
+L’entrée doit reprendre la structure commune à L’Archipel des mots et à L’Observatoire des lettres :
 
 1. écran de départ centré avec le titre, l’accroche, Pana et une action « Commencer » ;
 2. trois dialogues courts affichés et prononcés ;
@@ -296,7 +296,7 @@ Les distracteurs ne doivent pas être sélectionnés aléatoirement dans tout le
 
 Le nombre de directions ne constitue qu’un axe secondaire. Cinq mots longs peuvent surcharger un téléphone ; la proximité des distracteurs doit pouvoir augmenter la difficulté sans ajouter systématiquement une option.
 
-Les changements de casse ne sont pas l’axe principal de ce jeu : la connaissance des capitales et minuscules relève prioritairement du jeu Lettres. La graphie par défaut et son évolution seront décidées avec le contenu des niveaux.
+Les changements de casse ne sont pas l’axe principal de ce jeu : la connaissance des capitales et minuscules relève prioritairement de L’Observatoire des lettres. La graphie par défaut et son évolution seront décidées avec le contenu des niveaux.
 
 ## Scoring et récompenses
 
@@ -331,7 +331,7 @@ L’écran reprend la structure visuelle des autres jeux :
 - accroche « Lis les mots et guide Pana jusqu’au trésor. » ;
 - bouton principal « Commencer », identique aux autres jeux.
 
-Le dialogue conserve la même composition que le jeu des lettres : Pana au-dessus
+Le dialogue conserve la même composition que L’Observatoire des lettres : Pana au-dessus
 d’une bulle claire centrée, une pointe orientée vers Pana et le bouton secondaire
 « Passer » sous la bulle.
 
@@ -349,7 +349,7 @@ Le degré d’égarement doit être montré par la scène, pas par une jauge né
 
 La partie supérieure et centrale conserve la vue rapprochée du carrefour et suffisamment d’espace pour percevoir le mouvement de caméra.
 
-Le panneau de réponse est ancré en bas du cadre, comme dans les jeux Syllabes et Lettres. Il contient :
+Le panneau de réponse est ancré en bas du cadre, comme dans L’Archipel des mots et L’Observatoire des lettres. Il contient :
 
 - Pana et la consigne ou le feedback courant ;
 - l’illustration cible ;

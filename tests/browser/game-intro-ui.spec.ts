@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const games = [
-  { route: "/jeux/lettres/", title: "Découvrir les lettres avec Pana" },
+  { route: "/jeux/lettres/", title: "L’Observatoire des lettres" },
   { route: "/jeux/syllabes/", title: "Maîtriser les syllabes avec Pana" },
   { route: "/jeux/mots/", title: "Le Sentier des mots" },
 ] as const;

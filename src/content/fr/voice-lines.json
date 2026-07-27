@@ -69,12 +69,12 @@
       },
       {
         "id": "home-result-letters",
-        "text": "Je te conseille l'Observatoire des lettres. Tu vas apprendre à reconnaître les lettres et leurs sons.",
+        "text": "Je te conseille L’Observatoire des lettres. Tu vas apprendre à reconnaître les lettres et leurs sons.",
         "audio": "/assets/audio/fr/dialogue/home-result-letters.mp3"
       },
       {
         "id": "home-result-syllabes",
-        "text": "Je te conseille l'Archipel des mots. Tu vas assembler des syllabes pour faire avancer ton bateau.",
+        "text": "Je te conseille L’Archipel des mots. Tu vas assembler des syllabes pour faire avancer ton bateau.",
         "audio": "/assets/audio/fr/dialogue/home-result-syllabes.mp3"
       },
       {

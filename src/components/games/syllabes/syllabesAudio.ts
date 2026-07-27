@@ -37,7 +37,7 @@ const EFFECTS = {
   },
 } satisfies Record<string, AudioEffectConfig>;
 
-export function useBateauAudio() {
+export function useSyllabesAudio() {
   const {
     isAudioEnabled,
     pauseLoop,

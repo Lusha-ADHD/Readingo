@@ -1,6 +1,6 @@
 # World
 
-Déposer ici les assets du monde du jeu Bateau : bateau, îles, coffres et éléments de décor.
+Déposer ici les assets du monde de L’Archipel des mots : bateau, îles, coffres et éléments de décor.
 
 Noms attendus :
 

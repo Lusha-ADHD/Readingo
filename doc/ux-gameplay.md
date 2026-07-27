@@ -122,17 +122,17 @@ Cette séquence est une orientation de collection. Chaque jeu précise son péri
 
 ## Jeux documentés
 
-### Jeu de syllabes
+### L’Archipel des mots
 
-Le jeu de syllabes fait recomposer des mots à partir de syllabes et transforme chaque réussite en traversée maritime.
+L’Archipel des mots fait recomposer des mots à partir de syllabes et transforme chaque réussite en traversée maritime.
 
-Sa boucle, ses six niveaux, sa carte, son scoring, sa sauvegarde et son mode de test sont décrits dans le [Game Design Document du jeu de syllabes](./games/syllabes.md).
+Sa boucle, ses six niveaux, sa carte, son scoring, sa sauvegarde et son mode de test sont décrits dans le [Game Design Document de L’Archipel des mots](./games/syllabes.md).
 
-### Lettres
+### L’Observatoire des lettres
 
-Lettres demande d’identifier un graphème à partir du nom, du son et d’un mot-indice prononcés par Pana. Chaque bonne réponse allume une étoile d’une constellation.
+L’Observatoire des lettres demande d’identifier un graphème à partir du nom, du son et d’un mot-indice prononcés par Pana. À bord de son bateau, Pana utilise une lunette astronomique pour suivre les étoiles et retrouver sa route. Chaque bonne réponse rallume une étoile de la constellation.
 
-Le premier niveau est un vertical slice de huit questions. Sa boucle, son contenu provisoire et le statut expérimental du thème sont décrits dans le [Game Design Document de Lettres](./games/lettres.md).
+Le premier niveau est un vertical slice de huit questions. Sa boucle, son contenu provisoire et son contexte maritime sont décrits dans le [Game Design Document de L’Observatoire des lettres](./games/lettres.md).
 
 ### Le Sentier des mots
 

@@ -6,21 +6,21 @@ import { AudioButton } from "../../ui/AudioButton";
 import { RewardBurst } from "../../ui/RewardBurst";
 import { SyllableSlot } from "../../ui/SyllableSlot";
 import { SyllableTile } from "../../ui/SyllableTile";
-import type { BateauTile } from "./bateauTiles";
+import type { SyllabesTile } from "./syllabesTiles";
 
 type Props = {
   challenge: WordEntry;
-  tiles: BateauTile[];
-  placed: Array<BateauTile | null>;
+  tiles: SyllabesTile[];
+  placed: Array<SyllabesTile | null>;
   usedTileIds: string[];
   wrongTileId: string | null;
   lastTreasuresFound: number;
   onListenWord: () => void;
-  onListenSyllable: (tile: BateauTile) => void;
+  onListenSyllable: (tile: SyllabesTile) => void;
   onSelectTile: (tileId: string) => void;
 };
 
-export function BateauChallenge({
+export function SyllabesChallenge({
   challenge,
   tiles,
   placed,
@@ -34,31 +34,31 @@ export function BateauChallenge({
   const [wordImageFailed, setWordImageFailed] = useState(false);
 
   return (
-    <div className="bateau-game__panel">
-      <div className="bateau-game__image-card">
-        <div className="bateau-game__picture" aria-hidden="true">
+    <div className="syllabes-game__panel">
+      <div className="syllabes-game__image-card">
+        <div className="syllabes-game__picture" aria-hidden="true">
           {!wordImageFailed ? (
             <img
-              className="bateau-game__word-image"
+              className="syllabes-game__word-image"
               src={sitePath(challenge.image)}
               alt=""
               draggable={false}
               onError={() => setWordImageFailed(true)}
             />
           ) : (
-            <span className="bateau-game__picture-fallback" />
+            <span className="syllabes-game__picture-fallback" />
           )}
           <AudioButton
-            className="bateau-game__audio"
+            className="syllabes-game__audio"
             label={`Écouter ${challenge.displayWord}`}
             onClick={onListenWord}
           />
         </div>
       </div>
 
-      <div className="bateau-game__challenge">
-        <div className="bateau-game__challenge-header">
-          <p className="bateau-game__eyebrow" id="syllables-title">
+      <div className="syllabes-game__challenge">
+        <div className="syllabes-game__challenge-header">
+          <p className="syllabes-game__eyebrow" id="syllables-title">
             Compose le mot
           </p>
           {lastTreasuresFound > 0 ? (
@@ -66,7 +66,7 @@ export function BateauChallenge({
           ) : null}
         </div>
         <div
-          className="bateau-game__slots"
+          className="syllabes-game__slots"
           aria-label="Emplacements des syllabes"
           data-count={challenge.syllables.length}
           style={
@@ -84,11 +84,11 @@ export function BateauChallenge({
       </div>
 
       <div
-        className="bateau-game__syllables"
+        className="syllabes-game__syllables"
         aria-label="Syllabes disponibles"
       >
         {tiles.map((tile) => (
-          <div className="bateau-game__tile-wrap" key={tile.id}>
+          <div className="syllabes-game__tile-wrap" key={tile.id}>
             <SyllableTile
               id={tile.id}
               onClick={() => onSelectTile(tile.id)}
@@ -97,7 +97,7 @@ export function BateauChallenge({
               used={usedTileIds.includes(tile.id)}
             />
             <AudioButton
-              className="bateau-game__tile-audio"
+              className="syllabes-game__tile-audio"
               label={`Écouter ${tile.text}`}
               onClick={() => onListenSyllable(tile)}
             />

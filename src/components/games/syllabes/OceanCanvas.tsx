@@ -388,5 +388,5 @@ export function OceanCanvas({ paused, sailing, sailingDuration, wind }: OceanCan
     };
   }, []);
 
-  return <canvas className="bateau-game__ocean" ref={canvasRef} aria-hidden="true" />;
+  return <canvas className="syllabes-game__ocean" ref={canvasRef} aria-hidden="true" />;
 }

@@ -365,7 +365,7 @@ export function LettersGame() {
   if (!lesson || !question || !targetLetter || !anchorWord) {
     return (
       <div className="letters-game letters-game--error" role="alert">
-        Le contenu du jeu des lettres est incomplet.
+        Le contenu de L’Observatoire des lettres est incomplet.
       </div>
     );
   }
@@ -409,7 +409,7 @@ export function LettersGame() {
 
       {phase === "intro" && (
         <GameIntroOverlay
-          title="Découvrir les lettres avec Pana"
+          title="L’Observatoire des lettres"
           onStart={() => void startIntroDialog()}
         />
       )}

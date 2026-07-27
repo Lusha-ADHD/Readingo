@@ -2,7 +2,7 @@
 
 Les assets exposés au site vivent dans ce dossier `public/assets`.
 
-Fichiers attendus par le jeu Bateau :
+Fichiers attendus par L’Archipel des mots :
 
 - `characters/pana.png` : personnage Pana, fond transparent recommandé.
 - `world/boat.png` : bateau joueur, fond transparent recommandé.

@@ -7,7 +7,8 @@ Ce document définit le langage visuel commun à tous les jeux Readingo. Il déc
 Documents associés :
 
 - [socle de game design](./game-design-system.md) pour les règles fonctionnelles communes ;
-- [GDD du jeu de syllabes](./games/syllabes.md) pour le thème de l’archipel ;
+- [GDD de L’Archipel des mots](./games/syllabes.md) pour le thème de l’archipel ;
+- [GDD de L’Observatoire des lettres](./games/lettres.md) pour la navigation nocturne ;
 - [pipeline image](./image-generation.md) pour la production des illustrations ;
 - [pipeline audio](./audio-generation.md) pour l’identité sonore.
 
@@ -47,9 +48,13 @@ Les formes sont arrondies, les contrastes francs et les matières légèrement i
 
 Le décor peut utiliser plusieurs plans et un mouvement lent. Les panneaux pédagogiques restent stables, clairs et placés au premier plan.
 
+### Production des décors
+
+Ne pas créer ni ajouter de décor en SVG ou en CSS sans demande explicite. Une modification importante du décor doit réutiliser des assets visuels validés ou faire l’objet d’une validation du médium avant sa production.
+
 ## Univers commun et thèmes
 
-Readingo se déroule dans un monde d’aventure guidé par Pana. Chaque jeu peut explorer un territoire adapté à sa mécanique : archipel, forêt, ciel, atelier, train ou autre environnement.
+Readingo se déroule dans un monde d’aventure guidé par Pana. Chaque jeu peut explorer un territoire adapté à sa mécanique : archipel, forêt, mer nocturne, atelier, train ou autre environnement.
 
 Éléments communs :
 
@@ -70,7 +75,7 @@ Readingo se déroule dans un monde d’aventure guidé par Pana. Chaque jeu peut
 - récompense ;
 - bruitages d’environnement.
 
-Une variation thématique doit être décrite dans le GDD du jeu. L’archipel, le bateau, les îles et les coffres appartiennent ainsi au thème du [jeu de syllabes](./games/syllabes.md), pas à tous les jeux Readingo.
+Une variation thématique doit être décrite dans le GDD du jeu. L’archipel, les îles et les coffres appartiennent à [L’Archipel des mots](./games/syllabes.md). Dans [L’Observatoire des lettres](./games/lettres.md), le bateau navigue de nuit et la lunette astronomique permet à Pana de suivre les étoiles ; aucun bâtiment d’observatoire n’appartient à cet univers.
 
 ## Palette
 

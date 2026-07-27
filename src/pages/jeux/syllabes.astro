@@ -1,5 +1,5 @@
 ---
-import { BateauGame } from "@components/games/bateau";
+import { SyllabesGame } from "@components/games/syllabes";
 import { GAME_BY_ID, GAME_IDS } from "../../content/gameCatalog";
 import GamePageLayout from "../../layouts/GamePageLayout.astro";
 
@@ -7,5 +7,5 @@ const game = GAME_BY_ID[GAME_IDS.SYLLABLES];
 ---
 
 <GamePageLayout game={game}>
-  <BateauGame client:load />
+  <SyllabesGame client:load />
 </GamePageLayout>

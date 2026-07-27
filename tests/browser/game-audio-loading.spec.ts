@@ -56,7 +56,7 @@ test.describe("Chargement audio à la demande", () => {
     });
 
     await page.goto("/jeux/syllabes/?niveau=1");
-    await expect(page.locator(".bateau-game--playing")).toBeVisible();
+    await expect(page.locator(".syllabes-game--playing")).toBeVisible();
     await page.locator(".syllable-tile").first().click();
     await expect
       .poll(() => requestedAudio.has("/assets/audio/sfx/syllable-select.mp3"))

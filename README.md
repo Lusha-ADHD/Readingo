@@ -22,8 +22,9 @@ Ordre de lecture :
 | Principes communs à tous les jeux | [Socle de game design](./doc/game-design-system.md) |
 | Direction artistique et composants UI | [Direction artistique et design UI](./doc/design-direction.md) |
 | Parcours utilisateur et principes UX | [Expérience utilisateur et gameplay](./doc/ux-gameplay.md) |
-| Game design du jeu de syllabes | [Jeu de syllabes — Game Design Document](./doc/games/syllabes.md) |
-| Prototype du jeu Lettres | [Jeu Lettres — Game Design Document](./doc/games/lettres.md) |
+| Game design de L’Archipel des mots | [L’Archipel des mots — Game Design Document](./doc/games/syllabes.md) |
+| Prototype de L’Observatoire des lettres | [L’Observatoire des lettres — Game Design Document](./doc/games/lettres.md) |
+| Game design du Sentier des mots | [Le Sentier des mots — Game Design Document](./doc/games/sentier-des-mots.md) |
 | Modèle de contenu pédagogique | [Contenu pédagogique et assets](./doc/content-assets.md) |
 | Génération et intégration des voix | [Pipeline audio](./doc/audio-generation.md) |
 | Génération des illustrations | [Pipeline image](./doc/image-generation.md) |

@@ -1,0 +1,1 @@
+export { SyllabesGame } from "./SyllabesGame";

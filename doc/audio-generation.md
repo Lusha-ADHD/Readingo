@@ -75,7 +75,7 @@ Une graphie pédagogique n’est pas toujours un bon texte de synthèse vocale. 
 - `spokenSyllables` : textes de génération dans le contexte du mot ;
 - `speechText` : texte de génération générique d’une syllabe ;
 - `audioWord` et `audio` : chemins des clips.
-- `nameSpeechText` et `promptSpeechText` : textes de génération propres au jeu Lettres.
+- `nameSpeechText` et `promptSpeechText` : textes de génération propres à L’Observatoire des lettres.
 
 Exemples : `llon` peut être généré avec `yon`, `pho` avec `faux` et `cy` avec `si`. La ponctuation peut également influencer le résultat, comme dans `mi!`.
 
@@ -120,7 +120,7 @@ Le pipeline actuel utilise :
 - une vitesse de `0.88` pour les mots ;
 - une vitesse de `0.82` pour les syllabes ;
 - une vitesse de `0.84` pour les noms de lettres ;
-- une vitesse de `0.90` pour les consignes complètes du jeu Lettres ;
+- une vitesse de `0.90` pour les consignes complètes de L’Observatoire des lettres ;
 - des réglages de stabilité et de style propres à chaque catégorie ;
 - jusqu’à trois nouvelles tentatives après une réponse `429` ou `5xx`.
 
@@ -162,7 +162,7 @@ Cette version ajoute un paramètre à l’URL. Elle n’a pas besoin de changer 
 - Chaque asset conserve malgré tout le lien de sa page Pixabay dans l’inventaire
   ci-dessous afin de retrouver son auteur et sa provenance exacte.
 
-### Inventaire actuel du jeu de syllabes
+### Inventaire actuel de L’Archipel des mots
 
 | Usage | Fichier | Source |
 | --- | --- | --- |
@@ -174,18 +174,18 @@ Cette version ajoute un paramètre à l’URL. Elle n’a pas besoin de changer 
 | Collecte d’un coffre | `public/assets/audio/sfx/chest-collect.mp3` | [Opening Bell](https://pixabay.com/sound-effects/film-special-effects-opening-bell-421471/) |
 | Réussite | `public/assets/audio/sfx/level-complete.mp3` | [Short Success Sound Glockenspiel Treasure Video Game](https://pixabay.com/sound-effects/film-special-effects-short-success-sound-glockenspiel-treasure-video-game-6346/) |
 
-Dans le jeu de syllabes, la mer commence après « Commencer ». Le vent et le bateau sont synchronisés avec la traversée. Pendant une collecte, le bateau s’arrête et le vent reste plus discret.
+Dans L’Archipel des mots, la mer commence après « Commencer ». Le vent et le bateau sont synchronisés avec la traversée. Pendant une collecte, le bateau s’arrête et le vent reste plus discret.
 
-Les règles fonctionnelles complètes sont dans le [GDD du jeu de syllabes](./games/syllabes.md).
+Les règles fonctionnelles complètes sont dans le [GDD de L’Archipel des mots](./games/syllabes.md).
 
-### Inventaire propre à Lettres
+### Inventaire propre à L’Observatoire des lettres
 
 | Usage | Fichier | Source |
 | --- | --- | --- |
 | Ambiance nocturne | `public/assets/audio/sfx/night-loop.mp3` | [Crickets Chirping & Ocean Waves](https://pixabay.com/sound-effects/nature-crickets-chirping-amp-ocean-waves-by-prettysleepy-art-10372/), Prettysleepy, licence de contenu Pixabay |
 | Allumage d’une étoile | `public/assets/audio/sfx/star-shine.mp3` | [Shine 11](https://pixabay.com/sound-effects/film-special-effects-shine-11-268907/), BenKirb, licence de contenu Pixabay |
 
-L’ambiance nocturne démarre après l’action « Commencer » afin de respecter les restrictions d’autoplay. Elle reste très discrète sous les consignes. L’effet scintillant est joué au moment précis où l’étoile et son éventuel segment deviennent actifs.
+L’ambiance nocturne mêle mer calme et grillons après l’action « Commencer » afin de respecter les restrictions d’autoplay. Elle accompagne Pana sur son bateau, sous la lunette astronomique, et reste très discrète sous les consignes. L’effet scintillant est joué au moment précis où l’étoile et son éventuel segment deviennent actifs.
 
 ### Inventaire propre au Sentier des mots
 

@@ -6,7 +6,7 @@ const root = resolve(import.meta.dirname, "..");
 const outputPath = resolve(root, ".tmp/readingo-home-final.png");
 
 const [background, icon, font] = await Promise.all([
-  readFile(resolve(root, "public/assets/social/readingo-home-style-test.png")),
+  readFile(resolve(root, "public/assets/social/readingo-home-art.png")),
   readFile(resolve(root, "public/assets/Readingo_Icon.png")),
   readFile(resolve(root, "public/assets/fonts/nunito-latin.ttf")),
 ]);

@@ -1,25 +1,25 @@
-# Jeu de syllabes — Game Design Document
+# L’Archipel des mots — Game Design Document
 
 ## Statut et périmètre
 
-Ce document décrit le comportement actuel du jeu de syllabes et constitue sa référence de game design. Il complète le [socle commun Readingo](../game-design-system.md) sans recopier toutes ses règles.
+Ce document décrit le comportement actuel de **L’Archipel des mots** et constitue sa référence de game design. Il complète le [socle commun Readingo](../game-design-system.md) sans recopier toutes ses règles.
 
 Sources techniques de vérité :
 
 - niveaux : `src/content/fr/lessons.json` ;
 - mots et découpages : `src/content/fr/words.json` ;
 - syllabes et prononciations : `src/content/fr/syllables.json` ;
-- orchestration : `src/components/games/bateau/BateauGame.tsx` ;
-- scène, défi et résultat : `src/components/games/bateau/BateauScene.tsx`,
-  `BateauChallenge.tsx` et `BateauResult.tsx` ;
-- carte : `src/components/games/bateau/LevelMap.tsx` ;
-- sauvegarde : `src/components/games/bateau/bateauProgress.ts`.
+- orchestration : `src/components/games/syllabes/SyllabesGame.tsx` ;
+- scène, défi et résultat : `src/components/games/syllabes/SyllabesScene.tsx`,
+  `SyllabesChallenge.tsx` et `SyllabesResult.tsx` ;
+- carte : `src/components/games/syllabes/LevelMap.tsx` ;
+- sauvegarde : `src/components/games/syllabes/syllabesProgress.ts`.
 
 Lorsqu’une valeur technique change, le code, les données, les validateurs et ce document doivent être mis à jour ensemble.
 
 ## Intention
 
-Le jeu de syllabes est un jeu de recomposition syllabique. L’enfant observe et écoute un mot, puis le reconstitue en choisissant ses syllabes dans le bon ordre.
+**L’Archipel des mots** est un jeu de recomposition syllabique. L’enfant observe et écoute un mot, puis le reconstitue en choisissant ses syllabes dans le bon ordre.
 
 La réussite fait avancer un bateau dans un archipel. La progression pédagogique et la progression dans le décor sont ainsi confondues : chaque mot correctement composé produit immédiatement un voyage visible.
 
@@ -58,7 +58,7 @@ Un niveau débloqué reste disponible. Le meilleur résultat et le total de coff
 
 ## Univers et narration
 
-Le jeu de syllabes utilise le territoire maritime de l’univers Readingo :
+**L’Archipel des mots** utilise le territoire maritime de l’univers Readingo :
 
 - Pana guide le joueur ;
 - le bateau relie les îles de l’archipel ;
@@ -209,7 +209,7 @@ Elle conserve l’océan et le ciel animés du jeu. Le parcours défile vertical
 - Un chemin maritime serpente de gauche à droite.
 - Le bateau marque le niveau frontière, c’est-à-dire le niveau le plus avancé accessible.
 - Une grande île au trésor se trouve après le niveau 6.
-- L’en-tête fixe affiche Pana, « L’Archipel », le total de coffres et, selon le contexte, le bouton de fermeture.
+- L’en-tête fixe affiche Pana, « L’Archipel des mots », le total de coffres et, selon le contexte, le bouton de fermeture.
 
 Les positions sont exprimées relativement au parcours afin de conserver la trajectoire sur téléphone, tablette et bureau.
 
@@ -373,7 +373,7 @@ Assets partagés ou propres au territoire maritime :
 
 La route, les coches, les cadenas et les halos sont produits en SVG ou CSS. Ils ne nécessitent pas de raster.
 
-La fabrication est décrite dans le [pipeline image commun](../image-generation.md). La recette visuelle actuelle du jeu de syllabes est `readingo-pana-v1`.
+La fabrication est décrite dans le [pipeline image commun](../image-generation.md). La recette visuelle actuelle de L’Archipel des mots est `readingo-pana-v1`.
 
 ## Contenu et validation automatique
 
@@ -417,7 +417,7 @@ Ce mode sert au contrôle de contenu et d’interface. Il ne doit jamais appara�
 
 ## Variations par rapport au socle commun
 
-Le jeu de syllabes spécialise le socle Readingo sur les points suivants :
+L’Archipel des mots spécialise le socle Readingo sur les points suivants :
 
 - progression représentée par une carte verticale ;
 - score matérialisé par des coffres ;

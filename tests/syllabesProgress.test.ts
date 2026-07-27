@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  completeBateauLevel,
+  completeSyllabesLevel,
   createInitialProgress,
-  readBateauProgress,
-} from "../src/components/games/bateau/bateauProgress.ts";
-import { createBateauTiles } from "../src/components/games/bateau/bateauTiles.ts";
+  readSyllabesProgress,
+} from "../src/components/games/syllabes/syllabesProgress.ts";
+import { createSyllabesTiles } from "../src/components/games/syllabes/syllabesTiles.ts";
 
 const firstLevelWords = ["chaton", "bateau", "moto", "lapin", "melon", "tapis", "panda", "maison"];
 
@@ -17,15 +17,15 @@ test("la progression initiale ouvre seulement le niveau 1", () => {
 });
 
 test("terminer le niveau frontière débloque exactement le suivant", () => {
-  const progress = completeBateauLevel(createInitialProgress(), 1, 5, firstLevelWords, 6);
+  const progress = completeSyllabesLevel(createInitialProgress(), 1, 5, firstLevelWords, 6);
   assert.equal(progress.unlockedLevel, 2);
   assert.deepEqual(progress.completedLevels, [1]);
   assert.equal(progress.totalTreasures, 5);
 });
 
 test("rejouer conserve la frontière et le meilleur score", () => {
-  const first = completeBateauLevel(createInitialProgress(), 1, 5, firstLevelWords, 6);
-  const replay = completeBateauLevel(first, 1, 3, firstLevelWords, 6);
+  const first = completeSyllabesLevel(createInitialProgress(), 1, 5, firstLevelWords, 6);
+  const replay = completeSyllabesLevel(first, 1, 3, firstLevelWords, 6);
   assert.equal(replay.unlockedLevel, 2);
   assert.equal(replay.bestTreasuresByLevel["1"], 5);
   assert.equal(replay.totalTreasures, 8);
@@ -34,7 +34,7 @@ test("rejouer conserve la frontière et le meilleur score", () => {
 
 test("terminer le dernier niveau n’invente pas un niveau 7", () => {
   const before = { ...createInitialProgress(), unlockedLevel: 6, completedLevels: [1, 2, 3, 4, 5] };
-  const after = completeBateauLevel(before, 6, 9, ["macaroni"], 6);
+  const after = completeSyllabesLevel(before, 6, 9, ["macaroni"], 6);
   assert.equal(after.unlockedLevel, 6);
   assert.deepEqual(after.completedLevels, [1, 2, 3, 4, 5, 6]);
 });
@@ -44,11 +44,11 @@ test("une sauvegarde corrompue revient à la progression initiale", () => {
     getItem: () => "{not-json",
     setItem: () => undefined,
   } as unknown as Storage;
-  assert.deepEqual(readBateauProgress(storage, 6), createInitialProgress());
+  assert.deepEqual(readSyllabesProgress(storage, 6), createInitialProgress());
 });
 
 test("les deux tuiles po d’hippopotame restent sélectionnables séparément", () => {
-  const tiles = createBateauTiles({
+  const tiles = createSyllabesTiles({
     id: "hippopotame",
     syllables: ["hip", "po", "po", "tame"],
     distractors: ["pi", "peau", "pote"],

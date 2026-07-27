@@ -8,11 +8,11 @@ test.describe("Structure des jeux après découpage", () => {
   test("Syllabes affiche ensemble scène, HUD et défi", async ({ page }) => {
     await page.goto("/jeux/syllabes/?niveau=1", { waitUntil: "networkidle" });
 
-    await expect(page.locator(".bateau-game--playing")).toBeVisible();
-    await expect(page.locator(".bateau-game__world")).toBeVisible();
-    await expect(page.locator(".bateau-game__boat")).toBeVisible();
-    await expect(page.locator(".bateau-game__hud")).toBeVisible();
-    await expect(page.locator(".bateau-game__panel")).toBeVisible();
+    await expect(page.locator(".syllabes-game--playing")).toBeVisible();
+    await expect(page.locator(".syllabes-game__world")).toBeVisible();
+    await expect(page.locator(".syllabes-game__boat")).toBeVisible();
+    await expect(page.locator(".syllabes-game__hud")).toBeVisible();
+    await expect(page.locator(".syllabes-game__panel")).toBeVisible();
   });
 
   test("Lettres affiche ensemble constellation, HUD et défi", async ({

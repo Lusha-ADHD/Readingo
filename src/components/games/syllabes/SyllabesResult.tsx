@@ -10,7 +10,7 @@ type Props = {
   onReplay: () => void;
 };
 
-export function BateauResult({
+export function SyllabesResult({
   level,
   levelCount,
   wordCount,
@@ -21,19 +21,19 @@ export function BateauResult({
 }: Props) {
   return (
     <div
-      className={`bateau-game__panel bateau-game__panel--end ${
-        leaving ? "bateau-game__panel--leaving" : ""
+      className={`syllabes-game__panel syllabes-game__panel--end ${
+        leaving ? "syllabes-game__panel--leaving" : ""
       }`}
     >
-      <div className="bateau-game__end" aria-live="polite">
-        <p className="bateau-game__eyebrow">Niveau {level} terminé</p>
+      <div className="syllabes-game__end" aria-live="polite">
+        <p className="syllabes-game__eyebrow">Niveau {level} terminé</p>
         <h2>{level === levelCount ? "Cap sur le trésor !" : "Bravo !"}</h2>
         <p>
           {wordCount} mots réussis, {treasures} coffre
           {treasures > 1 ? "s" : ""} collecté
           {treasures > 1 ? "s" : ""}.
         </p>
-        <div className="bateau-game__end-actions">
+        <div className="syllabes-game__end-actions">
           <GameButton onClick={onContinue} variant="success">
             Continuer l’aventure
           </GameButton>

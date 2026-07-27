@@ -1,4 +1,4 @@
-export type BateauPhase =
+export type SyllabesPhase =
   | "intro"
   | "dialog"
   | "map"
