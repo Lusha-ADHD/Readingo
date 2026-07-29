@@ -126,8 +126,7 @@ export function SyllabesScene({
           ))}
         </div>
 
-        {phase !== "map" ? (
-          <>
+        <>
             <div
               className={`syllabes-game__island-track ${
                 phase === "sailing"
@@ -222,8 +221,7 @@ export function SyllabesScene({
                 <strong>+1</strong>
               </div>
             ))}
-          </>
-        ) : null}
+        </>
       </div>
 
       {phase === "sailing" && journey ? (
