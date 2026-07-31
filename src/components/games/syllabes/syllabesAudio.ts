@@ -9,7 +9,7 @@ import type {
 } from "../gameAudio";
 
 const LOOPS = {
-  sea: { source: sfxPath("sea-loop.mp3"), volume: 0.2 },
+  sea: { source: sfxPath("sea-loop.mp3"), volume: 0.15 },
   wind: { source: sfxPath("wind-loop.mp3"), volume: 0.4 },
   boat: { source: sfxPath("boat-loop.mp3"), volume: 0.2 },
 } satisfies Record<string, AudioLoopConfig>;

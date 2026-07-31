@@ -336,5 +336,150 @@
     "syllables": [], "spokenSyllables": [], "distractors": [],
     "image": "/assets/images/fr/words/zebre.png", "audioWord": "/assets/audio/fr/words/zebre.mp3", "audioSyllables": {},
     "difficulty": 1, "tags": ["animal", "mot-indice-lettres"]
+  },
+
+  {
+    "id": "lune", "locale": "fr-FR", "word": "lune", "displayWord": "lune",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/lune.png", "audioWord": "/assets/audio/fr/words/lune.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["nature", "mot-indice-sentier"]
+  },
+  {
+    "id": "poule", "locale": "fr-FR", "word": "poule", "displayWord": "poule",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/poule.png", "audioWord": "/assets/audio/fr/words/poule.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["animal", "mot-indice-sentier"]
+  },
+  {
+    "id": "boule", "locale": "fr-FR", "word": "boule", "displayWord": "boule",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/boule.png", "audioWord": "/assets/audio/fr/words/boule.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "robe", "locale": "fr-FR", "word": "robe", "displayWord": "robe",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/robe.png", "audioWord": "/assets/audio/fr/words/robe.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["vetement", "mot-indice-sentier"]
+  },
+  {
+    "id": "livre", "locale": "fr-FR", "word": "livre", "displayWord": "livre",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/livre.png", "audioWord": "/assets/audio/fr/words/livre.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "arbre", "locale": "fr-FR", "word": "arbre", "displayWord": "arbre",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/arbre.png", "audioWord": "/assets/audio/fr/words/arbre.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["nature", "mot-indice-sentier"]
+  },
+  {
+    "id": "pomme", "locale": "fr-FR", "word": "pomme", "displayWord": "pomme",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/pomme.png", "audioWord": "/assets/audio/fr/words/pomme.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["aliment", "mot-indice-sentier"]
+  },
+  {
+    "id": "porte", "locale": "fr-FR", "word": "porte", "displayWord": "porte",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/porte.png", "audioWord": "/assets/audio/fr/words/porte.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "tortue", "locale": "fr-FR", "word": "tortue", "displayWord": "tortue",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/tortue.png", "audioWord": "/assets/audio/fr/words/tortue.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["animal", "mot-indice-sentier"]
+  },
+  {
+    "id": "banane", "locale": "fr-FR", "word": "banane", "displayWord": "banane",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/banane.png", "audioWord": "/assets/audio/fr/words/banane.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["aliment", "mot-indice-sentier"]
+  },
+  {
+    "id": "renard", "locale": "fr-FR", "word": "renard", "displayWord": "renard",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/renard.png", "audioWord": "/assets/audio/fr/words/renard.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["animal", "mot-indice-sentier"]
+  },
+  {
+    "id": "valise", "locale": "fr-FR", "word": "valise", "displayWord": "valise",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/valise.png", "audioWord": "/assets/audio/fr/words/valise.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "dragon", "locale": "fr-FR", "word": "dragon", "displayWord": "dragon",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/dragon.png", "audioWord": "/assets/audio/fr/words/dragon.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["personnage", "mot-indice-sentier"]
+  },
+  {
+    "id": "orange", "locale": "fr-FR", "word": "orange", "displayWord": "orange",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/orange.png", "audioWord": "/assets/audio/fr/words/orange.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["aliment", "mot-indice-sentier"]
+  },
+  {
+    "id": "ballon", "locale": "fr-FR", "word": "ballon", "displayWord": "ballon",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/ballon.png", "audioWord": "/assets/audio/fr/words/ballon.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "poisson", "locale": "fr-FR", "word": "poisson", "displayWord": "poisson",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/poisson.png", "audioWord": "/assets/audio/fr/words/poisson.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["animal", "mot-indice-sentier"]
+  },
+  {
+    "id": "voiture", "locale": "fr-FR", "word": "voiture", "displayWord": "voiture",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/voiture.png", "audioWord": "/assets/audio/fr/words/voiture.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "fromage", "locale": "fr-FR", "word": "fromage", "displayWord": "fromage",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/fromage.png", "audioWord": "/assets/audio/fr/words/fromage.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["aliment", "mot-indice-sentier"]
+  },
+  {
+    "id": "chapeau", "locale": "fr-FR", "word": "chapeau", "displayWord": "chapeau",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/chapeau.png", "audioWord": "/assets/audio/fr/words/chapeau.mp3", "audioSyllables": {},
+    "difficulty": 2, "tags": ["vetement", "mot-indice-sentier"]
+  },
+  {
+    "id": "fantome", "locale": "fr-FR", "word": "fantôme", "displayWord": "fantôme",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/fantome.png", "audioWord": "/assets/audio/fr/words/fantome.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["personnage", "mot-indice-sentier"]
+  },
+  {
+    "id": "escargot", "locale": "fr-FR", "word": "escargot", "displayWord": "escargot",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/escargot.png", "audioWord": "/assets/audio/fr/words/escargot.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-indice-sentier"]
+  },
+  {
+    "id": "pyramide", "locale": "fr-FR", "word": "pyramide", "displayWord": "pyramide",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/pyramide.png", "audioWord": "/assets/audio/fr/words/pyramide.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-indice-sentier"]
+  },
+  {
+    "id": "kangourou", "locale": "fr-FR", "word": "kangourou", "displayWord": "kangourou",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/kangourou.png", "audioWord": "/assets/audio/fr/words/kangourou.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["animal", "mot-indice-sentier"]
+  },
+  {
+    "id": "montgolfiere", "locale": "fr-FR", "word": "montgolfière", "displayWord": "montgolfière",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/montgolfiere.png", "audioWord": "/assets/audio/fr/words/montgolfiere.mp3", "audioSyllables": {},
+    "difficulty": 3, "tags": ["objet", "mot-indice-sentier"]
   }
 ]

@@ -6,9 +6,12 @@ export type SentierDirection =
   | "far-right"
   | "uturn";
 
+import type { SentierChoiceSeed, SentierDisplayCase } from "./sentierContent";
+
 export type SentierPhase =
   | "intro"
   | "dialogue"
+  | "map"
   | "presenting"
   | "choosing"
   | "travelling"
@@ -21,10 +24,13 @@ export type SentierPhase =
   | "treasure-buried"
   | "treasure-revealed"
   | "treasure-collecting"
+  | "grand-treasure"
   | "result";
 
 export type SentierChoice = {
-  word: string;
+  wordId: string;
+  displayWord: string;
+  displayCase: SentierDisplayCase;
   direction: SentierDirection;
 };
 
@@ -34,7 +40,7 @@ export type SentierState = {
   remainingWords: string[];
   choices: SentierChoice[];
   errors: number;
-  selectedWord: string | null;
+  selectedWordId: string | null;
   gems: number;
   pendingGems: number;
   rewardTotal: number;
@@ -47,16 +53,18 @@ export const TREASURE_BONUS_GEMS = 8;
 
 export type SentierAction =
   | { type: "START_DIALOGUE" }
+  | { type: "SHOW_MAP" }
+  | { type: "RESET_LEVEL" }
   | {
       type: "PRESENT_QUESTION";
       questionIndex: number;
-      words: string[];
+      choices: SentierChoiceSeed[];
       rewardGems?: number;
       rewardCompletesLevel?: boolean;
       random?: () => number;
     }
   | { type: "ENABLE_CHOICES" }
-  | { type: "SELECT"; word: string }
+  | { type: "SELECT"; wordId: string }
   | { type: "ARRIVE_CORRECT" }
   | { type: "ARRIVE_WRONG"; random?: () => number }
   | { type: "RETRY" }
@@ -69,6 +77,7 @@ export type SentierAction =
   | { type: "ARRIVE_DESTINATION" }
   | { type: "DIG_TREASURE" }
   | { type: "OPEN_TREASURE" }
+  | { type: "SHOW_GRAND_TREASURE" }
   | { type: "SHOW_RESULT" };
 
 const DIRECTION_SETS: Record<number, SentierDirection[]> = {
@@ -91,17 +100,17 @@ export function shuffleValues<T>(values: readonly T[], random = Math.random): T[
 }
 
 export function assignDirections(
-  words: readonly string[],
+  choices: readonly SentierChoiceSeed[],
   random = Math.random,
 ): SentierChoice[] {
-  const directions = DIRECTION_SETS[words.length];
+  const directions = DIRECTION_SETS[choices.length];
 
   if (!directions) {
-    throw new Error(`Le Sentier attend entre 1 et 5 choix, reçu : ${words.length}.`);
+    throw new Error(`Le Sentier attend entre 1 et 5 choix, reçu : ${choices.length}.`);
   }
 
-  const shuffledWords = shuffleValues(words, random);
-  return shuffledWords.map((word, index) => ({ word, direction: directions[index] }));
+  const shuffledChoices = shuffleValues(choices, random);
+  return shuffledChoices.map((choice, index) => ({ ...choice, direction: directions[index] }));
 }
 
 export function rewardForErrors(errors: number) {
@@ -115,7 +124,7 @@ export function createInitialSentierState(): SentierState {
     remainingWords: [],
     choices: [],
     errors: 0,
-    selectedWord: null,
+    selectedWordId: null,
     gems: 0,
     pendingGems: 0,
     rewardTotal: 0,
@@ -130,17 +139,26 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
     case "START_DIALOGUE":
       return state.phase === "intro" ? { ...state, phase: "dialogue" } : state;
 
+    case "SHOW_MAP":
+      return { ...createInitialSentierState(), phase: "map" };
+
+    case "RESET_LEVEL":
+      return { ...createInitialSentierState(), phase: "presenting" };
+
     case "PRESENT_QUESTION": {
-      const words = Array.from(new Set(action.words));
+      const choices = action.choices.filter(
+        (choice, index, entries) =>
+          entries.findIndex((candidate) => candidate.wordId === choice.wordId) === index,
+      );
 
       return {
         ...state,
         phase: action.rewardGems === undefined ? "presenting" : "reward",
         questionIndex: action.questionIndex,
-        remainingWords: words,
-        choices: assignDirections(words, action.random),
+        remainingWords: choices.map((choice) => choice.wordId),
+        choices: assignDirections(choices, action.random),
         errors: 0,
-        selectedWord: null,
+        selectedWordId: null,
         pendingGems: action.rewardGems ?? 0,
         rewardTotal: action.rewardGems ?? 0,
         rewardCompletesLevel: action.rewardCompletesLevel ?? false,
@@ -156,14 +174,14 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
         : state;
 
     case "SELECT":
-      if (state.phase !== "choosing" || !state.remainingWords.includes(action.word)) {
+      if (state.phase !== "choosing" || !state.remainingWords.includes(action.wordId)) {
         return state;
       }
 
       return {
         ...state,
         phase: "travelling",
-        selectedWord: action.word,
+        selectedWordId: action.wordId,
         transitionToken: state.transitionToken + 1,
       };
 
@@ -182,11 +200,14 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
     }
 
     case "ARRIVE_WRONG": {
-      if (state.phase !== "travelling" || !state.selectedWord) {
+      if (state.phase !== "travelling" || !state.selectedWordId) {
         return state;
       }
 
-      const remainingWords = state.remainingWords.filter((word) => word !== state.selectedWord);
+      const remainingWords = state.remainingWords.filter((wordId) => wordId !== state.selectedWordId);
+      const remainingChoices = state.choices.filter(
+        (choice) => choice.wordId !== state.selectedWordId,
+      );
       const errors = state.errors + 1;
       const mustTurnBack = remainingWords.length === 1;
 
@@ -194,9 +215,9 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
         ...state,
         phase: mustTurnBack ? "uturn-prompt" : "wrong-feedback",
         remainingWords,
-        choices: assignDirections(remainingWords, action.random),
+        choices: assignDirections(remainingChoices, action.random),
         errors,
-        selectedWord: null,
+        selectedWordId: null,
       };
     }
 
@@ -208,7 +229,7 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
       return {
         ...state,
         phase: "uturn-travelling",
-        selectedWord: state.remainingWords[0] ?? null,
+        selectedWordId: state.remainingWords[0] ?? null,
         transitionToken: state.transitionToken + 1,
       };
 
@@ -268,7 +289,7 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
       return {
         ...state,
         phase: "destination-travelling",
-        selectedWord: null,
+        selectedWordId: null,
         destinationReached: true,
         transitionToken: state.transitionToken + 1,
       };
@@ -305,8 +326,14 @@ export function sentierReducer(state: SentierState, action: SentierAction): Sent
         : state;
 
     case "SHOW_RESULT":
+      return (state.phase === "treasure-collecting" || state.phase === "grand-treasure") &&
+        state.pendingGems === 0
+        ? { ...state, phase: "result", selectedWordId: null }
+        : state;
+
+    case "SHOW_GRAND_TREASURE":
       return state.phase === "treasure-collecting" && state.pendingGems === 0
-        ? { ...state, phase: "result", selectedWord: null }
+        ? { ...state, phase: "grand-treasure" }
         : state;
 
     default:

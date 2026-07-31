@@ -46,6 +46,138 @@ test.describe("Le Sentier des mots", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
   });
 
+  test("la carte affiche douze étapes et guide vers le niveau disponible", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.goto("/jeux/mots/?test=1&state=map");
+    const nodes = page.locator(".sentier-map__node");
+    await expect(nodes).toHaveCount(12);
+    await expect(nodes.nth(0)).toBeEnabled();
+    await expect(nodes.nth(1)).toBeDisabled();
+    await expect(page.locator(".sentier-map__pointer")).toHaveCount(1);
+    await expect(page.locator(".sentier-map__art")).toHaveCount(4);
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  });
+
+  test("les préréglages locaux affichent plusieurs états de progression", async ({ page }) => {
+    await page.goto("/jeux/mots/?test=1&state=map&preset=middle");
+    await expect(page.locator(".sentier-map__node--completed")).toHaveCount(5);
+    await expect(page.locator(".sentier-map__node--available")).toHaveCount(1);
+    await expect(page.locator(".sentier-map__node--locked")).toHaveCount(6);
+    await expect(page.locator(".sentier-map__total")).toContainText("90/288");
+    await expect(page.getByTestId("sentier-map-test-tools")).toBeVisible();
+
+    await page.goto("/jeux/mots/?test=1&state=map&preset=final");
+    await expect(page.locator(".sentier-map__node--completed")).toHaveCount(11);
+    await expect(page.locator(".sentier-map__node--available")).toHaveCount(1);
+    await expect(page.locator(".sentier-map__total")).toContainText("220/288");
+
+    await page.goto("/jeux/mots/?test=1&state=map&preset=complete");
+    await expect(page.locator(".sentier-map__node--completed")).toHaveCount(12);
+    await expect(page.locator(".sentier-map__pointer")).toHaveCount(0);
+    await expect(page.locator(".sentier-map__total")).toContainText("288/288");
+  });
+
+  test("une ancienne sauvegarde du niveau 1 débloque automatiquement l’étape 2", async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem("readingo:sentier-des-mots:v1", JSON.stringify({
+        version: 1,
+        completedLevels: [1],
+        bestGemsByLevel: { "1": 18 },
+        sessions: 1,
+      }));
+    });
+    await page.goto("/jeux/mots/?test=1&state=map");
+    const nodes = page.locator(".sentier-map__node");
+    await expect(nodes.nth(0)).toHaveClass(/sentier-map__node--completed/);
+    await expect(nodes.nth(1)).toBeEnabled();
+    await expect(nodes.nth(2)).toBeDisabled();
+    await expect(page.locator(".sentier-map__pointer")).toHaveCount(1);
+  });
+
+  test("le niveau 12 local mélange les casses dans une grille de cinq mots", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.goto("/jeux/mots/?niveau=12");
+    await expect(page.getByTestId("sentier-choice")).toHaveCount(5);
+    await expect(page.getByTestId("sentier-hud")).toContainText("Niveau 12");
+    const labels = await page.locator(".sentier-choice__word").allTextContents();
+    expect(labels.some((label) => label === label.toLocaleUpperCase("fr-FR"))).toBe(true);
+    expect(labels.some((label) => label === label.toLocaleLowerCase("fr-FR"))).toBe(true);
+  });
+
+  test("le niveau 2 conserve ses propres réponses après chaque récompense", async ({ page }) => {
+    await page.goto("/jeux/mots/?test=1&niveau=2");
+
+    await expect(page.getByTestId("sentier-target").getByRole("img", { name: "jupe" })).toBeVisible();
+    await page.getByRole("button", { name: /^jupe$/i }).click();
+
+    await expect(page.getByTestId("sentier-target").getByRole("img", { name: "robe" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^robe$/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^lune$/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^poule$/i })).toBeVisible();
+    await page.getByTestId("sentier-reward-mound").click();
+
+    await expect(page.getByRole("button", { name: /^robe$/i })).toBeEnabled();
+    await page.getByRole("button", { name: /^robe$/i }).click();
+
+    await expect(page.getByTestId("sentier-target").getByRole("img", { name: "lune" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^lune$/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^poule$/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^boule$/i })).toBeVisible();
+    await expect(page.getByTestId("sentier-choice")).toHaveCount(3);
+  });
+
+  test("les transitions des niveaux 5, 9 et 12 gardent leurs grilles", async ({ page }) => {
+    const scenarios = [
+      { level: 5, first: "caméra", second: "koala", choices: 4 },
+      { level: 9, first: "alligator", second: "ordinateur", choices: 4 },
+      { level: 12, first: "poule", second: "boule", choices: 5 },
+    ];
+
+    for (const scenario of scenarios) {
+      await page.goto(`/jeux/mots/?test=1&niveau=${scenario.level}`);
+      await expect(
+        page.getByTestId("sentier-target").getByRole("img", { name: scenario.first }),
+      ).toBeVisible();
+      await page.getByRole("button", { name: new RegExp(`^${scenario.first}$`, "i") }).click();
+      await expect(
+        page.getByTestId("sentier-target").getByRole("img", { name: scenario.second }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: new RegExp(`^${scenario.second}$`, "i") }),
+      ).toBeVisible();
+      await expect(page.getByTestId("sentier-choice")).toHaveCount(scenario.choices);
+    }
+  });
+
+  test("Continuer depuis le résultat revient à la carte", async ({ page }) => {
+    await page.goto("/jeux/mots/?test=1&state=result");
+    await page.getByRole("button", { name: "Continuer" }).click();
+    await expect(page.locator(".sentier-map")).toBeVisible();
+  });
+
+  test("la carte se centre sur le dernier niveau débloqué", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.addInitScript(() => {
+      localStorage.setItem("readingo:sentier-des-mots:v1", JSON.stringify({
+        version: 1,
+        unlockedLevel: 12,
+        completedLevels: Array.from({ length: 11 }, (_, index) => index + 1),
+        bestGemsByLevel: {},
+        sessions: 11,
+      }));
+    });
+    await page.goto("/jeux/mots/?test=1&state=map");
+    await expect(page.locator(".sentier-map__node").nth(11)).toBeEnabled();
+    await expect.poll(() => page.locator(".sentier-map__scroller").evaluate((element) => element.scrollTop)).toBeGreaterThan(500);
+  });
+
+  test("le résultat du niveau 12 présente le grand trésor", async ({ page }) => {
+    await page.goto("/jeux/mots/?test=1&niveau=12&state=result");
+    await expect(page.getByTestId("sentier-grand-treasure")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Grand trésor découvert !" })).toBeVisible();
+    await expect(page.getByTestId("sentier-gem-count")).toHaveText("10");
+  });
+
   for (const viewport of viewports) {
     test(`la scène couvre tout le cadre à ${viewport.width}x${viewport.height}`, async ({
       page,
@@ -189,7 +321,7 @@ test.describe("Le Sentier des mots", () => {
     await page.goto("/jeux/mots/?test=1");
     await expect(page.getByTestId("sentier-scene")).toHaveAttribute("data-light-variant", "0");
 
-    await page.getByRole("button", { name: "melon", exact: true }).click();
+    await page.getByRole("button", { name: /^melon$/i }).click();
     await expect(page.getByTestId("sentier-scene")).toHaveAttribute("data-light-variant", "1", {
       timeout: 3_000,
     });
@@ -224,7 +356,7 @@ test.describe("Le Sentier des mots", () => {
         await page.goto("/jeux/mots/?test=1&choices=5");
         await page
           .getByTestId("sentier-choices")
-          .getByRole("button", { name: word, exact: true })
+          .getByRole("button", { name: new RegExp(`^${word}$`, "i") })
           .click();
         await expect(page.getByTestId("sentier-scene")).toHaveClass(
           new RegExp(`jungle-scene--${direction}`),
@@ -283,7 +415,7 @@ test.describe("Le Sentier des mots", () => {
     const initialScore = await page.getByTestId("sentier-gem-count").textContent();
     await page
       .getByTestId("sentier-choices")
-      .getByRole("button", { name: "moto", exact: true })
+      .getByRole("button", { name: /^moto$/i })
       .click();
 
     const mound = page.getByTestId("sentier-reward-mound");
@@ -320,7 +452,7 @@ test.describe("Le Sentier des mots", () => {
     await page.goto("/jeux/mots/?test=1&errors=1");
     await page
       .getByTestId("sentier-choices")
-      .getByRole("button", { name: "moto", exact: true })
+      .getByRole("button", { name: /^moto$/i })
       .click();
 
     const mound = page.getByTestId("sentier-reward-mound");
@@ -388,7 +520,7 @@ test.describe("Le Sentier des mots", () => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/jeux/mots/?test=1&question=7");
 
-    await page.getByRole("button", { name: "maison", exact: true }).click();
+    await page.getByRole("button", { name: /^maison$/i }).click();
     const rewardMound = page.getByTestId("sentier-reward-mound");
     await expect(rewardMound).toBeVisible();
     await expectBackdrop(page, 1);
@@ -421,19 +553,19 @@ test.describe("Le Sentier des mots", () => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/jeux/mots/?test=1");
     await expectBackdrop(page, 3);
-    await page.getByRole("button", { name: "melon" }).click();
+    await page.getByRole("button", { name: /^melon$/i }).click();
     await expect(page.getByTestId("sentier-choice")).toHaveCount(2, { timeout: 8_000 });
     await expectBackdrop(page, 2);
-    await expect(page.getByRole("button", { name: "melon" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /^melon$/i })).toHaveCount(0);
     await expect(
-      page.getByTestId("sentier-choices").getByRole("button", { name: "moto" }),
+      page.getByTestId("sentier-choices").getByRole("button", { name: /^moto$/i }),
     ).toBeEnabled();
   });
 
   test("une erreur à cinq choix charge le carrefour à quatre chemins", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/jeux/mots/?test=1&choices=5");
-    await page.getByRole("button", { name: "melon", exact: true }).click();
+    await page.getByRole("button", { name: /^melon$/i }).click();
     await expect(page.getByTestId("sentier-choice")).toHaveCount(4, { timeout: 8_000 });
     await expectBackdrop(page, 4);
   });

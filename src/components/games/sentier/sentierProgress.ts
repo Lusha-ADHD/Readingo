@@ -11,6 +11,11 @@ export type SentierProgress = {
   sessions: number;
 };
 
+export type SentierMapTestState = {
+  progress: SentierProgress;
+  newlyUnlockedLevel: number | null;
+};
+
 export function createInitialSentierProgress(): SentierProgress {
   return {
     version: 1,
@@ -66,6 +71,73 @@ function normalizeProgress(
     bestGemsByLevel,
     sessions: Math.max(0, Math.round(Number(value.sessions) || 0)),
   };
+}
+
+function parseCompletedLevels(value: string | null, totalLevels: number) {
+  if (!value) return [];
+
+  const levels = value.split(",").flatMap((part) => {
+    const range = part.trim().match(/^(\d+)-(\d+)$/);
+
+    if (!range) return [Number(part)];
+
+    const start = Number(range[1]);
+    const end = Number(range[2]);
+    const length = Math.max(0, Math.min(totalLevels, end) - Math.max(1, start) + 1);
+    return Array.from({ length }, (_, index) => Math.max(1, start) + index);
+  });
+
+  return Array.from(
+    new Set(levels.filter((level) => Number.isInteger(level) && level >= 1 && level <= totalLevels)),
+  ).sort((left, right) => left - right);
+}
+
+export function createSentierMapTestState(
+  search: string | URLSearchParams,
+  totalLevels: number,
+): SentierMapTestState | null {
+  const params = typeof search === "string" ? new URLSearchParams(search) : search;
+  const preset = params.get("preset");
+  const presetCompletedCount: Record<string, number> = {
+    new: 0,
+    middle: Math.min(5, totalLevels),
+    unlock: Math.min(5, totalLevels),
+    final: Math.max(0, totalLevels - 1),
+    complete: totalLevels,
+  };
+  const hasCustomState = ["unlocked", "completed", "score", "new"].some((key) =>
+    params.has(key),
+  );
+
+  if (!(preset && preset in presetCompletedCount) && !hasCustomState) return null;
+
+  const completedLevels = preset && preset in presetCompletedCount
+    ? Array.from({ length: presetCompletedCount[preset] }, (_, index) => index + 1)
+    : parseCompletedLevels(params.get("completed"), totalLevels);
+  const defaultScore = preset === "complete" ? 24 : preset === "final" ? 20 : 18;
+  const score = Number(params.get("score") ?? defaultScore);
+  const requestedNewLevel = preset === "unlock"
+    ? Math.min(6, totalLevels)
+    : Number(params.get("new"));
+  const inferredUnlockedLevel = Math.min(totalLevels, completedLevels.length + 1);
+  const unlockedLevel = Number(params.get("unlocked")) || requestedNewLevel || inferredUnlockedLevel;
+  const progress = normalizeProgress(
+    {
+      version: 1,
+      unlockedLevel,
+      completedLevels,
+      bestGemsByLevel: Object.fromEntries(
+        completedLevels.map((level) => [String(level), score]),
+      ),
+      sessions: completedLevels.length,
+    },
+    totalLevels,
+  );
+  const newlyUnlockedLevel = Number.isInteger(requestedNewLevel) && requestedNewLevel >= 1
+    ? Math.min(totalLevels, requestedNewLevel)
+    : null;
+
+  return { progress, newlyUnlockedLevel };
 }
 
 export function readSentierProgress(

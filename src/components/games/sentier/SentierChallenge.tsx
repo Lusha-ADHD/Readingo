@@ -7,10 +7,10 @@ type Props = {
   target: WordReference;
   choices: SentierChoice[];
   phase: SentierPhase;
-  selectedWord: string | null;
+  selectedWordId: string | null;
   message: string;
   onListen: () => void;
-  onChoose: (word: string) => void;
+  onChoose: (wordId: string) => void;
   onUturn: () => void;
 };
 
@@ -74,7 +74,7 @@ export function SentierChallenge({
   target,
   choices,
   phase,
-  selectedWord,
+  selectedWordId,
   message,
   onListen,
   onChoose,
@@ -105,10 +105,11 @@ export function SentierChallenge({
         <div
           className="sentier-challenge__choices"
           data-choice-count={choices.length}
+          data-long-choices={choices.some((choice) => Array.from(choice.displayWord).length > 9) ? "true" : "false"}
           data-testid="sentier-choices"
         >
           {choices.map((choice) => {
-            const selected = selectedWord === choice.word;
+            const selected = selectedWordId === choice.wordId;
             const isUturn = phase === "uturn-prompt";
 
             return (
@@ -117,12 +118,12 @@ export function SentierChallenge({
                   phase === "reward" && selected ? "sentier-choice--correct" : ""
                 }`}
                 disabled={locked}
-                key={`${choice.word}-${choice.direction}`}
-                onClick={() => (isUturn ? onUturn() : onChoose(choice.word))}
+                key={`${choice.wordId}-${choice.direction}`}
+                onClick={() => (isUturn ? onUturn() : onChoose(choice.wordId))}
                 type="button"
                 data-testid="sentier-choice"
               >
-                <span className="sentier-choice__word">{choice.word.toLocaleLowerCase("fr")}</span>
+                <span className="sentier-choice__word">{choice.displayWord}</span>
                 <span className="sentier-choice__direction">
                   <DirectionIcon direction={isUturn ? "uturn" : choice.direction} />
                 </span>

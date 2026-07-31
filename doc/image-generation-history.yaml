@@ -2411,3 +2411,167 @@ entries:
       alpha_channel: passed
       transparent_corners: passed
       subject_legibility: passed
+
+  - id: 2026-07-31-sentier-jungle-map-v1
+    date: 2026-07-31
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-map-v1
+    tool:
+      provider: OpenAI
+      interface: Codex built-in image_gen
+      model: not_exposed
+      seed: not_exposed
+    inputs: []
+    prompt: |-
+      Use case: illustration-story
+      Asset type: portrait panel of a continuous vertical level map for the French children's reading game Readingo
+      Primary request: Create one chapter of a lush jungle expedition map with three distinct round clearings connected by one continuous winding ochre trail. Chapter 1: welcoming lisière, upper-left / middle-right / lower-left clearings. Chapter 2: turquoise streams, bamboo and lotus wetlands, upper-right / middle-left / lower-right clearings. Chapter 3: giant ferns, friendly glowing cave and first mossy ruins, upper-left / middle-right / lower-left clearings. Chapter 4: overgrown temple garden, ancient stairs and final glowing temple doorway, upper-right / middle-left / lower-right clearings.
+      Style/medium: polished hand-painted 2D children's game illustration; gently elevated three-quarter top-down view; rounded tropical shapes; bold warm dark-brown outlines; rich emerald, turquoise, ochre and golden-light palette matching Readingo's jungle.
+      Composition/framing: portrait 2:3; generous empty clearing centers for HTML markers; trail entry and exit alternate at x=34% and x=68%; dense foliage in the top and bottom 8% for hidden overlap seams.
+      Constraints: opaque full-bleed illustration; no text, numbers, letters, UI, chests, characters, arrows, signs or watermark; exactly one continuous readable trail.
+    generated_dimensions: [1024, 1536]
+    post_processing:
+      format: WebP
+      quality: 88
+      runtime_overlap_percent: 7
+    outputs:
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-1.webp, dimensions: [1024, 1536], format: WebP }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-2.webp, dimensions: [1024, 1536], format: WebP }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-3.webp, dimensions: [1024, 1536], format: WebP }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-4.webp, dimensions: [1024, 1536], format: WebP }
+    validation:
+      visual_review: passed
+      three_clearings_per_panel: passed
+      no_embedded_ui_or_text: passed
+      route_legibility: passed
+
+  - id: 2026-07-31-sentier-word-anchors-v1
+    date: 2026-07-31
+    status: selected
+    operation: generate
+    recipe: readingo-word-card-v1
+    tool:
+      provider: OpenAI
+      interface: Codex built-in image_gen
+      model: not_exposed
+      seed: not_exposed
+    inputs: []
+    prompt: |-
+      Use case: illustration-story
+      Asset type: isolated vocabulary illustration for the Readingo children's reading game
+      Primary request: Generate one clearly recognizable centered subject per call for ages 5–7: crescent lune; white poule; blue-and-yellow boule; yellow robe; open blue livre; broad-canopy arbre; red pomme; turquoise porte; green tortue; three bananes; seated orange renard; coral valise; friendly green dragon; orange fruit; red-blue-yellow ballon; orange poisson; red voiture; cheese wedge; straw chapeau; friendly white fantôme; spiral-shell escargot; sandstone pyramide; tan kangourou; striped montgolfière.
+      Style/medium: polished 2D children's educational game illustration; rounded cartoon shapes; warm dark-brown outline; gentle cel shading; saturated highlights; one fully visible subject with generous padding.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal; no shadows, gradients, texture, reflections or floor.
+      Constraints: crisp closed edges; no cast or contact shadow; no extra object; no text, letters, logo or watermark; do not use #ff00ff in the subject.
+    generated_dimensions: [1254, 1254]
+    post_processing:
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+      fit_subject_within: [710, 710]
+      canvas: [768, 768]
+    outputs:
+      - { path: public/assets/images/fr/words/lune.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/poule.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/boule.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/robe.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/livre.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/arbre.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/pomme.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/porte.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/tortue.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/banane.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/renard.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/valise.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/dragon.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/orange.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/ballon.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/poisson.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/voiture.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/fromage.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/chapeau.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/fantome.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/escargot.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/pyramide.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/kangourou.png, dimensions: [768, 768], format: PNG-RGBA }
+      - { path: public/assets/images/fr/words/montgolfiere.png, dimensions: [768, 768], format: PNG-RGBA }
+    validation:
+      visual_review: passed
+      alpha_channel: passed
+      transparent_corners: passed
+      subject_legibility: passed
+
+  - id: 2026-07-31-sentier-grand-treasure-v1
+    date: 2026-07-31
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-v1
+    tool:
+      provider: OpenAI
+      interface: Codex built-in image_gen
+      model: not_exposed
+      seed: not_exposed
+    inputs: []
+    prompt: |-
+      Use case: illustration-story
+      Asset type: isolated final reward asset for the Readingo children's game
+      Primary request: Generate matching closed and open states of one magnificent oversized jungle treasure chest, made of warm carved wood with thick golden bands, an emerald leaf-shaped lock and subtle ancient-jungle motifs. The open state overflows with large red, blue, green and golden gems.
+      Style/medium: polished 2D children's game illustration; rounded cartoon proportions; bold warm dark-brown outline; rich cel shading and brilliant golden highlights, consistent with Readingo's existing chest.
+      Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for removal.
+      Constraints: one centered fully visible chest; no cast or contact shadow; no extra objects outside the chest; no text, letters, logo or watermark.
+    generated_dimensions: [1254, 1254]
+    post_processing:
+      chroma_key: auto-border
+      soft_matte: true
+      transparent_threshold: 12
+      opaque_threshold: 220
+      despill: true
+      canvas: [1024, 1024]
+    outputs:
+      - { path: public/assets/world/jungle/grand-treasure-chest-closed.png, dimensions: [1024, 1024], format: PNG-RGBA }
+      - { path: public/assets/world/jungle/grand-treasure-chest-open.png, dimensions: [1024, 1024], format: PNG-RGBA }
+    validation:
+      visual_review: passed
+      alpha_channel: passed
+      transparent_corners: passed
+
+  - id: 2026-07-31-sentier-jungle-map-v2
+    date: 2026-07-31
+    status: selected
+    operation: generate
+    recipe: readingo-jungle-map-v2
+    tool:
+      provider: OpenAI
+      interface: Codex built-in image_gen
+      model: not_exposed
+      seed: not_exposed
+    inputs:
+      - public/assets/world/jungle/map/jungle-canopy-base-v1.png
+    prompt: |-
+      Use case: illustration-story
+      Asset type: four portrait boards for the vertically scrolling Readingo jungle level map
+      Primary request: Starting from a strict 90-degree top-down, dense Amazonian canopy, create exactly three compact isolated ochre ground patches per board at alternating left/right coordinates. Every patch must be surrounded by high overlapping treetops. Any tiny trail stub must disappear immediately beneath the crowns; no route, low-vegetation corridor or open ground may connect two patches.
+      Scene progression: welcoming emerald jungle; humid turquoise bamboo and lotus region; deep blue-green giant-fern region; ancient ruins almost swallowed by vines.
+      Composition/framing: portrait 2:3; top and bottom remain uninterrupted canopy; consistent clearing scale and foliage density across all four boards.
+      Constraints: no continuous path, broad plaza, extra clearing, chest, character, animal, text, number, UI, arrow, border or watermark.
+    generated_dimensions: [1024, 1536]
+    post_processing:
+      method: vertical panorama cross-fade followed by overlapping recut
+      overlap_pixels: 260
+      master_dimensions: [1024, 5364]
+      format: WebP
+      quality: 90
+    outputs:
+      - { path: public/assets/world/jungle/map/jungle-canopy-base-v1.png, dimensions: [1024, 1536], format: PNG-RGB }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-1-v2.webp, dimensions: [1024, 1536], format: WebP }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-2-v2.webp, dimensions: [1024, 1536], format: WebP }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-3-v2.webp, dimensions: [1024, 1536], format: WebP }
+      - { path: public/assets/world/jungle/map/jungle-map-chapter-4-v2.webp, dimensions: [1024, 1536], format: WebP }
+    validation:
+      visual_review: passed
+      three_isolated_clearings_per_panel: passed
+      no_continuous_path: passed
+      pixel_identical_overlap_bands: passed

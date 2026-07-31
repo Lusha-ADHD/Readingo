@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { sitePath } from "../../../utils/paths";
 import type { SentierDirection, SentierPhase } from "./sentierState";
+import type { SentierRegionId } from "./sentierContent";
 
 type Props = {
   choiceCount: number;
   destinationReached: boolean;
   phase: SentierPhase;
+  regionId: SentierRegionId;
+  finalLevel: boolean;
   selectedDirection: SentierDirection | null;
   lostness: number;
   mirrorBackdrop: boolean;
@@ -41,6 +44,8 @@ const ASSETS = {
   mound: sitePath("/assets/world/jungle/dirt-mound.webp"),
   chestBuried: sitePath("/assets/world/jungle/treasure-chest-buried.webp"),
   chestOpen: sitePath("/assets/world/jungle/treasure-chest-open.webp"),
+  grandChestClosed: sitePath("/assets/world/jungle/grand-treasure-chest-closed.png"),
+  grandChestOpen: sitePath("/assets/world/jungle/grand-treasure-chest-open.png"),
 };
 
 const NEXT_BACKDROP_COUNT: Partial<Record<BackdropPathCount, BackdropPathCount>> = {
@@ -70,6 +75,8 @@ export function JungleScene({
   choiceCount,
   destinationReached,
   phase,
+  regionId,
+  finalLevel,
   selectedDirection,
   lostness,
   mirrorBackdrop,
@@ -113,15 +120,16 @@ export function JungleScene({
       ASSETS.mound,
       ASSETS.chestBuried,
       ASSETS.chestOpen,
+      ...(finalLevel ? [ASSETS.grandChestClosed, ASSETS.grandChestOpen] : []),
     ]) {
       const image = new Image();
       image.src = source;
     }
-  }, [preloadTreasureAssets]);
+  }, [finalLevel, preloadTreasureAssets]);
 
   return (
     <div
-      className={`jungle-scene jungle-scene--lost-${Math.min(2, lostness)} ${
+      className={`jungle-scene jungle-scene--region-${regionId} jungle-scene--lost-${Math.min(2, lostness)} ${
         travelling ? `jungle-scene--travelling jungle-scene--${direction}` : ""
       } ${destinationReached ? "jungle-scene--destination" : ""} ${
         phase === "destination-travelling" ? "jungle-scene--destination-travelling" : ""
@@ -267,12 +275,22 @@ export function JungleScene({
 
       {phase === "treasure-collecting" || (phase === "result" && destinationReached) ? (
         <img
-          className="jungle-scene__open-chest"
+          className={`jungle-scene__open-chest ${finalLevel && phase === "result" ? "jungle-scene__open-chest--small-final" : ""}`}
           data-testid="sentier-open-chest"
           src={ASSETS.chestOpen}
           alt="Coffre au trésor ouvert"
           draggable={false}
         />
+      ) : null}
+
+      {finalLevel && (phase === "grand-treasure" || phase === "result") ? (
+        <span
+          className={`jungle-scene__grand-treasure ${phase === "result" ? "jungle-scene__grand-treasure--open" : ""}`}
+          data-testid="sentier-grand-treasure"
+        >
+          <img className="jungle-scene__grand-chest jungle-scene__grand-chest--closed" src={ASSETS.grandChestClosed} alt="" draggable={false} />
+          <img className="jungle-scene__grand-chest jungle-scene__grand-chest--open" src={ASSETS.grandChestOpen} alt="Grand trésor de la jungle ouvert" draggable={false} />
+        </span>
       ) : null}
     </div>
   );

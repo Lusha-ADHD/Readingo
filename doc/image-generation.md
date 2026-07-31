@@ -220,6 +220,20 @@ Le Sentier des mots utilise une recette dérivée pour des décors modulaires :
 
 Les sorties sont stockées dans `public/assets/world/jungle/`. Les chemins, flèches, brume, rayons, halos et particules restent produits en SVG/CSS. Les variantes d’égarement réutilisent les mêmes images avec des filtres et changements d’opacité.
 
+### Recette `readingo-jungle-map-v1`
+
+La carte du Sentier emploie une recette distincte des carrefours jouables :
+
+- quatre planches opaques portrait 2:3 de 1024 × 1536 ;
+- vue légèrement aérienne, illustration cartoon peinte et contours brun chaud ;
+- un chemin ocre continu et trois clairières dégagées intégrés au raster ;
+- entrée et sortie alternées pour raccorder les chapitres ;
+- feuillage dense dans les zones de chevauchement ;
+- aucun texte, numéro, coffre, personnage ou autre état d’interface peint ;
+- export WebP qualité 88 dans `public/assets/world/jungle/map/`.
+
+Les planches sont affichées à leur ratio intrinsèque, sans `cover`. Les coordonnées normalisées des boutons restent ainsi alignées avec les clairières à toutes les largeurs. Les coffres, coches, halos et la main tutorielle restent des surcouches dynamiques.
+
 ## Intégration d’un nouveau mot
 
 1. Ajouter le mot et ses donnees pedagogiques dans `src/content/fr/words.json`.

@@ -10,7 +10,7 @@ Procédures associées :
 - [pipeline image](./image-generation.md) ;
 - [socle de game design](./game-design-system.md).
 
-Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [L’Archipel des mots](./games/syllabes.md) et de [L’Observatoire des lettres](./games/lettres.md).
+Les règles propres à un jeu, comme le nombre de mots ou de distracteurs par niveau, restent dans son GDD. Voir les documents de [L’Archipel des mots](./games/syllabes.md), de [L’Observatoire des lettres](./games/lettres.md) et du [Sentier des mots](./games/sentier-des-mots.md).
 
 ## Principe général
 
@@ -39,6 +39,7 @@ src/content/
     lessons.json
     letter-lessons.json
     letters.json
+    sentier-lessons.json
     syllables.json
     voice-lines.json
     words.json
@@ -137,6 +138,12 @@ Contient les dialogues et feedbacks localisés. Une entrée possède un texte et
 
 Le mot-indice référence `words.json` : son illustration et son audio ne sont pas dupliqués. Les mots portant le tag `mot-indice-lettres` appartiennent au lexique partagé sans être ajoutés artificiellement aux niveaux Syllabes. La progression complète est détaillée dans le [GDD de L’Observatoire des lettres](./games/lettres.md).
 
+### `sentier-lessons.json`
+
+Décrit les douze étapes du Sentier des mots. Chaque question référence une cible et ses distracteurs par identifiant, puis définit la casse d’affichage indépendamment du mot stocké dans le lexique. Les niveaux 11 et 12 peuvent surcharger la casse choix par choix avec `choiceCases`.
+
+Les 24 entrées portant le tag `mot-indice-sentier` sont des ancres propres à ce jeu : elles possèdent une image et une prononciation du mot complet, mais leurs tableaux syllabiques restent vides et elles ne sont pas ajoutées aux niveaux Syllabes.
+
 ## Validation pédagogique
 
 Avant intégration, vérifier :
@@ -166,6 +173,7 @@ Le validateur actuel contrôle notamment :
 - appartenance de chaque mot à un niveau ;
 - références de mots valides ;
 - quantité de contenu attendue ;
+- progression séquentielle et stratégie de casse des niveaux Lettres et Sentier ;
 - nombre de syllabes et de distracteurs ;
 - présence des prononciations ;
 - chemins publics valides ;

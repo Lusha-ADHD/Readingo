@@ -5,9 +5,9 @@
 
 ## Statut et périmètre
 
-Ce document décrit le vertical slice implémenté du troisième jeu Readingo. La première version contient le niveau **Lisière de la jungle**, huit questions, trois directions, le système d’erreur et de demi-tour, les gemmes, la sauvegarde locale et un mode de test navigateur.
+Ce document décrit la progression implémentée du troisième jeu Readingo. Elle contient douze niveaux de huit questions, une carte verticale de jungle, de trois à cinq directions, le système d’erreur et de demi-tour, les gemmes, les coffres, la sauvegarde locale et un mode de test navigateur.
 
-Le jeu doit être conçu comme un dungeon crawler guidé en vue rapprochée. Il ne possède ni carte persistante, ni graphe de navigation, ni déplacement libre. Les carrefours sont générés à partir de la question en cours et des réponses encore disponibles.
+Le jeu reste un dungeon crawler guidé en vue rapprochée pendant un niveau. La carte sert uniquement à sélectionner une étape et à visualiser la progression : elle n’introduit ni déplacement libre ni graphe à explorer. Les carrefours sont générés à partir de la question en cours et des réponses encore disponibles.
 
 Sources de vérité prévues :
 
@@ -17,6 +17,7 @@ Sources de vérité prévues :
 - orchestration : `src/components/games/sentier/SentierGame.tsx` ;
 - scène, défi et résultat : `src/components/games/sentier/JungleScene.tsx`,
   `SentierChallenge.tsx` et `SentierResult.tsx` ;
+- carte : `src/components/games/sentier/SentierLevelMap.tsx` ;
 - logique pure : `src/components/games/sentier/sentierState.ts` ;
 - progression : `src/components/games/sentier/sentierProgress.ts`.
 
@@ -102,7 +103,7 @@ L’entrée doit reprendre la structure commune à L’Archipel des mots et à L
 1. écran de départ centré avec le titre, l’accroche, Pana et une action « Commencer » ;
 2. trois dialogues courts affichés et prononcés ;
 3. possibilité de passer l’introduction ;
-4. lancement automatique du premier mot après la dernière réplique.
+4. ouverture de la carte après la dernière réplique.
 
 Les trois textes produits sont :
 
@@ -115,7 +116,8 @@ Les trois textes produits sont :
 ```text
 Écran de départ
   → introduction de Pana
-  → niveau 1 : Lisière de la jungle
+  → carte de la grande jungle
+  → choix d’un niveau débloqué
   → huit mots
       → annonce de la cible
       → choix d’un chemin
@@ -126,7 +128,7 @@ Les trois textes produits sont :
   → continuer l’expédition ou rejouer
 ```
 
-Le nombre de niveaux et leur contenu ne sont pas encore arrêtés. Chaque niveau doit néanmoins conserver une unité de huit mots et faire progresser symboliquement Pana vers le trésor final.
+Les douze niveaux sont répartis en quatre régions de trois étapes : lisière, eaux et bambous, profondeurs, puis ruines. Les niveaux 1 à 4 utilisent les capitales, les niveaux 5 à 8 les minuscules, les niveaux 9 et 10 alternent la casse par question, et les niveaux 11 et 12 mélangent les deux casses dans chaque carrefour.
 
 ## Boucle d’un mot
 
@@ -428,12 +430,14 @@ Le fichier de leçons définit :
   "id": "sentier-1",
   "level": 1,
   "title": "Lisière de la jungle",
+  "regionId": "lisiere",
   "gameIds": ["sentier"],
   "questions": [
     {
       "id": "sentier-1-moto",
       "targetWordId": "moto",
-      "distractors": ["melon", "maison"]
+      "choiceWordIds": ["moto", "melon", "maison"],
+      "displayCase": "uppercase"
     }
   ]
 }
@@ -445,8 +449,9 @@ Validation attendue :
 
 - huit questions par niveau ;
 - mot cible présent dans `words.json` ;
-- distracteurs textuels normalisés et uniques ;
-- entre deux et cinq réponses ;
+- choix référencés dans `words.json`, uniques, avec la cible exactement une fois ;
+- trois à cinq réponses selon le niveau ;
+- stratégie de casse conforme au groupe de niveaux ;
 - graphie, audio et image disponibles pour la cible ;
 - illustration disponible pour la cible ;
 - une seule réponse correcte ;
@@ -465,7 +470,7 @@ Le jeu doit produire l’impression d’un environnement vivant avec un petit en
 - effets UI mutualisables ;
 - coffre ou éléments de trésor existants lorsque leur représentation convient.
 
-### Nouveaux assets du premier vertical slice
+### Assets de la progression complète
 
 Les huit rasters produits dans `public/assets/world/jungle/` sont :
 
@@ -478,7 +483,9 @@ Les huit rasters produits dans `public/assets/world/jungle/` sont :
 
 La brume, les flèches, les ouvertures de chemin, les halos et les particules simples sont réalisés en SVG ou CSS.
 
-Un fragment de carte, des ruines ou une entrée de temple ne sont produits qu’après validation de la boucle principale. Ils appartiennent à la progression longue et non au budget du premier vertical slice.
+La carte utilise quatre planches opaques 1024 × 1536 dans `public/assets/world/jungle/map/`. Le chemin et les trois clairières de chaque chapitre sont peints dans le raster ; seuls les coffres, libellés, états et la main tutorielle sont superposés en HTML/CSS. Deux rasters transparents représentent le grand coffre final fermé et ouvert.
+
+Vingt-quatre illustrations de mots propres au Sentier complètent la bibliothèque. Elles restent réutilisables par un futur contenu mais ne sont pas ajoutées artificiellement aux niveaux Syllabes.
 
 ### Limites de production
 
@@ -488,7 +495,7 @@ Le jeu n’exige pas :
 - un décor complet par niveau ;
 - une image propre à chaque direction ;
 - un personnage animé image par image ;
-- un graphe illustré de la jungle ;
+- un décor de jeu complet par étape ;
 - des animaux décoratifs uniques pour chaque question ;
 - une scène 3D ou un moteur de collision.
 
@@ -509,8 +516,8 @@ La sauvegarde n’est écrite qu’après les huit mots. Une interruption ne ter
 
 Le niveau suivant est débloqué séquentiellement dès qu’un niveau frontière est
 terminé. Une ancienne sauvegarde sans `unlockedLevel` déduit cette valeur depuis
-les niveaux terminés. La représentation visuelle de ce parcours et son total
-cumulé restent différés jusqu’à la conception de la carte de la jungle.
+les niveaux terminés. La carte affiche la somme des meilleurs scores de chaque
+niveau, plafonnée à 288 gemmes ; rejouer un niveau ne gonfle donc pas ce total.
 
 ## Responsive et accessibilité
 
@@ -551,12 +558,30 @@ Il doit permettre d’ouvrir directement :
 Paramètres disponibles :
 
 ```text
+?test=1&state=map&preset=new
+?test=1&state=map&preset=middle
+?test=1&state=map&preset=unlock
+?test=1&state=map&preset=final
+?test=1&state=map&preset=complete
 ?test=1&question=4
 ?test=1&errors=1
 ?test=1&state=uturn
 ?test=1&state=result
 ?test=1&choices=5
 ```
+
+Les cinq préréglages de carte représentent respectivement un nouveau joueur, une progression arrêtée au niveau 6, l’animation de déblocage du niveau 6, l’arrivée au niveau 12 et les douze étapes terminées. Un menu « 🧪 États de la carte » permet de passer de l’un à l’autre directement sur la carte locale.
+
+Une progression personnalisée utilise les paramètres suivants :
+
+```text
+?test=1&state=map&completed=1-4,7&unlocked=8&score=16&new=8
+```
+
+- `completed` accepte une liste et des intervalles ;
+- `unlocked` indique le dernier niveau cliquable ;
+- `score` attribue le même meilleur score aux niveaux terminés ;
+- `new` déclenche le centrage et l’état de nouveau déblocage sur le niveau indiqué.
 
 Une session de test ne modifie jamais la sauvegarde.
 

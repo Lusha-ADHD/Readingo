@@ -9,6 +9,8 @@ type Props = {
   title: string;
   gems: number;
   bestScore: number;
+  finalLevel: boolean;
+  onContinue: () => void;
   onReplay: () => void;
 };
 
@@ -17,6 +19,8 @@ export function SentierResult({
   title,
   gems,
   bestScore,
+  finalLevel,
+  onContinue,
   onReplay,
 }: Props) {
   return (
@@ -26,7 +30,7 @@ export function SentierResult({
         <p>
           Niveau {level} · {title}
         </p>
-        <h2>Trésor découvert !</h2>
+        <h2>{finalLevel ? "Grand trésor découvert !" : "Étape terminée !"}</h2>
         <strong>
           <img src={GEM_PATH} alt="" /> {gems} gemmes collectées
         </strong>
@@ -35,6 +39,7 @@ export function SentierResult({
         ) : null}
       </div>
       <div className="sentier-result__actions">
+        <GameButton onClick={onContinue}>Continuer</GameButton>
         <GameButton onClick={onReplay}>Rejouer le niveau</GameButton>
         <a href={sitePath("/#jeux")}>Retour aux jeux</a>
       </div>

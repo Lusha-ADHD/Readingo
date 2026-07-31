@@ -9,7 +9,7 @@ import type {
 } from "../gameAudio";
 
 const LOOPS = {
-  night: { source: sfxPath("night-loop.mp3"), volume: 0.3 },
+  night: { source: sfxPath("night-loop.mp3"), volume: 0.2 },
 } satisfies Record<string, AudioLoopConfig>;
 
 const EFFECTS = {

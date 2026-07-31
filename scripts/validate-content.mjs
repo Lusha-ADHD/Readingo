@@ -52,7 +52,7 @@ for (const game of games) {
   assert(Array.isArray(game.progressKeys) && game.progressKeys.length > 0, `${game.id}: clé de progression absente`);
 }
 
-assert(words.length === 54, `54 mots attendus, ${words.length} trouvés`);
+assert(words.length === 78, `78 mots attendus, ${words.length} trouvés`);
 assert(duplicates(words.map((word) => word.id)).length === 0, "Identifiants de mots dupliqués");
 assert(duplicates(syllables.map((syllable) => syllable.id)).length === 0, "Identifiants de syllabes dupliqués");
 assert(duplicates(syllables.map((syllable) => syllable.text)).length === 0, "Textes de syllabes dupliqués");
@@ -63,10 +63,15 @@ const letterById = new Map(letters.map((letter) => [letter.id, letter]));
 const referencedWordIds = levels.flatMap((level) => level.wordIds);
 const letterAnchorWordIds = letters.map((letter) => letter.anchorWordId);
 const letterOnlyWords = words.filter((word) => word.tags?.includes("mot-indice-lettres"));
+const sentierReferencedWordIds = sentierLevels.flatMap((level) =>
+  level.questions?.flatMap((question) => question.choiceWordIds ?? []) ?? [],
+);
+const sentierOnlyWords = words.filter((word) => word.tags?.includes("mot-indice-sentier"));
 
 assert(duplicates(referencedWordIds).length === 0, "Un mot est référencé par plusieurs niveaux");
 assert(referencedWordIds.length === 48, "Les niveaux Syllabes doivent conserver leurs 48 mots");
 assert(letterOnlyWords.length === 6, `${letterOnlyWords.length} mots-indices exclusifs Lettres trouvés au lieu de 6`);
+assert(sentierOnlyWords.length === 24, `${sentierOnlyWords.length} mots-indices exclusifs Sentier trouvés au lieu de 24`);
 
 for (const [index, level] of levels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau ${level.id}`);
@@ -97,7 +102,7 @@ for (const [index, level] of levels.entries()) {
 
 for (const word of words) {
   assert(
-    referencedWordIds.includes(word.id) || letterAnchorWordIds.includes(word.id),
+    referencedWordIds.includes(word.id) || letterAnchorWordIds.includes(word.id) || sentierReferencedWordIds.includes(word.id),
     `${word.id}: aucun jeu associé`,
   );
 }
@@ -207,7 +212,9 @@ for (const level of letterLevels.slice(8, 10)) {
   );
 }
 
-assert(sentierLevels.length === 1, `1 niveau Sentier attendu, ${sentierLevels.length} trouvé(s)`);
+assert(sentierLevels.length === 12, `12 niveaux Sentier attendus, ${sentierLevels.length} trouvé(s)`);
+const expectedSentierChoiceCounts = [3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5];
+const sentierRegions = new Set(["lisiere", "eaux", "profondeurs", "ruines"]);
 
 for (const [index, level] of sentierLevels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau Sentier ${level.id}`);
@@ -215,6 +222,7 @@ for (const [index, level] of sentierLevels.entries()) {
     level.gameIds?.includes("sentier"),
     `${level.id}: gameIds doit contenir sentier`,
   );
+  assert(sentierRegions.has(level.regionId), `${level.id}: région de jungle invalide`);
   assert(level.questions?.length === 8, `${level.id}: 8 questions attendues`);
   assert(
     duplicates(level.questions?.map((question) => question.id) ?? []).length === 0,
@@ -223,40 +231,56 @@ for (const [index, level] of sentierLevels.entries()) {
 
   for (const question of level.questions ?? []) {
     const target = wordById.get(question.targetWordId);
-    const choices = [
-      target?.displayWord.toLocaleLowerCase("fr") ?? "",
-      ...(question.distractors ?? []).map((value) => String(value).toLocaleLowerCase("fr").trim()),
-    ];
+    const choices = question.choiceWordIds ?? [];
     const choiceCount = choices.length;
-    const longestChoice = Math.max(...choices.map((value) => Array.from(value).length));
 
     assert(Boolean(target), `${question.id}: mot cible inconnu ${question.targetWordId}`);
     assert(
-      choiceCount >= 2 && choiceCount <= 5,
-      `${question.id}: entre 2 et 5 choix attendus`,
+      choiceCount === expectedSentierChoiceCounts[index],
+      `${question.id}: ${expectedSentierChoiceCounts[index]} choix attendus`,
     );
     assert(
       duplicates(choices).length === 0,
       `${question.id}: réponses dupliquées ou mot cible répété`,
     );
     assert(
-      question.distractors?.every((value) => typeof value === "string" && value.trim()),
-      `${question.id}: distracteur vide ou invalide`,
+      choices.filter((wordId) => wordId === question.targetWordId).length === 1,
+      `${question.id}: la cible doit apparaître exactement une fois`,
     );
-    assert(
-      choiceCount < 5 || longestChoice <= 7,
-      `${question.id}: 5 choix nécessitent des mots de 7 caractères maximum`,
-    );
-    assert(
-      choiceCount < 4 || longestChoice <= 10,
-      `${question.id}: 4 choix nécessitent des mots de 10 caractères maximum`,
-    );
+    assert(choices.every((wordId) => wordById.has(wordId)), `${question.id}: choix de mot inconnu`);
+    assert(question.displayCase === "uppercase" || question.displayCase === "lowercase", `${question.id}: casse invalide`);
+
+    if (index < 4) {
+      assert(question.displayCase === "uppercase", `${question.id}: capitale attendue`);
+      assert(!question.choiceCases, `${question.id}: grille uniforme attendue`);
+    } else if (index < 8) {
+      assert(question.displayCase === "lowercase", `${question.id}: minuscule attendue`);
+      assert(!question.choiceCases, `${question.id}: grille uniforme attendue`);
+    } else if (index < 10) {
+      assert(!question.choiceCases, `${question.id}: alternance uniforme attendue`);
+    } else {
+      const cases = choices.map((wordId) => question.choiceCases?.[wordId]);
+      assert(Object.keys(question.choiceCases ?? {}).length === choiceCount, `${question.id}: casse requise pour chaque choix`);
+      assert(cases.every((value) => value === "uppercase" || value === "lowercase"), `${question.id}: casse de choix invalide`);
+      assert(new Set(cases).size === 2, `${question.id}: capitales et minuscules attendues`);
+      assert(question.choiceCases?.[question.targetWordId] === question.displayCase, `${question.id}: casse cible incohérente`);
+    }
 
     if (target) {
       await assertAsset(target.image, `${question.id} image cible`);
       await assertAsset(target.audioWord, `${question.id} audio cible`);
     }
   }
+}
+
+for (const level of sentierLevels.slice(8, 10)) {
+  assert(new Set(level.questions.map((question) => question.displayCase)).size === 2, `${level.id}: alternance de casse attendue`);
+}
+
+for (const word of sentierOnlyWords) {
+  assert(word.syllables?.length === 0 && word.distractors?.length === 0, `${word.id}: le mot Sentier ne doit pas rejoindre les niveaux Syllabes`);
+  await assertAsset(word.image, `${word.id} image Sentier`);
+  await assertAsset(word.audioWord, `${word.id} audio Sentier`);
 }
 
 for (const asset of ["map-island-sandbar.png", "map-island-rocky.png", "map-island-palms.png"]) {
@@ -272,8 +296,15 @@ for (const asset of [
   "vines-b.png",
   "rock-fern.png",
   "gem.png",
+  "grand-treasure-chest-closed.png",
+  "grand-treasure-chest-open.png",
 ]) {
   await assertAsset(`/assets/world/jungle/${asset}`, `Sentier ${asset}`);
+}
+
+
+for (const asset of [1, 2, 3, 4].map((index) => `map/jungle-map-chapter-${index}-v2.webp`)) {
+  await assertAsset(`/assets/world/jungle/${asset}`, `Carte Sentier ${asset}`);
 }
 
 for (const asset of [
@@ -301,5 +332,5 @@ if (errors.length) {
 }
 
 process.stdout.write(
-  `Contenu valide : ${levels.length} niveaux Syllabes, ${letterLevels.length} niveaux Lettres, ${sentierLevels.length} niveau Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
+  `Contenu valide : ${levels.length} niveaux Syllabes, ${letterLevels.length} niveaux Lettres, ${sentierLevels.length} niveaux Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
 );

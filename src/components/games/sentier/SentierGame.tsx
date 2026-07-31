@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "r
 import { GAME_IDS } from "../../../content/gameCatalog";
 import type {
   AudioLine,
-  LessonBase,
   VoiceLine,
   WordReference,
 } from "../../../content/types";
@@ -10,7 +9,7 @@ import sentierLessonsData from "../../../content/fr/sentier-lessons.json";
 import voiceLinesData from "../../../content/fr/voice-lines.json";
 import wordsData from "../../../content/fr/words.json";
 import { sitePath } from "../../../utils/paths";
-import { rememberLastGame } from "../../home/onboardingState";
+import { rememberLastGame, shouldResumeFromUrl } from "../../home/onboardingState";
 import {
   GameDialogueOverlay,
   GameIntroOverlay,
@@ -19,6 +18,7 @@ import { GemFlightLayer } from "./GemFlightLayer";
 import type { GemFlightBatch } from "./GemFlightLayer";
 import { JungleScene } from "./JungleScene";
 import { SentierChallenge } from "./SentierChallenge";
+import { SentierLevelMap } from "./SentierLevelMap";
 import { SentierResult } from "./SentierResult";
 import { SentierTreasurePrompt } from "./SentierTreasurePrompt";
 import { useSentierAudio } from "./sentierAudio";
@@ -29,8 +29,11 @@ import {
   TREASURE_BONUS_GEMS,
 } from "./sentierState";
 import type { SentierDirection } from "./sentierState";
+import { buildSentierChoiceSeeds } from "./sentierContent";
+import type { SentierLesson } from "./sentierContent";
 import {
   completeSentierLevel,
+  createSentierMapTestState,
   createInitialSentierProgress,
   readSentierProgress,
   saveSentierProgress,
@@ -38,16 +41,6 @@ import {
 import type { SentierProgress } from "./sentierProgress";
 import { useVoiceAudio } from "../useVoiceAudio";
 import "./SentierGame.css";
-
-type SentierQuestion = {
-  id: string;
-  targetWordId: string;
-  distractors: string[];
-};
-
-type SentierLesson = LessonBase & {
-  questions: SentierQuestion[];
-};
 
 type VoiceLines = {
   dialogue: {
@@ -70,14 +63,7 @@ type VoiceLines = {
 const lessons = (sentierLessonsData as SentierLesson[])
   .filter((entry) => entry.gameIds.includes(GAME_IDS.SENTIER))
   .sort((left, right) => left.level - right.level);
-const lesson = lessons[0];
 const wordById = new Map((wordsData as WordReference[]).map((word) => [word.id, word]));
-const wordByDisplayText = new Map(
-  (wordsData as WordReference[]).map((word) => [
-    word.displayWord.toLocaleLowerCase("fr"),
-    word,
-  ]),
-);
 const voiceLines = voiceLinesData as VoiceLines;
 const introLines = voiceLines.dialogue.sentierIntro;
 const feedback = voiceLines.feedback;
@@ -130,8 +116,10 @@ function feedbackForReward(gems: number) {
 export function SentierGame() {
   const [state, dispatch] = useReducer(sentierReducer, undefined, createInitialSentierState);
   const [dialogLineIndex, setDialogLineIndex] = useState(0);
+  const [selectedLesson, setSelectedLesson] = useState<SentierLesson>(() => lessons[0]);
   const [sceneVersion, setSceneVersion] = useState(0);
   const [progress, setProgress] = useState<SentierProgress>(createInitialSentierProgress);
+  const [newlyUnlockedLevel, setNewlyUnlockedLevel] = useState<number | null>(null);
   const [localTools, setLocalTools] = useState(false);
   const [testMode, setTestMode] = useState(false);
   const [panaMessageOverride, setPanaMessageOverride] = useState<string | null>(null);
@@ -150,11 +138,11 @@ export function SentierGame() {
     startJungleAmbience,
   } = useSentierAudio();
 
+  const lesson = selectedLesson;
   const question = lesson.questions[state.questionIndex];
   const target = wordById.get(question?.targetWordId ?? "") ?? wordById.values().next().value;
-  const targetWord = target?.displayWord.toLocaleLowerCase("fr") ?? "";
   const selectedDirection =
-    state.choices.find((choice) => choice.word === state.selectedWord)?.direction ?? null;
+    state.choices.find((choice) => choice.wordId === state.selectedWordId)?.direction ?? null;
   const bestScore = progress.bestGemsByLevel[String(lesson.level)] ?? 0;
 
   const playLine = useCallback(
@@ -249,8 +237,8 @@ export function SentierGame() {
   );
 
   const presentQuestion = useCallback(
-    async (index: number) => {
-      const nextQuestion = lesson.questions[index];
+    async (targetLesson: SentierLesson, index: number) => {
+      const nextQuestion = targetLesson.questions[index];
       const nextTarget = wordById.get(nextQuestion?.targetWordId ?? "");
 
       if (!nextQuestion || !nextTarget) {
@@ -263,7 +251,7 @@ export function SentierGame() {
       dispatch({
         type: "PRESENT_QUESTION",
         questionIndex: index,
-        words: [nextTarget.displayWord.toLocaleLowerCase("fr"), ...nextQuestion.distractors],
+        choices: buildSentierChoiceSeeds(nextQuestion, wordById),
       });
       setSceneVersion((version) => version + 1);
       await playTarget(nextTarget);
@@ -276,8 +264,8 @@ export function SentierGame() {
   );
 
   const prepareRewardQuestion = useCallback(
-    (index: number, rewardGems: number) => {
-      const nextQuestion = lesson.questions[index];
+    (targetLesson: SentierLesson, index: number, rewardGems: number) => {
+      const nextQuestion = targetLesson.questions[index];
       const nextTarget = wordById.get(nextQuestion?.targetWordId ?? "");
 
       if (!nextQuestion || !nextTarget) {
@@ -288,7 +276,7 @@ export function SentierGame() {
       dispatch({
         type: "PRESENT_QUESTION",
         questionIndex: index,
-        words: [nextTarget.displayWord.toLocaleLowerCase("fr"), ...nextQuestion.distractors],
+        choices: buildSentierChoiceSeeds(nextQuestion, wordById),
         rewardGems,
       });
       setSceneVersion((version) => version + 1);
@@ -299,14 +287,24 @@ export function SentierGame() {
 
   const finishLevel = useCallback(
     async (score: number, token: number) => {
+      if (lesson.level === lessons.length) {
+        dispatch({ type: "SHOW_GRAND_TREASURE" });
+        await delay(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 160 : 1_150);
+
+        if (runTokenRef.current !== token) return;
+      }
+
       dispatch({ type: "SHOW_RESULT" });
 
       if (!testMode) {
-        setProgress((current) => {
-          const completed = completeSentierLevel(current, lesson.level, score, lessons.length);
-          saveSentierProgress(window.localStorage, completed);
-          return completed;
-        });
+        const unlocksNext =
+          lesson.level === progress.unlockedLevel &&
+          !progress.completedLevels.includes(lesson.level) &&
+          lesson.level < lessons.length;
+        const completed = completeSentierLevel(progress, lesson.level, score, lessons.length);
+        setProgress(completed);
+        saveSentierProgress(window.localStorage, completed);
+        setNewlyUnlockedLevel(unlocksNext ? lesson.level + 1 : null);
       }
 
       await playEffect("levelComplete");
@@ -317,7 +315,7 @@ export function SentierGame() {
 
       await playLine(feedback.sentierComplete);
     },
-    [playEffect, playLine, testMode],
+    [lesson.level, playEffect, playLine, progress, testMode],
   );
 
   const startDestination = useCallback(
@@ -339,34 +337,34 @@ export function SentierGame() {
   );
 
   const handleChoice = useCallback(
-    async (word: string) => {
+    async (wordId: string) => {
       if (state.phase !== "choosing" || !target) {
         return;
       }
 
       const token = runTokenRef.current + 1;
       runTokenRef.current = token;
-      dispatch({ type: "SELECT", word });
+      dispatch({ type: "SELECT", wordId });
       void playMovement();
       startJungleAmbience();
-      const chosenWord = wordByDisplayText.get(word.toLocaleLowerCase("fr"));
+      const chosenWord = wordById.get(wordId);
       await Promise.all([
         travel(),
         chosenWord
           ? playTarget(chosenWord)
-          : speakFrench(word),
+          : speakFrench(wordId),
       ]);
 
       if (runTokenRef.current !== token) {
         return;
       }
 
-      if (word === targetWord) {
+      if (wordId === question.targetWordId) {
         const reward = rewardForErrors(state.errors);
         const completesLevel = state.questionIndex >= lesson.questions.length - 1;
         const nextTarget =
           !completesLevel
-            ? prepareRewardQuestion(state.questionIndex + 1, reward)
+            ? prepareRewardQuestion(lesson, state.questionIndex + 1, reward)
             : null;
 
         if (!nextTarget) {
@@ -399,7 +397,7 @@ export function SentierGame() {
       }
 
       setSceneVersion((version) => version + 1);
-      const remainingCount = state.remainingWords.filter((entry) => entry !== word).length;
+      const remainingCount = state.remainingWords.filter((entry) => entry !== wordId).length;
       dispatch({ type: "ARRIVE_WRONG" });
       await playLine(remainingCount === 1 ? feedback.sentierUturn : feedback.sentierWrong);
 
@@ -412,6 +410,7 @@ export function SentierGame() {
       playMovement,
       playTarget,
       prepareRewardQuestion,
+      lesson,
       state.errors,
       state.phase,
       state.questionIndex,
@@ -419,7 +418,7 @@ export function SentierGame() {
       startJungleAmbience,
       startDestination,
       target,
-      targetWord,
+      question.targetWordId,
       travel,
     ],
   );
@@ -499,7 +498,7 @@ export function SentierGame() {
       dispatch({
         type: "PRESENT_QUESTION",
         questionIndex: state.questionIndex + 1,
-        words: [nextTarget.displayWord.toLocaleLowerCase("fr"), ...nextQuestion.distractors],
+        choices: buildSentierChoiceSeeds(nextQuestion, wordById),
       });
       setSceneVersion((version) => version + 1);
       setPanaMessageOverride(feedback.sentierRecovered.text);
@@ -524,6 +523,7 @@ export function SentierGame() {
     playTarget,
     state.phase,
     state.questionIndex,
+    lesson,
     startDestination,
     travel,
   ]);
@@ -600,135 +600,152 @@ export function SentierGame() {
     }
 
     if (runTokenRef.current === token) {
-      await presentQuestion(0);
+      dispatch({ type: "SHOW_MAP" });
     }
-  }, [enableEffects, playLine, presentQuestion, startJungleAmbience]);
+  }, [enableEffects, playLine, startJungleAmbience]);
 
-  const skipIntro = useCallback(() => {
+  const showMap = useCallback(() => {
     runTokenRef.current += 1;
     cancelVoice();
     window.speechSynthesis?.cancel();
+    setTestMode(false);
+    dispatch({ type: "SHOW_MAP" });
+  }, [cancelVoice]);
+
+  const skipIntro = useCallback(() => {
     startJungleAmbience();
-    void presentQuestion(0);
-  }, [cancelVoice, presentQuestion, startJungleAmbience]);
+    showMap();
+  }, [showMap, startJungleAmbience]);
+
+  const startLevel = useCallback(
+    (targetLesson: SentierLesson, asTest = false) => {
+      if (!asTest && targetLesson.level > progress.unlockedLevel) return;
+      runTokenRef.current += 1;
+      dispatch({ type: "RESET_LEVEL" });
+      setSelectedLesson(targetLesson);
+      setTestMode(asTest);
+      setNewlyUnlockedLevel(null);
+      enableEffects();
+      startJungleAmbience();
+      void presentQuestion(targetLesson, 0);
+    },
+    [enableEffects, presentQuestion, progress.unlockedLevel, startJungleAmbience],
+  );
 
   const replay = useCallback(() => {
-    runTokenRef.current += 1;
-    startJungleAmbience();
-    void presentQuestion(0);
-  }, [presentQuestion, startJungleAmbience]);
+    startLevel(lesson, testMode);
+  }, [lesson, startLevel, testMode]);
 
   useEffect(() => {
-    setProgress(readSentierProgress(window.localStorage, lessons.length));
+    const savedProgress = readSentierProgress(window.localStorage, lessons.length);
+    setProgress(savedProgress);
+    rememberLastGame(window.localStorage, "sentier");
     const local = isLocalTestHost(window.location.hostname);
     setLocalTools(local);
     const params = new URLSearchParams(window.location.search);
+    const resumeRequested =
+      shouldResumeFromUrl(window.location.search) &&
+      (savedProgress.sessions > 0 || savedProgress.completedLevels.length > 0);
 
-    if (local && params.get("test") === "1") {
-      setTestMode(true);
-      enableEffects();
-      startJungleAmbience();
-      const requestedState = params.get("state");
+    if (!local) {
+      if (resumeRequested) dispatch({ type: "SHOW_MAP" });
+      return;
+    }
 
-      const prepareTreasureState = (
-        stage: "buried" | "revealed" | "collecting" | "result",
-      ) => {
-        dispatch({
-          type: "PRESENT_QUESTION",
-          questionIndex: lesson.questions.length - 1,
-          words: ["maison", "melon", "panda"],
-          random: () => 0.99,
-        });
-        dispatch({ type: "ENABLE_CHOICES" });
-        dispatch({ type: "SELECT", word: "maison" });
-        dispatch({ type: "ARRIVE_CORRECT" });
-        dispatch({ type: "START_REWARD_COLLECTION" });
-        dispatch({ type: "GEM_ARRIVED" });
-        dispatch({ type: "GEM_ARRIVED" });
-        dispatch({ type: "START_DESTINATION" });
-        dispatch({ type: "ARRIVE_DESTINATION" });
+    const requestedLevelNumber = Number.parseInt(params.get("niveau") ?? "1", 10);
+    const requestedLesson =
+      lessons.find((candidate) => candidate.level === requestedLevelNumber) ?? lessons[0];
+    const hasRequestedLevel = params.has("niveau") && requestedLesson.level === requestedLevelNumber;
+    const requestedState = params.get("state") ?? params.get("etat");
+    const requestedMap = requestedState === "map" || requestedState === "carte" || params.get("carte") === "1";
+    const isTestRequest = params.get("test") === "1";
 
-        if (stage === "revealed" || stage === "collecting" || stage === "result") {
-          dispatch({ type: "DIG_TREASURE" });
-        }
+    if (requestedMap) {
+      setTestMode(isTestRequest);
+      const mapTestState = isTestRequest
+        ? createSentierMapTestState(params, lessons.length)
+        : null;
 
-        if (stage === "collecting" || stage === "result") {
-          dispatch({ type: "OPEN_TREASURE" });
-        }
+      if (mapTestState) {
+        setProgress(mapTestState.progress);
+        setNewlyUnlockedLevel(mapTestState.newlyUnlockedLevel);
+      }
 
-        if (stage === "result") {
-          for (let index = 0; index < TREASURE_BONUS_GEMS; index += 1) {
-            dispatch({ type: "GEM_ARRIVED" });
-          }
-          dispatch({ type: "SHOW_RESULT" });
-        }
-      };
+      dispatch({ type: "SHOW_MAP" });
+      return;
+    }
 
-      if (requestedState === "intro") {
-        return;
-      } else if (requestedState === "dialogue") {
-        dispatch({ type: "START_DIALOGUE" });
-      } else if (requestedState === "result") {
-        prepareTreasureState("result");
-      } else if (requestedState === "treasure") {
-        prepareTreasureState("buried");
-      } else if (requestedState === "treasure-revealed") {
-        prepareTreasureState("revealed");
-      } else if (requestedState === "treasure-open") {
-        prepareTreasureState("collecting");
-      } else if (params.get("choices") === "5") {
-        dispatch({
-          type: "PRESENT_QUESTION",
-          questionIndex: 0,
-          words: ["moto", "melon", "maison", "chaton", "bateau"],
-          random: () => 0.99,
-        });
-        dispatch({ type: "ENABLE_CHOICES" });
-      } else if (requestedState === "uturn") {
-        dispatch({
-          type: "PRESENT_QUESTION",
-          questionIndex: 0,
-          words: ["moto", "melon", "maison"],
-          random: () => 0.99,
-        });
-        dispatch({ type: "ENABLE_CHOICES" });
-        dispatch({ type: "SELECT", word: "melon" });
+    if (!isTestRequest && !hasRequestedLevel) {
+      if (resumeRequested) dispatch({ type: "SHOW_MAP" });
+      return;
+    }
+
+    setSelectedLesson(requestedLesson);
+    setTestMode(true);
+    enableEffects();
+    startJungleAmbience();
+    const questionSeeds = (index: number) =>
+      buildSentierChoiceSeeds(requestedLesson.questions[index], wordById);
+
+    const prepareTreasureState = (
+      stage: "buried" | "revealed" | "collecting" | "result",
+    ) => {
+      const finalIndex = requestedLesson.questions.length - 1;
+      const finalQuestion = requestedLesson.questions[finalIndex];
+      dispatch({ type: "RESET_LEVEL" });
+      dispatch({ type: "PRESENT_QUESTION", questionIndex: finalIndex, choices: questionSeeds(finalIndex), random: () => 0.99 });
+      dispatch({ type: "ENABLE_CHOICES" });
+      dispatch({ type: "SELECT", wordId: finalQuestion.targetWordId });
+      dispatch({ type: "ARRIVE_CORRECT" });
+      dispatch({ type: "START_REWARD_COLLECTION" });
+      dispatch({ type: "GEM_ARRIVED" });
+      dispatch({ type: "GEM_ARRIVED" });
+      dispatch({ type: "START_DESTINATION" });
+      dispatch({ type: "ARRIVE_DESTINATION" });
+
+      if (stage === "revealed" || stage === "collecting" || stage === "result") dispatch({ type: "DIG_TREASURE" });
+      if (stage === "collecting" || stage === "result") dispatch({ type: "OPEN_TREASURE" });
+      if (stage === "result") {
+        for (let index = 0; index < TREASURE_BONUS_GEMS; index += 1) dispatch({ type: "GEM_ARRIVED" });
+        if (requestedLesson.level === lessons.length) dispatch({ type: "SHOW_GRAND_TREASURE" });
+        dispatch({ type: "SHOW_RESULT" });
+      }
+    };
+
+    if (requestedState === "intro") return;
+    if (requestedState === "dialogue") { dispatch({ type: "START_DIALOGUE" }); return; }
+    if (requestedState === "result") { prepareTreasureState("result"); return; }
+    if (requestedState === "treasure") { prepareTreasureState("buried"); return; }
+    if (requestedState === "treasure-revealed") { prepareTreasureState("revealed"); return; }
+    if (requestedState === "treasure-open") { prepareTreasureState("collecting"); return; }
+
+    const requestedQuestionIndex = Math.min(
+      requestedLesson.questions.length - 1,
+      Math.max(0, Number(params.get("question")) || 0),
+    );
+    const seeds = questionSeeds(requestedQuestionIndex);
+    const limitedSeeds = params.get("choices") === "5"
+      ? ["moto", "melon", "maison", "chaton", "bateau"].flatMap((wordId) => {
+          const entry = wordById.get(wordId);
+          return entry ? [{ wordId, displayWord: entry.displayWord.toLocaleUpperCase("fr-FR"), displayCase: "uppercase" as const }] : [];
+        })
+      : seeds;
+    dispatch({ type: "RESET_LEVEL" });
+    dispatch({ type: "PRESENT_QUESTION", questionIndex: requestedQuestionIndex, choices: limitedSeeds, random: () => 0.99 });
+    dispatch({ type: "ENABLE_CHOICES" });
+
+    if (requestedState === "uturn" || params.get("errors") === "1") {
+      const targetId = requestedLesson.questions[requestedQuestionIndex].targetWordId;
+      const wrongIds = limitedSeeds.map((seed) => seed.wordId).filter((wordId) => wordId !== targetId);
+      dispatch({ type: "SELECT", wordId: wrongIds[0] });
+      dispatch({ type: "ARRIVE_WRONG", random: () => 0.99 });
+      dispatch({ type: "RETRY" });
+      if (requestedState === "uturn") {
+        dispatch({ type: "SELECT", wordId: wrongIds[1] });
         dispatch({ type: "ARRIVE_WRONG", random: () => 0.99 });
-        dispatch({ type: "RETRY" });
-        dispatch({ type: "SELECT", word: "maison" });
-        dispatch({ type: "ARRIVE_WRONG", random: () => 0.99 });
-      } else if (params.get("errors") === "1") {
-        dispatch({
-          type: "PRESENT_QUESTION",
-          questionIndex: 0,
-          words: ["moto", "melon", "maison"],
-          random: () => 0.99,
-        });
-        dispatch({ type: "ENABLE_CHOICES" });
-        dispatch({ type: "SELECT", word: "melon" });
-        dispatch({ type: "ARRIVE_WRONG", random: () => 0.99 });
-        dispatch({ type: "RETRY" });
-      } else {
-        const index = Math.min(
-          lesson.questions.length - 1,
-          Math.max(0, Number(params.get("question")) || 0),
-        );
-        const testQuestion = lesson.questions[index];
-        const testTarget = wordById.get(testQuestion.targetWordId);
-
-        dispatch({
-          type: "PRESENT_QUESTION",
-          questionIndex: index,
-          words: [
-            testTarget?.displayWord.toLocaleLowerCase("fr") ?? testQuestion.targetWordId,
-            ...testQuestion.distractors,
-          ],
-          random: () => 0.99,
-        });
-        dispatch({ type: "ENABLE_CHOICES" });
       }
     }
-  }, [enableEffects, presentQuestion, startJungleAmbience]);
+  }, [enableEffects, startJungleAmbience]);
 
   useEffect(
     () => () => {
@@ -762,6 +779,8 @@ export function SentierGame() {
         return feedback.sentierTreasureChest.text;
       case "treasure-collecting":
         return feedback.sentierTreasureOpened.text;
+      case "grand-treasure":
+        return "Le grand trésor de la jungle est à nous !";
       default:
         return "Écoute le mot et choisis le bon chemin.";
     }
@@ -784,7 +803,7 @@ export function SentierGame() {
           <button
             className="sentier-game__test sentier-game__test--opening"
             type="button"
-            onClick={() => void presentQuestion(0)}
+            onClick={showMap}
           >
             🧪 Tester
           </button>
@@ -800,6 +819,32 @@ export function SentierGame() {
       <section className="sentier-game sentier-game--opening" data-testid="sentier-game">
         <img className="sentier-opening__backdrop" src={BACKDROP_PATH} alt="" />
         <GameDialogueOverlay text={line.text} onSkip={skipIntro} />
+      </section>
+    );
+  }
+
+  if (state.phase === "map") {
+    return (
+      <section className="sentier-game sentier-game--map" data-testid="sentier-game">
+        <SentierLevelMap
+          lessons={lessons}
+          progress={progress}
+          newlyUnlockedLevel={newlyUnlockedLevel}
+          onSelectLevel={(targetLesson) => startLevel(targetLesson, testMode)}
+          onUnlockAnimationComplete={() => setNewlyUnlockedLevel(null)}
+        />
+        {localTools && testMode ? (
+          <details className="sentier-map-test-tools" data-testid="sentier-map-test-tools">
+            <summary>🧪 États de la carte</summary>
+            <nav aria-label="Configurations de test de la carte">
+              <a href="?test=1&state=map&preset=new">Nouveau joueur</a>
+              <a href="?test=1&state=map&preset=middle">Progression niveau 6</a>
+              <a href="?test=1&state=map&preset=unlock">Déblocage niveau 6</a>
+              <a href="?test=1&state=map&preset=final">Dernier niveau</a>
+              <a href="?test=1&state=map&preset=complete">Tout terminé</a>
+            </nav>
+          </details>
+        ) : null}
       </section>
     );
   }
@@ -865,6 +910,8 @@ export function SentierGame() {
         onRewardMound={handleRewardMound}
         onSkipTravel={() => skipTravelRef.current?.()}
         phase={state.phase}
+        regionId={lesson.regionId}
+        finalLevel={lesson.level === lessons.length}
         preloadTreasureAssets={
           state.destinationReached ||
           state.questionIndex >= Math.max(0, lesson.questions.length - 2)
@@ -881,6 +928,8 @@ export function SentierGame() {
           title={lesson.title}
           gems={state.gems}
           bestScore={bestScore}
+          finalLevel={lesson.level === lessons.length}
+          onContinue={showMap}
           onReplay={replay}
         />
       ) : treasureMode ? (
@@ -889,11 +938,11 @@ export function SentierGame() {
         <SentierChallenge
           choices={state.choices}
           message={message}
-          onChoose={(word) => void handleChoice(word)}
+          onChoose={(wordId) => void handleChoice(wordId)}
           onListen={() => void playTarget(target)}
           onUturn={() => void handleUturn()}
           phase={state.phase}
-          selectedWord={state.selectedWord}
+          selectedWordId={state.selectedWordId}
           target={target}
         />
       )}
@@ -908,7 +957,7 @@ export function SentierGame() {
             setTestMode(true);
             runTokenRef.current += 1;
             rememberLastGame(window.localStorage, "sentier");
-            void presentQuestion((state.questionIndex + 1) % lesson.questions.length);
+            void presentQuestion(lesson, (state.questionIndex + 1) % lesson.questions.length);
           }}
         >
           🧪 Mot suivant

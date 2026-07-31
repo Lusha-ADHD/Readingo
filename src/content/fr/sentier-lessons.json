@@ -3,47 +3,1299 @@
     "id": "sentier-1",
     "level": 1,
     "title": "Lisière de la jungle",
-    "gameIds": ["sentier"],
+    "regionId": "lisiere",
+    "gameIds": [
+      "sentier"
+    ],
     "questions": [
       {
         "id": "sentier-1-moto",
         "targetWordId": "moto",
-        "distractors": ["melon", "maison"]
+        "choiceWordIds": [
+          "moto",
+          "melon",
+          "maison"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-panda",
         "targetWordId": "panda",
-        "distractors": ["lapin", "moto"]
+        "choiceWordIds": [
+          "panda",
+          "lapin",
+          "moto"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-tapis",
         "targetWordId": "tapis",
-        "distractors": ["lapin", "bateau"]
+        "choiceWordIds": [
+          "tapis",
+          "lapin",
+          "bateau"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-lapin",
         "targetWordId": "lapin",
-        "distractors": ["tapis", "panda"]
+        "choiceWordIds": [
+          "lapin",
+          "tapis",
+          "panda"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-melon",
         "targetWordId": "melon",
-        "distractors": ["maison", "moto"]
+        "choiceWordIds": [
+          "melon",
+          "maison",
+          "moto"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-chaton",
         "targetWordId": "chaton",
-        "distractors": ["maison", "bateau"]
+        "choiceWordIds": [
+          "chaton",
+          "maison",
+          "bateau"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-bateau",
         "targetWordId": "bateau",
-        "distractors": ["chaton", "tapis"]
+        "choiceWordIds": [
+          "bateau",
+          "chaton",
+          "tapis"
+        ],
+        "displayCase": "uppercase"
       },
       {
         "id": "sentier-1-maison",
         "targetWordId": "maison",
-        "distractors": ["melon", "panda"]
+        "choiceWordIds": [
+          "maison",
+          "melon",
+          "panda"
+        ],
+        "displayCase": "uppercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-2",
+    "level": 2,
+    "title": "Clairière des lianes",
+    "regionId": "lisiere",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-2-jupe",
+        "targetWordId": "jupe",
+        "choiceWordIds": [
+          "jupe",
+          "robe",
+          "lune"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-robe",
+        "targetWordId": "robe",
+        "choiceWordIds": [
+          "robe",
+          "lune",
+          "poule"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-lune",
+        "targetWordId": "lune",
+        "choiceWordIds": [
+          "lune",
+          "poule",
+          "boule"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-poule",
+        "targetWordId": "poule",
+        "choiceWordIds": [
+          "poule",
+          "boule",
+          "livre"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-boule",
+        "targetWordId": "boule",
+        "choiceWordIds": [
+          "boule",
+          "livre",
+          "arbre"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-livre",
+        "targetWordId": "livre",
+        "choiceWordIds": [
+          "livre",
+          "arbre",
+          "pomme"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-arbre",
+        "targetWordId": "arbre",
+        "choiceWordIds": [
+          "arbre",
+          "pomme",
+          "jupe"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-2-pomme",
+        "targetWordId": "pomme",
+        "choiceWordIds": [
+          "pomme",
+          "jupe",
+          "robe"
+        ],
+        "displayCase": "uppercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-3",
+    "level": 3,
+    "title": "Gué des lucioles",
+    "regionId": "lisiere",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-3-velo",
+        "targetWordId": "velo",
+        "choiceWordIds": [
+          "velo",
+          "fusee",
+          "soleil",
+          "citron"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-fusee",
+        "targetWordId": "fusee",
+        "choiceWordIds": [
+          "fusee",
+          "soleil",
+          "citron",
+          "pirate"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-soleil",
+        "targetWordId": "soleil",
+        "choiceWordIds": [
+          "soleil",
+          "citron",
+          "pirate",
+          "girafe"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-citron",
+        "targetWordId": "citron",
+        "choiceWordIds": [
+          "citron",
+          "pirate",
+          "girafe",
+          "cadeau"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-pirate",
+        "targetWordId": "pirate",
+        "choiceWordIds": [
+          "pirate",
+          "girafe",
+          "cadeau",
+          "porte"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-girafe",
+        "targetWordId": "girafe",
+        "choiceWordIds": [
+          "girafe",
+          "cadeau",
+          "porte",
+          "velo"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-cadeau",
+        "targetWordId": "cadeau",
+        "choiceWordIds": [
+          "cadeau",
+          "porte",
+          "velo",
+          "fusee"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-3-porte",
+        "targetWordId": "porte",
+        "choiceWordIds": [
+          "porte",
+          "velo",
+          "fusee",
+          "soleil"
+        ],
+        "displayCase": "uppercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-4",
+    "level": 4,
+    "title": "Cascade turquoise",
+    "regionId": "eaux",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-4-requin",
+        "targetWordId": "requin",
+        "choiceWordIds": [
+          "requin",
+          "domino",
+          "canari",
+          "animal"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-domino",
+        "targetWordId": "domino",
+        "choiceWordIds": [
+          "domino",
+          "canari",
+          "animal",
+          "parasol"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-canari",
+        "targetWordId": "canari",
+        "choiceWordIds": [
+          "canari",
+          "animal",
+          "parasol",
+          "ananas"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-animal",
+        "targetWordId": "animal",
+        "choiceWordIds": [
+          "animal",
+          "parasol",
+          "ananas",
+          "chocolat"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-parasol",
+        "targetWordId": "parasol",
+        "choiceWordIds": [
+          "parasol",
+          "ananas",
+          "chocolat",
+          "papillon"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-ananas",
+        "targetWordId": "ananas",
+        "choiceWordIds": [
+          "ananas",
+          "chocolat",
+          "papillon",
+          "requin"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-chocolat",
+        "targetWordId": "chocolat",
+        "choiceWordIds": [
+          "chocolat",
+          "papillon",
+          "requin",
+          "domino"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-4-papillon",
+        "targetWordId": "papillon",
+        "choiceWordIds": [
+          "papillon",
+          "requin",
+          "domino",
+          "canari"
+        ],
+        "displayCase": "uppercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-5",
+    "level": 5,
+    "title": "Forêt de bambous",
+    "regionId": "eaux",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-5-camera",
+        "targetWordId": "camera",
+        "choiceWordIds": [
+          "camera",
+          "koala",
+          "wagon",
+          "yaourt"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-koala",
+        "targetWordId": "koala",
+        "choiceWordIds": [
+          "koala",
+          "wagon",
+          "yaourt",
+          "zebre"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-wagon",
+        "targetWordId": "wagon",
+        "choiceWordIds": [
+          "wagon",
+          "yaourt",
+          "zebre",
+          "tortue"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-yaourt",
+        "targetWordId": "yaourt",
+        "choiceWordIds": [
+          "yaourt",
+          "zebre",
+          "tortue",
+          "banane"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-zebre",
+        "targetWordId": "zebre",
+        "choiceWordIds": [
+          "zebre",
+          "tortue",
+          "banane",
+          "renard"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-tortue",
+        "targetWordId": "tortue",
+        "choiceWordIds": [
+          "tortue",
+          "banane",
+          "renard",
+          "camera"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-banane",
+        "targetWordId": "banane",
+        "choiceWordIds": [
+          "banane",
+          "renard",
+          "camera",
+          "koala"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-5-renard",
+        "targetWordId": "renard",
+        "choiceWordIds": [
+          "renard",
+          "camera",
+          "koala",
+          "wagon"
+        ],
+        "displayCase": "lowercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-6",
+    "level": 6,
+    "title": "Marais des lotus",
+    "regionId": "eaux",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-6-valise",
+        "targetWordId": "valise",
+        "choiceWordIds": [
+          "valise",
+          "dragon",
+          "orange",
+          "ballon"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-dragon",
+        "targetWordId": "dragon",
+        "choiceWordIds": [
+          "dragon",
+          "orange",
+          "ballon",
+          "poisson"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-orange",
+        "targetWordId": "orange",
+        "choiceWordIds": [
+          "orange",
+          "ballon",
+          "poisson",
+          "voiture"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-ballon",
+        "targetWordId": "ballon",
+        "choiceWordIds": [
+          "ballon",
+          "poisson",
+          "voiture",
+          "fromage"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-poisson",
+        "targetWordId": "poisson",
+        "choiceWordIds": [
+          "poisson",
+          "voiture",
+          "fromage",
+          "chapeau"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-voiture",
+        "targetWordId": "voiture",
+        "choiceWordIds": [
+          "voiture",
+          "fromage",
+          "chapeau",
+          "valise"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-fromage",
+        "targetWordId": "fromage",
+        "choiceWordIds": [
+          "fromage",
+          "chapeau",
+          "valise",
+          "dragon"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-6-chapeau",
+        "targetWordId": "chapeau",
+        "choiceWordIds": [
+          "chapeau",
+          "valise",
+          "dragon",
+          "orange"
+        ],
+        "displayCase": "lowercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-7",
+    "level": 7,
+    "title": "Fougères géantes",
+    "regionId": "profondeurs",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-7-fantome",
+        "targetWordId": "fantome",
+        "choiceWordIds": [
+          "fantome",
+          "escargot",
+          "pyramide",
+          "kangourou"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-escargot",
+        "targetWordId": "escargot",
+        "choiceWordIds": [
+          "escargot",
+          "pyramide",
+          "kangourou",
+          "montgolfiere"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-pyramide",
+        "targetWordId": "pyramide",
+        "choiceWordIds": [
+          "pyramide",
+          "kangourou",
+          "montgolfiere",
+          "ecureuil"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-kangourou",
+        "targetWordId": "kangourou",
+        "choiceWordIds": [
+          "kangourou",
+          "montgolfiere",
+          "ecureuil",
+          "elephant"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-montgolfiere",
+        "targetWordId": "montgolfiere",
+        "choiceWordIds": [
+          "montgolfiere",
+          "ecureuil",
+          "elephant",
+          "telephone"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-ecureuil",
+        "targetWordId": "ecureuil",
+        "choiceWordIds": [
+          "ecureuil",
+          "elephant",
+          "telephone",
+          "fantome"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-elephant",
+        "targetWordId": "elephant",
+        "choiceWordIds": [
+          "elephant",
+          "telephone",
+          "fantome",
+          "escargot"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-7-telephone",
+        "targetWordId": "telephone",
+        "choiceWordIds": [
+          "telephone",
+          "fantome",
+          "escargot",
+          "pyramide"
+        ],
+        "displayCase": "lowercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-8",
+    "level": 8,
+    "title": "Grotte des échos",
+    "regionId": "profondeurs",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-8-dinosaure",
+        "targetWordId": "dinosaure",
+        "choiceWordIds": [
+          "dinosaure",
+          "crocodile",
+          "coquillage",
+          "cheminee"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-crocodile",
+        "targetWordId": "crocodile",
+        "choiceWordIds": [
+          "crocodile",
+          "coquillage",
+          "cheminee",
+          "libellule"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-coquillage",
+        "targetWordId": "coquillage",
+        "choiceWordIds": [
+          "coquillage",
+          "cheminee",
+          "libellule",
+          "xylophone"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-cheminee",
+        "targetWordId": "cheminee",
+        "choiceWordIds": [
+          "cheminee",
+          "libellule",
+          "xylophone",
+          "hippopotame"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-libellule",
+        "targetWordId": "libellule",
+        "choiceWordIds": [
+          "libellule",
+          "xylophone",
+          "hippopotame",
+          "helicoptere"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-xylophone",
+        "targetWordId": "xylophone",
+        "choiceWordIds": [
+          "xylophone",
+          "hippopotame",
+          "helicoptere",
+          "dinosaure"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-hippopotame",
+        "targetWordId": "hippopotame",
+        "choiceWordIds": [
+          "hippopotame",
+          "helicoptere",
+          "dinosaure",
+          "crocodile"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-8-helicoptere",
+        "targetWordId": "helicoptere",
+        "choiceWordIds": [
+          "helicoptere",
+          "dinosaure",
+          "crocodile",
+          "coquillage"
+        ],
+        "displayCase": "lowercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-9",
+    "level": 9,
+    "title": "Pont des ruines",
+    "regionId": "profondeurs",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-9-alligator",
+        "targetWordId": "alligator",
+        "choiceWordIds": [
+          "alligator",
+          "ordinateur",
+          "calculatrice",
+          "locomotive"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-9-ordinateur",
+        "targetWordId": "ordinateur",
+        "choiceWordIds": [
+          "ordinateur",
+          "calculatrice",
+          "locomotive",
+          "cameleon"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-9-calculatrice",
+        "targetWordId": "calculatrice",
+        "choiceWordIds": [
+          "calculatrice",
+          "locomotive",
+          "cameleon",
+          "photographie"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-9-locomotive",
+        "targetWordId": "locomotive",
+        "choiceWordIds": [
+          "locomotive",
+          "cameleon",
+          "photographie",
+          "aspirateur"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-9-cameleon",
+        "targetWordId": "cameleon",
+        "choiceWordIds": [
+          "cameleon",
+          "photographie",
+          "aspirateur",
+          "rhinoceros"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-9-photographie",
+        "targetWordId": "photographie",
+        "choiceWordIds": [
+          "photographie",
+          "aspirateur",
+          "rhinoceros",
+          "alligator"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-9-aspirateur",
+        "targetWordId": "aspirateur",
+        "choiceWordIds": [
+          "aspirateur",
+          "rhinoceros",
+          "alligator",
+          "ordinateur"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-9-rhinoceros",
+        "targetWordId": "rhinoceros",
+        "choiceWordIds": [
+          "rhinoceros",
+          "alligator",
+          "ordinateur",
+          "calculatrice"
+        ],
+        "displayCase": "lowercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-10",
+    "level": 10,
+    "title": "Jardin du temple",
+    "regionId": "ruines",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-10-television",
+        "targetWordId": "television",
+        "choiceWordIds": [
+          "television",
+          "epouvantail",
+          "bibliotheque",
+          "motocyclette"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-10-epouvantail",
+        "targetWordId": "epouvantail",
+        "choiceWordIds": [
+          "epouvantail",
+          "bibliotheque",
+          "motocyclette",
+          "accordeon"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-10-bibliotheque",
+        "targetWordId": "bibliotheque",
+        "choiceWordIds": [
+          "bibliotheque",
+          "motocyclette",
+          "accordeon",
+          "macaroni"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-10-motocyclette",
+        "targetWordId": "motocyclette",
+        "choiceWordIds": [
+          "motocyclette",
+          "accordeon",
+          "macaroni",
+          "xylophone"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-10-accordeon",
+        "targetWordId": "accordeon",
+        "choiceWordIds": [
+          "accordeon",
+          "macaroni",
+          "xylophone",
+          "montgolfiere"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-10-macaroni",
+        "targetWordId": "macaroni",
+        "choiceWordIds": [
+          "macaroni",
+          "xylophone",
+          "montgolfiere",
+          "television"
+        ],
+        "displayCase": "lowercase"
+      },
+      {
+        "id": "sentier-10-xylophone",
+        "targetWordId": "xylophone",
+        "choiceWordIds": [
+          "xylophone",
+          "montgolfiere",
+          "television",
+          "epouvantail"
+        ],
+        "displayCase": "uppercase"
+      },
+      {
+        "id": "sentier-10-montgolfiere",
+        "targetWordId": "montgolfiere",
+        "choiceWordIds": [
+          "montgolfiere",
+          "television",
+          "epouvantail",
+          "bibliotheque"
+        ],
+        "displayCase": "lowercase"
+      }
+    ]
+  },
+  {
+    "id": "sentier-11",
+    "level": 11,
+    "title": "Escalier secret",
+    "regionId": "ruines",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-11-moto",
+        "targetWordId": "moto",
+        "choiceWordIds": [
+          "moto",
+          "melon",
+          "maison",
+          "panda",
+          "tapis"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "moto": "uppercase",
+          "melon": "lowercase",
+          "maison": "uppercase",
+          "panda": "lowercase",
+          "tapis": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-11-melon",
+        "targetWordId": "melon",
+        "choiceWordIds": [
+          "melon",
+          "maison",
+          "panda",
+          "tapis",
+          "bateau"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "melon": "lowercase",
+          "maison": "uppercase",
+          "panda": "lowercase",
+          "tapis": "uppercase",
+          "bateau": "lowercase"
+        }
+      },
+      {
+        "id": "sentier-11-maison",
+        "targetWordId": "maison",
+        "choiceWordIds": [
+          "maison",
+          "panda",
+          "tapis",
+          "bateau",
+          "lapin"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "maison": "uppercase",
+          "panda": "lowercase",
+          "tapis": "uppercase",
+          "bateau": "lowercase",
+          "lapin": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-11-panda",
+        "targetWordId": "panda",
+        "choiceWordIds": [
+          "panda",
+          "tapis",
+          "bateau",
+          "lapin",
+          "chaton"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "panda": "lowercase",
+          "tapis": "uppercase",
+          "bateau": "lowercase",
+          "lapin": "uppercase",
+          "chaton": "lowercase"
+        }
+      },
+      {
+        "id": "sentier-11-tapis",
+        "targetWordId": "tapis",
+        "choiceWordIds": [
+          "tapis",
+          "bateau",
+          "lapin",
+          "chaton",
+          "moto"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "tapis": "uppercase",
+          "bateau": "lowercase",
+          "lapin": "uppercase",
+          "chaton": "lowercase",
+          "moto": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-11-bateau",
+        "targetWordId": "bateau",
+        "choiceWordIds": [
+          "bateau",
+          "lapin",
+          "chaton",
+          "moto",
+          "melon"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "bateau": "lowercase",
+          "lapin": "uppercase",
+          "chaton": "lowercase",
+          "moto": "uppercase",
+          "melon": "lowercase"
+        }
+      },
+      {
+        "id": "sentier-11-lapin",
+        "targetWordId": "lapin",
+        "choiceWordIds": [
+          "lapin",
+          "chaton",
+          "moto",
+          "melon",
+          "maison"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "lapin": "uppercase",
+          "chaton": "lowercase",
+          "moto": "uppercase",
+          "melon": "lowercase",
+          "maison": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-11-chaton",
+        "targetWordId": "chaton",
+        "choiceWordIds": [
+          "chaton",
+          "moto",
+          "melon",
+          "maison",
+          "panda"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "chaton": "lowercase",
+          "moto": "uppercase",
+          "melon": "lowercase",
+          "maison": "uppercase",
+          "panda": "lowercase"
+        }
+      }
+    ]
+  },
+  {
+    "id": "sentier-12",
+    "level": 12,
+    "title": "Cœur du trésor",
+    "regionId": "ruines",
+    "gameIds": [
+      "sentier"
+    ],
+    "questions": [
+      {
+        "id": "sentier-12-poule",
+        "targetWordId": "poule",
+        "choiceWordIds": [
+          "poule",
+          "boule",
+          "porte",
+          "pomme",
+          "orange"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "poule": "uppercase",
+          "boule": "lowercase",
+          "porte": "uppercase",
+          "pomme": "lowercase",
+          "orange": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-12-boule",
+        "targetWordId": "boule",
+        "choiceWordIds": [
+          "boule",
+          "porte",
+          "pomme",
+          "orange",
+          "animal"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "boule": "lowercase",
+          "porte": "uppercase",
+          "pomme": "lowercase",
+          "orange": "uppercase",
+          "animal": "lowercase"
+        }
+      },
+      {
+        "id": "sentier-12-porte",
+        "targetWordId": "porte",
+        "choiceWordIds": [
+          "porte",
+          "pomme",
+          "orange",
+          "animal",
+          "ananas"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "porte": "uppercase",
+          "pomme": "lowercase",
+          "orange": "uppercase",
+          "animal": "lowercase",
+          "ananas": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-12-pomme",
+        "targetWordId": "pomme",
+        "choiceWordIds": [
+          "pomme",
+          "orange",
+          "animal",
+          "ananas",
+          "canari"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "pomme": "lowercase",
+          "orange": "uppercase",
+          "animal": "lowercase",
+          "ananas": "uppercase",
+          "canari": "lowercase"
+        }
+      },
+      {
+        "id": "sentier-12-orange",
+        "targetWordId": "orange",
+        "choiceWordIds": [
+          "orange",
+          "animal",
+          "ananas",
+          "canari",
+          "poule"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "orange": "uppercase",
+          "animal": "lowercase",
+          "ananas": "uppercase",
+          "canari": "lowercase",
+          "poule": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-12-animal",
+        "targetWordId": "animal",
+        "choiceWordIds": [
+          "animal",
+          "ananas",
+          "canari",
+          "poule",
+          "boule"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "animal": "lowercase",
+          "ananas": "uppercase",
+          "canari": "lowercase",
+          "poule": "uppercase",
+          "boule": "lowercase"
+        }
+      },
+      {
+        "id": "sentier-12-ananas",
+        "targetWordId": "ananas",
+        "choiceWordIds": [
+          "ananas",
+          "canari",
+          "poule",
+          "boule",
+          "porte"
+        ],
+        "displayCase": "uppercase",
+        "choiceCases": {
+          "ananas": "uppercase",
+          "canari": "lowercase",
+          "poule": "uppercase",
+          "boule": "lowercase",
+          "porte": "uppercase"
+        }
+      },
+      {
+        "id": "sentier-12-canari",
+        "targetWordId": "canari",
+        "choiceWordIds": [
+          "canari",
+          "poule",
+          "boule",
+          "porte",
+          "pomme"
+        ],
+        "displayCase": "lowercase",
+        "choiceCases": {
+          "canari": "lowercase",
+          "poule": "uppercase",
+          "boule": "lowercase",
+          "porte": "uppercase",
+          "pomme": "lowercase"
+        }
       }
     ]
   }

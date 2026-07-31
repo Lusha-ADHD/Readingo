@@ -70,6 +70,8 @@ L’Observatoire contient un clip de nom et une consigne complète pour chacune 
 26 lettres. Une exécution sans `--force` conserve les clips existants et génère
 uniquement les lettres ou mots-indices encore absents.
 
+Les mots marqués `mot-indice-sentier` ne demandent qu’un `audioWord`. Leurs tableaux de syllabes restent vides : le générateur produit leur prononciation complète sans créer de clips syllabiques inutilisés ni les injecter dans les niveaux Syllabes.
+
 ### Texte affiché et texte prononcé
 
 Une graphie pédagogique n’est pas toujours un bon texte de synthèse vocale. Le modèle distingue donc :
