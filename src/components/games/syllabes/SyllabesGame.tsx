@@ -43,7 +43,11 @@ type Tile = SyllabesTile;
 
 type VoiceLines = {
   dialogue: { intro: VoiceLine[] };
-  feedback: { tryAgain: AudioLine; bravo: AudioLine };
+  feedback: {
+    syllablesPrompt: AudioLine;
+    tryAgain: AudioLine;
+    bravo: AudioLine;
+  };
 };
 
 const CHEST_COLLECT_PAUSE_MS = 620;
@@ -166,6 +170,7 @@ export function SyllabesGame() {
   const [isTestMode, setIsTestMode] = useState(false);
   const [testToolsEnabled, setTestToolsEnabled] = useState(false);
   const dialogRunRef = useRef(0);
+  const challengePromptRunRef = useRef(0);
   const chestBurstIdRef = useRef(0);
   const savedSessionRef = useRef(false);
   const directTestStartedRef = useRef(false);
@@ -224,6 +229,23 @@ export function SyllabesGame() {
   }, [challenge]);
 
   useEffect(() => {
+    if (phase !== "playing") {
+      return;
+    }
+
+    const runId = challengePromptRunRef.current + 1;
+    challengePromptRunRef.current = runId;
+
+    void playChallengePrompt(challenge, runId);
+
+    return () => {
+      if (challengePromptRunRef.current === runId) {
+        challengePromptRunRef.current += 1;
+      }
+    };
+  }, [challenge, phase]);
+
+  useEffect(() => {
     const isMapTravel = phase === "map" && newlyUnlockedLevel !== null;
     setTravelAudio((phase === "sailing" && isSailingMotionActive) || isMapTravel, journey?.wind ?? 1, isCollectingChest || isMapTravel);
   }, [isCollectingChest, isSailingMotionActive, journey?.wind, newlyUnlockedLevel, phase, setTravelAudio]);
@@ -279,6 +301,17 @@ export function SyllabesGame() {
         return;
       }
     }
+  }
+
+  async function playChallengePrompt(currentChallenge: WordEntry, runId: number) {
+    const prompt = voiceLines.feedback.syllablesPrompt;
+    const promptResult = await playRecordedVoice(prompt.audio, prompt.text);
+
+    if (promptResult === "cancelled" || challengePromptRunRef.current !== runId) {
+      return;
+    }
+
+    await playRecordedVoice(currentChallenge.audioWord, currentChallenge.displayWord);
   }
 
   async function startIntroDialog() {

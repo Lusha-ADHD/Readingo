@@ -101,6 +101,10 @@ L’écran affiche :
 
 Le mot peut être écouté avant toute réponse.
 
+À l’arrivée de chaque nouveau mot, Pana dit « Trouve les syllabes du mot »,
+puis le mot est prononcé séparément. La consigne et le mot utilisent deux clips
+successifs afin de mutualiser la consigne entre tous les mots.
+
 ### Action
 
 Le joueur touche une tuile. Elle est placée dans le premier emplacement vide, puis validée immédiatement.

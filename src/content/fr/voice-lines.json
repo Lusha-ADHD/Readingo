@@ -132,6 +132,10 @@
     ]
   },
   "feedback": {
+    "syllablesPrompt": {
+      "text": "Trouve les syllabes du mot.",
+      "audio": "/assets/audio/fr/dialogue/syllabes-prompt.mp3"
+    },
     "tryAgain": {
       "text": "Essaie encore !",
       "audio": "/assets/audio/fr/feedback/essaie-encore.mp3"
