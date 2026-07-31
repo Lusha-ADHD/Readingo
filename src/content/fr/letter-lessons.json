@@ -1,9 +1,6 @@
 [
   {
-    "id": "premiere-constellation",
-    "level": 1,
-    "title": "Première constellation",
-    "gameIds": ["letters"],
+    "id": "premiere-constellation", "level": 1, "title": "Première constellation", "gameIds": ["letters"],
     "questions": [
       { "id": "lettre-a", "targetLetterId": "a", "choiceLetterIds": ["a", "m", "l"], "displayCase": "uppercase" },
       { "id": "lettre-m", "targetLetterId": "m", "choiceLetterIds": ["f", "m", "a"], "displayCase": "uppercase" },
@@ -13,6 +10,149 @@
       { "id": "lettre-r", "targetLetterId": "r", "choiceLetterIds": ["l", "v", "r"], "displayCase": "uppercase" },
       { "id": "lettre-v", "targetLetterId": "v", "choiceLetterIds": ["b", "v", "f"], "displayCase": "uppercase" },
       { "id": "lettre-b", "targetLetterId": "b", "choiceLetterIds": ["r", "m", "b"], "displayCase": "uppercase" }
+    ]
+  },
+  {
+    "id": "cercle-des-voyelles", "level": 2, "title": "Le cercle des voyelles", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n2-lettre-e", "targetLetterId": "e", "choiceLetterIds": ["e", "f", "l"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-i", "targetLetterId": "i", "choiceLetterIds": ["i", "j", "l"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-o", "targetLetterId": "o", "choiceLetterIds": ["o", "c", "q"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-u", "targetLetterId": "u", "choiceLetterIds": ["u", "v", "n"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-n", "targetLetterId": "n", "choiceLetterIds": ["n", "m", "u"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-t", "targetLetterId": "t", "choiceLetterIds": ["t", "f", "i"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-p", "targetLetterId": "p", "choiceLetterIds": ["p", "b", "d"], "displayCase": "uppercase" },
+      { "id": "n2-lettre-c", "targetLetterId": "c", "choiceLetterIds": ["c", "g", "o"], "displayCase": "uppercase" }
+    ]
+  },
+  {
+    "id": "formes-jumelles", "level": 3, "title": "Les formes jumelles", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n3-lettre-b", "targetLetterId": "b", "choiceLetterIds": ["b", "d", "p", "q"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-d", "targetLetterId": "d", "choiceLetterIds": ["b", "d", "p", "q"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-p", "targetLetterId": "p", "choiceLetterIds": ["b", "d", "p", "q"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-q", "targetLetterId": "q", "choiceLetterIds": ["b", "d", "p", "q"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-g", "targetLetterId": "g", "choiceLetterIds": ["c", "g", "j", "q"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-h", "targetLetterId": "h", "choiceLetterIds": ["h", "k", "n", "m"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-j", "targetLetterId": "j", "choiceLetterIds": ["g", "j", "i", "k"], "displayCase": "uppercase" },
+      { "id": "n3-lettre-k", "targetLetterId": "k", "choiceLetterIds": ["c", "k", "q", "x"], "displayCase": "uppercase" }
+    ]
+  },
+  {
+    "id": "eclats-rares", "level": 4, "title": "Les éclats rares", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n4-lettre-w", "targetLetterId": "w", "choiceLetterIds": ["w", "m", "n", "v"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-x", "targetLetterId": "x", "choiceLetterIds": ["x", "y", "k", "z"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-y", "targetLetterId": "y", "choiceLetterIds": ["x", "y", "j", "i"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-z", "targetLetterId": "z", "choiceLetterIds": ["z", "s", "x", "n"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-m", "targetLetterId": "m", "choiceLetterIds": ["m", "n", "w", "v"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-n", "targetLetterId": "n", "choiceLetterIds": ["m", "n", "u", "h"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-u", "targetLetterId": "u", "choiceLetterIds": ["u", "v", "n", "w"], "displayCase": "uppercase" },
+      { "id": "n4-lettre-v", "targetLetterId": "v", "choiceLetterIds": ["u", "v", "w", "f"], "displayCase": "uppercase" }
+    ]
+  },
+  {
+    "id": "ruban-celeste", "level": 5, "title": "Le ruban céleste", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n5-lettre-a", "targetLetterId": "a", "choiceLetterIds": ["a", "o", "e", "m"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-m", "targetLetterId": "m", "choiceLetterIds": ["m", "n", "w", "l"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-l", "targetLetterId": "l", "choiceLetterIds": ["l", "i", "j", "t"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-f", "targetLetterId": "f", "choiceLetterIds": ["f", "t", "s", "v"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-s", "targetLetterId": "s", "choiceLetterIds": ["s", "f", "z", "c"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-r", "targetLetterId": "r", "choiceLetterIds": ["r", "v", "n", "m"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-v", "targetLetterId": "v", "choiceLetterIds": ["v", "u", "w", "f"], "displayCase": "lowercase" },
+      { "id": "n5-lettre-b", "targetLetterId": "b", "choiceLetterIds": ["b", "d", "p", "q"], "displayCase": "lowercase" }
+    ]
+  },
+  {
+    "id": "couronne-claire", "level": 6, "title": "La couronne claire", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n6-lettre-e", "targetLetterId": "e", "choiceLetterIds": ["e", "c", "o", "a"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-i", "targetLetterId": "i", "choiceLetterIds": ["i", "j", "l", "t"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-o", "targetLetterId": "o", "choiceLetterIds": ["o", "c", "e", "q"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-u", "targetLetterId": "u", "choiceLetterIds": ["u", "v", "n", "w"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-n", "targetLetterId": "n", "choiceLetterIds": ["n", "m", "u", "h"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-t", "targetLetterId": "t", "choiceLetterIds": ["t", "f", "i", "l"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-p", "targetLetterId": "p", "choiceLetterIds": ["p", "b", "d", "q"], "displayCase": "lowercase" },
+      { "id": "n6-lettre-c", "targetLetterId": "c", "choiceLetterIds": ["c", "e", "o", "g"], "displayCase": "lowercase" }
+    ]
+  },
+  {
+    "id": "passage-secret", "level": 7, "title": "Le passage secret", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n7-lettre-b", "targetLetterId": "b", "choiceLetterIds": ["b", "d", "p", "q", "h"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-d", "targetLetterId": "d", "choiceLetterIds": ["b", "d", "p", "q", "g"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-p", "targetLetterId": "p", "choiceLetterIds": ["b", "d", "p", "q", "f"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-q", "targetLetterId": "q", "choiceLetterIds": ["b", "d", "p", "q", "g"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-g", "targetLetterId": "g", "choiceLetterIds": ["g", "j", "q", "c", "k"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-h", "targetLetterId": "h", "choiceLetterIds": ["h", "k", "n", "m", "b"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-j", "targetLetterId": "j", "choiceLetterIds": ["j", "i", "g", "l", "k"], "displayCase": "lowercase" },
+      { "id": "n7-lettre-k", "targetLetterId": "k", "choiceLetterIds": ["k", "q", "x", "h", "c"], "displayCase": "lowercase" }
+    ]
+  },
+  {
+    "id": "vague-etoiles", "level": 8, "title": "La vague d’étoiles", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n8-lettre-w", "targetLetterId": "w", "choiceLetterIds": ["w", "m", "n", "v", "u"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-x", "targetLetterId": "x", "choiceLetterIds": ["x", "y", "k", "z", "v"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-y", "targetLetterId": "y", "choiceLetterIds": ["y", "x", "j", "i", "v"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-z", "targetLetterId": "z", "choiceLetterIds": ["z", "s", "x", "n", "y"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-m", "targetLetterId": "m", "choiceLetterIds": ["m", "n", "w", "u", "v"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-n", "targetLetterId": "n", "choiceLetterIds": ["n", "m", "u", "h", "v"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-u", "targetLetterId": "u", "choiceLetterIds": ["u", "v", "n", "w", "m"], "displayCase": "lowercase" },
+      { "id": "n8-lettre-v", "targetLetterId": "v", "choiceLetterIds": ["v", "u", "w", "f", "y"], "displayCase": "lowercase" }
+    ]
+  },
+  {
+    "id": "orbite-croisee", "level": 9, "title": "L’orbite croisée", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n9-lettre-a", "targetLetterId": "a", "choiceLetterIds": ["a", "o", "e", "m", "n"], "displayCase": "uppercase" },
+      { "id": "n9-lettre-m", "targetLetterId": "m", "choiceLetterIds": ["m", "n", "w", "l", "v"], "displayCase": "lowercase" },
+      { "id": "n9-lettre-l", "targetLetterId": "l", "choiceLetterIds": ["l", "i", "j", "t", "f"], "displayCase": "uppercase" },
+      { "id": "n9-lettre-f", "targetLetterId": "f", "choiceLetterIds": ["f", "t", "s", "v", "p"], "displayCase": "lowercase" },
+      { "id": "n9-lettre-s", "targetLetterId": "s", "choiceLetterIds": ["s", "f", "z", "c", "r"], "displayCase": "uppercase" },
+      { "id": "n9-lettre-r", "targetLetterId": "r", "choiceLetterIds": ["r", "v", "n", "m", "p"], "displayCase": "lowercase" },
+      { "id": "n9-lettre-v", "targetLetterId": "v", "choiceLetterIds": ["v", "u", "w", "f", "y"], "displayCase": "uppercase" },
+      { "id": "n9-lettre-b", "targetLetterId": "b", "choiceLetterIds": ["b", "d", "p", "q", "h"], "displayCase": "lowercase" }
+    ]
+  },
+  {
+    "id": "prisme-nocturne", "level": 10, "title": "Le prisme nocturne", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n10-lettre-e", "targetLetterId": "e", "choiceLetterIds": ["e", "c", "o", "a", "f"], "displayCase": "lowercase" },
+      { "id": "n10-lettre-i", "targetLetterId": "i", "choiceLetterIds": ["i", "j", "l", "t", "y"], "displayCase": "uppercase" },
+      { "id": "n10-lettre-o", "targetLetterId": "o", "choiceLetterIds": ["o", "c", "e", "q", "u"], "displayCase": "lowercase" },
+      { "id": "n10-lettre-u", "targetLetterId": "u", "choiceLetterIds": ["u", "v", "n", "w", "m"], "displayCase": "uppercase" },
+      { "id": "n10-lettre-n", "targetLetterId": "n", "choiceLetterIds": ["n", "m", "u", "h", "v"], "displayCase": "lowercase" },
+      { "id": "n10-lettre-t", "targetLetterId": "t", "choiceLetterIds": ["t", "f", "i", "l", "p"], "displayCase": "uppercase" },
+      { "id": "n10-lettre-p", "targetLetterId": "p", "choiceLetterIds": ["p", "b", "d", "q", "r"], "displayCase": "lowercase" },
+      { "id": "n10-lettre-c", "targetLetterId": "c", "choiceLetterIds": ["c", "e", "o", "g", "q"], "displayCase": "uppercase" }
+    ]
+  },
+  {
+    "id": "tourbillon-dore", "level": 11, "title": "Le tourbillon doré", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n11-lettre-b", "targetLetterId": "b", "choiceLetterIds": ["b", "d", "p", "q", "h", "r"], "displayCase": "uppercase", "choiceCases": { "b": "uppercase", "d": "lowercase", "p": "uppercase", "q": "lowercase", "h": "uppercase", "r": "lowercase" } },
+      { "id": "n11-lettre-d", "targetLetterId": "d", "choiceLetterIds": ["b", "d", "p", "q", "g", "o"], "displayCase": "lowercase", "choiceCases": { "b": "uppercase", "d": "lowercase", "p": "lowercase", "q": "uppercase", "g": "lowercase", "o": "uppercase" } },
+      { "id": "n11-lettre-p", "targetLetterId": "p", "choiceLetterIds": ["b", "d", "p", "q", "f", "r"], "displayCase": "uppercase", "choiceCases": { "b": "lowercase", "d": "uppercase", "p": "uppercase", "q": "lowercase", "f": "uppercase", "r": "lowercase" } },
+      { "id": "n11-lettre-q", "targetLetterId": "q", "choiceLetterIds": ["b", "d", "p", "q", "g", "c"], "displayCase": "lowercase", "choiceCases": { "b": "uppercase", "d": "lowercase", "p": "uppercase", "q": "lowercase", "g": "uppercase", "c": "lowercase" } },
+      { "id": "n11-lettre-g", "targetLetterId": "g", "choiceLetterIds": ["g", "j", "q", "c", "k", "o"], "displayCase": "uppercase", "choiceCases": { "g": "uppercase", "j": "lowercase", "q": "uppercase", "c": "lowercase", "k": "uppercase", "o": "lowercase" } },
+      { "id": "n11-lettre-h", "targetLetterId": "h", "choiceLetterIds": ["h", "k", "n", "m", "b", "l"], "displayCase": "lowercase", "choiceCases": { "h": "lowercase", "k": "uppercase", "n": "lowercase", "m": "uppercase", "b": "lowercase", "l": "uppercase" } },
+      { "id": "n11-lettre-j", "targetLetterId": "j", "choiceLetterIds": ["j", "i", "g", "l", "k", "y"], "displayCase": "uppercase", "choiceCases": { "j": "uppercase", "i": "lowercase", "g": "uppercase", "l": "lowercase", "k": "uppercase", "y": "lowercase" } },
+      { "id": "n11-lettre-k", "targetLetterId": "k", "choiceLetterIds": ["k", "q", "x", "h", "c", "g"], "displayCase": "lowercase", "choiceCases": { "k": "lowercase", "q": "uppercase", "x": "lowercase", "h": "uppercase", "c": "lowercase", "g": "uppercase" } }
+    ]
+  },
+  {
+    "id": "aurore-des-lettres", "level": 12, "title": "L’aurore des lettres", "gameIds": ["letters"],
+    "questions": [
+      { "id": "n12-lettre-w", "targetLetterId": "w", "choiceLetterIds": ["w", "m", "n", "v", "u", "x"], "displayCase": "lowercase", "choiceCases": { "w": "lowercase", "m": "uppercase", "n": "lowercase", "v": "uppercase", "u": "lowercase", "x": "uppercase" } },
+      { "id": "n12-lettre-x", "targetLetterId": "x", "choiceLetterIds": ["x", "y", "k", "z", "v", "w"], "displayCase": "uppercase", "choiceCases": { "x": "uppercase", "y": "lowercase", "k": "uppercase", "z": "lowercase", "v": "uppercase", "w": "lowercase" } },
+      { "id": "n12-lettre-y", "targetLetterId": "y", "choiceLetterIds": ["y", "x", "j", "i", "v", "z"], "displayCase": "lowercase", "choiceCases": { "y": "lowercase", "x": "uppercase", "j": "lowercase", "i": "uppercase", "v": "lowercase", "z": "uppercase" } },
+      { "id": "n12-lettre-z", "targetLetterId": "z", "choiceLetterIds": ["z", "s", "x", "n", "y", "c"], "displayCase": "uppercase", "choiceCases": { "z": "uppercase", "s": "lowercase", "x": "uppercase", "n": "lowercase", "y": "uppercase", "c": "lowercase" } },
+      { "id": "n12-lettre-m", "targetLetterId": "m", "choiceLetterIds": ["m", "n", "w", "u", "v", "h"], "displayCase": "lowercase", "choiceCases": { "m": "lowercase", "n": "uppercase", "w": "lowercase", "u": "uppercase", "v": "lowercase", "h": "uppercase" } },
+      { "id": "n12-lettre-n", "targetLetterId": "n", "choiceLetterIds": ["n", "m", "u", "h", "v", "w"], "displayCase": "uppercase", "choiceCases": { "n": "uppercase", "m": "lowercase", "u": "uppercase", "h": "lowercase", "v": "uppercase", "w": "lowercase" } },
+      { "id": "n12-lettre-u", "targetLetterId": "u", "choiceLetterIds": ["u", "v", "n", "w", "m", "y"], "displayCase": "lowercase", "choiceCases": { "u": "lowercase", "v": "uppercase", "n": "lowercase", "w": "uppercase", "m": "lowercase", "y": "uppercase" } },
+      { "id": "n12-lettre-v", "targetLetterId": "v", "choiceLetterIds": ["v", "u", "w", "f", "y", "m"], "displayCase": "uppercase", "choiceCases": { "v": "uppercase", "u": "lowercase", "w": "uppercase", "f": "lowercase", "y": "uppercase", "m": "lowercase" } }
     ]
   }
 ]

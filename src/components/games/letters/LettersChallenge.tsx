@@ -13,8 +13,11 @@ const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 type Props = {
   anchorWord: WordReference;
   targetLetter: LetterEntry;
-  displayCase: LetterDisplayCase;
-  choices: LetterEntry[];
+  wordDisplayCase: LetterDisplayCase;
+  choices: Array<{
+    entry: LetterEntry;
+    displayCase: LetterDisplayCase;
+  }>;
   selectedLetterId: string | null;
   revealWord: boolean;
   inputLocked: boolean;
@@ -28,7 +31,7 @@ type Props = {
 export function LettersChallenge({
   anchorWord,
   targetLetter,
-  displayCase,
+  wordDisplayCase,
   choices,
   selectedLetterId,
   revealWord,
@@ -39,6 +42,11 @@ export function LettersChallenge({
   onListenLetter,
   onChoose,
 }: Props) {
+  const revealedWord =
+    wordDisplayCase === "uppercase"
+      ? anchorWord.displayWord.toLocaleUpperCase("fr-FR")
+      : anchorWord.displayWord.toLocaleLowerCase("fr-FR");
+
   return (
     <main className="letters-game__exercise">
       <div className="letters-game__bottom-panels">
@@ -75,9 +83,9 @@ export function LettersChallenge({
           <div className="letters-game__word-reveal" aria-live="polite">
             {revealWord ? (
               <>
-                <span className="sr-only">{anchorWord.displayWord}</span>
+                <span className="sr-only">{revealedWord}</span>
                 <span aria-hidden="true">
-                  {Array.from(anchorWord.displayWord).map((character, index) =>
+                  {Array.from(revealedWord).map((character, index) =>
                     isTargetCharacter(character, targetLetter) ? (
                       <mark key={`${character}-${index}`}>{character}</mark>
                     ) : (
@@ -96,8 +104,10 @@ export function LettersChallenge({
             )}
           </div>
 
-          <div className="letters-game__choices">
-            {choices.map((entry) => {
+          <div
+            className={`letters-game__choices letters-game__choices--${choices.length}`}
+          >
+            {choices.map(({ entry, displayCase }) => {
               const state =
                 selectedLetterId !== entry.id
                   ? "idle"
@@ -108,7 +118,7 @@ export function LettersChallenge({
               return (
                 <LetterTile
                   disabled={inputLocked}
-                  key={entry.id}
+                  key={`${entry.id}-${displayCase}`}
                   letter={entry[displayCase]}
                   letterName={entry.nameText}
                   onChoose={() => onChoose(entry.id)}

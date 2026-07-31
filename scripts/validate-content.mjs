@@ -52,7 +52,7 @@ for (const game of games) {
   assert(Array.isArray(game.progressKeys) && game.progressKeys.length > 0, `${game.id}: clé de progression absente`);
 }
 
-assert(words.length === 48, `48 mots attendus, ${words.length} trouvés`);
+assert(words.length === 54, `54 mots attendus, ${words.length} trouvés`);
 assert(duplicates(words.map((word) => word.id)).length === 0, "Identifiants de mots dupliqués");
 assert(duplicates(syllables.map((syllable) => syllable.id)).length === 0, "Identifiants de syllabes dupliqués");
 assert(duplicates(syllables.map((syllable) => syllable.text)).length === 0, "Textes de syllabes dupliqués");
@@ -61,9 +61,12 @@ const wordById = new Map(words.map((word) => [word.id, word]));
 const syllableByText = new Map(syllables.map((syllable) => [syllable.text, syllable]));
 const letterById = new Map(letters.map((letter) => [letter.id, letter]));
 const referencedWordIds = levels.flatMap((level) => level.wordIds);
+const letterAnchorWordIds = letters.map((letter) => letter.anchorWordId);
+const letterOnlyWords = words.filter((word) => word.tags?.includes("mot-indice-lettres"));
 
 assert(duplicates(referencedWordIds).length === 0, "Un mot est référencé par plusieurs niveaux");
-assert(referencedWordIds.length === words.length, "Tous les mots doivent appartenir à un niveau");
+assert(referencedWordIds.length === 48, "Les niveaux Syllabes doivent conserver leurs 48 mots");
+assert(letterOnlyWords.length === 6, `${letterOnlyWords.length} mots-indices exclusifs Lettres trouvés au lieu de 6`);
 
 for (const [index, level] of levels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau ${level.id}`);
@@ -93,13 +96,32 @@ for (const [index, level] of levels.entries()) {
 }
 
 for (const word of words) {
-  assert(referencedWordIds.includes(word.id), `${word.id}: aucun niveau associé`);
+  assert(
+    referencedWordIds.includes(word.id) || letterAnchorWordIds.includes(word.id),
+    `${word.id}: aucun jeu associé`,
+  );
 }
 
-assert(letterLevels.length === 1, `1 niveau Lettres attendu, ${letterLevels.length} trouvé(s)`);
+assert(letterLevels.length === 12, `12 niveaux Lettres attendus, ${letterLevels.length} trouvé(s)`);
+assert(letters.length === 26, `26 lettres attendues, ${letters.length} trouvée(s)`);
 assert(duplicates(letters.map((letter) => letter.id)).length === 0, "Identifiants de lettres dupliqués");
 assert(duplicates(letters.map((letter) => letter.uppercase)).length === 0, "Capitales de lettres dupliquées");
 assert(duplicates(letters.map((letter) => letter.lowercase)).length === 0, "Minuscules de lettres dupliquées");
+
+const expectedChoiceCounts = [3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6];
+const expectedAlphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+
+for (const firstLevelIndex of [0, 4, 8]) {
+  const coveredLetters = new Set(
+    letterLevels
+      .slice(firstLevelIndex, firstLevelIndex + 4)
+      .flatMap((level) => level.questions?.map((question) => question.targetLetterId) ?? []),
+  );
+  assert(
+    expectedAlphabet.every((letterId) => coveredLetters.has(letterId)),
+    `Les niveaux Lettres ${firstLevelIndex + 1} à ${firstLevelIndex + 4} doivent couvrir l’alphabet`,
+  );
+}
 
 for (const [index, level] of letterLevels.entries()) {
   assert(level.level === index + 1, `Ordre invalide pour le niveau Lettres ${level.id}`);
@@ -114,7 +136,10 @@ for (const [index, level] of letterLevels.entries()) {
       question.displayCase === "uppercase" || question.displayCase === "lowercase",
       `${question.id}: casse d'affichage invalide`,
     );
-    assert(question.choiceLetterIds?.length >= 2, `${question.id}: au moins 2 choix attendus`);
+    assert(
+      question.choiceLetterIds?.length === expectedChoiceCounts[index],
+      `${question.id}: ${expectedChoiceCounts[index]} choix attendus`,
+    );
     assert(duplicates(question.choiceLetterIds ?? []).length === 0, `${question.id}: choix dupliqués`);
     assert(
       question.choiceLetterIds?.filter((id) => id === question.targetLetterId).length === 1,
@@ -123,6 +148,38 @@ for (const [index, level] of letterLevels.entries()) {
 
     for (const choiceId of question.choiceLetterIds ?? []) {
       assert(letterById.has(choiceId), `${question.id}: choix inconnu ${choiceId}`);
+    }
+
+    const choiceCases = question.choiceLetterIds?.map(
+      (choiceId) => question.choiceCases?.[choiceId] ?? question.displayCase,
+    ) ?? [];
+
+    for (const [choiceId, displayCase] of Object.entries(question.choiceCases ?? {})) {
+      assert(question.choiceLetterIds?.includes(choiceId), `${question.id}: casse définie pour un choix absent ${choiceId}`);
+      assert(
+        displayCase === "uppercase" || displayCase === "lowercase",
+        `${question.id}: casse invalide pour ${choiceId}`,
+      );
+    }
+
+    if (index < 4) {
+      assert(question.displayCase === "uppercase", `${question.id}: capitale attendue`);
+      assert(!question.choiceCases, `${question.id}: grille uniforme attendue`);
+    } else if (index < 8) {
+      assert(question.displayCase === "lowercase", `${question.id}: minuscule attendue`);
+      assert(!question.choiceCases, `${question.id}: grille uniforme attendue`);
+    } else if (index < 10) {
+      assert(!question.choiceCases, `${question.id}: casse uniforme par question attendue`);
+    } else if (index >= 10) {
+      assert(
+        Object.keys(question.choiceCases ?? {}).length === question.choiceLetterIds.length,
+        `${question.id}: chaque choix doit définir sa casse`,
+      );
+      assert(new Set(choiceCases).size === 2, `${question.id}: capitales et minuscules attendues`);
+      assert(
+        question.choiceCases?.[question.targetLetterId] === question.displayCase,
+        `${question.id}: la casse cible doit correspondre à displayCase`,
+      );
     }
 
     if (!target) continue;
@@ -136,8 +193,18 @@ for (const [index, level] of letterLevels.entries()) {
     assert(Boolean(target.promptSpeechText), `${target.id}: consigne vocale absente`);
     await assertAsset(target.nameAudio, `${target.id} nom audio`);
     await assertAsset(target.promptAudio, `${target.id} consigne audio`);
-    if (anchorWord) await assertAsset(anchorWord.image, `${target.id} image-indice`);
+    if (anchorWord) {
+      await assertAsset(anchorWord.image, `${target.id} image-indice`);
+      await assertAsset(anchorWord.audioWord, `${target.id} audio du mot-indice`);
+    }
   }
+}
+
+for (const level of letterLevels.slice(8, 10)) {
+  assert(
+    new Set(level.questions.map((question) => question.displayCase)).size === 2,
+    `${level.id}: alternance de casse attendue`,
+  );
 }
 
 assert(sentierLevels.length === 1, `1 niveau Sentier attendu, ${sentierLevels.length} trouvé(s)`);
@@ -234,5 +301,5 @@ if (errors.length) {
 }
 
 process.stdout.write(
-  `Contenu valide : ${levels.length} niveaux Syllabes, ${letterLevels.length} niveau Lettres, ${sentierLevels.length} niveau Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
+  `Contenu valide : ${levels.length} niveaux Syllabes, ${letterLevels.length} niveaux Lettres, ${sentierLevels.length} niveau Sentier, ${words.length} mots, ${syllables.length} syllabes et ${letters.length} lettres.\n`,
 );

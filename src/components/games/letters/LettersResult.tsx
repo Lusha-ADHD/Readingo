@@ -5,10 +5,11 @@ const PANA_ASSET_PATH = sitePath("/assets/characters/pana.png");
 
 type Props = {
   starCount: number;
+  onContinue: () => void;
   onReplay: () => void;
 };
 
-export function LettersResult({ starCount, onReplay }: Props) {
+export function LettersResult({ starCount, onContinue, onReplay }: Props) {
   return (
     <div className="letters-game__result">
       <img
@@ -20,7 +21,10 @@ export function LettersResult({ starCount, onReplay }: Props) {
         <p className="letters-game__eyebrow">{starCount} étoiles allumées</p>
         <h2>Constellation terminée !</h2>
         <p>Tu as retrouvé toutes les lettres demandées par Pana.</p>
-        <GameButton onClick={onReplay}>Rejouer</GameButton>
+        <div className="letters-game__result-actions">
+          <GameButton onClick={onContinue}>Continuer</GameButton>
+          <GameButton onClick={onReplay} variant="secondary">Rejouer</GameButton>
+        </div>
       </div>
     </div>
   );

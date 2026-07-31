@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import type { CSSProperties } from "react";
 import type { LessonBase } from "../../../content/types";
 import { sitePath } from "../../../utils/paths";
+import { TutorialPointer } from "../../ui/TutorialPointer";
 import { OceanCanvas } from "./OceanCanvas";
 import type { SyllabesProgress } from "./syllabesProgress";
 import "./LevelMap.css";
@@ -237,6 +238,9 @@ export function LevelMap({
                   <span>{level.title}</span>
                   {completed ? <small>{best} coffre{best > 1 ? "s" : ""}</small> : frontier ? <small>Jouer</small> : null}
                 </span>
+                {frontier ? (
+                  <TutorialPointer className="level-map__tutorial-pointer" />
+                ) : null}
               </button>
             );
           })}

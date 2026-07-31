@@ -133,9 +133,9 @@ Contient les dialogues et feedbacks localisés. Une entrée possède un texte et
 
 ### `letters.json` et `letter-lessons.json`
 
-`letters.json` associe le nom, les graphies, le son travaillé, le mot-indice et les clips d’une lettre. `letter-lessons.json` ordonne les questions et définit les choix proposés.
+`letters.json` associe les 26 lettres à leur nom, leurs graphies, leur son travaillé, leur mot-indice et leurs clips. `letter-lessons.json` ordonne les douze niveaux, définit les choix proposés et peut surcharger la casse de chaque choix dans les grilles mixtes.
 
-Le mot-indice référence `words.json` : son illustration et son audio ne sont pas dupliqués. Les contraintes du premier niveau sont détaillées dans le [GDD de L’Observatoire des lettres](./games/lettres.md).
+Le mot-indice référence `words.json` : son illustration et son audio ne sont pas dupliqués. Les mots portant le tag `mot-indice-lettres` appartiennent au lexique partagé sans être ajoutés artificiellement aux niveaux Syllabes. La progression complète est détaillée dans le [GDD de L’Observatoire des lettres](./games/lettres.md).
 
 ## Validation pédagogique
 

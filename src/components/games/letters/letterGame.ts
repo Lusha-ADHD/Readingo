@@ -21,6 +21,12 @@ export type LetterQuestion = {
   targetLetterId: string;
   choiceLetterIds: string[];
   displayCase: LetterDisplayCase;
+  choiceCases?: Partial<Record<string, LetterDisplayCase>>;
+};
+
+export type LetterChoice = {
+  letterId: string;
+  displayCase: LetterDisplayCase;
 };
 
 export type LetterLesson = LessonBase & {
@@ -29,6 +35,27 @@ export type LetterLesson = LessonBase & {
 
 export function shuffleLetterIds(letterIds: string[], random: () => number = Math.random) {
   const shuffled = [...letterIds];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
+export function buildLetterChoices(question: LetterQuestion): LetterChoice[] {
+  return question.choiceLetterIds.map((letterId) => ({
+    letterId,
+    displayCase: question.choiceCases?.[letterId] ?? question.displayCase,
+  }));
+}
+
+export function shuffleLetterChoices(
+  choices: LetterChoice[],
+  random: () => number = Math.random,
+) {
+  const shuffled = [...choices];
 
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
     const randomIndex = Math.floor(random() * (index + 1));

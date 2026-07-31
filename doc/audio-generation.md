@@ -66,6 +66,10 @@ Le script `scripts/generate-voices.mjs` construit les clips à partir de :
 
 Les composants ne maintiennent aucune liste audio parallèle.
 
+L’Observatoire contient un clip de nom et une consigne complète pour chacune des
+26 lettres. Une exécution sans `--force` conserve les clips existants et génère
+uniquement les lettres ou mots-indices encore absents.
+
 ### Texte affiché et texte prononcé
 
 Une graphie pédagogique n’est pas toujours un bon texte de synthèse vocale. Le modèle distingue donc :

@@ -1,0 +1,32 @@
+.tutorial-pointer {
+  display: block;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.tutorial-pointer__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 0 rgba(8, 33, 74, 0.24));
+  animation: tutorial-pointer-bob 900ms ease-in-out infinite alternate;
+}
+
+@keyframes tutorial-pointer-bob {
+  from {
+    transform: translateY(3px);
+  }
+
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tutorial-pointer__image {
+    animation: none;
+  }
+}

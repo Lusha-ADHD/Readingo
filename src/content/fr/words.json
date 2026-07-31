@@ -299,5 +299,42 @@
     "syllables": ["ma", "ca", "ro", "ni"], "spokenSyllables": ["ma", "cas", "ro", "ni"], "distractors": ["mo", "cé", "tail", "no"],
     "image": "/assets/images/fr/words/macaroni.png", "audioWord": "/assets/audio/fr/words/macaroni.mp3", "audioSyllables": {},
     "difficulty": 4, "tags": ["aliment", "mot-quadrisyllabique"]
+  },
+
+  {
+    "id": "jupe", "locale": "fr-FR", "word": "jupe", "displayWord": "jupe",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/jupe.png", "audioWord": "/assets/audio/fr/words/jupe.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["vetement", "mot-indice-lettres"]
+  },
+  {
+    "id": "koala", "locale": "fr-FR", "word": "koala", "displayWord": "koala",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/koala.png", "audioWord": "/assets/audio/fr/words/koala.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["animal", "mot-indice-lettres"]
+  },
+  {
+    "id": "wagon", "locale": "fr-FR", "word": "wagon", "displayWord": "wagon",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/wagon.png", "audioWord": "/assets/audio/fr/words/wagon.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["objet", "mot-indice-lettres"]
+  },
+  {
+    "id": "xylophone", "locale": "fr-FR", "word": "xylophone", "displayWord": "xylophone",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/xylophone.png", "audioWord": "/assets/audio/fr/words/xylophone.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["instrument", "mot-indice-lettres"]
+  },
+  {
+    "id": "yaourt", "locale": "fr-FR", "word": "yaourt", "displayWord": "yaourt",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/yaourt.png", "audioWord": "/assets/audio/fr/words/yaourt.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["aliment", "mot-indice-lettres"]
+  },
+  {
+    "id": "zebre", "locale": "fr-FR", "word": "zèbre", "displayWord": "zèbre",
+    "syllables": [], "spokenSyllables": [], "distractors": [],
+    "image": "/assets/images/fr/words/zebre.png", "audioWord": "/assets/audio/fr/words/zebre.mp3", "audioSyllables": {},
+    "difficulty": 1, "tags": ["animal", "mot-indice-lettres"]
   }
 ]

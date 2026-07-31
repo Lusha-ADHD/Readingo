@@ -91,7 +91,8 @@
 
 .constellation-scene__link {
   fill: none;
-  stroke: transparent;
+  stroke: rgba(231, 240, 255, 0.28);
+  stroke-dasharray: 2.2 2.4;
   stroke-linecap: round;
   stroke-width: 0.78;
 }
@@ -406,6 +407,13 @@
   font-weight: 800;
 }
 
+.letters-game__result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
 .letters-game__eyebrow {
   color: #7250b4 !important;
   font-size: 0.82rem;
@@ -583,6 +591,10 @@
   grid-column: 1 / -1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+}
+
+.letters-game__choices--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .letters-game__test-tools {

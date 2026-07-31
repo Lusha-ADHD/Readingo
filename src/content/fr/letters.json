@@ -1,106 +1,184 @@
 [
   {
-    "id": "a",
-    "uppercase": "A",
-    "lowercase": "a",
-    "nameText": "a",
-    "nameSpeechText": "a",
-    "nameAudio": "/assets/audio/fr/letters/names/a.mp3",
-    "soundText": "/a/",
-    "anchorWordId": "ananas",
+    "id": "a", "uppercase": "A", "lowercase": "a", "nameText": "a", "nameSpeechText": "a",
+    "nameAudio": "/assets/audio/fr/letters/names/a.mp3", "soundText": "/a/", "anchorWordId": "ananas",
     "promptText": "Donne-moi la lettre A. A fait /a/, comme dans ananas.",
     "promptSpeechText": "Donne-moi la lettre A. La lettre A fait le son a, comme dans ananas.",
     "promptAudio": "/assets/audio/fr/letters/prompts/a-ananas.mp3"
   },
   {
-    "id": "m",
-    "uppercase": "M",
-    "lowercase": "m",
-    "nameText": "ème",
-    "nameSpeechText": "ème",
-    "nameAudio": "/assets/audio/fr/letters/names/m.mp3",
-    "soundText": "/m/",
-    "anchorWordId": "moto",
-    "promptText": "Donne-moi la lettre M. M fait /m/, comme dans moto.",
-    "promptSpeechText": "Donne-moi la lettre M. La lettre M fait mmm, comme dans moto.",
-    "promptAudio": "/assets/audio/fr/letters/prompts/m-moto.mp3"
+    "id": "b", "uppercase": "B", "lowercase": "b", "nameText": "bé", "nameSpeechText": "bé",
+    "nameAudio": "/assets/audio/fr/letters/names/b.mp3", "soundText": "/b/", "anchorWordId": "bateau",
+    "promptText": "Donne-moi la lettre B. B fait /b/, comme dans bateau.",
+    "promptSpeechText": "Donne-moi la lettre B. La lettre B fait be, comme dans bateau.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/b-bateau.mp3"
   },
   {
-    "id": "l",
-    "uppercase": "L",
-    "lowercase": "l",
-    "nameText": "elle",
-    "nameSpeechText": "elle",
-    "nameAudio": "/assets/audio/fr/letters/names/l.mp3",
-    "soundText": "/l/",
-    "anchorWordId": "lapin",
-    "promptText": "Donne-moi la lettre L. L fait /l/, comme dans lapin.",
-    "promptSpeechText": "Donne-moi la lettre L. La lettre L fait /l/, comme dans lapin.",
-    "promptAudio": "/assets/audio/fr/letters/prompts/l-lapin.mp3"
+    "id": "c", "uppercase": "C", "lowercase": "c", "nameText": "cé", "nameSpeechText": "cé",
+    "nameAudio": "/assets/audio/fr/letters/names/c.mp3", "soundText": "/k/", "anchorWordId": "cadeau",
+    "promptText": "Donne-moi la lettre C. C fait /k/, comme dans cadeau.",
+    "promptSpeechText": "Donne-moi la lettre C. La lettre C fait le son ke, comme dans cadeau.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/c-cadeau.mp3"
   },
   {
-    "id": "f",
-    "uppercase": "F",
-    "lowercase": "f",
-    "nameText": "effe",
-    "nameSpeechText": "effe",
-    "nameAudio": "/assets/audio/fr/letters/names/f.mp3",
-    "soundText": "/f/",
-    "anchorWordId": "fusee",
+    "id": "d", "uppercase": "D", "lowercase": "d", "nameText": "dé", "nameSpeechText": "dé",
+    "nameAudio": "/assets/audio/fr/letters/names/d.mp3", "soundText": "/d/", "anchorWordId": "domino",
+    "promptText": "Donne-moi la lettre D. D fait /d/, comme dans domino.",
+    "promptSpeechText": "Donne-moi la lettre D. La lettre D fait le son de, comme dans domino.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/d-domino.mp3"
+  },
+  {
+    "id": "e", "uppercase": "E", "lowercase": "e", "nameText": "e", "nameSpeechText": "euh",
+    "nameAudio": "/assets/audio/fr/letters/names/e.mp3", "soundText": "/ə/", "anchorWordId": "melon",
+    "promptText": "Donne-moi la lettre E. E fait /ə/, comme dans melon.",
+    "promptSpeechText": "Donne-moi la lettre E. La lettre E fait le son euh, comme dans melon.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/e-melon.mp3"
+  },
+  {
+    "id": "f", "uppercase": "F", "lowercase": "f", "nameText": "effe", "nameSpeechText": "effe",
+    "nameAudio": "/assets/audio/fr/letters/names/f.mp3", "soundText": "/f/", "anchorWordId": "fusee",
     "promptText": "Donne-moi la lettre F. F fait /f/, comme dans fusée.",
     "promptSpeechText": "Donne-moi la lettre F. La lettre F fait fff, comme dans fusée.",
     "promptAudio": "/assets/audio/fr/letters/prompts/f-fusee.mp3"
   },
   {
-    "id": "s",
-    "uppercase": "S",
-    "lowercase": "s",
-    "nameText": "esse",
-    "nameSpeechText": "esse",
-    "nameAudio": "/assets/audio/fr/letters/names/s.mp3",
-    "soundText": "/s/",
-    "anchorWordId": "soleil",
-    "promptText": "Donne-moi la lettre S. S fait /s/, comme dans soleil.",
-    "promptSpeechText": "Donne-moi la lettre S. La lettre S fait sss, comme dans soleil.",
-    "promptAudio": "/assets/audio/fr/letters/prompts/s-soleil.mp3"
+    "id": "g", "uppercase": "G", "lowercase": "g", "nameText": "gé", "nameSpeechText": "gé",
+    "nameAudio": "/assets/audio/fr/letters/names/g.mp3", "soundText": "/g/", "anchorWordId": "alligator",
+    "promptText": "Donne-moi la lettre G. G fait /g/, comme dans alligator.",
+    "promptSpeechText": "Donne-moi la lettre G. La lettre G fait le son gue, comme dans alligator.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/g-alligator.mp3"
   },
   {
-    "id": "r",
-    "uppercase": "R",
-    "lowercase": "r",
-    "nameText": "erre",
-    "nameSpeechText": "erre",
-    "nameAudio": "/assets/audio/fr/letters/names/r.mp3",
-    "soundText": "/r/",
-    "anchorWordId": "requin",
+    "id": "h", "uppercase": "H", "lowercase": "h", "nameText": "ache", "nameSpeechText": "ache",
+    "nameAudio": "/assets/audio/fr/letters/names/h.mp3", "soundText": "un son muet", "anchorWordId": "helicoptere",
+    "promptText": "Donne-moi la lettre H. H est muette, comme dans hélicoptère.",
+    "promptSpeechText": "Donne-moi la lettre H. La lettre H est muette, comme dans hélicoptère.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/h-helicoptere.mp3"
+  },
+  {
+    "id": "i", "uppercase": "I", "lowercase": "i", "nameText": "i", "nameSpeechText": "i",
+    "nameAudio": "/assets/audio/fr/letters/names/i.mp3", "soundText": "/i/", "anchorWordId": "pirate",
+    "promptText": "Donne-moi la lettre I. I fait /i/, comme dans pirate.",
+    "promptSpeechText": "Donne-moi la lettre I. La lettre I fait le son i, comme dans pirate.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/i-pirate.mp3"
+  },
+  {
+    "id": "j", "uppercase": "J", "lowercase": "j", "nameText": "ji", "nameSpeechText": "ji",
+    "nameAudio": "/assets/audio/fr/letters/names/j.mp3", "soundText": "/ʒ/", "anchorWordId": "jupe",
+    "promptText": "Donne-moi la lettre J. J fait /ʒ/, comme dans jupe.",
+    "promptSpeechText": "Donne-moi la lettre J. La lettre J fait le son je, comme dans jupe.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/j-jupe.mp3"
+  },
+  {
+    "id": "k", "uppercase": "K", "lowercase": "k", "nameText": "ka", "nameSpeechText": "ka",
+    "nameAudio": "/assets/audio/fr/letters/names/k.mp3", "soundText": "/k/", "anchorWordId": "koala",
+    "promptText": "Donne-moi la lettre K. K fait /k/, comme dans koala.",
+    "promptSpeechText": "Donne-moi la lettre K. La lettre K fait le son ke, comme dans koala.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/k-koala.mp3"
+  },
+  {
+    "id": "l", "uppercase": "L", "lowercase": "l", "nameText": "elle", "nameSpeechText": "elle",
+    "nameAudio": "/assets/audio/fr/letters/names/l.mp3", "soundText": "/l/", "anchorWordId": "lapin",
+    "promptText": "Donne-moi la lettre L. L fait /l/, comme dans lapin.",
+    "promptSpeechText": "Donne-moi la lettre L. La lettre L fait le son le, comme dans lapin.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/l-lapin.mp3"
+  },
+  {
+    "id": "m", "uppercase": "M", "lowercase": "m", "nameText": "ème", "nameSpeechText": "ème",
+    "nameAudio": "/assets/audio/fr/letters/names/m.mp3", "soundText": "/m/", "anchorWordId": "moto",
+    "promptText": "Donne-moi la lettre M. M fait /m/, comme dans moto.",
+    "promptSpeechText": "Donne-moi la lettre M. La lettre M fait mmm, comme dans moto.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/m-moto.mp3"
+  },
+  {
+    "id": "n", "uppercase": "N", "lowercase": "n", "nameText": "enne", "nameSpeechText": "enne",
+    "nameAudio": "/assets/audio/fr/letters/names/n.mp3", "soundText": "/n/", "anchorWordId": "canari",
+    "promptText": "Donne-moi la lettre N. N fait /n/, comme dans canari.",
+    "promptSpeechText": "Donne-moi la lettre N. La lettre N fait /n/, comme dans canari.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/n-canari.mp3"
+  },
+  {
+    "id": "o", "uppercase": "O", "lowercase": "o", "nameText": "o", "nameSpeechText": "o",
+    "nameAudio": "/assets/audio/fr/letters/names/o.mp3", "soundText": "/o/", "anchorWordId": "moto",
+    "promptText": "Donne-moi la lettre O. O fait /o/, comme dans moto.",
+    "promptSpeechText": "Donne-moi la lettre O. La lettre O fait le son o, comme dans moto.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/o-moto.mp3"
+  },
+  {
+    "id": "p", "uppercase": "P", "lowercase": "p", "nameText": "pé", "nameSpeechText": "pé",
+    "nameAudio": "/assets/audio/fr/letters/names/p.mp3", "soundText": "/p/", "anchorWordId": "pirate",
+    "promptText": "Donne-moi la lettre P. P fait /p/, comme dans pirate.",
+    "promptSpeechText": "Donne-moi la lettre P. La lettre P fait le son pe, comme dans pirate.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/p-pirate.mp3"
+  },
+  {
+    "id": "q", "uppercase": "Q", "lowercase": "q", "nameText": "ku", "nameSpeechText": "ku",
+    "nameAudio": "/assets/audio/fr/letters/names/q.mp3", "soundText": "/k/", "anchorWordId": "requin",
+    "promptText": "Donne-moi la lettre Q. Q fait /k/, comme dans requin.",
+    "promptSpeechText": "Donne-moi la lettre Q. La lettre Q fait le son ke, comme dans requin.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/q-requin.mp3"
+  },
+  {
+    "id": "r", "uppercase": "R", "lowercase": "r", "nameText": "erre", "nameSpeechText": "erre",
+    "nameAudio": "/assets/audio/fr/letters/names/r.mp3", "soundText": "/r/", "anchorWordId": "requin",
     "promptText": "Donne-moi la lettre R. R fait /r/, comme dans requin.",
     "promptSpeechText": "Donne-moi la lettre R. La lettre R fait rrr, comme dans requin.",
     "promptAudio": "/assets/audio/fr/letters/prompts/r-requin.mp3"
   },
   {
-    "id": "v",
-    "uppercase": "V",
-    "lowercase": "v",
-    "nameText": "vé",
-    "nameSpeechText": "vé",
-    "nameAudio": "/assets/audio/fr/letters/names/v.mp3",
-    "soundText": "/v/",
-    "anchorWordId": "velo",
+    "id": "s", "uppercase": "S", "lowercase": "s", "nameText": "esse", "nameSpeechText": "esse",
+    "nameAudio": "/assets/audio/fr/letters/names/s.mp3", "soundText": "/s/", "anchorWordId": "soleil",
+    "promptText": "Donne-moi la lettre S. S fait /s/, comme dans soleil.",
+    "promptSpeechText": "Donne-moi la lettre S. La lettre S fait sss, comme dans soleil.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/s-soleil.mp3"
+  },
+  {
+    "id": "t", "uppercase": "T", "lowercase": "t", "nameText": "té", "nameSpeechText": "té",
+    "nameAudio": "/assets/audio/fr/letters/names/t.mp3", "soundText": "/t/", "anchorWordId": "tapis",
+    "promptText": "Donne-moi la lettre T. T fait /t/, comme dans tapis.",
+    "promptSpeechText": "Donne-moi la lettre T. La lettre T fait le son te, comme dans tapis.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/t-tapis.mp3"
+  },
+  {
+    "id": "u", "uppercase": "U", "lowercase": "u", "nameText": "u", "nameSpeechText": "u",
+    "nameAudio": "/assets/audio/fr/letters/names/u.mp3", "soundText": "/u/", "anchorWordId": "fusee",
+    "promptText": "Donne-moi la lettre U. U fait /u/, comme dans fusée.",
+    "promptSpeechText": "Donne-moi la lettre U. La lettre U fait le son u, comme dans fusée.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/u-fusee.mp3"
+  },
+  {
+    "id": "v", "uppercase": "V", "lowercase": "v", "nameText": "vé", "nameSpeechText": "vé",
+    "nameAudio": "/assets/audio/fr/letters/names/v.mp3", "soundText": "/v/", "anchorWordId": "velo",
     "promptText": "Donne-moi la lettre V. V fait /v/, comme dans vélo.",
     "promptSpeechText": "Donne-moi la lettre V. La lettre V fait vvv, comme dans vélo.",
     "promptAudio": "/assets/audio/fr/letters/prompts/v-velo.mp3"
   },
   {
-    "id": "b",
-    "uppercase": "B",
-    "lowercase": "b",
-    "nameText": "bé",
-    "nameSpeechText": "bé",
-    "nameAudio": "/assets/audio/fr/letters/names/b.mp3",
-    "soundText": "/b/",
-    "anchorWordId": "bateau",
-    "promptText": "Donne-moi la lettre B. B fait /b/, comme dans bateau.",
-    "promptSpeechText": "Donne-moi la lettre B. La lettre B fait be, comme dans bateau.",
-    "promptAudio": "/assets/audio/fr/letters/prompts/b-bateau.mp3"
+    "id": "w", "uppercase": "W", "lowercase": "w", "nameText": "double vé", "nameSpeechText": "double vé",
+    "nameAudio": "/assets/audio/fr/letters/names/w.mp3", "soundText": "/w/", "anchorWordId": "wagon",
+    "promptText": "Donne-moi la lettre W. W fait /w/, comme dans wagon.",
+    "promptSpeechText": "Donne-moi la lettre W. La lettre W fait le son oua, comme dans wagon.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/w-wagon.mp3"
+  },
+  {
+    "id": "x", "uppercase": "X", "lowercase": "x", "nameText": "ix", "nameSpeechText": "ix",
+    "nameAudio": "/assets/audio/fr/letters/names/x.mp3", "soundText": "/gz/", "anchorWordId": "xylophone",
+    "promptText": "Donne-moi la lettre X. X fait /gz/, comme dans xylophone.",
+    "promptSpeechText": "Donne-moi la lettre X. La lettre X fait le son gze, comme dans xylophone.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/x-xylophone.mp3"
+  },
+  {
+    "id": "y", "uppercase": "Y", "lowercase": "y", "nameText": "i grec", "nameSpeechText": "i grec",
+    "nameAudio": "/assets/audio/fr/letters/names/y.mp3", "soundText": "/j/", "anchorWordId": "yaourt",
+    "promptText": "Donne-moi la lettre Y. Y fait /j/, comme dans yaourt.",
+    "promptSpeechText": "Donne-moi la lettre Y. La lettre Y fait le son ye, comme dans yaourt.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/y-yaourt.mp3"
+  },
+  {
+    "id": "z", "uppercase": "Z", "lowercase": "z", "nameText": "zède", "nameSpeechText": "zède",
+    "nameAudio": "/assets/audio/fr/letters/names/z.mp3", "soundText": "/z/", "anchorWordId": "zebre",
+    "promptText": "Donne-moi la lettre Z. Z fait /z/, comme dans zèbre.",
+    "promptSpeechText": "Donne-moi la lettre Z. La lettre Z fait zzz, comme dans zèbre.",
+    "promptAudio": "/assets/audio/fr/letters/prompts/z-zebre.mp3"
   }
 ]

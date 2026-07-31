@@ -289,6 +289,14 @@
   filter: grayscale(0.6);
 }
 
+.level-map__tutorial-pointer {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .level-map__transit {
   position: absolute;
   z-index: 1;

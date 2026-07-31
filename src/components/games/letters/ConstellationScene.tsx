@@ -1,34 +1,24 @@
 import type { CSSProperties } from "react";
+import type { ConstellationDefinition } from "./lettersConstellations";
 
 type ConstellationSceneProps = {
+  constellation: ConstellationDefinition;
   litStars: number;
   pendingLetter?: string;
   pendingStarIndex?: number;
   complete?: boolean;
 };
 
-const STAR_POINTS = [
-  { x: 15, y: 66 },
-  { x: 28, y: 39 },
-  { x: 42, y: 58 },
-  { x: 54, y: 25 },
-  { x: 67, y: 45 },
-  { x: 79, y: 20 },
-  { x: 87, y: 54 },
-  { x: 72, y: 72 },
-];
-
-const CONSTELLATION_PATH = STAR_POINTS.map(
-  (point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`,
-).join(" ");
-
 export function ConstellationScene({
+  constellation,
   litStars,
   pendingLetter,
   pendingStarIndex = litStars,
   complete = false,
 }: ConstellationSceneProps) {
-  const pendingPoint = STAR_POINTS[Math.min(pendingStarIndex, STAR_POINTS.length - 1)];
+  const pendingPoint = constellation.points[
+    Math.min(pendingStarIndex, constellation.points.length - 1)
+  ];
 
   return (
     <div className={`constellation-scene ${complete ? "constellation-scene--complete" : ""}`} aria-hidden="true">
@@ -49,26 +39,26 @@ export function ConstellationScene({
         viewBox="0 0 100 88"
         preserveAspectRatio="none"
       >
-        <path className="constellation-scene__path" d={CONSTELLATION_PATH} />
-        {STAR_POINTS.slice(1).map((point, index) => {
-          const previousPoint = STAR_POINTS[index];
-          const isLit = index + 1 < litStars;
+        {constellation.connections.map(([fromIndex, toIndex], index) => {
+          const from = constellation.points[fromIndex];
+          const to = constellation.points[toIndex];
+          const isLit = fromIndex < litStars && toIndex < litStars;
 
           return (
             <line
-              className={`constellation-scene__link ${
+              className={`constellation-scene__path constellation-scene__link ${
                 isLit ? "constellation-scene__link--lit" : ""
               }`}
               key={`link-${index}`}
               pathLength="1"
-              x1={previousPoint.x}
-              x2={point.x}
-              y1={previousPoint.y}
-              y2={point.y}
+              x1={from.x}
+              x2={to.x}
+              y1={from.y}
+              y2={to.y}
             />
           );
         })}
-        {STAR_POINTS.map((point, index) => (
+        {constellation.points.map((point, index) => (
           <g
             className={`constellation-scene__star ${
               index < litStars ? "constellation-scene__star--lit" : ""

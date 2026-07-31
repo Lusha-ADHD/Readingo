@@ -230,6 +230,8 @@ Les positions sont exprimées relativement au parcours afin de conserver la traj
 
 Le panneau de texte d’un niveau et son île constituent un seul bouton visuel. Ils ne doivent pas se recouvrir au point de masquer le titre ou l’action. Les grandes îles restent assez compactes pour ne pas cacher les petites îles de trajet.
 
+Une main tutorielle pointe vers le niveau frontière et oscille verticalement sous son libellé. Elle disparaît lorsque l’archipel est terminé et reste immobile lorsque le mouvement réduit est activé.
+
 ### Ouverture
 
 À l’ouverture :

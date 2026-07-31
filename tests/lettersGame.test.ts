@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  buildLetterChoices,
   isTargetCharacter,
+  shuffleLetterChoices,
   shuffleLetterIds,
 } from "../src/components/games/letters/letterGame.ts";
 import type { LetterEntry } from "../src/components/games/letters/letterGame.ts";
+import { LETTERS_CONSTELLATIONS } from "../src/components/games/letters/lettersConstellations.ts";
 import {
   completeLettersLevel,
   createInitialLettersProgress,
@@ -38,6 +41,50 @@ test("la lettre cible est reconnue sans dépendre de la casse", () => {
   assert.equal(isTargetCharacter("A", targetA), true);
   assert.equal(isTargetCharacter("a", targetA), true);
   assert.equal(isTargetCharacter("n", targetA), false);
+});
+
+test("la carte définit douze constellations valides de huit étoiles", () => {
+  assert.equal(LETTERS_CONSTELLATIONS.length, 12);
+  assert.equal(
+    new Set(LETTERS_CONSTELLATIONS.map((constellation) => constellation.id)).size,
+    LETTERS_CONSTELLATIONS.length,
+  );
+
+  for (const constellation of LETTERS_CONSTELLATIONS) {
+    assert.equal(constellation.points.length, 8);
+    assert.ok(
+      constellation.points.every(
+        ({ x, y }) => x >= 0 && x <= 100 && y >= 0 && y <= 88,
+      ),
+    );
+    assert.ok(constellation.connections.length >= 7);
+    assert.ok(
+      constellation.connections.every(
+        ([from, to]) =>
+          from >= 0 &&
+          from < constellation.points.length &&
+          to >= 0 &&
+          to < constellation.points.length &&
+          from !== to,
+      ),
+    );
+  }
+});
+
+test("le mélange conserve la casse associée à chaque choix", () => {
+  const choices = buildLetterChoices({
+    id: "mixte",
+    targetLetterId: "b",
+    choiceLetterIds: ["b", "d", "p"],
+    displayCase: "uppercase",
+    choiceCases: { b: "lowercase", d: "uppercase", p: "lowercase" },
+  });
+  const shuffled = shuffleLetterChoices(choices, () => 0);
+
+  assert.deepEqual(
+    Object.fromEntries(shuffled.map((choice) => [choice.letterId, choice.displayCase])),
+    { b: "lowercase", d: "uppercase", p: "lowercase" },
+  );
 });
 
 test("la progression initiale ne contient aucune constellation terminée", () => {

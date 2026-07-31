@@ -25,6 +25,7 @@ Le pipeline reproduit le cadrage, la palette et le traitement de transparence. I
 | Personnage | portrait ou carré transparent | Pana |
 | Objet de monde | transparent, silhouette compacte | bateau, coffre |
 | Élément de parcours | transparent, échelle variable | petite île |
+| Aide d’interface | transparent, lisible à petite taille | main tutorielle |
 | Décor | large ou répétable | fond de scène |
 
 La recette `readingo-pana-v1` concerne d’abord les sujets isolés transparents. Un décor complet doit disposer d’un contrat de cadrage propre.
@@ -33,7 +34,8 @@ La recette `readingo-pana-v1` concerne d’abord les sujets isolés transparents
 
 Les images finales des mots sont stockées dans `public/assets/images/<locale>/words/`. Avec `readingo-pana-v1`, elles sont produites en PNG RGBA de 768 × 768 pixels, avec un sujet centré, une marge régulière et des coins complètement transparents.
 
-Les personnages et objets de monde sont rangés dans `public/assets/characters/` et `public/assets/world/`.
+Les personnages, objets de monde et aides d’interface sont rangés respectivement
+dans `public/assets/characters/`, `public/assets/world/` et `public/assets/ui/`.
 
 Ce document ne repertorie pas les generations individuelles. Le prompt exact, les references ordonnees et le post-traitement de chaque asset sont archives dans [`image-generation-history.yaml`](./image-generation-history.yaml).
 
