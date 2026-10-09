@@ -57,6 +57,7 @@ const {
 } = Astro.props;
 
 const canonicalUrl = new URL(sitePath(canonicalPath), Astro.site ?? Astro.url).toString();
+const authorUrl = new URL(sitePath("/a-propos/"), Astro.site ?? Astro.url).toString();
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -67,8 +68,11 @@ const articleSchema = {
   dateModified: "2026-07-22",
   mainEntityOfPage: canonicalUrl,
   author: {
-    "@type": "Organization",
-    name: "Readingo",
+    "@type": "Person",
+    name: "Marine Lemaître",
+    jobTitle: "Institutrice",
+    url: `${authorUrl}#autrice`,
+    image: new URL(sitePath("/assets/MarineLemaitrePicture.jpg"), Astro.site ?? Astro.url).toString(),
   },
   audience: {
     "@type": "PeopleAudience",
@@ -111,6 +115,20 @@ const structuredData = faqEntries.length > 0 ? [articleSchema, faqSchema] : [art
         <p class="eyebrow">{eyebrow}</p>
         <h1>{heading}</h1>
         <p class="article-hero__intro">{intro}</p>
+        <a class="article-author" href={sitePath("/a-propos/#autrice")}>
+          <img
+            src={sitePath("/assets/MarineLemaitrePicture.jpg")}
+            alt=""
+            width="64"
+            height="64"
+            decoding="async"
+          />
+          <span class="article-author__text">
+            <span class="article-author__label">Article rédigé par</span>
+            <strong>Marine Lemaître</strong>
+            <span class="article-author__role">Institutrice · Autrice pour Readingo</span>
+          </span>
+        </a>
         <p class="article-meta">Mis à jour en juillet 2026 · Lecture : {readingTime}</p>
       </header>
 

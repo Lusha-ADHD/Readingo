@@ -46,6 +46,15 @@ import { sitePath } from "../utils/paths";
         <a class="about-cta" href={sitePath("/apprendre-a-lire/")}>Lire les conseils pour les parents <span aria-hidden="true">→</span></a>
       </section>
 
+      <section id="autrice" aria-labelledby="author-title">
+        <p class="eyebrow">Les guides Readingo</p>
+        <h2 id="author-title">Marine Lemaître</h2>
+        <p>
+          Marine Lemaître est institutrice et autrice pour Readingo. Elle rédige les guides destinés
+          aux parents pour les aider à accompagner les premiers apprentissages de la lecture.
+        </p>
+      </section>
+
       <section class="about-team" aria-labelledby="team-title">
         <p class="eyebrow">Qui sommes-nous ?</p>
         <h2 id="team-title">Dygie, l’équipe derrière Readingo</h2>
@@ -117,6 +126,7 @@ import { sitePath } from "../utils/paths";
   }
 
   .about-content > section {
+    scroll-margin-top: 104px;
     padding: clamp(26px, 5vw, 42px);
     border: 3px solid var(--color-border);
     border-radius: 26px;
