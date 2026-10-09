@@ -115,30 +115,33 @@ const structuredData = faqEntries.length > 0 ? [articleSchema, faqSchema] : [art
         <p class="eyebrow">{eyebrow}</p>
         <h1>{heading}</h1>
         <p class="article-hero__intro">{intro}</p>
-        <a class="article-author" href={sitePath("/a-propos/#autrice")}>
-          <img
-            src={sitePath("/assets/MarineLemaitrePicture.jpg")}
-            alt=""
-            width="64"
-            height="64"
-            decoding="async"
-          />
-          <span class="article-author__text">
-            <span class="article-author__label">Article rédigé par</span>
-            <strong>Marine Lemaître</strong>
-            <span class="article-author__role">Institutrice · Autrice pour Readingo</span>
-          </span>
-        </a>
         <p class="article-meta">Mis à jour en juillet 2026 · Lecture : {readingTime}</p>
       </header>
 
       <div class="article-layout page-shell">
-        <nav class="article-toc" aria-label="Sommaire de l’article">
-          <strong>Dans ce guide</strong>
-          <ol>
-            {toc.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-          </ol>
-        </nav>
+        <div class="article-sidebar">
+          <nav class="article-toc" aria-label="Sommaire de l’article">
+            <strong>Dans ce guide</strong>
+            <ol>
+              {toc.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            </ol>
+          </nav>
+
+          <a class="article-author" href={sitePath("/a-propos/#autrice")}>
+            <img
+              src={sitePath("/assets/MarineLemaitrePicture.jpg")}
+              alt=""
+              width="56"
+              height="56"
+              decoding="async"
+            />
+            <span class="article-author__text">
+              <span class="article-author__label">Article rédigé par</span>
+              <strong>Marine Lemaître</strong>
+              <span class="article-author__role">Institutrice · Autrice pour Readingo</span>
+            </span>
+          </a>
+        </div>
 
         <div class="article-content">
           <slot />
